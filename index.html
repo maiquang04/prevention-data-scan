@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prevention data scan</title>
+<meta name="description" content="A scan of what data already exists for measuring prevention, and how obtainable each source is.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="site-head__inner">
+    <a class="site-head__title" href="index.html">Prevention data scan <span>&middot; working draft</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="index.html">Overview</a>
+      <a href="application.html?app=1">Application 1</a>
+      <a href="browse.html">Browse sources</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap">
+
+    <div class="hero">
+      <h1>What data already exists for measuring prevention?</h1>
+      <p class="lede">
+        Prevention work is easy to argue for and hard to evidence, because the data that would
+        show whether it worked sits in a lot of different places &ndash; and some of it cannot be
+        obtained at all. This is a scan of what has already been published, and an honest
+        assessment of which of it you could actually get hold of.
+      </p>
+    </div>
+
+    <div class="stats" id="stats" aria-live="polite">
+      <p class="loading">Loading&hellip;</p>
+    </div>
+
+    <div class="buttons">
+      <a class="button" href="application.html?app=1">Explore Application 1</a>
+      <a class="button button--ghost" href="browse.html">Browse every source</a>
+    </div>
+
+    <section style="margin-top:44px">
+      <h2>Three questions being scanned</h2>
+      <div class="cards" id="cards"></div>
+    </section>
+
+    <section>
+      <h2>How to read this</h2>
+      <div class="note">
+        <p>
+          Two questions get confused with each other, so they are kept apart here.
+          <b>Can you read the paper?</b> is not the same as <b>can you get the data?</b>
+          Plenty of good research sits on data nobody outside the original team can obtain.
+          Every source carries a badge saying which situation it is in:
+        </p>
+        <ul id="access-key" style="margin:0;padding-left:0;list-style:none"></ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>What this is, and what it is not</h2>
+      <div class="wrap--text" style="padding:0">
+        <p>
+          This is a scan of published work &ndash; papers, government reports and data
+          collections &ndash; carried out at the University of Queensland. It records what other
+          people have already measured, how they measured it, and whether the underlying data can
+          be obtained.
+        </p>
+        <p>
+          It is <b>not</b> an analysis of Queensland data, and it does not contain any health
+          statistics of its own. Nothing on this site is confidential: every source listed is
+          already published, and every summary is written here from scratch rather than copied.
+        </p>
+        <p>
+          It is also incomplete on purpose. Some sources have been profiled in detail and some
+          have only been read; where the data behind a source has not been checked yet, it says
+          so rather than guessing.
+        </p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>Working draft &middot; last generated <span data-generated>&mdash;</span>.</p>
+    <p>Compiled at the University of Queensland. Lists only published sources; contains no
+       individual records and no unpublished material.</p>
+  </div>
+</footer>
+
+<script src="assets/common.js"></script>
+<script>
+(function () {
+  "use strict";
+  var S = window.scan;
+
+  S.loadData(["studies.json", "meta.json"]).then(function (loaded) {
+    var studies = loaded[0], meta = loaded[1];
+    S.stampGenerated(meta);
+
+    var restricted = studies.filter(function (s) { return s.access === "Restricted - application"; }).length;
+    var stats = [
+      [meta.total, "sources scanned"],
+      [meta.withDownloadableData, "with data you can download"],
+      [restricted, "where you would have to apply"],
+      [Object.keys(meta.byApplication).length, "applications covered"]
+    ];
+    document.getElementById("stats").innerHTML = stats.map(function (s) {
+      return '<div class="stat"><b>' + s[0] + "</b><span>" + s[1] + "</span></div>";
+    }).join("");
+
+    document.getElementById("cards").innerHTML = Object.keys(meta.byApplication).map(function (key) {
+      var app = meta.byApplication[key];
+      var live = key === "1";
+      return '<article class="card' + (live ? "" : " card--soon") + '">' +
+        "<h3>" + (live
+          ? '<a href="application.html?app=' + key + '">Application ' + key + ": " + S.escapeHtml(app.title) + "</a>"
+          : "Application " + key + ": " + S.escapeHtml(app.title)) + "</h3>" +
+        "<p>" + S.escapeHtml(app.blurb) + "</p>" +
+        '<p class="card__meta">' + app.count + " sources &middot; " +
+          (live
+            ? "grid view built"
+            : '<a href="browse.html?app=' + key + '">listed on the browse page</a>, grid view to come') +
+        "</p></article>";
+    }).join("");
+
+    document.getElementById("access-key").innerHTML = meta.accessValues.map(function (value) {
+      return '<li style="margin-bottom:.5em">' + S.accessBadge(value) + " " +
+        S.escapeHtml(S.accessMeaning[value]) + "</li>";
+    }).join("");
+  }).catch(function (err) {
+    S.showLoadError(document.getElementById("stats"), err);
+  });
+})();
+</script>
+</body>
+</html>

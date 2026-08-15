@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Source - Prevention data scan</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="site-head__inner">
+    <a class="site-head__title" href="index.html">Prevention data scan <span>&middot; working draft</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="index.html">Overview</a>
+      <a href="application.html?app=1">Application 1</a>
+      <a href="browse.html">Browse sources</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap wrap--text" id="study-main">
+    <p class="crumb" id="crumb"><a href="index.html">Overview</a> &rsaquo;
+      <a href="browse.html">Browse sources</a></p>
+    <div id="record"><p class="loading">Loading&hellip;</p></div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>Working draft &middot; last generated <span data-generated>&mdash;</span>.</p>
+    <p>Compiled at the University of Queensland. Lists only published sources; contains no
+       individual records and no unpublished material.</p>
+  </div>
+</footer>
+
+<script src="assets/common.js"></script>
+<script>
+(function () {
+  "use strict";
+  var S = window.scan;
+
+  function row(term, value) {
+    if (!value) return "";
+    return "<dt>" + S.escapeHtml(term) + "</dt><dd>" + value + "</dd>";
+  }
+
+  S.loadData(["studies.json", "meta.json"]).then(function (loaded) {
+    var studies = loaded[0], meta = loaded[1];
+    S.stampGenerated(meta);
+
+    var wanted = S.param("id");
+    var study = null;
+    studies.forEach(function (s) { if (s.id === wanted) study = s; });
+
+    if (!study) {
+      document.getElementById("record").innerHTML =
+        '<div class="error"><p><b>No source with that reference.</b></p>' +
+        '<p>Try the <a href="browse.html">browse page</a>.</p></div>';
+      return;
+    }
+
+    document.title = "Application " + study.app + " source " + study.num + " - Prevention data scan";
+    document.getElementById("crumb").innerHTML =
+      '<a href="index.html">Overview</a> &rsaquo; ' +
+      '<a href="browse.html?app=' + study.app + '">Application ' + study.app + "</a> &rsaquo; source " + study.num;
+
+    var links = study.dataLinks.map(function (l) {
+      if (!l.url) return "<li>" + S.escapeHtml(l.label) + "</li>";
+      return "<li>" + S.externalLink(l.url, l.label || S.shortHost(l.url)) + "</li>";
+    }).join("");
+
+    document.getElementById("record").innerHTML =
+      "<h1>" + S.escapeHtml(study.reference) + "</h1>" +
+      '<p>' + S.priorityDot(study.priority) +
+        '<span class="small muted">' + S.escapeHtml(S.priorityLabel[study.priority]) +
+        " &middot; " + S.escapeHtml(study.sourceType) + " &middot; " + S.escapeHtml(study.country) + "</span></p>" +
+      (study.link ? "<p>" + S.externalLink(study.link, "Read the source") + "</p>" : "") +
+      '<div class="record"><dl>' +
+        row("What it does", S.escapeHtml(study.task)) +
+        row("What goes in", S.escapeHtml(study.inputData)) +
+        row("What comes out", S.escapeHtml(study.output)) +
+        row("Measures used", S.escapeHtml(study.metrics)) +
+        row("Geographic level", S.escapeHtml(study.geoLevel)) +
+        row("Filed under", study.geoTags.map(function (t) {
+          return '<a class="tag" href="browse.html?geo=' + encodeURIComponent(t) + '">' +
+            S.escapeHtml(t) + "</a>";
+        }).join("")) +
+        row("Data behind it", S.escapeHtml(study.dataSources)) +
+        row("Can we get it?", S.accessBadge(study.access) + " " +
+          S.escapeHtml(study.accessNote || S.accessMeaning[study.access] || "")) +
+        row("Where to get it", links ? "<ul>" + links + "</ul>" : "") +
+        row("How big it is", S.escapeHtml(study.scale)) +
+        row("What is in it", S.escapeHtml(study.keyAttributes)) +
+      "</dl></div>" +
+      '<p style="margin-top:28px"><a href="application.html?app=' + study.app +
+        '">Back to Application ' + study.app + "</a></p>";
+  }).catch(function (err) {
+    S.showLoadError(document.getElementById("record"), err);
+  });
+})();
+</script>
+</body>
+</html>
