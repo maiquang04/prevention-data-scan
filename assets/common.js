@@ -12,13 +12,13 @@
   };
 
   // Shown next to the badge so a reader who has never met the word "restricted"
-  // in this context still knows what it means for them.
+  // in this context still knows what it means.
   var ACCESS_MEANING = {
-    "Public": "The data can be downloaded now, at no cost.",
+    "Public": "Free to download now.",
     "Public (aggregate only)": "The published results and maps are free. The records behind them are not released.",
-    "Restricted - application": "The data exists but you have to apply to whoever holds it.",
-    "Not a dataset": "A review, guide or set of principles rather than data you can download.",
-    "Not yet assessed": "We have not checked how obtainable this one is yet."
+    "Restricted - application": "The data exists, but it takes an application to whoever holds it.",
+    "Not a dataset": "A review, guide or set of principles rather than data to download.",
+    "Not yet assessed": "How obtainable this one is has not been checked yet."
   };
 
   var PRIORITY_LABEL = {
@@ -90,9 +90,24 @@
 
   function markCurrentNav() {
     var here = global.location.pathname.split("/").pop() || "index.html";
+    var params = new URLSearchParams(global.location.search);
     var links = document.querySelectorAll(".site-nav a");
+
     for (var i = 0; i < links.length; i++) {
-      if (links[i].getAttribute("href") === here) links[i].setAttribute("aria-current", "page");
+      var parts = links[i].getAttribute("href").split("?");
+      if (parts[0] !== here) continue;
+
+      // A nav link carrying a query has to match it too, or "Application 1" would
+      // light up while you are looking at application 5. An address with no app in
+      // it means 1, which is what the page itself falls back to.
+      var matches = true;
+      if (parts[1]) {
+        new URLSearchParams(parts[1]).forEach(function (value, key) {
+          var mine = params.get(key) || (key === "app" ? "1" : null);
+          if (mine !== value) matches = false;
+        });
+      }
+      if (matches) links[i].setAttribute("aria-current", "page");
     }
   }
 
