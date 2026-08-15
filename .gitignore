@@ -1,0 +1,30 @@
+# Never let project documents into a public repository. build/check_publish.py
+# catches these too, but keeping them unstaged means a stray copy cannot reach a
+# commit by accident in the first place.
+*.xlsx
+*.xls
+*.xlsm
+*.docx
+*.doc
+*.pdf
+*.eml
+*.msg
+*.pptx
+*.csv
+*.zip
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local server scratch
+*.log
