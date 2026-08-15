@@ -25,13 +25,7 @@
   <div class="wrap">
 
     <div class="hero">
-      <h1>What data already exists for measuring prevention?</h1>
-      <p class="lede">
-        Prevention work is easy to argue for and hard to evidence, because the data that would
-        show whether it worked sits in a lot of different places &ndash; and some of it cannot be
-        obtained at all. This is a scan of what has already been published, and an honest
-        assessment of which of it you could actually get hold of.
-      </p>
+      <h1>Prevention data scan</h1>
     </div>
 
     <div class="stats" id="stats" aria-live="polite">
@@ -51,35 +45,7 @@
     <section>
       <h2>How to read this</h2>
       <div class="note">
-        <p>
-          Two questions get confused with each other, so they are kept apart here.
-          <b>Can you read the paper?</b> is not the same as <b>can you get the data?</b>
-          Plenty of good research sits on data nobody outside the original team can obtain.
-          Every source carries a badge saying which situation it is in:
-        </p>
         <ul id="access-key" style="margin:0;padding-left:0;list-style:none"></ul>
-      </div>
-    </section>
-
-    <section>
-      <h2>What this is, and what it is not</h2>
-      <div class="wrap--text" style="padding:0">
-        <p>
-          This is a scan of published work &ndash; papers, government reports and data
-          collections &ndash; carried out at the University of Queensland. It records what other
-          people have already measured, how they measured it, and whether the underlying data can
-          be obtained.
-        </p>
-        <p>
-          It is <b>not</b> an analysis of Queensland data, and it does not contain any health
-          statistics of its own. Nothing on this site is confidential: every source listed is
-          already published, and every summary is written here from scratch rather than copied.
-        </p>
-        <p>
-          It is also incomplete on purpose. Some sources have been profiled in detail and some
-          have only been read; where the data behind a source has not been checked yet, it says
-          so rather than guessing.
-        </p>
       </div>
     </section>
 
@@ -89,8 +55,6 @@
 <footer class="site-foot">
   <div class="wrap">
     <p>Working draft &middot; last generated <span data-generated>&mdash;</span>.</p>
-    <p>Compiled at the University of Queensland. Lists only published sources; contains no
-       individual records and no unpublished material.</p>
   </div>
 </footer>
 
@@ -107,8 +71,8 @@
     var restricted = studies.filter(function (s) { return s.access === "Restricted - application"; }).length;
     var stats = [
       [meta.total, "sources scanned"],
-      [meta.withDownloadableData, "with data you can download"],
-      [restricted, "where you would have to apply"],
+      [meta.withDownloadableData, "with downloadable data"],
+      [restricted, "needing an application"],
       [Object.keys(meta.byApplication).length, "applications covered"]
     ];
     document.getElementById("stats").innerHTML = stats.map(function (s) {

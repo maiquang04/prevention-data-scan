@@ -53,26 +53,17 @@ APPLICATIONS = {
     1: {
         "title": "Prevention and the health system",
         "question": "How do we show that prevention changes what happens in hospitals?",
-        "blurb": (
-            "Waiting lists, bed days, ambulance ramping and hospitalisations that better "
-            "community care could have avoided."
-        ),
+        "blurb": "Waiting lists, bed days, ambulance ramping and potentially preventable hospitalisations.",
     },
     5: {
         "title": "Targeting prevention to reduce health inequities",
         "question": "Where should prevention effort go, so the gap between groups narrows?",
-        "blurb": (
-            "Measuring who is worse off and by how much, and deciding where to put effort "
-            "so differences between groups close rather than widen."
-        ),
+        "blurb": "Differences in health between population groups and between areas, and how they are measured.",
     },
     6: {
         "title": "A prevention measurement framework for local government",
         "question": "How would a council know whether its area is getting healthier?",
-        "blurb": (
-            "Indicators a Queensland council could actually collect and track - walkability, "
-            "green space, food environment, participation."
-        ),
+        "blurb": "Walkability, green space, food environment and participation, measured at council level.",
     },
 }
 

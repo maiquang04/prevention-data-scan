@@ -144,14 +144,12 @@
     var bar = document.getElementById("resultbar");
     var active = FACETS.reduce(function (n, f) { return n + state[f.key].length; }, 0) + (state.q ? 1 : 0);
 
-    bar.innerHTML = "<span><b>" + results.length + "</b> of " + studies.length + " sources" +
-      (active ? "" : " (no filters applied)") + "</span>" +
-      (active ? '<button type="button" class="linkish" id="clear">Clear all filters</button>' : "") +
-      (active && results.length ? '<span class="small muted">This filtered view has its own web address - copy it from the address bar to share it.</span>' : "");
+    bar.innerHTML = "<span><b>" + results.length + "</b> of " + studies.length + " sources</span>" +
+      (active ? '<button type="button" class="linkish" id="clear">Clear all filters</button>' : "");
 
     var list = document.getElementById("results");
     if (!results.length) {
-      list.innerHTML = '<li class="empty">Nothing matches that combination. Try removing a filter.</li>';
+      list.innerHTML = '<li class="empty">Nothing matches that combination.</li>';
       return;
     }
 

@@ -11,13 +11,13 @@
   ],
   "cols": [
     { "key": "actions", "label": "Actions", "note": "What can be done" },
-    { "key": "measures", "label": "Measures", "note": "How you would know it worked" }
+    { "key": "measures", "label": "Measures", "note": "How the effect would be measured" }
   ],
   "applications": {
     "1": {
       "title": "Prevention and the health system",
       "question": "How do we show that prevention changes what happens in hospitals?",
-      "intro": "Each card below is something the scanned literature can actually support - an action with evidence behind it, or a measure that someone has already defined and published. The badge says whether the data behind it can be obtained.",
+      "intro": "Each card is something the scanned literature supports: an action with evidence behind it, or a measure someone has already defined and published.",
       "cells": {
         "people-actions": [
           {

@@ -215,7 +215,7 @@
   },
   {
     "reference": "Purdy S (2010). Avoiding hospital admissions: what does the research evidence say? London: The King's Fund",
-    "link": "https://www.kingsfund.org.uk/publications/avoiding-hospital-admissions",
+    "link": "https://www.kingsfund.org.uk/insight-and-analysis/reports/avoiding-hospital-admissions",
     "sourceType": "Institutional report (policy think tank)",
     "country": "United Kingdom",
     "task": "Reviews which interventions genuinely reduce unplanned hospital admissions - a useful reality-check on the claims in Application 1",
@@ -246,7 +246,7 @@
     "link": "https://www.oecd.org/en/publications/health-at-a-glance-2023_7a7afb35-en.html",
     "sourceType": "International agency report",
     "country": "Wealthy countries (OECD members)",
-    "task": "International benchmarking of avoidable admissions - lets you position Australia against comparable health systems",
+    "task": "International benchmarking of avoidable admissions - places Australia alongside comparable health systems",
     "metrics": "Admissions per 100,000 people, adjusted for age and sex",
     "geoLevel": "National",
     "inputData": "National hospital discharge data submitted by member countries",
@@ -407,7 +407,7 @@
   },
   {
     "reference": "Australian Commission on Safety and Quality in Health Care and Australian Institute of Health and Welfare (2021). The Fourth Australian Atlas of Healthcare Variation. Sydney: Australian Commission on Safety and Quality in Health Care. ISBN 978-1-922563-06-4",
-    "link": "https://www.safetyandquality.gov.au/our-work/healthcare-variation/fourth-atlas-2021/fourth-atlas-2021-download-atlas",
+    "link": "https://www.safetyandquality.gov.au/resources/fourth-australian-atlas-healthcare-variation-2021",
     "sourceType": "Government report (national atlas)",
     "country": "Australia",
     "task": "Maps healthcare use and preventable hospitalisation by small area, split by disadvantage, remoteness and Aboriginal and Torres Strait Islander status. Chapter 2 covers preventable hospitalisations. Notes a key gap: Indigenous status is missing from Medicare and pharmaceutical data, and undercounted in hospital data",
@@ -466,7 +466,7 @@
   },
   {
     "reference": "Flanagan BE, Gregory EW, Hallisey EJ, Heitgerd JL, Lewis B (2011). A Social Vulnerability Index for Disaster Management. Journal of Homeland Security and Emergency Management 8(1), Article 3",
-    "link": "https://www.atsdr.cdc.gov/placeandhealth/svi/index.html",
+    "link": "https://www.atsdr.cdc.gov/place-health/php/svi/",
     "sourceType": "Peer-reviewed, plus a government data tool",
     "country": "United States",
     "task": "A widely reused composite index for identifying vulnerable areas - a working model for how Queensland could build its own index to target prevention",
@@ -475,10 +475,10 @@
     "inputData": "United States census and community survey variables",
     "output": "A vulnerability ranking for every small area, across four themes: social and economic position, household composition, ethnicity and language, and housing and transport",
     "dataSources": "United States Census Bureau American Community Survey",
-    "accessNote": "",
+    "accessNote": "Yes - the index files are free to download, no registration",
     "scale": "",
     "keyAttributes": "",
-    "access": "Not yet assessed",
+    "access": "Public",
     "id": "app5-06",
     "app": 5,
     "num": 6,
@@ -491,7 +491,12 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.atsdr.cdc.gov/place-health/php/svi/svi-data-documentation-download.html"
+      }
+    ]
   },
   {
     "reference": "Atkinson J, Salmond C, Crampton P, Viggers H, Lacey K (2024). NZDep2023 Index of Socioeconomic Deprivation: Research Report. Wellington: University of Otago",
