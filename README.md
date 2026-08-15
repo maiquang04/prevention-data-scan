@@ -127,3 +127,11 @@ export script. GitHub Pages serves the files as they are.
 Working draft. Application 1 has the grid view; Applications 5 and 6 are on the browse page
 while their framing is settled. Where a source's data has not been checked yet, it is marked
 `Not yet assessed` rather than guessed at.
+
+Every page carries `<meta name="robots" content="noindex">`, so the site is reachable by
+anyone with the link but will not turn up in a search. **Delete those four lines when the
+draft is finished**, or the finished thing stays invisible too.
+
+There is deliberately no `robots.txt` blocking crawlers: a blocked crawler never fetches the
+page, so it never sees the `noindex` and can still list the bare URL. The meta tag on its own
+is the stronger signal.
