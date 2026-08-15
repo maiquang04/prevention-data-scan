@@ -188,8 +188,10 @@ section { margin-bottom: 40px; }
 .card__meta { margin-top: auto; padding-top: 10px; font-size: .82rem; color: var(--muted); }
 .card--soon { background: var(--panel); border-style: dashed; }
 
+/* White, not a tint. The access badges carry pale backgrounds of their own, and a
+   pale badge on a pale panel is the one place the colour has to be readable. */
 .note {
-  background: var(--accent-soft); border-left: 3px solid var(--accent);
+  background: #fff; border: 1px solid var(--rule); border-left: 3px solid var(--accent);
   padding: 14px 18px; border-radius: 0 var(--radius) var(--radius) 0;
   max-width: var(--text);
 }
@@ -238,24 +240,27 @@ section { margin-bottom: 40px; }
   padding: 11px 13px; background: #fff; text-align: left; width: 100%;
   font: inherit; color: inherit; cursor: pointer;
 }
-.qcard:hover { border-color: var(--accent); background: var(--accent-soft); }
-.qcard[aria-expanded="true"] { border-color: var(--accent); background: var(--accent-soft); }
+/* Cards stay white whatever their state, so the badge and tags on the face never
+   sit on a tint. Hover and open are shown with the border instead. */
+.qcard:hover { border-color: var(--accent); box-shadow: 0 1px 4px rgba(22, 32, 58, .1); }
+.qcard[aria-expanded="true"] {
+  border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent);
+}
 .qcard__name { font-weight: 600; font-size: .92rem; display: block; margin-bottom: 4px; }
 .qcard__note { font-size: .84rem; color: var(--ink-soft); display: block; margin-bottom: 8px; }
 .qcard__meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; font-size: .78rem; color: var(--muted); }
 .qcard__meta .tag { margin: 0; }
-.qcard[aria-expanded="true"] .tag { background: rgba(255, 255, 255, .7); }
 
 .panel {
-  border: 1px solid var(--accent); border-radius: var(--radius);
-  background: var(--accent-soft); padding: 16px 18px; margin-top: 16px;
+  border: 1px solid var(--accent); border-left-width: 3px;
+  border-radius: var(--radius);
+  background: #fff; padding: 16px 18px; margin-top: 16px;
 }
 .panel h3 { margin-bottom: .3em; }
 .panel ul { margin: 0; padding-left: 1.1em; }
 .panel li { margin-bottom: .9em; font-size: .9rem; }
 .panel li:last-child { margin-bottom: 0; }
 .panel .meta-row { margin: 5px 0 3px; }
-.panel .tag { background: rgba(255, 255, 255, .7); }
 .panel__close {
   float: right; border: 0; background: transparent; cursor: pointer;
   color: var(--ink-soft); font-size: 1.3rem; line-height: 1; padding: 0 4px;
