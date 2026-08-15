@@ -1,0 +1,834 @@
+[
+  {
+    "reference": "Masters R, Anwar E, Collins B, Cookson R, Capewell S (2017). Return on investment of public health interventions: a systematic review. Journal of Epidemiology and Community Health 71(8):827-834",
+    "link": "https://pubmed.ncbi.nlm.nih.gov/28356325/",
+    "sourceType": "Peer-reviewed (systematic review)",
+    "country": "High-income countries",
+    "task": "Quantifies the economic return of public health interventions, to make the case for spending on prevention",
+    "metrics": "Return on investment (how many dollars come back per dollar spent); cost-benefit ratio",
+    "geoLevel": "National and local, depending on the intervention",
+    "inputData": "52 studies included from 2,957 titles screened across seven research databases",
+    "output": "Pooled return-on-investment estimates: median 14.3 to 1 overall; 4.1 to 1 for local interventions; 27.2 to 1 for national ones",
+    "dataSources": "Published intervention cost and outcome data from the included studies",
+    "accessNote": "Not a dataset - a review of published studies. The papers themselves are published",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not a dataset",
+    "id": "app1-01",
+    "app": 1,
+    "num": 1,
+    "priority": "relevant",
+    "geoTags": [
+      "National",
+      "International"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Australian Institute of Health and Welfare (2026). Potentially preventable hospitalisations in Australia by small geographic areas: 2017-18 to 2023-24. Web report, catalogue number HPF 76",
+    "link": "https://www.aihw.gov.au/reports/primary-health-care/potentially-preventable-hospitalisations-2017-2024/contents/about",
+    "sourceType": "Government report",
+    "country": "Australia",
+    "task": "National monitoring of hospital admissions that could have been avoided through timely care in the community - the standard system-level indicator, and the natural benchmark for judging whether prevention is shifting hospital demand",
+    "metrics": "Potentially preventable hospitalisation rate per 100,000 people, adjusted for age; split into acute, chronic and vaccine-preventable groups",
+    "geoLevel": "Statistical Area Level 3 (346 small areas of about 30,000-130,000 people); also Primary Health Network (33 of them), remoteness (4 categories) and socioeconomic quintile (5 groups from most to least disadvantaged)",
+    "inputData": "Records of admitted hospital patients across seven financial years, 2017-18 to 2023-24",
+    "output": "Counts and rates for 22 preventable conditions. In 2023-24, 778,133 hospitalisations were potentially preventable - 6.2% of all 12.6 million hospitalisations - using 3.07 million bed days, average stay 3.9 days",
+    "dataSources": "National Hospital Morbidity Database; population estimates from the Australian Bureau of Statistics",
+    "accessNote": "Yes - Excel and CSV are free to download. Patient-level hospital records remain restricted",
+    "scale": "868,000 rows covering 7 financial years (2017-18 to 2023-24). Covers 346 small areas, 33 Primary Health Networks, 4 remoteness categories, and 5 disadvantage quintiles.",
+    "keyAttributes": "Splits by year, area, sex, age (under 65 and 65 plus), condition (22 of them) and category (acute, chronic, vaccine-preventable). Measures: number of admissions, rate per 100,000, bed days, and average length of stay",
+    "access": "Public",
+    "id": "app1-02",
+    "app": 1,
+    "num": 2,
+    "priority": "relevant",
+    "geoTags": [
+      "Small area",
+      "PHN",
+      "Remoteness",
+      "National"
+    ],
+    "sourceGroup": "Government report",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.aihw.gov.au/reports/primary-health-care/potentially-preventable-hospitalisations-2017-2024/data"
+      }
+    ]
+  },
+  {
+    "reference": "Falster MO, Jorm LR, Douglas KA, Blyth FM, Elliott RF, Leyland AH (2015). Sociodemographic and health characteristics, rather than primary care supply, are major drivers of geographic variation in preventable hospitalizations in Australia. Medical Care 53(5):436-445",
+    "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4396734/",
+    "sourceType": "Peer-reviewed",
+    "country": "Australia (New South Wales)",
+    "task": "An important caution for Application 1: it works out WHY preventable hospitalisation rates differ between areas, and finds the answer is mostly who lives there, not how many services are available. Guards against over-crediting or over-blaming local programs",
+    "metrics": "Share of the between-area difference explained: general practitioner supply 2.9%, versus people's own social and health characteristics 36.9%",
+    "geoLevel": "Statistical Local Area (199 areas across New South Wales)",
+    "inputData": "267,091 people surveyed in the 45 and Up Study (262,755 analysed after exclusions), linked to New South Wales hospital and death records; plus general practitioner supply across 199 small areas",
+    "output": "General practitioner supply was NOT a significant predictor of preventable hospitalisation",
+    "dataSources": "45 and Up Study survey; New South Wales Admitted Patient Data Collection; death records; general practitioner workforce data",
+    "accessNote": "No - survey and hospital records need application",
+    "scale": "",
+    "keyAttributes": "Per person: age, sex, income, education, smoking, physical activity, body mass index, long-term conditions. Per area: number of general practitioners. Outcome: preventable admissions",
+    "access": "Restricted - application",
+    "id": "app1-03",
+    "app": 1,
+    "num": 3,
+    "priority": "highly-relevant",
+    "geoTags": [
+      "Small area",
+      "State",
+      "Individual"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.saxinstitute.org.au/solutions/45-and-up-study/"
+      }
+    ]
+  },
+  {
+    "reference": "Jorm LR, Leyland AH, Blyth FM, Elliott RF, Douglas KMA, Redman S, on behalf of the APHID Investigators (2012). Assessing Preventable Hospitalisation InDicators (APHID): protocol for a data-linkage study using cohort study and administrative data. BMJ Open 2:e002344",
+    "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3533070/",
+    "sourceType": "Peer-reviewed (study protocol)",
+    "country": "Australia (New South Wales)",
+    "task": "Sets out how to test what actually drives preventable hospitalisation at the level of individual people - the evidence chain Application 1 needs",
+    "metrics": "Planned comparisons of preventable hospitalisation rates by health behaviour and social background",
+    "geoLevel": "Individual people, New South Wales",
+    "inputData": "The 45 and Up Study group of participants, linked to hospital, death and Medicare records",
+    "output": "Study design and analysis plan for checking the preventable hospitalisation indicator against individual characteristics",
+    "dataSources": "45 and Up Study survey; New South Wales Admitted Patient Data Collection; Medicare and pharmaceutical records; death registry, joined together by the Centre for Health Record Linkage",
+    "accessNote": "",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Restricted - application",
+    "id": "app1-04",
+    "app": 1,
+    "num": 4,
+    "priority": "unmarked",
+    "geoTags": [
+      "Individual",
+      "State"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Vos T, Carter R, Barendregt J, Mihalopoulos C, Veerman L, Magnus A, Cobiac L, Bertram M, Wallace A (2010). Assessing Cost-Effectiveness in Prevention (ACE-Prevention): Final Report. University of Queensland & Deakin University",
+    "link": "https://public-health.uq.edu.au/files/571/ACE-Prevention_final_report.pdf",
+    "sourceType": "Academic report",
+    "country": "Australia",
+    "task": "Ranks preventive interventions by value for money - the landmark Australian exercise in deciding which prevention to fund first, led by the University of Queensland",
+    "metrics": "Cost per healthy year of life gained (measured as disability-adjusted life years averted); savings elsewhere in the health system",
+    "geoLevel": "National",
+    "inputData": "Disease data, effect sizes and costs for 123 preventive and 27 treatment interventions",
+    "output": "A ranked table of interventions showing which prevention gives the best value; tax and regulatory measures came out strongest",
+    "dataSources": "Australian burden of disease data; national health and population statistics; published trial evidence",
+    "accessNote": "Not a dataset - the underlying models were not released",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not a dataset",
+    "id": "app1-05",
+    "app": 1,
+    "num": 5,
+    "priority": "highly-relevant",
+    "geoTags": [
+      "National"
+    ],
+    "sourceGroup": "Academic or institutional report",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "World Health Organization (2018). Saving lives, spending less: a strategic response to noncommunicable diseases. Geneva: World Health Organization",
+    "link": "https://www.who.int/publications/i/item/WHO-NMH-NVI-18.8",
+    "sourceType": "International agency report",
+    "country": "Global (focus on lower-income countries)",
+    "task": "The investment case for preventing chronic diseases such as heart disease, cancer and diabetes - the large-scale version of Application 1's question",
+    "metrics": "Return on investment per intervention; deaths avoided; healthy years of life gained",
+    "geoLevel": "National (modelled across many countries)",
+    "inputData": "Disease and cost data by country for the World Health Organization's recommended 'best buy' interventions",
+    "output": "Projected returns: every US$1 invested returns US$7 by 2030 in lower-income countries",
+    "dataSources": "World Health Organization global health estimates; country-level costing",
+    "accessNote": "",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not a dataset",
+    "id": "app1-06",
+    "app": 1,
+    "num": 6,
+    "priority": "unmarked",
+    "geoTags": [
+      "National",
+      "International"
+    ],
+    "sourceGroup": "International agency report",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Owen L, Morgan A, Fischer A, Ellis S, Hoy A, Kelly MP (2012). The cost-effectiveness of public health interventions. Journal of Public Health 34(1):37-45",
+    "link": "https://academic.oup.com/jpubhealth/article/34/1/37/1554654",
+    "sourceType": "Peer-reviewed",
+    "country": "England",
+    "task": "Shows that most public health interventions assessed for England's national clinical guidance are highly cost-effective - a counter to the claim that prevention does not pay off",
+    "metrics": "Cost per quality-adjusted life year (a year of life weighted by health status)",
+    "geoLevel": "National (England)",
+    "inputData": "21 economic analyses that underpinned national public health guidance issued between 2006 and 2010",
+    "output": "Most results fell well within what the health system treats as good value; many interventions saved money outright",
+    "dataSources": "Economic models built on English cost and disease data",
+    "accessNote": "No single dataset. 200 estimates are available in the paper itself",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not a dataset",
+    "id": "app1-07",
+    "app": 1,
+    "num": 7,
+    "priority": "relevant",
+    "geoTags": [
+      "National"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Purdy S (2010). Avoiding hospital admissions: what does the research evidence say? London: The King's Fund",
+    "link": "https://www.kingsfund.org.uk/publications/avoiding-hospital-admissions",
+    "sourceType": "Institutional report (policy think tank)",
+    "country": "United Kingdom",
+    "task": "Reviews which interventions genuinely reduce unplanned hospital admissions - a useful reality-check on the claims in Application 1",
+    "metrics": "Emergency and unplanned admission rates; admissions for conditions treatable outside hospital",
+    "geoLevel": "National and local (England)",
+    "inputData": "Published evaluations of programs intended to avoid hospital admissions",
+    "output": "Grades the evidence: some approaches work, while several widely used ones have weak or no supporting evidence",
+    "dataSources": "English hospital activity statistics used in the underlying studies",
+    "accessNote": "",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not a dataset",
+    "id": "app1-08",
+    "app": 1,
+    "num": 8,
+    "priority": "unmarked",
+    "geoTags": [
+      "National"
+    ],
+    "sourceGroup": "Academic or institutional report",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Organisation for Economic Co-operation and Development (2023). Health at a Glance 2023: OECD Indicators. Paris: OECD Publishing",
+    "link": "https://www.oecd.org/en/publications/health-at-a-glance-2023_7a7afb35-en.html",
+    "sourceType": "International agency report",
+    "country": "Wealthy countries (OECD members)",
+    "task": "International benchmarking of avoidable admissions - lets you position Australia against comparable health systems",
+    "metrics": "Admissions per 100,000 people, adjusted for age and sex",
+    "geoLevel": "National",
+    "inputData": "National hospital discharge data submitted by member countries",
+    "output": "Country-by-country comparison of avoidable admission rates for asthma, chronic lung disease, heart failure and diabetes",
+    "dataSources": "OECD health statistics database",
+    "accessNote": "Yes - free from the OECD portal",
+    "scale": "38 member countries plus selected partners",
+    "keyAttributes": "",
+    "access": "Public",
+    "id": "app1-09",
+    "app": 1,
+    "num": 9,
+    "priority": "relevant",
+    "geoTags": [
+      "National",
+      "International"
+    ],
+    "sourceGroup": "International agency report",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://data-explorer.oecd.org"
+      }
+    ]
+  },
+  {
+    "reference": "Harriss LR, Thompson F, Lawson K, O'Loughlin M, McDermott R (2019). Preventable hospitalisations in regional Queensland: potential for primary health? Australian Health Review 43(4):371-381",
+    "link": "https://www.publish.csiro.au/ah/AH18033",
+    "sourceType": "Peer-reviewed",
+    "country": "Australia (regional Queensland)",
+    "task": "A Queensland-specific analysis - the most locally relevant evidence in this table for where prevention could reduce hospital demand",
+    "metrics": "Preventable hospitalisation rates by condition and region",
+    "geoLevel": "Regional Queensland",
+    "inputData": "Queensland hospital admission records for regional areas",
+    "output": "Patterns of preventable hospitalisation across regional Queensland, and the share that community-based care could address",
+    "dataSources": "Queensland Health admitted patient data",
+    "accessNote": "No - needs application to Queensland Health",
+    "scale": "Demographic data and clinical information on all admitted patients separated from both public and licensed private hospitals and private day surgeries in Queensland",
+    "keyAttributes": "",
+    "access": "Restricted - application",
+    "id": "app1-10",
+    "app": 1,
+    "num": 10,
+    "priority": "highly-relevant",
+    "geoTags": [
+      "State"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "Queensland",
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.health.qld.gov.au/dsb/collections/qhapdc"
+      }
+    ]
+  },
+  {
+    "reference": "World Health Organization (2013). Handbook on health inequality monitoring: with a special focus on low- and middle-income countries. Geneva: World Health Organization",
+    "link": "https://www.who.int/publications/i/item/9789241548632",
+    "sourceType": "International agency handbook",
+    "country": "Global",
+    "task": "The standard method text for Application 5's core task: how to monitor health inequalities step by step",
+    "metrics": "Simple difference and ratio between groups; slope index of inequality and relative index of inequality (which measure the gradient across all groups, not just the extremes); concentration index",
+    "geoLevel": "Any level - the method applies anywhere",
+    "inputData": "Health data broken down by wealth, education, sex, region and other population characteristics",
+    "output": "A monitoring framework: choose indicators, choose the population splits, calculate summary measures, report the results",
+    "dataSources": "Household surveys and routine administrative records",
+    "accessNote": "Not a dataset",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not a dataset",
+    "id": "app5-01",
+    "app": 5,
+    "num": 1,
+    "priority": "relevant",
+    "geoTags": [
+      "Any"
+    ],
+    "sourceGroup": "International agency report",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Marmot M, Allen J, Boyce T, Goldblatt P, Morrison J (2020). Health Equity in England: The Marmot Review 10 Years On. London: Institute of Health Equity / The Health Foundation",
+    "link": "https://www.instituteofhealthequity.org/resources-reports/marmot-review-10-years-on",
+    "sourceType": "Institutional report",
+    "country": "England",
+    "task": "The source of 'proportionate universalism' - the targeting logic Application 5 asks about, meaning prevention is offered to everyone but with effort scaled up in more disadvantaged places. Also tracks a decade of inequality trends",
+    "metrics": "Gaps in life expectancy and healthy life expectancy between the most and least deprived tenths of the population",
+    "geoLevel": "National down to neighbourhood",
+    "inputData": "Life expectancy, death rates and social indicators from 2010 to 2020",
+    "output": "Finds inequalities widened and life expectancy stopped improving; sets out recommendations across six policy areas",
+    "dataSources": "National death and population statistics; the English Index of Multiple Deprivation (a small-area measure of disadvantage)",
+    "accessNote": "Yes",
+    "scale": "England (2010 to about 2018-19)",
+    "keyAttributes": "Deprivation files: rank and decile per neighbourhood",
+    "access": "Public",
+    "id": "app5-02",
+    "app": 5,
+    "num": 2,
+    "priority": "relevant",
+    "geoTags": [
+      "Small area",
+      "National"
+    ],
+    "sourceGroup": "Academic or institutional report",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": [
+      {
+        "label": "Office for National Statistics",
+        "url": "https://www.ons.gov.uk/"
+      },
+      {
+        "label": "Deprivation data",
+        "url": "https://deprivation.communities.gov.uk/download-all"
+      }
+    ]
+  },
+  {
+    "reference": "Flavel J, Kedzior SGE, Isaac V, Cameron D, Baum F (2024). Regional health inequalities in Australia and social determinants of health: analysis of trends and distribution by remoteness. Rural and Remote Health 24:7726",
+    "link": "https://doi.org/10.22605/RRH7726",
+    "sourceType": "Peer-reviewed",
+    "country": "Australia",
+    "task": "The closest match in this table to Application 5's core question, and it covers rural and remote Australia explicitly. The key point: differences WITHIN non-city areas are large, so regions and towns should not be lumped together when targeting prevention",
+    "metrics": "Slope index of inequality across disadvantage groups - a measure of the whole gradient, which the authors argue is better than simply comparing the most and least disadvantaged groups",
+    "geoLevel": "Local government area (538 of them), grouped by how remote they are, and capital city versus rest of state",
+    "inputData": "Public Health Information Development Unit data for capital cities, the rest of each state and territory, and 538 local government areas; trends from 1986 to 2018",
+    "output": "Premature and avoidable death rates fell everywhere, but the gap between richer and poorer areas WIDENED outside the capital cities; social conditions showed mixed trends",
+    "dataSources": "Public Health Information Development Unit small-area data (Torrens University); Australian Bureau of Statistics disadvantage rankings; death and census records",
+    "accessNote": "",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not yet assessed",
+    "id": "app5-03",
+    "app": 5,
+    "num": 3,
+    "priority": "unmarked",
+    "geoTags": [
+      "LGA",
+      "Remoteness",
+      "State"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Australian Commission on Safety and Quality in Health Care and Australian Institute of Health and Welfare (2021). The Fourth Australian Atlas of Healthcare Variation. Sydney: Australian Commission on Safety and Quality in Health Care. ISBN 978-1-922563-06-4",
+    "link": "https://www.safetyandquality.gov.au/our-work/healthcare-variation/fourth-atlas-2021/fourth-atlas-2021-download-atlas",
+    "sourceType": "Government report (national atlas)",
+    "country": "Australia",
+    "task": "Maps healthcare use and preventable hospitalisation by small area, split by disadvantage, remoteness and Aboriginal and Torres Strait Islander status. Chapter 2 covers preventable hospitalisations. Notes a key gap: Indigenous status is missing from Medicare and pharmaceutical data, and undercounted in hospital data",
+    "metrics": "Rates per 100,000 people adjusted for age and sex; 'magnitude of variation', meaning the highest area rate divided by the lowest. Chronic lung disease varies 18.1-fold between areas, and is 4.8 times higher for Aboriginal and Torres Strait Islander people",
+    "geoLevel": "Statistical Area Level 3 (about 30,000-130,000 people); also grouped by Primary Health Network, state, remoteness and disadvantage",
+    "inputData": "Hospital records 2014-15 to 2017-18; Medicare and pharmaceutical records 2018-19; birth records 2017; population estimates as denominators",
+    "output": "Maps and tables of standardised rates by small area for 18 clinical items, each with equity breakdowns. Chapter 2 covers 330,000+ preventable hospitalisations in 2017-18 across five conditions",
+    "dataSources": "National Hospital Morbidity Database; Medicare Benefits Schedule; Pharmaceutical Benefits Scheme; National Perinatal Data Collection; population, remoteness and disadvantage classifications",
+    "accessNote": "No - underlying records are not released",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Public (aggregate only)",
+    "id": "app5-04",
+    "app": 5,
+    "num": 4,
+    "priority": "highly-relevant",
+    "geoTags": [
+      "Small area",
+      "PHN",
+      "Remoteness",
+      "State"
+    ],
+    "sourceGroup": "Government report",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Canadian Institute for Health Information (2018). In Pursuit of Health Equity: Defining Stratifiers for Measuring Health Inequality - A Focus on Age, Sex, Gender, Income, Education and Geographic Location. Ottawa: Canadian Institute for Health Information",
+    "link": "https://www.cihi.ca/sites/default/files/document/defining-stratifiers-measuring-health-inequalities-2018-en-web.pdf",
+    "sourceType": "Government agency methodology",
+    "country": "Canada",
+    "task": "Answers Application 5's 'what data is missing' question: it standardises WHICH population characteristics should be recorded alongside health data so that fair comparisons are possible",
+    "metrics": "Definitions of each population split, and the equity gap measured for each",
+    "geoLevel": "National and provincial",
+    "inputData": "A review of existing Canadian health databases, checking which population characteristics they capture",
+    "output": "Recommended standard definitions for six population characteristics, plus guidance on building them into data collection",
+    "dataSources": "Canadian administrative health data linked to census records",
+    "accessNote": "No for the health records",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not a dataset",
+    "id": "app5-05",
+    "app": 5,
+    "num": 5,
+    "priority": "relevant",
+    "geoTags": [
+      "National"
+    ],
+    "sourceGroup": "Government report",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Flanagan BE, Gregory EW, Hallisey EJ, Heitgerd JL, Lewis B (2011). A Social Vulnerability Index for Disaster Management. Journal of Homeland Security and Emergency Management 8(1), Article 3",
+    "link": "https://www.atsdr.cdc.gov/placeandhealth/svi/index.html",
+    "sourceType": "Peer-reviewed, plus a government data tool",
+    "country": "United States",
+    "task": "A widely reused composite index for identifying vulnerable areas - a working model for how Queensland could build its own index to target prevention",
+    "metrics": "A percentile ranking per theme plus an overall ranking (so an area can be placed against all others)",
+    "geoLevel": "Census tract (roughly neighbourhood size)",
+    "inputData": "United States census and community survey variables",
+    "output": "A vulnerability ranking for every small area, across four themes: social and economic position, household composition, ethnicity and language, and housing and transport",
+    "dataSources": "United States Census Bureau American Community Survey",
+    "accessNote": "",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not yet assessed",
+    "id": "app5-06",
+    "app": 5,
+    "num": 6,
+    "priority": "unmarked",
+    "geoTags": [
+      "Small area",
+      "International"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Atkinson J, Salmond C, Crampton P, Viggers H, Lacey K (2024). NZDep2023 Index of Socioeconomic Deprivation: Research Report. Wellington: University of Otago",
+    "link": "https://www.otago.ac.nz/__data/assets/pdf_file/0026/593135/NZDep2023-Research-Report-31-October-2024.pdf",
+    "sourceType": "Academic report and index",
+    "country": "New Zealand",
+    "task": "A small-area disadvantage index used routinely in New Zealand to allocate health funding and target services - a proven mechanism for turning disadvantage data into prevention resourcing",
+    "metrics": "The nine variables combined into a single score, then sorted into ten equal groups from 1 (least disadvantaged) to 10 (most disadvantaged)",
+    "geoLevel": "Small area (roughly a few hundred people), which can be added up to any larger level",
+    "inputData": "Nine variables from the 2023 census covering eight aspects of disadvantage: income, employment, communication, support, qualifications, home ownership, living space and dry housing",
+    "output": "A disadvantage score and rank for every small area in New Zealand",
+    "dataSources": "New Zealand Census of Population and Dwellings 2023",
+    "accessNote": "Yes for the finished index",
+    "scale": "~32,000 small areas covering all of New Zealand, generally 100-200 residents each",
+    "keyAttributes": "Nine census variables (income, employment, communication, support, qualifications, home ownership, space, damp housing), combined into one score reported as deciles 1-10",
+    "access": "Public",
+    "id": "app5-07",
+    "app": 5,
+    "num": 7,
+    "priority": "highly-relevant",
+    "geoTags": [
+      "Small area",
+      "National"
+    ],
+    "sourceGroup": "Academic or institutional report",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.otago.ac.nz/wellington/research/groups/research-groups-in-the-department-of-public-health/hirp/socioeconomic-deprivation-indexes"
+      }
+    ]
+  },
+  {
+    "reference": "Maiam nayri Wingara Indigenous Data Sovereignty Collective and Australian Indigenous Governance Institute (2018). Indigenous Data Sovereignty Communique, Indigenous Data Sovereignty Summit, 20 June 2018, Canberra",
+    "link": "https://www.maiamnayriwingara.org/mnw-principles",
+    "sourceType": "Communique (statement of principles)",
+    "country": "Australia",
+    "task": "Speaks to how inequity can be reported responsibly: it asserts Aboriginal and Torres Strait Islander peoples' rights over how data about them is created, accessed and interpreted, countering the negative framing that can itself entrench disadvantage",
+    "metrics": "Not applicable - these are criteria to apply when choosing and reporting equity indicators",
+    "geoLevel": "All levels",
+    "inputData": "Not applicable - these are governance principles that apply to any Indigenous data",
+    "output": "A statement of Indigenous data sovereignty rights and data governance principles",
+    "dataSources": "Applies to all datasets about Aboriginal and Torres Strait Islander peoples",
+    "accessNote": "",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not a dataset",
+    "id": "app5-08",
+    "app": 5,
+    "num": 8,
+    "priority": "unmarked",
+    "geoTags": [
+      "Any"
+    ],
+    "sourceGroup": "Academic or institutional report",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Higgs C, Badland H, Simons K, Knibbs LD, Giles-Corti B (2019). The Urban Liveability Index: developing a policy-relevant urban liveability composite measure and evaluating associations with transport mode choice. International Journal of Health Geographics 18:14",
+    "link": "https://pubmed.ncbi.nlm.nih.gov/31185987/",
+    "sourceType": "Peer-reviewed",
+    "country": "Australia (Melbourne)",
+    "task": "How to build and test a liveability index that is detailed enough to guide policy - the method Application 6 would follow",
+    "metrics": "The overall liveability score and each of its component measures",
+    "geoLevel": "Individual street addresses, which can be added up to larger areas",
+    "inputData": "Liveability measures calculated for every residential address in Melbourne: walkability, transport, open space, employment, housing affordability and community facilities",
+    "output": "A combined liveability score for each address, checked against how people actually travel",
+    "dataSources": "Census and disadvantage data; a Victorian travel survey; mapped infrastructure data",
+    "accessNote": "Yes",
+    "scale": "The survey is conducted throughout the year across greater Melbourne, and periodically in Geelong and other key regional centres. Over 32,000 households contributed to this survey since 2012",
+    "keyAttributes": "Travel survey comes as six linked files: households, persons, trips, stops, journey to work, journey to education",
+    "access": "Public",
+    "id": "app6-01",
+    "app": 6,
+    "num": 1,
+    "priority": "highly-relevant",
+    "geoTags": [
+      "Address",
+      "Small area"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://opendata.transport.vic.gov.au/dataset/victorian-integrated-survey-of-travel-and-activity-vista"
+      }
+    ]
+  },
+  {
+    "reference": "Higgs C, Lowe M, Hooper P, Mavoa S, Arundel J, Gunn L, Simons K, Giles-Corti B (2023). Policy relevant health related liveability indicator datasets for addresses in Australia's 21 largest cities. Scientific Data 10:113",
+    "link": "https://www.nature.com/articles/s41597-023-02013-5",
+    "sourceType": "Peer-reviewed data descriptor",
+    "country": "Australia",
+    "task": "Publishes the underlying liveability datasets as free open data - so an agency could calculate these indicators itself rather than paying for dashboard access",
+    "metrics": "Neighbourhood liveability and access-to-amenity measures",
+    "geoLevel": "Street address, which can be added up to larger areas",
+    "inputData": "Built environment measures for addresses across Australia's 21 largest cities",
+    "output": "Free downloadable datasets of liveability indicators, at address level and for administrative areas",
+    "dataSources": "Census data, OpenStreetMap (a free public map), public transport timetable data and government mapping data",
+    "accessNote": "Yes - published as open data by RMIT University. The repository blocks automated checks, so open the link in a browser",
+    "scale": "Residential address points across Australia's 21 largest cities",
+    "keyAttributes": "",
+    "access": "Public",
+    "id": "app6-02",
+    "app": 6,
+    "num": 2,
+    "priority": "highly-relevant",
+    "geoTags": [
+      "Address",
+      "Small area"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://doi.org/10.25439/rmt.15001230"
+      }
+    ]
+  },
+  {
+    "reference": "Giles-Corti B, Vernez-Moudon A, Reis R, Turrell G, Dannenberg AL, Badland H, Foster S, Lowe M, Sallis JF, Stevenson M, Owen N (2016). City planning and population health: a global challenge. The Lancet 388:2912-2924",
+    "link": "https://www.thelancet.com/series/urban-design",
+    "sourceType": "Peer-reviewed journal series",
+    "country": "Global",
+    "task": "Identifies eight city-planning levers that together encourage walking, cycling and public transport - the reasoning that links Application 6's indicator areas to actual health outcomes",
+    "metrics": "The eight planning levers, and their links to chronic disease and road trauma",
+    "geoLevel": "City and neighbourhood",
+    "inputData": "A global review of evidence on city form, transport and health",
+    "output": "A framework plus supporting evidence for the eight planning levers",
+    "dataSources": "Published studies from many countries",
+    "accessNote": "",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not a dataset",
+    "id": "app6-03",
+    "app": 6,
+    "num": 3,
+    "priority": "unmarked",
+    "geoTags": [
+      "International"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Boeing G, Higgs C, Liu S, Giles-Corti B, Sallis JF, Cerin E, et al. (2022). Using open data and open-source software to develop spatial indicators of urban design and transport features for achieving healthy and sustainable cities. Lancet Global Health 10(6):e907-e918",
+    "link": "https://www.thelancet.com/journals/langlo/article/PIIS2214-109X(22)00072-9/fulltext",
+    "sourceType": "Peer-reviewed",
+    "country": "25 cities across 19 countries",
+    "task": "A reusable, freely available process for calculating comparable indicators within and between cities - the template for a framework that could scale across Queensland",
+    "metrics": "Walkability; access to fresh food, public transport and open space; whether planning policy targets are being met",
+    "geoLevel": "Small grids and neighbourhoods within each city",
+    "inputData": "Free public map data, public transport timetable data, and official population maps",
+    "output": "Indicators for 25 cities, allowing comparison both within a city and between cities",
+    "dataSources": "Entirely free and public data sources, processed with freely available software",
+    "accessNote": "The toolkit is open source",
+    "scale": "25 diverse cities in 19 countrie",
+    "keyAttributes": "Population and street density, street connectivity, walkability, and distance to fresh food, shops, public transport and open space",
+    "access": "Public",
+    "id": "app6-04",
+    "app": 6,
+    "num": 4,
+    "priority": "relevant",
+    "geoTags": [
+      "Small area",
+      "International"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": [
+      {
+        "label": "OpenStreetMap",
+        "url": "https://planet.osm.org"
+      },
+      {
+        "label": "Tool",
+        "url": "https://github.com/healthysustainablecities/global-indicators"
+      }
+    ]
+  },
+  {
+    "reference": "Lowe M, Whitzman C, Badland H, Davern M, Aye L, Hes D, Butterworth I, Giles-Corti B (2015). Planning Healthy, Liveable and Sustainable Cities: How Can Indicators Inform Policy? Urban Policy and Research 33(2):131-144",
+    "link": "https://www.tandfonline.com/doi/full/10.1080/08111146.2014.1002606",
+    "sourceType": "Peer-reviewed",
+    "country": "Australia",
+    "task": "Directly answers Application 6's design question: what makes indicators actually get picked up and used by decision-makers",
+    "metrics": "Criteria for choosing and using indicators",
+    "geoLevel": "City and local government area",
+    "inputData": "A review of Australian and international liveability indicator systems, plus interviews with academics and decision-makers",
+    "output": "Recommendations for making indicators policy-relevant: match them to the levers government actually controls, report them at a useful geographic detail, and communicate them well",
+    "dataSources": "Existing indicator systems; stakeholder interview data",
+    "accessNote": "",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not a dataset",
+    "id": "app6-05",
+    "app": 6,
+    "num": 5,
+    "priority": "unmarked",
+    "geoTags": [
+      "LGA"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Gourevitch MN, Athens JK, Levine SE, Kleiman N, Thorpe LE (2019). City-Level Measures of Health, Health Determinants, and Equity to Foster Population Health Improvement: The City Health Dashboard. American Journal of Public Health 109(4):585-592",
+    "link": "https://ajph.aphapublications.org/doi/full/10.2105/AJPH.2018.304903",
+    "sourceType": "Peer-reviewed, plus a live public dashboard",
+    "country": "United States",
+    "task": "A mature working example of what Application 6 is aiming at: standardised local health measures delivered to city governments to prompt action",
+    "metrics": "Measures covering health outcomes, social and economic conditions, health behaviours, physical environment and clinical care",
+    "geoLevel": "City and census tract (roughly neighbourhood size)",
+    "inputData": "National health surveys, birth and death records, and federal administrative data",
+    "output": "A web dashboard of 37 measures across five areas for the 500 largest United States cities, at both city and neighbourhood level (the live version has since grown)",
+    "dataSources": "Census and community survey data; national disease control data; environmental agency data; birth and death records",
+    "accessNote": "",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not yet assessed",
+    "id": "app6-06",
+    "app": 6,
+    "num": 6,
+    "priority": "unmarked",
+    "geoTags": [
+      "Small area",
+      "International"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Topp CW, Ostergaard SD, Sondergaard S, Bech P (2015). The WHO-5 Well-Being Index: A Systematic Review of the Literature. Psychotherapy and Psychosomatics 84(3):167-176",
+    "link": "https://karger.com/pps/article/84/3/167/282903/The-WHO-5-Well-Being-Index-A-Systematic-Review-of",
+    "sourceType": "Peer-reviewed (systematic review)",
+    "country": "Many countries",
+    "task": "Evidence on whether the five-question WHO-5 wellbeing measure actually works. This is exactly the 'is this measure valid and reliable' test Application 6 calls for, and the measure is already in use on Queensland indicator lists",
+    "metrics": "The WHO-5 score (five questions); how well it detects what it is meant to detect; how responsive it is to change",
+    "geoLevel": "Individual people, which can be added up to any area",
+    "inputData": "Studies that used the five-question WHO-5 wellbeing questionnaire, in both clinical and general population settings",
+    "output": "Finds the measure performs well both for screening and for tracking change over time, and works across many different settings",
+    "dataSources": "Survey data collected in the reviewed studies",
+    "accessNote": "No primary dataset; questionnaire free to use",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not a dataset",
+    "id": "app6-07",
+    "app": 6,
+    "num": 7,
+    "priority": "relevant",
+    "geoTags": [
+      "Individual",
+      "Any"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Lytle LA, Sokol RL (2017). Measures of the food environment: A systematic review of the field, 2007-2015. Health & Place 44:18-34",
+    "link": "https://pubmed.ncbi.nlm.nih.gov/28135633/",
+    "sourceType": "Peer-reviewed (systematic review)",
+    "country": "Many countries",
+    "task": "Assesses whether measures of the local food environment are actually reliable - directly relevant to healthy eating indicators such as outlet density, supermarket access and the cost of a healthy food basket",
+    "metrics": "Counts of food outlets and how close they are; in-store audits; the costed healthy food basket; survey questions about how people perceive their local food options",
+    "geoLevel": "Neighbourhood and small area",
+    "inputData": "Studies published between 2007 and 2015 that measured food environments",
+    "output": "A critique of measurement quality across the field, finding that many measures have never been properly tested for reliability or accuracy",
+    "dataSources": "Business listings mapped geographically, in-store audit tools, and survey measures",
+    "accessNote": "Not a dataset",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not a dataset",
+    "id": "app6-08",
+    "app": 6,
+    "num": 8,
+    "priority": "relevant",
+    "geoTags": [
+      "Small area"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Organisation for Economic Co-operation and Development & European Commission Joint Research Centre (2008). Handbook on Constructing Composite Indicators: Methodology and User Guide. Paris: OECD Publishing",
+    "link": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2008/08/handbook-on-constructing-composite-indicators-methodology-and-user-guide_g1gh9301/9789264043466-en.pdf",
+    "sourceType": "International agency methodology guide",
+    "country": "Global",
+    "task": "The standard method text for Application 6's goal of a combined index or dashboard: how to weight and combine indicators, and how to test whether the result holds up",
+    "metrics": "Ways to put indicators on a common scale and weight them; techniques for checking how sensitive the final ranking is to those choices",
+    "geoLevel": "Any",
+    "inputData": "Any set of candidate indicators intended to be combined into a single score",
+    "output": "A ten-step framework, from setting out the underlying concept through to presenting and publishing the results",
+    "dataSources": "Applies to whatever indicator set the user supplies",
+    "accessNote": "",
+    "scale": "",
+    "keyAttributes": "",
+    "access": "Not a dataset",
+    "id": "app6-09",
+    "app": 6,
+    "num": 9,
+    "priority": "unmarked",
+    "geoTags": [
+      "Any"
+    ],
+    "sourceGroup": "International agency report",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  }
+]

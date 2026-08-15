@@ -1,0 +1,64 @@
+{
+  "generated": "2026-08-15",
+  "source": "lit-scan-draft.xlsx",
+  "total": 27,
+  "byApplication": {
+    "1": {
+      "count": 10,
+      "title": "Prevention and the health system",
+      "question": "How do we show that prevention changes what happens in hospitals?",
+      "blurb": "Waiting lists, bed days, ambulance ramping and hospitalisations that better community care could have avoided."
+    },
+    "5": {
+      "count": 8,
+      "title": "Targeting prevention to reduce health inequities",
+      "question": "Where should prevention effort go, so the gap between groups narrows?",
+      "blurb": "Measuring who is worse off and by how much, and deciding where to put effort so differences between groups close rather than widen."
+    },
+    "6": {
+      "count": 9,
+      "title": "A prevention measurement framework for local government",
+      "question": "How would a council know whether its area is getting healthier?",
+      "blurb": "Indicators a Queensland council could actually collect and track - walkability, green space, food environment, participation."
+    }
+  },
+  "byAccess": {
+    "Not a dataset": 13,
+    "Public": 7,
+    "Restricted - application": 3,
+    "Not yet assessed": 3,
+    "Public (aggregate only)": 1
+  },
+  "accessValues": [
+    "Public",
+    "Public (aggregate only)",
+    "Restricted - application",
+    "Not a dataset",
+    "Not yet assessed"
+  ],
+  "geoTags": [
+    "Address",
+    "Small area",
+    "LGA",
+    "PHN",
+    "HHS",
+    "Remoteness",
+    "State",
+    "National",
+    "International",
+    "Individual",
+    "Any"
+  ],
+  "sourceGroups": [
+    "Peer-reviewed",
+    "Government report",
+    "International agency report",
+    "Academic or institutional report"
+  ],
+  "regions": [
+    "Queensland",
+    "Australia",
+    "International"
+  ],
+  "withDownloadableData": 8
+}
