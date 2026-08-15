@@ -95,8 +95,13 @@
         "terminal in this folder, run <code>python -m http.server 8000</code>, then visit " +
         "<code>http://localhost:8000</code>.</p>";
     } else {
-      html += "<p>Run <code>python build/export_data.py</code> to regenerate the data files, " +
-        "then reload.</p>";
+      // A stale cached script has caused this before, and the symptom looks like a
+      // data failure, so offer the hard reload first.
+      html += "<p>If the page was working a moment ago, the browser may be holding an " +
+        "old copy of one of its files. A hard reload usually clears it: " +
+        "<b>Ctrl+Shift+R</b>, or <b>Cmd+Shift+R</b> on a Mac.</p>" +
+        "<p class=\"small\">If that does not help, run <code>python build/export_data.py</code> " +
+        "to regenerate the data files.</p>";
     }
     html += '<p class="small">' + escapeHtml(err && err.message ? err.message : String(err)) + "</p></div>";
     target.innerHTML = html;

@@ -282,6 +282,14 @@ def export(src, out_dir, quiet=False):
         for value in ACCESS_VALUES:
             print("  %-26s %d" % (value, counts.get(value, 0)))
 
+    # Re-stamp the asset links here too, so the one command people actually run
+    # leaves the site in a publishable state.
+    if out_dir == OUT_DIR:
+        import stamp_assets
+        if not quiet:
+            print("")
+        stamp_assets.stamp(quiet)
+
     return studies, meta
 
 

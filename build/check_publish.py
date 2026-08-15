@@ -124,11 +124,19 @@ def check_quadrant_ids(problems):
                                         "study id '%s'" % (app, cell, card["name"], sid))
 
 
+def check_asset_stamps(problems):
+    """A page referencing a stale ?v= hash lets a browser pair an old script with a
+    new one, which has already broken the live site once."""
+    import stamp_assets
+    problems.extend(stamp_assets.verify())
+
+
 def main():
     problems, warnings = [], []
     check_files(problems, warnings)
     check_text(problems)
     check_quadrant_ids(problems)
+    check_asset_stamps(problems)
 
     for warning in warnings:
         print("warning: " + warning)

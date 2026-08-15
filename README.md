@@ -28,6 +28,16 @@ python build/export_data.py
 
 Close the workbook in Excel first, or openpyxl reads a stale copy.
 
+That command also re-stamps the stylesheet and script links with a hash of each file
+(`assets/common.js?v=cbf15586`). GitHub Pages caches assets for ten minutes and its CDN
+caches them too, so without the stamp a visitor can hold the new copy of one file and the
+old copy of another — which has already broken the live site once. If only the CSS or JS
+changed and there is no reason to regenerate the data, run the stamping on its own:
+
+```
+python build/stamp_assets.py
+```
+
 ```
 lit-scan/lit-scan-draft.xlsx        source of truth, maintained in Excel
         │
@@ -82,7 +92,8 @@ This repository is public and the wider project holds material that is not. The 
 scans every file for classification markings, the partner agency's name, individual names,
 suburb-level detail from unpublished slides, and document types (`.xlsx`, `.docx`, `.eml`,
 `.pdf`) that should never be here. It also checks that every study id referenced in
-`quadrants.json` actually exists. It exits non-zero if anything looks wrong.
+`quadrants.json` exists, and that no page still points at a stale asset hash. It exits
+non-zero if anything looks wrong.
 
 Nothing on the site should be anything other than a citation of published work, a link to a
 public source, or a summary written from scratch.
@@ -114,8 +125,10 @@ data/
   meta.json         generated
   quadrants.json    hand-authored
 build/
-  export_data.py    workbook → JSON
+  export_data.py    workbook → JSON, then re-stamps the asset links
+  stamp_assets.py   adds ?v=<hash> to each stylesheet and script link
   check_publish.py  pre-push safety scan
+  check_links.py    checks the outbound links still resolve
 .nojekyll           stops GitHub Pages hiding files that start with an underscore
 ```
 
