@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Application - Prevention data scan</title>
+<meta name="description" content="Actions and measures for one application, split by whether they apply to people or to places.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="site-head__inner">
+    <a class="site-head__title" href="index.html">Prevention data scan <span>&middot; working draft</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="index.html">Overview</a>
+      <a href="application.html?app=1">Application 1</a>
+      <a href="browse.html">Browse sources</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap" id="app-main">
+    <p class="crumb"><a href="index.html">Overview</a> &rsaquo; <span id="crumb-app">Application</span></p>
+    <h1 id="app-title">&nbsp;</h1>
+    <p class="lede" id="app-question">&nbsp;</p>
+
+    <section style="margin-top:32px">
+      <h2>Actions and measures</h2>
+      <p class="wrap--text" style="padding:0;font-size:.92rem;color:var(--ink-soft)" id="app-intro"></p>
+      <div id="grid"><p class="loading">Loading&hellip;</p></div>
+      <p class="small muted" style="margin-top:12px">
+        Click a card to see the sources behind it. On a narrow screen the four boxes stack
+        into one column, each one still labelled.
+      </p>
+    </section>
+
+    <section>
+      <h2>All <span id="studies-count">&mdash;</span> sources for this application</h2>
+      <p class="small muted">
+        A red dot marks the ones flagged as most relevant, a yellow dot the rest of those
+        reviewed.
+      </p>
+      <ul class="studylist" id="studies"></ul>
+    </section>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>Working draft &middot; last generated <span data-generated>&mdash;</span>.</p>
+    <p>Compiled at the University of Queensland. Lists only published sources; contains no
+       individual records and no unpublished material.</p>
+  </div>
+</footer>
+
+<script src="assets/common.js"></script>
+<script>
+  document.getElementById("crumb-app").textContent =
+    "Application " + (new URLSearchParams(location.search).get("app") || "1");
+</script>
+<script src="assets/quadrants.js"></script>
+</body>
+</html>

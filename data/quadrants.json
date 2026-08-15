@@ -1,0 +1,103 @@
+{
+  "_comment": [
+    "Hand-authored. export_data.py never touches this file.",
+    "Deciding whether something belongs under People or Places is a judgement, so it",
+    "is written down here rather than guessed from the workbook. Every id in a",
+    "'studies' list must exist in studies.json - check_publish.py verifies that."
+  ],
+  "rows": [
+    { "key": "people", "label": "People", "note": "Population groups - who is affected" },
+    { "key": "places", "label": "Places", "note": "Areas - where the difference shows up" }
+  ],
+  "cols": [
+    { "key": "actions", "label": "Actions", "note": "What can be done" },
+    { "key": "measures", "label": "Measures", "note": "How you would know it worked" }
+  ],
+  "applications": {
+    "1": {
+      "title": "Prevention and the health system",
+      "question": "How do we show that prevention changes what happens in hospitals?",
+      "intro": "Each card below is something the scanned literature can actually support - an action with evidence behind it, or a measure that someone has already defined and published. The badge says whether the data behind it can be obtained.",
+      "cells": {
+        "people-actions": [
+          {
+            "name": "Prevention delivered to individuals, with a return on investment attached",
+            "note": "Programmes aimed at particular people - screening, counselling, vaccination - where someone has costed the return. Across the published studies the median return was 14 dollars back for every dollar spent.",
+            "studies": ["app1-01", "app1-07"]
+          },
+          {
+            "name": "Best-buy interventions for chronic disease",
+            "note": "The World Health Organization's shortlist of prevention measures for heart disease, cancer and diabetes, each with a modelled return.",
+            "studies": ["app1-06"]
+          },
+          {
+            "name": "A ranked list of 123 preventive interventions by value for money",
+            "note": "An Australian exercise, led by the University of Queensland, that put preventive measures in order of cost per healthy year of life gained. The nearest thing to a menu of what to fund first.",
+            "studies": ["app1-05"]
+          }
+        ],
+        "people-measures": [
+          {
+            "name": "Preventable hospitalisation rate, split by age and sex",
+            "note": "The standard national indicator, already published broken down by sex and by age group. Downloadable now, seven years of it.",
+            "studies": ["app1-02"]
+          },
+          {
+            "name": "Preventable admissions set against a person's own circumstances",
+            "note": "Smoking, physical activity, body mass index, income and education linked to whether that person was later admitted. Needs an application to the data custodians.",
+            "studies": ["app1-03", "app1-04"]
+          },
+          {
+            "name": "Healthy years of life gained per person",
+            "note": "The common currency for comparing very different interventions. Used in both the Australian and the English costing work.",
+            "studies": ["app1-05", "app1-07"]
+          }
+        ],
+        "places-actions": [
+          {
+            "name": "Population-wide measures such as taxes and regulation",
+            "note": "In the Australian ranking these came out strongest - they change the environment for everyone rather than one person at a time.",
+            "studies": ["app1-05"]
+          },
+          {
+            "name": "National delivery against local delivery",
+            "note": "Worth knowing before designing anything: the same review found local interventions returned 4.1 to 1 while national ones returned 27.2 to 1.",
+            "studies": ["app1-01"]
+          },
+          {
+            "name": "Programmes intended to avoid hospital admissions",
+            "note": "A review that grades the evidence rather than assuming it. Several widely used approaches turn out to have weak support.",
+            "studies": ["app1-08"]
+          },
+          {
+            "name": "A caution before comparing one area with another",
+            "note": "When one area looks worse than another, that mostly reflects who lives there rather than how local services perform. General practitioner supply explained 2.9 per cent of the difference between areas; people's own circumstances explained 36.9 per cent.",
+            "studies": ["app1-03"]
+          }
+        ],
+        "places-measures": [
+          {
+            "name": "Preventable hospitalisation rate by area",
+            "note": "Published for 346 small areas, 33 primary health network regions, four remoteness categories and five socioeconomic groups. Not published by local government area or hospital and health service, which is a real gap.",
+            "studies": ["app1-02"]
+          },
+          {
+            "name": "How much of the gap between areas is services, and how much is population",
+            "note": "A method for splitting the difference between areas into the part explained by service supply and the part explained by who lives there.",
+            "studies": ["app1-03"]
+          },
+          {
+            "name": "Regional share of preventable admissions, and what they cost",
+            "note": "The one study in this set that looks specifically at regional Queensland.",
+            "studies": ["app1-10"]
+          },
+          {
+            "name": "How Australia compares with other wealthy countries",
+            "note": "Avoidable admission rates for asthma, chronic lung disease, heart failure and diabetes, on a comparable basis across countries.",
+            "studies": ["app1-09"]
+          }
+        ]
+      }
+    }
+  }
+}
