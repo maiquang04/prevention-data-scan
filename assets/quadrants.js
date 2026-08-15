@@ -12,6 +12,7 @@
   var quad = null;
   var app = null;
   var openCard = null;
+  var geoOrder = [];
 
   // Most obtainable first. A card's badge is the best case among its studies,
   // because the question a reader is asking is "could I act on this now?".
@@ -34,6 +35,18 @@
     return ACCESS_ORDER[best] || "Not yet assessed";
   }
 
+  /* Every geography its sources cover, listed in the vocabulary's own order so no
+     two cards order the same tags differently. On the card face rather than hidden
+     behind a click: whether something is available for a council-sized area is the
+     first thing anyone wants to know, and it should not need opening to find out. */
+  function geoTagsFor(ids) {
+    return geoOrder.filter(function (tag) {
+      return ids.some(function (sid) {
+        return byId[sid] && byId[sid].geoTags.indexOf(tag) !== -1;
+      });
+    });
+  }
+
   function cardHtml(card, cellKey, index) {
     var id = cellKey + "-" + index;
     var known = card.studies.filter(function (sid) { return byId[sid]; });
@@ -42,6 +55,7 @@
       '<span class="qcard__name">' + S.escapeHtml(card.name) + "</span>" +
       '<span class="qcard__note">' + S.escapeHtml(card.note) + "</span>" +
       '<span class="qcard__meta">' + S.accessBadge(bestAccess(card.studies)) +
+        S.tagList(geoTagsFor(card.studies)) +
         "<span>" + known.length + (known.length === 1 ? " source" : " sources") + "</span>" +
       "</span></button>";
   }
@@ -57,11 +71,12 @@
       }).join(", ");
       return "<li>" + S.priorityDot(study.priority) +
         '<a href="study.html?id=' + encodeURIComponent(study.id) + '">' +
-          S.escapeHtml(study.reference) + "</a><br>" +
-        S.accessBadge(study.access) + " " +
-        (study.accessNote ? S.escapeHtml(study.accessNote) : S.escapeHtml(S.accessMeaning[study.access] || "")) +
-        (where ? '<br><span class="small">Where to get it: ' + where + "</span>" : "") +
-        "</li>";
+          S.escapeHtml(study.reference) + "</a>" +
+        '<span class="meta-row">' + S.metaRow(study) + "</span>" +
+        '<span class="small">' +
+          (study.accessNote ? S.escapeHtml(study.accessNote) : S.escapeHtml(S.accessMeaning[study.access] || "")) +
+          (where ? "<br>Where to get it: " + where : "") +
+        "</span></li>";
     }).join("");
 
     return '<div class="panel" id="p-' + id + '">' +
@@ -79,20 +94,24 @@
     document.title = app.title + " - Prevention data scan";
 
     var rows = quad.rows, cols = quad.cols;
+    // data-key drives the header colours in the stylesheet, so adding a row or a
+    // column to quadrants.json means adding one rule rather than editing markup.
     var html = '<div class="quad">' +
       '<div class="quad__corner"></div>' +
       cols.map(function (c) {
-        return '<div class="quad__colhead">' + S.escapeHtml(c.label) +
-          "<span>" + S.escapeHtml(c.note) + "</span></div>";
+        return '<div class="quad__colhead" data-key="' + S.escapeHtml(c.key) + '">' +
+          S.escapeHtml(c.label) + "<span>" + S.escapeHtml(c.note) + "</span></div>";
       }).join("");
 
     rows.forEach(function (r) {
-      html += '<div class="quad__rowhead">' + S.escapeHtml(r.label) +
-        "<span>" + S.escapeHtml(r.note) + "</span></div>";
+      html += '<div class="quad__rowhead" data-key="' + S.escapeHtml(r.key) + '">' +
+        S.escapeHtml(r.label) + "<span>" + S.escapeHtml(r.note) + "</span></div>";
       cols.forEach(function (c) {
         var key = r.key + "-" + c.key;
         var cards = (app.cells && app.cells[key]) || [];
-        html += '<div class="quad__cell" data-label="' + S.escapeHtml(r.label + " - " + c.label) + '">' +
+        html += '<div class="quad__cell" data-row="' + S.escapeHtml(r.key) +
+          '" data-col="' + S.escapeHtml(c.key) +
+          '" data-label="' + S.escapeHtml(r.label + " - " + c.label) + '">' +
           (cards.length
             ? cards.map(function (card, i) { return cardHtml(card, key, i); }).join("")
             : '<p class="small muted">Nothing here yet.</p>') +
@@ -112,7 +131,8 @@
     document.getElementById("studies").innerHTML = mine.map(function (s) {
       return "<li>" + S.priorityDot(s.priority) +
         '<a href="study.html?id=' + encodeURIComponent(s.id) + '">' + S.escapeHtml(s.reference) + "</a>" +
-        "<p>" + S.accessBadge(s.access) + " " + S.escapeHtml(s.task) + "</p></li>";
+        "<p>" + S.escapeHtml(s.task) + "</p>" +
+        '<span class="meta-row">' + S.metaRow(s) + "</span></li>";
     }).join("");
     document.getElementById("studies-count").textContent = mine.length;
   }
@@ -165,6 +185,7 @@
   S.loadData(["studies.json", "meta.json", "quadrants.json"]).then(function (loaded) {
     loaded[0].forEach(function (s) { byId[s.id] = s; });
     S.stampGenerated(loaded[1]);
+    geoOrder = loaded[1].geoTags || [];
     quad = loaded[2];
 
     var wanted = S.param("app") || "1";

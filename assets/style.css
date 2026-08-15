@@ -16,6 +16,19 @@
   --accent-soft: #e7f0f7;
   --focus: #b8500a;
 
+  /* One colour per heading, so no two edges of the grid look alike. All four steer
+     clear of green and amber: those carry meaning in the access badges, and a
+     header tinted like "Public" would say something it does not mean. */
+  --quad-actions-bg: #dbe8f6;   /* blue   */
+  --quad-actions-fg: #0f3d5e;
+  --quad-measures-bg: #f8e3ea;  /* rose   */
+  --quad-measures-fg: #7d2a48;
+  --quad-people-bg: #e9e3f5;    /* violet */
+  --quad-people-fg: #443872;
+  --quad-places-bg: #efe9e2;    /* taupe  */
+  --quad-places-fg: #5a4a3a;
+  --quad-corner-bg: #f3f5f9;
+
   --ok-fg: #14663f;
   --ok-bg: #e4f2ea;
   --part-fg: #145c66;
@@ -205,15 +218,19 @@ section { margin-bottom: 40px; }
   overflow: hidden;
 }
 .quad__corner, .quad__colhead, .quad__rowhead, .quad__cell { background: #fff; }
-.quad__corner { background: var(--panel-2); }
+.quad__corner { background: var(--quad-corner-bg); }
 .quad__colhead, .quad__rowhead {
-  background: var(--panel-2); padding: 12px 14px;
-  font-weight: 650; font-size: .92rem;
-}
-.quad__colhead span, .quad__rowhead span {
-  display: block; font-weight: 400; font-size: .78rem; color: var(--muted);
+  padding: 12px 14px; font-weight: 650; font-size: .92rem;
 }
 .quad__rowhead { display: flex; flex-direction: column; justify-content: center; }
+
+.quad > [data-key="actions"]  { background: var(--quad-actions-bg);  color: var(--quad-actions-fg); }
+.quad > [data-key="measures"] { background: var(--quad-measures-bg); color: var(--quad-measures-fg); }
+.quad > [data-key="people"]   { background: var(--quad-people-bg);   color: var(--quad-people-fg); }
+.quad > [data-key="places"]   { background: var(--quad-places-bg);   color: var(--quad-places-fg); }
+.quad__colhead span, .quad__rowhead span {
+  display: block; font-weight: 400; font-size: .78rem; color: inherit; opacity: .78;
+}
 .quad__cell { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
 
 .qcard {
@@ -225,7 +242,9 @@ section { margin-bottom: 40px; }
 .qcard[aria-expanded="true"] { border-color: var(--accent); background: var(--accent-soft); }
 .qcard__name { font-weight: 600; font-size: .92rem; display: block; margin-bottom: 4px; }
 .qcard__note { font-size: .84rem; color: var(--ink-soft); display: block; margin-bottom: 8px; }
-.qcard__meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: .78rem; color: var(--muted); }
+.qcard__meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; font-size: .78rem; color: var(--muted); }
+.qcard__meta .tag { margin: 0; }
+.qcard[aria-expanded="true"] .tag { background: rgba(255, 255, 255, .7); }
 
 .panel {
   border: 1px solid var(--accent); border-radius: var(--radius);
@@ -233,7 +252,10 @@ section { margin-bottom: 40px; }
 }
 .panel h3 { margin-bottom: .3em; }
 .panel ul { margin: 0; padding-left: 1.1em; }
-.panel li { margin-bottom: .5em; font-size: .9rem; }
+.panel li { margin-bottom: .9em; font-size: .9rem; }
+.panel li:last-child { margin-bottom: 0; }
+.panel .meta-row { margin: 5px 0 3px; }
+.panel .tag { background: rgba(255, 255, 255, .7); }
 .panel__close {
   float: right; border: 0; background: transparent; cursor: pointer;
   color: var(--ink-soft); font-size: 1.3rem; line-height: 1; padding: 0 4px;
@@ -288,7 +310,14 @@ section { margin-bottom: 40px; }
 .result__body { flex: 1; min-width: 0; }
 .result__ref { font-weight: 600; font-size: .95rem; display: block; margin-bottom: 4px; }
 .result__task { font-size: .87rem; color: var(--ink-soft); margin-bottom: 6px; }
-.result__meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: .8rem; color: var(--muted); }
+/* The badge, geography tags and source type. Same markup and same look in the
+   browse list, the quadrant panels and the per-application list. */
+.result__meta, .meta-row {
+  display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+  font-size: .8rem; color: var(--muted);
+}
+.meta-row { margin-top: 6px; }
+.meta-row .tag { margin: 0; }
 .result__chev { flex: none; color: var(--muted); font-size: .8rem; padding-top: .35em; }
 
 .detail { padding: 14px 0 4px 4.6em; }
@@ -308,7 +337,7 @@ section { margin-bottom: 40px; }
 .record hr { border: 0; border-top: 1px solid var(--rule-soft); margin: 16px 0; }
 
 .studylist { list-style: none; margin: 0; padding: 0; }
-.studylist li { padding: 10px 0; border-bottom: 1px solid var(--rule-soft); font-size: .92rem; }
+.studylist li { padding: 12px 0; border-bottom: 1px solid var(--rule-soft); font-size: .92rem; }
 .studylist a { font-weight: 600; text-decoration: none; }
 .studylist a:hover { text-decoration: underline; }
 .studylist p { margin: 3px 0 0; font-size: .85rem; color: var(--ink-soft); }
@@ -338,11 +367,24 @@ section { margin-bottom: 40px; }
   .quad { grid-template-columns: 1fr; }
   .quad__corner, .quad__colhead { display: none; }
   .quad__rowhead { display: none; }
+  /* Stacked, so each cell carries its own heading bar - otherwise four lists of
+     cards run together with nothing saying which is which. The bar takes the row
+     colour and the left edge takes the column colour, so both still read. */
   .quad__cell::before {
     content: attr(data-label);
-    font-weight: 650; font-size: .82rem; text-transform: uppercase;
-    letter-spacing: .04em; color: var(--muted);
+    display: block; margin: -12px -12px 2px; padding: 9px 12px;
+    border-left: 5px solid transparent;
+    font-weight: 650; font-size: .8rem; text-transform: uppercase;
+    letter-spacing: .04em;
   }
+  .quad__cell[data-row="people"]::before {
+    background: var(--quad-people-bg); color: var(--quad-people-fg);
+  }
+  .quad__cell[data-row="places"]::before {
+    background: var(--quad-places-bg); color: var(--quad-places-fg);
+  }
+  .quad__cell[data-col="actions"]::before  { border-left-color: var(--quad-actions-fg); }
+  .quad__cell[data-col="measures"]::before { border-left-color: var(--quad-measures-fg); }
   .result__num { width: 3em; }
 }
 

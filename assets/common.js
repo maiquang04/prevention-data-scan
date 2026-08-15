@@ -46,6 +46,20 @@
       escapeHtml(label) + '" title="' + escapeHtml(label) + '"></span>';
   }
 
+  function tagList(tags) {
+    return (tags || []).map(function (tag) {
+      return '<span class="tag">' + escapeHtml(tag) + "</span>";
+    }).join("");
+  }
+
+  /* Access badge, geography tags, source type - in that order, everywhere a source
+     is listed. Shared so the quadrant panels and the browse list cannot drift into
+     showing different things about the same source. */
+  function metaRow(study) {
+    return accessBadge(study.access) + tagList(study.geoTags) +
+      "<span>" + escapeHtml(study.sourceGroup) + "</span>";
+  }
+
   function externalLink(url, label) {
     if (!url) return escapeHtml(label || "");
     return '<a href="' + escapeHtml(url) + '" target="_blank" rel="noopener noreferrer">' +
@@ -131,6 +145,8 @@
     accessMeaning: ACCESS_MEANING,
     priorityDot: priorityDot,
     priorityLabel: PRIORITY_LABEL,
+    tagList: tagList,
+    metaRow: metaRow,
     externalLink: externalLink,
     shortHost: shortHost,
     loadData: loadData,

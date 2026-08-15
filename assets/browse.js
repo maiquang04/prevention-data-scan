@@ -162,10 +162,7 @@
           '<span class="result__body">' +
             '<span class="result__ref">' + S.escapeHtml(study.reference) + "</span>" +
             '<span class="result__task">' + S.escapeHtml(trim(study.task, 210)) + "</span>" +
-            '<span class="result__meta">' + S.accessBadge(study.access) +
-              study.geoTags.map(function (t) { return '<span class="tag">' + S.escapeHtml(t) + "</span>"; }).join("") +
-              "<span>" + S.escapeHtml(study.sourceGroup) + "</span>" +
-            "</span>" +
+            '<span class="meta-row">' + S.metaRow(study) + "</span>" +
           "</span>" +
           '<span class="result__chev" aria-hidden="true">' + (open ? "&#9650;" : "&#9660;") + "</span>" +
         "</button>" +
