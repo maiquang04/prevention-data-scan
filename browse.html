@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Browse sources - Prevention data scan</title>
+<meta name="description" content="Every source in the scan, filterable by application, how obtainable the data is, geographic level and source type.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="site-head__inner">
+    <a class="site-head__title" href="index.html">Prevention data scan <span>&middot; working draft</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="index.html">Overview</a>
+      <a href="application.html?app=1">Application 1</a>
+      <a href="browse.html">Browse sources</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap" id="browse-main">
+    <p class="crumb"><a href="index.html">Overview</a> &rsaquo; Browse sources</p>
+    <h1>Browse sources</h1>
+    <p class="lede">
+      Narrow the list down, then copy the web address out of your browser to send that exact
+      view to someone else. Click any source to see what data sits behind it and whether you
+      could obtain it.
+    </p>
+
+    <div class="browse" style="margin-top:28px">
+      <form class="filters" id="filter-form" onsubmit="return false">
+        <label for="search" class="small muted" style="display:block;margin-bottom:6px">Search the text</label>
+        <input type="search" id="search" class="search" placeholder="walkability, deprivation, hospital&hellip;"
+               autocomplete="off" style="margin-bottom:22px">
+        <div id="filters"></div>
+      </form>
+
+      <div>
+        <div class="resultbar" id="resultbar"></div>
+        <ul class="results" id="results"></ul>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>Working draft &middot; last generated <span data-generated>&mdash;</span>.</p>
+    <p>Compiled at the University of Queensland. Lists only published sources; contains no
+       individual records and no unpublished material.</p>
+  </div>
+</footer>
+
+<script src="assets/common.js"></script>
+<script src="assets/browse.js"></script>
+</body>
+</html>
