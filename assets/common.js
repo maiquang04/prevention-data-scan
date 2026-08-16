@@ -27,6 +27,15 @@
     "unmarked": "Not marked"
   };
 
+  // Same shape as ACCESS_MEANING above, so the two keys on the site read alike.
+  var PRIORITY_MEANING = {
+    "highly-relevant": "Closest to what this application needs.",
+    "relevant": "Useful, though not the first place to look.",
+    "unmarked": "Included in the scan but not singled out."
+  };
+
+  var PRIORITY_ORDER = ["highly-relevant", "relevant", "unmarked"];
+
   function escapeHtml(value) {
     if (value === null || value === undefined) return "";
     return String(value)
@@ -150,6 +159,8 @@
     accessMeaning: ACCESS_MEANING,
     priorityDot: priorityDot,
     priorityLabel: PRIORITY_LABEL,
+    priorityMeaning: PRIORITY_MEANING,
+    priorityOrder: PRIORITY_ORDER,
     tagList: tagList,
     metaRow: metaRow,
     externalLink: externalLink,

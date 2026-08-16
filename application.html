@@ -40,10 +40,9 @@
 
     <section>
       <h2>All <span id="studies-count">&mdash;</span> sources for this application</h2>
-      <p class="small muted">
-        A red dot marks the ones flagged as most relevant, a yellow dot the rest of those
-        reviewed.
-      </p>
+      <div class="note" style="margin-bottom:18px">
+        <ul id="priority-key" style="margin:0;padding-left:0;list-style:none"></ul>
+      </div>
       <ul class="studylist" id="studies"></ul>
     </section>
   </div>
@@ -55,11 +54,11 @@
   </div>
 </footer>
 
-<script src="assets/common.js?v=cbf15586"></script>
+<script src="assets/common.js?v=e4eaa9a6"></script>
 <script>
   document.getElementById("crumb-app").textContent =
     "Application " + (new URLSearchParams(location.search).get("app") || "1");
 </script>
-<script src="assets/quadrants.js?v=0440d1a7"></script>
+<script src="assets/quadrants.js?v=be101ebd"></script>
 </body>
 </html>

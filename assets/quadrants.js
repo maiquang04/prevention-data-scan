@@ -128,6 +128,14 @@
       .filter(function (s) { return String(s.app) === String(S.param("app") || "1"); })
       .sort(function (a, b) { return a.num - b.num; });
 
+    // Same shape as the access key on the overview page: the mark itself, its name,
+    // then what it means. Reads better than a sentence describing three colours.
+    document.getElementById("priority-key").innerHTML = S.priorityOrder.map(function (p) {
+      return '<li style="margin-bottom:.5em">' + S.priorityDot(p) +
+        "<b>" + S.escapeHtml(S.priorityLabel[p]) + "</b> " +
+        S.escapeHtml(S.priorityMeaning[p]) + "</li>";
+    }).join("");
+
     document.getElementById("studies").innerHTML = mine.map(function (s) {
       return "<li>" + S.priorityDot(s.priority) +
         '<a href="study.html?id=' + encodeURIComponent(s.id) + '">' + S.escapeHtml(s.reference) + "</a>" +
