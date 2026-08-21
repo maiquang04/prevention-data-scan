@@ -17,7 +17,7 @@
     <a class="site-head__title" href="index.html">Prevention data scan <span>&middot; working draft</span></a>
     <nav class="site-nav" aria-label="Main">
       <a href="index.html">Overview</a>
-      <a href="application.html?app=1">Application 1</a>
+      <a href="application.html?app=1" data-grid-nav>Application 1</a>
       <a href="browse.html">Browse sources</a>
     </nav>
   </div>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="buttons">
-      <a class="button" href="application.html?app=1">Explore Application 1</a>
+      <a class="button" href="application.html?app=1" data-grid-nav="Explore">Explore Application 1</a>
       <a class="button button--ghost" href="browse.html">Browse every source</a>
     </div>
 
@@ -60,7 +60,7 @@
   </div>
 </footer>
 
-<script src="assets/common.js?v=e4eaa9a6"></script>
+<script src="assets/common.js?v=7d2eeb67"></script>
 <script>
 (function () {
   "use strict";
@@ -68,6 +68,7 @@
 
   S.loadData(["studies.json", "meta.json"]).then(function (loaded) {
     var studies = loaded[0], meta = loaded[1];
+    S.setTopics(meta.topics);
     S.stampGenerated(meta);
 
     var restricted = studies.filter(function (s) { return s.access === "Restricted - application"; }).length;
@@ -75,24 +76,22 @@
       [meta.total, "sources scanned"],
       [meta.withDownloadableData, "with downloadable data"],
       [restricted, "needing an application"],
-      [Object.keys(meta.byApplication).length, "applications covered"]
+      [meta.topics.length, "topics covered"]
     ];
     document.getElementById("stats").innerHTML = stats.map(function (s) {
       return '<div class="stat"><b>' + s[0] + "</b><span>" + s[1] + "</span></div>";
     }).join("");
 
-    document.getElementById("cards").innerHTML = Object.keys(meta.byApplication).map(function (key) {
-      var app = meta.byApplication[key];
-      var live = key === "1";
-      return '<article class="card' + (live ? "" : " card--soon") + '">' +
-        "<h3>" + (live
-          ? '<a href="application.html?app=' + key + '">Application ' + key + ": " + S.escapeHtml(app.title) + "</a>"
-          : "Application " + key + ": " + S.escapeHtml(app.title)) + "</h3>" +
-        "<p>" + S.escapeHtml(app.blurb) + "</p>" +
-        '<p class="card__meta">' + app.count + " sources &middot; " +
-          (live
+    document.getElementById("cards").innerHTML = meta.topics.map(function (topic) {
+      return '<article class="card' + (topic.hasGrid ? "" : " card--soon") + '">' +
+        "<h3>" + (topic.hasGrid
+          ? '<a href="application.html?topic=' + topic.id + '">' + S.escapeHtml(topic.title) + "</a>"
+          : S.escapeHtml(topic.title)) + "</h3>" +
+        "<p>" + S.escapeHtml(topic.blurb) + "</p>" +
+        '<p class="card__meta">' + topic.count + " sources &middot; " +
+          (topic.hasGrid
             ? "grid view built"
-            : '<a href="browse.html?app=' + key + '">listed on the browse page</a>, grid view to come') +
+            : '<a href="browse.html?topic=' + topic.id + '">listed on the browse page</a>, grid view to come') +
         "</p></article>";
     }).join("");
 

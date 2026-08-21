@@ -16,7 +16,7 @@
     <a class="site-head__title" href="index.html">Prevention data scan <span>&middot; working draft</span></a>
     <nav class="site-nav" aria-label="Main">
       <a href="index.html">Overview</a>
-      <a href="application.html?app=1">Application 1</a>
+      <a href="application.html?app=1" data-grid-nav>Application 1</a>
       <a href="browse.html">Browse sources</a>
     </nav>
   </div>
@@ -36,7 +36,7 @@
   </div>
 </footer>
 
-<script src="assets/common.js?v=e4eaa9a6"></script>
+<script src="assets/common.js?v=7d2eeb67"></script>
 <script>
 (function () {
   "use strict";
@@ -49,6 +49,7 @@
 
   S.loadData(["studies.json", "meta.json"]).then(function (loaded) {
     var studies = loaded[0], meta = loaded[1];
+    S.setTopics(meta.topics);
     S.stampGenerated(meta);
 
     var wanted = S.param("id");
@@ -62,10 +63,13 @@
       return;
     }
 
-    document.title = "Application " + study.app + " source " + study.num + " - Prevention data scan";
+    var topicNames = study.topics.map(S.topicTitle).join(", ");
+    document.title = topicNames + " source " + study.num + " - Prevention data scan";
+    // A source can carry more than one topic, so the breadcrumb names none of them
+    // specifically - the Topics row below links to each.
     document.getElementById("crumb").innerHTML =
       '<a href="index.html">Overview</a> &rsaquo; ' +
-      '<a href="browse.html?app=' + study.app + '">Application ' + study.app + "</a> &rsaquo; source " + study.num;
+      '<a href="browse.html">Browse sources</a> &rsaquo; source ' + study.num;
 
     var links = study.dataLinks.map(function (l) {
       if (!l.url) return "<li>" + S.escapeHtml(l.label) + "</li>";
@@ -79,6 +83,10 @@
         " &middot; " + S.escapeHtml(study.sourceType) + " &middot; " + S.escapeHtml(study.country) + "</span></p>" +
       (study.link ? "<p>" + S.externalLink(study.link, "Read the source") + "</p>" : "") +
       '<div class="record"><dl>' +
+        row("Topics", study.topics.map(function (id) {
+          return '<a class="tag" href="browse.html?topic=' + encodeURIComponent(id) + '">' +
+            S.escapeHtml(S.topicTitle(id)) + "</a>";
+        }).join("")) +
         row("What it does", S.escapeHtml(study.task)) +
         row("What goes in", S.escapeHtml(study.inputData)) +
         row("What comes out", S.escapeHtml(study.output)) +
@@ -95,8 +103,7 @@
         row("How big it is", S.escapeHtml(study.scale)) +
         row("What is in it", S.escapeHtml(study.keyAttributes)) +
       "</dl></div>" +
-      '<p style="margin-top:28px"><a href="application.html?app=' + study.app +
-        '">Back to Application ' + study.app + "</a></p>";
+      '<p style="margin-top:28px"><a href="browse.html">Back to browse</a></p>';
   }).catch(function (err) {
     S.showLoadError(document.getElementById("record"), err);
   });

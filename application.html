@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Draft: reachable by link, kept out of search results. Remove when it is finished. -->
 <meta name="robots" content="noindex">
-<title>Application - Prevention data scan</title>
-<meta name="description" content="Actions and measures for one application, split by whether they apply to people or to places.">
+<title>Topic - Prevention data scan</title>
+<meta name="description" content="Actions and measures for one topic, split by whether they apply to people or to places.">
 <link rel="stylesheet" href="assets/style.css?v=9da7681a">
 </head>
 <body>
@@ -17,7 +17,7 @@
     <a class="site-head__title" href="index.html">Prevention data scan <span>&middot; working draft</span></a>
     <nav class="site-nav" aria-label="Main">
       <a href="index.html">Overview</a>
-      <a href="application.html?app=1">Application 1</a>
+      <a href="application.html?app=1" data-grid-nav>Application 1</a>
       <a href="browse.html">Browse sources</a>
     </nav>
   </div>
@@ -25,7 +25,7 @@
 
 <main id="main">
   <div class="wrap" id="app-main">
-    <p class="crumb"><a href="index.html">Overview</a> &rsaquo; <span id="crumb-app">Application</span></p>
+    <p class="crumb"><a href="index.html">Overview</a> &rsaquo; <span id="crumb-app">Topic</span></p>
     <h1 id="app-title">&nbsp;</h1>
     <p class="lede" id="app-question">&nbsp;</p>
 
@@ -39,7 +39,7 @@
     </section>
 
     <section>
-      <h2>All <span id="studies-count">&mdash;</span> sources for this application</h2>
+      <h2>All <span id="studies-count">&mdash;</span> sources for this topic</h2>
       <div class="note" style="margin-bottom:18px">
         <ul id="priority-key" style="margin:0;padding-left:0;list-style:none"></ul>
       </div>
@@ -54,11 +54,7 @@
   </div>
 </footer>
 
-<script src="assets/common.js?v=e4eaa9a6"></script>
-<script>
-  document.getElementById("crumb-app").textContent =
-    "Application " + (new URLSearchParams(location.search).get("app") || "1");
-</script>
-<script src="assets/quadrants.js?v=be101ebd"></script>
+<script src="assets/common.js?v=7d2eeb67"></script>
+<script src="assets/quadrants.js?v=ce2167be"></script>
 </body>
 </html>
