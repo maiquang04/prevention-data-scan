@@ -112,20 +112,22 @@ broken; the script reports those separately from real `404`s.
 
 ```
 index.html          overview, counts, what the badges mean
-application.html    ?app=1 — the Actions/Measures by People/Places grid
+application.html    ?topic=<id> — the Actions/Measures by People/Places grid for one topic
 browse.html         every source, filterable; filter state lives in the query string
 study.html          ?id=app1-03 — one source in full
 assets/
   style.css         the whole stylesheet
-  common.js         data loading, badges, shared formatting
+  common.js         data loading, badges, the topic registry, shared formatting
   browse.js         filtering
   quadrants.js      the grid
 data/
   studies.json      generated
   meta.json         generated
-  quadrants.json    hand-authored
+  topics.json       hand-authored — the taxonomy: id, title, heading, question, blurb
+  quadrants.json    hand-authored — keyed by topic id
 build/
   export_data.py    workbook → JSON, then re-stamps the asset links
+  add_topics_column.py  one-off: adds the Topics column to the workbook
   stamp_assets.py   adds ?v=<hash> to each stylesheet and script link
   check_publish.py  pre-push safety scan
   check_links.py    checks the outbound links still resolve
@@ -135,10 +137,23 @@ build/
 Plain HTML, CSS and JavaScript, no build step and no dependencies beyond `openpyxl` for the
 export script. GitHub Pages serves the files as they are.
 
+## Topics
+
+The site groups sources by topic rather than by "Application N" - that numbering is internal
+project shorthand and means nothing to an outside reader. The taxonomy lives in
+`data/topics.json`; adding a topic there is enough, no code change needed. A source can belong
+to more than one topic: add to its `Topics` cell in the workbook, semicolon-separated, e.g.
+`Local government measurement; Health inequities`. A blank cell defaults to whichever topic
+claims that sheet.
+
+`?topic=<id>` is the current parameter on `application.html` and `browse.html`. The older
+`?app=1` style links already sent out still resolve to the same place, so nothing already
+shared breaks.
+
 ## Status
 
-Working draft. Application 1 has the grid view; Applications 5 and 6 are on the browse page
-while their framing is settled. Where a source's data has not been checked yet, it is marked
+Working draft. One topic has the grid view; the other two are on the browse page while their
+framing is settled. Where a source's data has not been checked yet, it is marked
 `Not yet assessed` rather than guessed at.
 
 Every page carries `<meta name="robots" content="noindex">`, so the site is reachable by
