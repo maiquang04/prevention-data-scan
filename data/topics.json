@@ -1,0 +1,43 @@
+{
+  "_comment": [
+    "Hand-authored. export_data.py reads this and never writes it.",
+    "",
+    "To add a topic: add an entry below. Nothing else needs changing - not the export",
+    "script, not the pages. Give it a 'sheet' only if a whole workbook sheet belongs to",
+    "it; a topic with no sheet is fine and simply picks up whatever rows name it in",
+    "their Topics column.",
+    "",
+    "  id       used in web addresses and inside quadrants.json. Never change one that",
+    "           is already published - links carry it.",
+    "  title    the short name. Filter options, tags on a card, breadcrumbs.",
+    "  heading  the longer phrasing, used only as the heading on this topic's own page.",
+    "  sheet    the workbook sheet whose rows default to this topic when their Topics",
+    "           cell is blank."
+  ],
+  "topics": [
+    {
+      "id": "health-system",
+      "title": "Health system impact",
+      "heading": "Prevention and the health system",
+      "question": "How do we show that prevention changes what happens in hospitals?",
+      "blurb": "Waiting lists, bed days, ambulance ramping and potentially preventable hospitalisations.",
+      "sheet": "App 1 - Health system impact"
+    },
+    {
+      "id": "health-inequities",
+      "title": "Health inequities",
+      "heading": "Targeting prevention to reduce health inequities",
+      "question": "Where should prevention effort go, so the gap between groups narrows?",
+      "blurb": "Differences in health between population groups and between areas, and how they are measured.",
+      "sheet": "App 5 - Health inequities"
+    },
+    {
+      "id": "local-government",
+      "title": "Local government measurement",
+      "heading": "A prevention measurement framework for local government",
+      "question": "How would a council know whether its area is getting healthier?",
+      "blurb": "Walkability, green space, food environment and participation, measured at council level.",
+      "sheet": "App 6 - LG measurement framewor"
+    }
+  ]
+}
