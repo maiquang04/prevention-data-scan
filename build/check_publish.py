@@ -104,24 +104,37 @@ def check_text(problems):
 
 
 def check_quadrant_ids(problems):
-    """Every study id referenced by a card must exist, or the page renders a dead link."""
+    """Every study id a card points at, and every topic quadrants.json is keyed by,
+    has to actually exist - either one going stale renders a dead link or an
+    unreachable grid."""
     data_dir = os.path.join(REPO, "data")
     try:
         with open(os.path.join(data_dir, "studies.json"), encoding="utf-8") as handle:
-            known = {s["id"] for s in json.load(handle)}
+            studies = json.load(handle)
+        with open(os.path.join(data_dir, "topics.json"), encoding="utf-8") as handle:
+            topic_ids = {t["id"] for t in json.load(handle)["topics"]}
         with open(os.path.join(data_dir, "quadrants.json"), encoding="utf-8") as handle:
             quad = json.load(handle)
-    except (OSError, ValueError) as err:
+    except (OSError, ValueError, KeyError) as err:
         problems.append("data: could not read the JSON (%s). Run build/export_data.py first." % err)
         return
 
-    for app, body in quad.get("applications", {}).items():
+    known_ids = {s["id"] for s in studies}
+    for topic_id, body in quad.get("topics", {}).items():
+        if topic_id not in topic_ids:
+            problems.append("quadrants.json: '%s' is not a topic in topics.json" % topic_id)
         for cell, cards in body.get("cells", {}).items():
             for card in cards:
                 for sid in card.get("studies", []):
-                    if sid not in known:
-                        problems.append("quadrants.json: app %s, %s, card '%s' points at unknown "
-                                        "study id '%s'" % (app, cell, card["name"], sid))
+                    if sid not in known_ids:
+                        problems.append("quadrants.json: %s, %s, card '%s' points at unknown "
+                                        "study id '%s'" % (topic_id, cell, card["name"], sid))
+
+    for study in studies:
+        for tid in study.get("topics", []):
+            if tid not in topic_ids:
+                problems.append("studies.json: %s references unknown topic '%s'"
+                                % (study["id"], tid))
 
 
 def check_asset_stamps(problems):

@@ -12,10 +12,13 @@
 
   // key -> how to read the value off a study, and what to call it on screen.
   var FACETS = [
-    { key: "app", legend: "Application", multi: true,
-      values: function () { return ["1", "5", "6"]; },
-      label: function (v) { return "Application " + v; },
-      of: function (s) { return [String(s.app)]; } },
+    // Values are topic ids; a source matches if it carries any of the ticked
+    // topics, which the shared matchesFacet() below already handles - a source
+    // with more than one topic needs no special case here.
+    { key: "topic", legend: "Topic", multi: true,
+      values: function () { return meta.topics.map(function (t) { return t.id; }); },
+      label: function (v) { return S.topicTitle(v); },
+      of: function (s) { return s.topics; } },
 
     { key: "access", legend: "Can we get the data?", multi: true,
       values: function () { return meta.accessValues; },
@@ -59,6 +62,17 @@
       var raw = params.get(facet.key);
       state[facet.key] = raw ? raw.split(",").filter(Boolean) : [];
     });
+
+    // ?app=1 is a link already sent out and must keep working. Fold it into
+    // the topic facet rather than keeping it as a separate parameter, so a page
+    // reached either way ends up in exactly the same state.
+    var legacyApp = params.get("app");
+    if (legacyApp) {
+      legacyApp.split(",").forEach(function (n) {
+        var id = S.legacyAppToTopic(n.trim());
+        if (id && state.topic.indexOf(id) === -1) state.topic.push(id);
+      });
+    }
     return state;
   }
 
@@ -188,6 +202,7 @@
     }).join("");
 
     return "<dl>" +
+      row("Topics", S.topicTags(study)) +
       row("What it does", S.escapeHtml(study.task)) +
       row("What goes in", S.escapeHtml(study.inputData)) +
       row("What comes out", S.escapeHtml(study.output)) +
@@ -257,6 +272,7 @@
   S.loadData(["studies.json", "meta.json"]).then(function (loaded) {
     studies = loaded[0];
     meta = loaded[1];
+    S.setTopics(meta.topics);   // before readState(): it resolves the ?app= alias
     state = readState();
     S.stampGenerated(meta);
     document.getElementById("search").value = state.q;

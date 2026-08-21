@@ -36,6 +36,75 @@
 
   var PRIORITY_ORDER = ["highly-relevant", "relevant", "unmarked"];
 
+  /* The topic list, set once from meta.json by every page after it loads. Kept here
+     rather than passed around so all four pages render a topic's name the same way -
+     the same reasoning as metaRow() below for a source's badge and tags. */
+  var TOPICS = [];
+  var TOPIC_BY_ID = {};
+  var LEGACY_APP_TO_TOPIC = {};
+
+  function setTopics(topics) {
+    TOPICS = topics || [];
+    TOPIC_BY_ID = {};
+    LEGACY_APP_TO_TOPIC = {};
+    TOPICS.forEach(function (t) {
+      TOPIC_BY_ID[t.id] = t;
+      if (t.legacyApp != null) LEGACY_APP_TO_TOPIC[String(t.legacyApp)] = t.id;
+    });
+    // The header link to the grid view is hardcoded HTML ("Application 1"), because
+    // it exists on several pages and none of them can know the topic list before
+    // this data arrives. Point it at whichever topic actually has a grid, so a
+    // second one being built later needs no page edited by hand. data-grid-nav
+    // carries the wording to use in front of the topic's title, if any.
+    var gridded = TOPICS.filter(function (t) { return t.hasGrid; })[0];
+    if (gridded) {
+      var links = document.querySelectorAll("[data-grid-nav]");
+      for (var i = 0; i < links.length; i++) {
+        var prefix = links[i].getAttribute("data-grid-nav");
+        links[i].textContent = (prefix ? prefix + " " : "") + gridded.title;
+        links[i].setAttribute("href", "application.html?topic=" + gridded.id);
+      }
+    }
+
+    // markCurrentNav already ran once on DOMContentLoaded, before this data existed,
+    // so any nav link carrying ?topic= or the legacy ?app= could not be matched yet.
+    // Re-run now that a topic id can actually be resolved, and now that the grid
+    // link's own href has just been corrected above.
+    markCurrentNav();
+  }
+
+  function topicTitle(id) {
+    var t = TOPIC_BY_ID[id];
+    return t ? t.title : id;
+  }
+
+  // The old ?app=1 style links already sent out map to exactly one topic id
+  // each, via the sheet each topic was seeded from.
+  function legacyAppToTopic(appNumber) {
+    return LEGACY_APP_TO_TOPIC[String(appNumber)] || null;
+  }
+
+  /* A source's topics, rendered as the same tag markup used for its geography. */
+  function topicTags(study) {
+    return tagList((study.topics || []).map(topicTitle));
+  }
+
+  /* The topic id meant by the current page: ?topic= first, then the legacy ?app=
+     link already sent out, then the first topic with a built grid, then
+     whatever topic is listed first. */
+  function currentTopicId() {
+    var topic = param("topic");
+    if (topic && TOPIC_BY_ID[topic]) return topic;
+
+    var app = param("app");
+    if (app && LEGACY_APP_TO_TOPIC[app]) return LEGACY_APP_TO_TOPIC[app];
+
+    var gridded = TOPICS.filter(function (t) { return t.hasGrid; })[0];
+    if (gridded) return gridded.id;
+
+    return TOPICS[0] ? TOPICS[0].id : null;
+  }
+
   function escapeHtml(value) {
     if (value === null || value === undefined) return "";
     return String(value)
@@ -63,7 +132,9 @@
 
   /* Access badge, geography tags, source type - in that order, everywhere a source
      is listed. Shared so the quadrant panels and the browse list cannot drift into
-     showing different things about the same source. */
+     showing different things about the same source. Topic tags are left out here
+     deliberately: on the browse page a source's own topics are implied by which
+     topic filter is ticked, and repeating them on every row would be noise. */
   function metaRow(study) {
     return accessBadge(study.access) + tagList(study.geoTags) +
       "<span>" + escapeHtml(study.sourceGroup) + "</span>";
@@ -125,14 +196,19 @@
       var parts = links[i].getAttribute("href").split("?");
       if (parts[0] !== here) continue;
 
-      // A nav link carrying a query has to match it too, or "Application 1" would
-      // light up while you are looking at application 5. An address with no app in
-      // it means 1, which is what the page itself falls back to.
+      // A nav link carrying a query has to match it too, or one topic's link would
+      // light up while another topic is open. Compare by topic id rather than the
+      // raw parameter, so a page reached via the legacy ?app= link still matches
+      // the ?topic= link in the header.
       var matches = true;
       if (parts[1]) {
         new URLSearchParams(parts[1]).forEach(function (value, key) {
-          var mine = params.get(key) || (key === "app" ? "1" : null);
-          if (mine !== value) matches = false;
+          if (key !== "topic" && key !== "app") {
+            if (params.get(key) !== value) matches = false;
+            return;
+          }
+          var linkTopic = key === "topic" ? value : LEGACY_APP_TO_TOPIC[value];
+          if (currentTopicId() !== linkTopic) matches = false;
         });
       }
       if (matches) links[i].setAttribute("aria-current", "page");
@@ -161,6 +237,11 @@
     priorityLabel: PRIORITY_LABEL,
     priorityMeaning: PRIORITY_MEANING,
     priorityOrder: PRIORITY_ORDER,
+    setTopics: setTopics,
+    topicTitle: topicTitle,
+    topicTags: topicTags,
+    currentTopicId: currentTopicId,
+    legacyAppToTopic: legacyAppToTopic,
     tagList: tagList,
     metaRow: metaRow,
     externalLink: externalLink,

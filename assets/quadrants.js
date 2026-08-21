@@ -1,16 +1,19 @@
-/* application.html?app=1 - the four-quadrant view.
+/* application.html?topic=health-system - the four-quadrant view.
 
    Rows are People and Places, columns are Actions and Measures. Cards are
-   hand-authored in data/quadrants.json; the studies behind each card, and how
-   obtainable their data is, come from studies.json. */
+   hand-authored in data/quadrants.json, keyed by topic id; the studies behind each
+   card, and how obtainable their data is, come from studies.json. ?app=1 still
+   works as an alias for a link already sent out - see S.currentTopicId(). */
 
 (function () {
   "use strict";
 
   var S = window.scan;
   var byId = {};
-  var quad = null;
-  var app = null;
+  var quadData = null;   // the whole file: { rows, cols, topics: { <id>: {intro, cells} } }
+  var gridBody = null;   // quadData.topics[topicId] - this topic's { intro, cells }
+  var topic = null;      // meta.json's entry for this topic - { id, title, heading, question, ... }
+  var allTopics = [];    // meta.json's full topic list, for the "no grid yet" message
   var openCard = null;
   var geoOrder = [];
 
@@ -88,12 +91,13 @@
   }
 
   function render() {
-    document.getElementById("app-title").textContent = app.title;
-    document.getElementById("app-question").textContent = app.question;
-    document.getElementById("app-intro").textContent = app.intro || "";
-    document.title = app.title + " - Prevention data scan";
+    document.getElementById("app-title").textContent = topic.heading;
+    document.getElementById("app-question").textContent = topic.question;
+    document.getElementById("app-intro").textContent = gridBody.intro || "";
+    document.getElementById("crumb-app").textContent = topic.title;
+    document.title = topic.heading + " - Prevention data scan";
 
-    var rows = quad.rows, cols = quad.cols;
+    var rows = quadData.rows, cols = quadData.cols;
     // data-key drives the header colours in the stylesheet, so adding a row or a
     // column to quadrants.json means adding one rule rather than editing markup.
     var html = '<div class="quad">' +
@@ -108,7 +112,7 @@
         S.escapeHtml(r.label) + "<span>" + S.escapeHtml(r.note) + "</span></div>";
       cols.forEach(function (c) {
         var key = r.key + "-" + c.key;
-        var cards = (app.cells && app.cells[key]) || [];
+        var cards = (gridBody.cells && gridBody.cells[key]) || [];
         html += '<div class="quad__cell" data-row="' + S.escapeHtml(r.key) +
           '" data-col="' + S.escapeHtml(c.key) +
           '" data-label="' + S.escapeHtml(r.label + " - " + c.label) + '">' +
@@ -125,8 +129,8 @@
 
   function renderStudyList() {
     var mine = Object.keys(byId).map(function (k) { return byId[k]; })
-      .filter(function (s) { return String(s.app) === String(S.param("app") || "1"); })
-      .sort(function (a, b) { return a.num - b.num; });
+      .filter(function (s) { return s.topics.indexOf(topic.id) !== -1; })
+      .sort(function (a, b) { return a.app - b.app || a.num - b.num; });
 
     // Same shape as the access key on the overview page: the mark itself, its name,
     // then what it means. Reads better than a sentence describing three colours.
@@ -174,7 +178,7 @@
       var parts = id.split("-");
       var index = Number(parts.pop());
       var cellKey = parts.join("-");
-      var card = app.cells[cellKey][index];
+      var card = gridBody.cells[cellKey][index];
 
       button.setAttribute("aria-expanded", "true");
       button.insertAdjacentHTML("afterend", panelHtml(card, id));
@@ -192,17 +196,34 @@
 
   S.loadData(["studies.json", "meta.json", "quadrants.json"]).then(function (loaded) {
     loaded[0].forEach(function (s) { byId[s.id] = s; });
-    S.stampGenerated(loaded[1]);
-    geoOrder = loaded[1].geoTags || [];
-    quad = loaded[2];
+    var meta = loaded[1];
+    S.setTopics(meta.topics);   // before currentTopicId(): it resolves ?app= via this
+    S.stampGenerated(meta);
+    geoOrder = meta.geoTags || [];
+    allTopics = meta.topics;
+    quadData = loaded[2];
 
-    var wanted = S.param("app") || "1";
-    app = quad.applications[wanted];
-    if (!app) {
+    // S.currentTopicId() is deliberately forgiving - it is what nav-highlighting
+    // uses, and silently falling back to a sensible default is right there. Here
+    // that would swallow a genuine typo in the URL, so an explicit ?topic= or
+    // ?app= is resolved directly, and only an address with neither falls back to
+    // the topic that actually has a grid.
+    var requestedTopic = S.param("topic");
+    var requestedApp = S.param("app");
+    var topicId = requestedTopic || (requestedApp && S.legacyAppToTopic(requestedApp));
+    if (!requestedTopic && !requestedApp) topicId = S.currentTopicId();
+
+    topic = topicId && allTopics.filter(function (t) { return t.id === topicId; })[0];
+    gridBody = topic && quadData.topics[topic.id];
+
+    if (!topic || !gridBody) {
+      var shown = topic ? topic.title : S.escapeHtml(requestedTopic || requestedApp || "That topic");
+      var built = allTopics.filter(function (t) { return t.hasGrid; }).map(function (t) { return t.title; });
       document.getElementById("app-main").innerHTML =
-        '<div class="error"><p><b>Application ' + S.escapeHtml(wanted) +
-        " does not have a quadrant view yet.</b></p><p>Application 1 is the one built so far. " +
-        'Everything scanned for Applications 5 and 6 is on the <a href="browse.html">browse page</a>.</p></div>';
+        "<div class=\"error\"><p><b>" + shown + " does not have a quadrant view yet.</b></p><p>" +
+        (built.length ? S.escapeHtml(built.join(", ")) + (built.length === 1 ? " is" : " are") + " built so far. "
+                       : "No topic has a quadrant view yet. ") +
+        'Everything scanned is on the <a href="browse.html">browse page</a>.</p></div>';
       return;
     }
     render();
