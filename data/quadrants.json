@@ -3,7 +3,10 @@
     "Hand-authored. export_data.py never touches this file.",
     "Deciding whether something belongs under People or Places is a judgement, so it",
     "is written down here rather than guessed from the workbook. Every id in a",
-    "'studies' list must exist in studies.json - check_publish.py verifies that."
+    "'studies' list must exist in studies.json - check_publish.py verifies that.",
+    "",
+    "Keyed by topic id from data/topics.json, which is where the title, heading and",
+    "question for each topic live - not repeated here, so there is one place to edit."
   ],
   "rows": [
     { "key": "people", "label": "People", "note": "Population groups - who is affected" },
@@ -13,10 +16,8 @@
     { "key": "actions", "label": "Actions", "note": "What can be done" },
     { "key": "measures", "label": "Measures", "note": "How the effect would be measured" }
   ],
-  "applications": {
-    "1": {
-      "title": "Prevention and the health system",
-      "question": "How do we show that prevention changes what happens in hospitals?",
+  "topics": {
+    "health-system": {
       "intro": "Every card comes from published sources: an action with evidence behind it, or a measure already defined.",
       "cells": {
         "people-actions": [

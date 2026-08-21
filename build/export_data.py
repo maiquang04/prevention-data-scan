@@ -24,6 +24,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
 DEFAULT_SRC = os.path.normpath(os.path.join(REPO, "..", "lit-scan", "lit-scan-draft.xlsx"))
 OUT_DIR = os.path.join(REPO, "data")
+TOPICS_FILE = os.path.join(OUT_DIR, "topics.json")
+QUADRANTS_FILE = os.path.join(OUT_DIR, "quadrants.json")
 
 HEADER_ROW = 2
 
@@ -47,24 +49,7 @@ FIELDS = {
     "Key attributes": "keyAttributes",
     "Access": "access",
     "Geo tags": "geoTagsRaw",
-}
-
-APPLICATIONS = {
-    1: {
-        "title": "Prevention and the health system",
-        "question": "How do we show that prevention changes what happens in hospitals?",
-        "blurb": "Waiting lists, bed days, ambulance ramping and potentially preventable hospitalisations.",
-    },
-    5: {
-        "title": "Targeting prevention to reduce health inequities",
-        "question": "Where should prevention effort go, so the gap between groups narrows?",
-        "blurb": "Differences in health between population groups and between areas, and how they are measured.",
-    },
-    6: {
-        "title": "A prevention measurement framework for local government",
-        "question": "How would a council know whether its area is getting healthier?",
-        "blurb": "Walkability, green space, food environment and participation, measured at council level.",
-    },
+    "Topics": "topicsRaw",
 }
 
 # Controlled vocabulary. Anything outside these lists is a data-entry mistake and
@@ -172,24 +157,55 @@ def parse_links(text):
 
 
 def app_number(sheet_title):
+    """Only used to build a stable study id. It records which sheet a row lives on,
+    which is not the same thing as which topics it belongs to."""
     match = re.search(r"App\s*(\d+)", sheet_title)
     if not match:
-        raise SystemExit("Sheet name does not start with an application number: " + sheet_title)
+        raise SystemExit("Sheet name does not carry a number: " + sheet_title)
     return int(match.group(1))
+
+
+def load_topics():
+    """The taxonomy lives in data/topics.json so a new topic is a data change, not a
+    code change. See that file's own comment for the shape."""
+    with open(TOPICS_FILE, encoding="utf-8") as handle:
+        topics = json.load(handle)["topics"]
+
+    seen = set()
+    for topic in topics:
+        for field in ("id", "title", "heading"):
+            if not topic.get(field):
+                raise SystemExit("topics.json: an entry is missing '%s'" % field)
+        if topic["id"] in seen:
+            raise SystemExit("topics.json: duplicate id '%s'" % topic["id"])
+        seen.add(topic["id"])
+    return topics
+
+
+def gridded_topic_ids():
+    """Which topics have a hand-authored quadrant grid. Lets the pages stop hardcoding
+    that Application 1 is the only one built."""
+    try:
+        with open(QUADRANTS_FILE, encoding="utf-8") as handle:
+            return set(json.load(handle).get("topics", {}))
+    except (OSError, ValueError):
+        return set()
 
 
 def export(src, out_dir, quiet=False):
     if not os.path.exists(src):
         raise SystemExit("Workbook not found: " + src)
 
+    topics = load_topics()
+    topic_by_title = {t["title"]: t["id"] for t in topics}
+    topic_by_sheet = {t["sheet"]: t["id"] for t in topics if t.get("sheet")}
+
     workbook = load_workbook(src, data_only=True)
     studies, problems = [], []
 
     for sheet in workbook:
         app = app_number(sheet.title)
-        if app not in APPLICATIONS:
-            problems.append("Unknown application number %s in sheet '%s'" % (app, sheet.title))
-            continue
+        default_topic = topic_by_sheet.get(sheet.title)
 
         headers = {cell.value: idx for idx, cell in enumerate(sheet[HEADER_ROW]) if cell.value}
         missing = [h for h in FIELDS if h not in headers]
@@ -219,9 +235,26 @@ def export(src, out_dir, quiet=False):
             if not tags:
                 problems.append("%s: no geo tags" % where)
 
+            # A blank cell means "whatever this sheet is about", so the column only
+            # has to be filled in where a source genuinely spans more than one topic.
+            named = [t.strip() for t in record.pop("topicsRaw", "").split(";") if t.strip()]
+            topic_ids = []
+            for name in named:
+                if name not in topic_by_title:
+                    problems.append("%s: topic '%s' is not in topics.json" % (where, name))
+                elif topic_by_title[name] not in topic_ids:
+                    topic_ids.append(topic_by_title[name])
+            if not topic_ids:
+                if default_topic:
+                    topic_ids = [default_topic]
+                else:
+                    problems.append("%s: no topic, and no topic claims sheet '%s'"
+                                    % (where, sheet.title))
+
             record["id"] = "app%d-%02d" % (app, num)
             record["app"] = app
             record["num"] = num
+            record["topics"] = topic_ids
             record["priority"] = priority_of(row)
             record["geoTags"] = tags
             record["sourceGroup"] = source_group(record.get("sourceType", ""))
@@ -245,17 +278,27 @@ def export(src, out_dir, quiet=False):
     for study in studies:
         counts[study["access"]] = counts.get(study["access"], 0) + 1
 
+    gridded = gridded_topic_ids()
     meta = {
         "generated": datetime.date.today().isoformat(),
         "source": os.path.basename(src),
         "total": len(studies),
-        "byApplication": {
-            str(app): {
-                "count": sum(1 for s in studies if s["app"] == app),
-                **APPLICATIONS[app],
+        "topics": [
+            {
+                "id": t["id"],
+                "title": t["title"],
+                "heading": t["heading"],
+                "question": t.get("question", ""),
+                "blurb": t.get("blurb", ""),
+                "count": sum(1 for s in studies if t["id"] in s["topics"]),
+                "hasGrid": t["id"] in gridded,
+                # The old ?app=1 links already sent out have to keep resolving.
+                # Derived from the sheet name, the same way a study id is, so this
+                # cannot drift out of step with it.
+                "legacyApp": app_number(t["sheet"]) if t.get("sheet") else None,
             }
-            for app in sorted(APPLICATIONS)
-        },
+            for t in topics
+        ],
         "byAccess": counts,
         "accessValues": ACCESS_VALUES,
         "geoTags": GEO_TAGS,
@@ -277,7 +320,7 @@ def export(src, out_dir, quiet=False):
     if not quiet:
         print("\n%d studies: %s" % (
             len(studies),
-            ", ".join("App %s = %d" % (a, v["count"]) for a, v in meta["byApplication"].items()),
+            ", ".join("%s = %d" % (t["title"], t["count"]) for t in meta["topics"]),
         ))
         for value in ACCESS_VALUES:
             print("  %-26s %d" % (value, counts.get(value, 0)))

@@ -1,27 +1,39 @@
 {
-  "generated": "2026-08-15",
+  "generated": "2026-08-22",
   "source": "lit-scan-draft.xlsx",
   "total": 27,
-  "byApplication": {
-    "1": {
-      "count": 10,
-      "title": "Prevention and the health system",
+  "topics": [
+    {
+      "id": "health-system",
+      "title": "Health system impact",
+      "heading": "Prevention and the health system",
       "question": "How do we show that prevention changes what happens in hospitals?",
-      "blurb": "Waiting lists, bed days, ambulance ramping and potentially preventable hospitalisations."
+      "blurb": "Waiting lists, bed days, ambulance ramping and potentially preventable hospitalisations.",
+      "count": 10,
+      "hasGrid": true,
+      "legacyApp": 1
     },
-    "5": {
-      "count": 8,
-      "title": "Targeting prevention to reduce health inequities",
+    {
+      "id": "health-inequities",
+      "title": "Health inequities",
+      "heading": "Targeting prevention to reduce health inequities",
       "question": "Where should prevention effort go, so the gap between groups narrows?",
-      "blurb": "Differences in health between population groups and between areas, and how they are measured."
+      "blurb": "Differences in health between population groups and between areas, and how they are measured.",
+      "count": 8,
+      "hasGrid": false,
+      "legacyApp": 5
     },
-    "6": {
-      "count": 9,
-      "title": "A prevention measurement framework for local government",
+    {
+      "id": "local-government",
+      "title": "Local government measurement",
+      "heading": "A prevention measurement framework for local government",
       "question": "How would a council know whether its area is getting healthier?",
-      "blurb": "Walkability, green space, food environment and participation, measured at council level."
+      "blurb": "Walkability, green space, food environment and participation, measured at council level.",
+      "count": 9,
+      "hasGrid": false,
+      "legacyApp": 6
     }
-  },
+  ],
   "byAccess": {
     "Not a dataset": 13,
     "Public": 8,

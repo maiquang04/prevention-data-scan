@@ -17,6 +17,9 @@
     "id": "app1-01",
     "app": 1,
     "num": 1,
+    "topics": [
+      "health-system"
+    ],
     "priority": "relevant",
     "geoTags": [
       "National",
@@ -46,6 +49,9 @@
     "id": "app1-02",
     "app": 1,
     "num": 2,
+    "topics": [
+      "health-system"
+    ],
     "priority": "relevant",
     "geoTags": [
       "Small area",
@@ -69,7 +75,7 @@
     "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4396734/",
     "sourceType": "Peer-reviewed",
     "country": "Australia (New South Wales)",
-    "task": "An important caution for Application 1: it works out WHY preventable hospitalisation rates differ between areas, and finds the answer is mostly who lives there, not how many services are available. Guards against over-crediting or over-blaming local programs",
+    "task": "An important caution for this topic: it works out WHY preventable hospitalisation rates differ between areas, and finds the answer is mostly who lives there, not how many services are available. Guards against over-crediting or over-blaming local programs",
     "metrics": "Share of the between-area difference explained: general practitioner supply 2.9%, versus people's own social and health characteristics 36.9%",
     "geoLevel": "Statistical Local Area (199 areas across New South Wales)",
     "inputData": "267,091 people surveyed in the 45 and Up Study (262,755 analysed after exclusions), linked to New South Wales hospital and death records; plus general practitioner supply across 199 small areas",
@@ -82,6 +88,9 @@
     "id": "app1-03",
     "app": 1,
     "num": 3,
+    "topics": [
+      "health-system"
+    ],
     "priority": "highly-relevant",
     "geoTags": [
       "Small area",
@@ -104,7 +113,7 @@
     "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3533070/",
     "sourceType": "Peer-reviewed (study protocol)",
     "country": "Australia (New South Wales)",
-    "task": "Sets out how to test what actually drives preventable hospitalisation at the level of individual people - the evidence chain Application 1 needs",
+    "task": "Sets out how to test what actually drives preventable hospitalisation at the level of individual people - the evidence chain this topic needs",
     "metrics": "Planned comparisons of preventable hospitalisation rates by health behaviour and social background",
     "geoLevel": "Individual people, New South Wales",
     "inputData": "The 45 and Up Study group of participants, linked to hospital, death and Medicare records",
@@ -117,6 +126,9 @@
     "id": "app1-04",
     "app": 1,
     "num": 4,
+    "topics": [
+      "health-system"
+    ],
     "priority": "unmarked",
     "geoTags": [
       "Individual",
@@ -146,6 +158,9 @@
     "id": "app1-05",
     "app": 1,
     "num": 5,
+    "topics": [
+      "health-system"
+    ],
     "priority": "highly-relevant",
     "geoTags": [
       "National"
@@ -161,7 +176,7 @@
     "link": "https://www.who.int/publications/i/item/WHO-NMH-NVI-18.8",
     "sourceType": "International agency report",
     "country": "Global (focus on lower-income countries)",
-    "task": "The investment case for preventing chronic diseases such as heart disease, cancer and diabetes - the large-scale version of Application 1's question",
+    "task": "The investment case for preventing chronic diseases such as heart disease, cancer and diabetes - the large-scale version of this topic's question",
     "metrics": "Return on investment per intervention; deaths avoided; healthy years of life gained",
     "geoLevel": "National (modelled across many countries)",
     "inputData": "Disease and cost data by country for the World Health Organization's recommended 'best buy' interventions",
@@ -174,6 +189,9 @@
     "id": "app1-06",
     "app": 1,
     "num": 6,
+    "topics": [
+      "health-system"
+    ],
     "priority": "unmarked",
     "geoTags": [
       "National",
@@ -203,6 +221,9 @@
     "id": "app1-07",
     "app": 1,
     "num": 7,
+    "topics": [
+      "health-system"
+    ],
     "priority": "relevant",
     "geoTags": [
       "National"
@@ -218,7 +239,7 @@
     "link": "https://www.kingsfund.org.uk/insight-and-analysis/reports/avoiding-hospital-admissions",
     "sourceType": "Institutional report (policy think tank)",
     "country": "United Kingdom",
-    "task": "Reviews which interventions genuinely reduce unplanned hospital admissions - a useful reality-check on the claims in Application 1",
+    "task": "Reviews which interventions genuinely reduce unplanned hospital admissions - a useful reality-check on the claims made about this topic",
     "metrics": "Emergency and unplanned admission rates; admissions for conditions treatable outside hospital",
     "geoLevel": "National and local (England)",
     "inputData": "Published evaluations of programs intended to avoid hospital admissions",
@@ -231,6 +252,9 @@
     "id": "app1-08",
     "app": 1,
     "num": 8,
+    "topics": [
+      "health-system"
+    ],
     "priority": "unmarked",
     "geoTags": [
       "National"
@@ -259,6 +283,9 @@
     "id": "app1-09",
     "app": 1,
     "num": 9,
+    "topics": [
+      "health-system"
+    ],
     "priority": "relevant",
     "geoTags": [
       "National",
@@ -293,6 +320,9 @@
     "id": "app1-10",
     "app": 1,
     "num": 10,
+    "topics": [
+      "health-system"
+    ],
     "priority": "highly-relevant",
     "geoTags": [
       "State"
@@ -314,7 +344,7 @@
     "link": "https://www.who.int/publications/i/item/9789241548632",
     "sourceType": "International agency handbook",
     "country": "Global",
-    "task": "The standard method text for Application 5's core task: how to monitor health inequalities step by step",
+    "task": "The standard method text for this topic's core task: how to monitor health inequalities step by step",
     "metrics": "Simple difference and ratio between groups; slope index of inequality and relative index of inequality (which measure the gradient across all groups, not just the extremes); concentration index",
     "geoLevel": "Any level - the method applies anywhere",
     "inputData": "Health data broken down by wealth, education, sex, region and other population characteristics",
@@ -327,6 +357,9 @@
     "id": "app5-01",
     "app": 5,
     "num": 1,
+    "topics": [
+      "health-inequities"
+    ],
     "priority": "relevant",
     "geoTags": [
       "Any"
@@ -342,7 +375,7 @@
     "link": "https://www.instituteofhealthequity.org/resources-reports/marmot-review-10-years-on",
     "sourceType": "Institutional report",
     "country": "England",
-    "task": "The source of 'proportionate universalism' - the targeting logic Application 5 asks about, meaning prevention is offered to everyone but with effort scaled up in more disadvantaged places. Also tracks a decade of inequality trends",
+    "task": "The source of 'proportionate universalism' - the targeting logic this topic asks about, meaning prevention is offered to everyone but with effort scaled up in more disadvantaged places. Also tracks a decade of inequality trends",
     "metrics": "Gaps in life expectancy and healthy life expectancy between the most and least deprived tenths of the population",
     "geoLevel": "National down to neighbourhood",
     "inputData": "Life expectancy, death rates and social indicators from 2010 to 2020",
@@ -355,6 +388,9 @@
     "id": "app5-02",
     "app": 5,
     "num": 2,
+    "topics": [
+      "health-inequities"
+    ],
     "priority": "relevant",
     "geoTags": [
       "Small area",
@@ -380,7 +416,7 @@
     "link": "https://doi.org/10.22605/RRH7726",
     "sourceType": "Peer-reviewed",
     "country": "Australia",
-    "task": "The closest match in this table to Application 5's core question, and it covers rural and remote Australia explicitly. The key point: differences WITHIN non-city areas are large, so regions and towns should not be lumped together when targeting prevention",
+    "task": "The closest match in this table to this topic's core question, and it covers rural and remote Australia explicitly. The key point: differences WITHIN non-city areas are large, so regions and towns should not be lumped together when targeting prevention",
     "metrics": "Slope index of inequality across disadvantage groups - a measure of the whole gradient, which the authors argue is better than simply comparing the most and least disadvantaged groups",
     "geoLevel": "Local government area (538 of them), grouped by how remote they are, and capital city versus rest of state",
     "inputData": "Public Health Information Development Unit data for capital cities, the rest of each state and territory, and 538 local government areas; trends from 1986 to 2018",
@@ -393,6 +429,9 @@
     "id": "app5-03",
     "app": 5,
     "num": 3,
+    "topics": [
+      "health-inequities"
+    ],
     "priority": "unmarked",
     "geoTags": [
       "LGA",
@@ -423,6 +462,9 @@
     "id": "app5-04",
     "app": 5,
     "num": 4,
+    "topics": [
+      "health-inequities"
+    ],
     "priority": "highly-relevant",
     "geoTags": [
       "Small area",
@@ -441,7 +483,7 @@
     "link": "https://www.cihi.ca/sites/default/files/document/defining-stratifiers-measuring-health-inequalities-2018-en-web.pdf",
     "sourceType": "Government agency methodology",
     "country": "Canada",
-    "task": "Answers Application 5's 'what data is missing' question: it standardises WHICH population characteristics should be recorded alongside health data so that fair comparisons are possible",
+    "task": "Answers this topic's 'what data is missing' question: it standardises WHICH population characteristics should be recorded alongside health data so that fair comparisons are possible",
     "metrics": "Definitions of each population split, and the equity gap measured for each",
     "geoLevel": "National and provincial",
     "inputData": "A review of existing Canadian health databases, checking which population characteristics they capture",
@@ -454,6 +496,9 @@
     "id": "app5-05",
     "app": 5,
     "num": 5,
+    "topics": [
+      "health-inequities"
+    ],
     "priority": "relevant",
     "geoTags": [
       "National"
@@ -482,6 +527,9 @@
     "id": "app5-06",
     "app": 5,
     "num": 6,
+    "topics": [
+      "health-inequities"
+    ],
     "priority": "unmarked",
     "geoTags": [
       "Small area",
@@ -516,6 +564,9 @@
     "id": "app5-07",
     "app": 5,
     "num": 7,
+    "topics": [
+      "health-inequities"
+    ],
     "priority": "highly-relevant",
     "geoTags": [
       "Small area",
@@ -550,6 +601,9 @@
     "id": "app5-08",
     "app": 5,
     "num": 8,
+    "topics": [
+      "health-inequities"
+    ],
     "priority": "unmarked",
     "geoTags": [
       "Any"
@@ -565,7 +619,7 @@
     "link": "https://pubmed.ncbi.nlm.nih.gov/31185987/",
     "sourceType": "Peer-reviewed",
     "country": "Australia (Melbourne)",
-    "task": "How to build and test a liveability index that is detailed enough to guide policy - the method Application 6 would follow",
+    "task": "How to build and test a liveability index that is detailed enough to guide policy - the method this topic would follow",
     "metrics": "The overall liveability score and each of its component measures",
     "geoLevel": "Individual street addresses, which can be added up to larger areas",
     "inputData": "Liveability measures calculated for every residential address in Melbourne: walkability, transport, open space, employment, housing affordability and community facilities",
@@ -578,6 +632,9 @@
     "id": "app6-01",
     "app": 6,
     "num": 1,
+    "topics": [
+      "local-government"
+    ],
     "priority": "highly-relevant",
     "geoTags": [
       "Address",
@@ -612,6 +669,9 @@
     "id": "app6-02",
     "app": 6,
     "num": 2,
+    "topics": [
+      "local-government"
+    ],
     "priority": "highly-relevant",
     "geoTags": [
       "Address",
@@ -633,7 +693,7 @@
     "link": "https://www.thelancet.com/series/urban-design",
     "sourceType": "Peer-reviewed journal series",
     "country": "Global",
-    "task": "Identifies eight city-planning levers that together encourage walking, cycling and public transport - the reasoning that links Application 6's indicator areas to actual health outcomes",
+    "task": "Identifies eight city-planning levers that together encourage walking, cycling and public transport - the reasoning that links this topic's indicator areas to actual health outcomes",
     "metrics": "The eight planning levers, and their links to chronic disease and road trauma",
     "geoLevel": "City and neighbourhood",
     "inputData": "A global review of evidence on city form, transport and health",
@@ -646,6 +706,9 @@
     "id": "app6-03",
     "app": 6,
     "num": 3,
+    "topics": [
+      "local-government"
+    ],
     "priority": "unmarked",
     "geoTags": [
       "International"
@@ -674,6 +737,9 @@
     "id": "app6-04",
     "app": 6,
     "num": 4,
+    "topics": [
+      "local-government"
+    ],
     "priority": "relevant",
     "geoTags": [
       "Small area",
@@ -699,7 +765,7 @@
     "link": "https://www.tandfonline.com/doi/full/10.1080/08111146.2014.1002606",
     "sourceType": "Peer-reviewed",
     "country": "Australia",
-    "task": "Directly answers Application 6's design question: what makes indicators actually get picked up and used by decision-makers",
+    "task": "Directly answers this topic's design question: what makes indicators actually get picked up and used by decision-makers",
     "metrics": "Criteria for choosing and using indicators",
     "geoLevel": "City and local government area",
     "inputData": "A review of Australian and international liveability indicator systems, plus interviews with academics and decision-makers",
@@ -712,6 +778,9 @@
     "id": "app6-05",
     "app": 6,
     "num": 5,
+    "topics": [
+      "local-government"
+    ],
     "priority": "unmarked",
     "geoTags": [
       "LGA"
@@ -727,7 +796,7 @@
     "link": "https://ajph.aphapublications.org/doi/full/10.2105/AJPH.2018.304903",
     "sourceType": "Peer-reviewed, plus a live public dashboard",
     "country": "United States",
-    "task": "A mature working example of what Application 6 is aiming at: standardised local health measures delivered to city governments to prompt action",
+    "task": "A mature working example of what this topic is aiming at: standardised local health measures delivered to city governments to prompt action",
     "metrics": "Measures covering health outcomes, social and economic conditions, health behaviours, physical environment and clinical care",
     "geoLevel": "City and census tract (roughly neighbourhood size)",
     "inputData": "National health surveys, birth and death records, and federal administrative data",
@@ -740,6 +809,9 @@
     "id": "app6-06",
     "app": 6,
     "num": 6,
+    "topics": [
+      "local-government"
+    ],
     "priority": "unmarked",
     "geoTags": [
       "Small area",
@@ -756,7 +828,7 @@
     "link": "https://karger.com/pps/article/84/3/167/282903/The-WHO-5-Well-Being-Index-A-Systematic-Review-of",
     "sourceType": "Peer-reviewed (systematic review)",
     "country": "Many countries",
-    "task": "Evidence on whether the five-question WHO-5 wellbeing measure actually works. This is exactly the 'is this measure valid and reliable' test Application 6 calls for, and the measure is already in use on Queensland indicator lists",
+    "task": "Evidence on whether the five-question WHO-5 wellbeing measure actually works. This is exactly the 'is this measure valid and reliable' test this topic calls for, and the measure is already in use on Queensland indicator lists",
     "metrics": "The WHO-5 score (five questions); how well it detects what it is meant to detect; how responsive it is to change",
     "geoLevel": "Individual people, which can be added up to any area",
     "inputData": "Studies that used the five-question WHO-5 wellbeing questionnaire, in both clinical and general population settings",
@@ -769,6 +841,9 @@
     "id": "app6-07",
     "app": 6,
     "num": 7,
+    "topics": [
+      "local-government"
+    ],
     "priority": "relevant",
     "geoTags": [
       "Individual",
@@ -798,6 +873,9 @@
     "id": "app6-08",
     "app": 6,
     "num": 8,
+    "topics": [
+      "local-government"
+    ],
     "priority": "relevant",
     "geoTags": [
       "Small area"
@@ -813,7 +891,7 @@
     "link": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2008/08/handbook-on-constructing-composite-indicators-methodology-and-user-guide_g1gh9301/9789264043466-en.pdf",
     "sourceType": "International agency methodology guide",
     "country": "Global",
-    "task": "The standard method text for Application 6's goal of a combined index or dashboard: how to weight and combine indicators, and how to test whether the result holds up",
+    "task": "The standard method text for this topic's goal of a combined index or dashboard: how to weight and combine indicators, and how to test whether the result holds up",
     "metrics": "Ways to put indicators on a common scale and weight them; techniques for checking how sensitive the final ranking is to those choices",
     "geoLevel": "Any",
     "inputData": "Any set of candidate indicators intended to be combined into a single score",
@@ -826,6 +904,9 @@
     "id": "app6-09",
     "app": 6,
     "num": 9,
+    "topics": [
+      "local-government"
+    ],
     "priority": "unmarked",
     "geoTags": [
       "Any"
