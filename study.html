@@ -6,7 +6,7 @@
 <!-- Draft: reachable by link, kept out of search results. Remove when it is finished. -->
 <meta name="robots" content="noindex">
 <title>Source - Prevention data scan</title>
-<link rel="stylesheet" href="assets/style.css?v=9da7681a">
+<link rel="stylesheet" href="assets/style.css?v=c81f47ce">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -36,7 +36,7 @@
   </div>
 </footer>
 
-<script src="assets/common.js?v=7d2eeb67"></script>
+<script src="assets/common.js?v=59f71396"></script>
 <script>
 (function () {
   "use strict";
@@ -93,7 +93,9 @@
         row("Measures used", S.escapeHtml(study.metrics)) +
         row("Geographic level", S.escapeHtml(study.geoLevel)) +
         row("Filed under", study.geoTags.map(function (t) {
-          return '<a class="tag" href="browse.html?geo=' + encodeURIComponent(t) + '">' +
+          var full = S.tagTitle(t);
+          return '<a class="tag" href="browse.html?geo=' + encodeURIComponent(t) + '"' +
+            (full ? ' title="' + S.escapeHtml(full) + '"' : "") + ">" +
             S.escapeHtml(t) + "</a>";
         }).join("")) +
         row("Data behind it", S.escapeHtml(study.dataSources)) +

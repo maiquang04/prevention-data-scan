@@ -36,6 +36,20 @@
 
   var PRIORITY_ORDER = ["highly-relevant", "relevant", "unmarked"];
 
+  /* The three geography tags that are abbreviations. They stay short on screen and
+     expand on hover: the short form is what the workbook, the filter and the URL all
+     call them, and the full names would push every card taller. Same teach-by-hover
+     as ACCESS_MEANING above. Anything not listed here returns "" and is drawn plain. */
+  var TAG_TITLE = {
+    "LGA": "Local government area",
+    "PHN": "Primary Health Network",
+    "HHS": "Hospital and Health Service"
+  };
+
+  function tagTitle(value) {
+    return TAG_TITLE[value] || "";
+  }
+
   /* The topic list, set once from meta.json by every page after it loads. Kept here
      rather than passed around so all four pages render a topic's name the same way -
      the same reasoning as metaRow() below for a source's badge and tags. */
@@ -124,9 +138,16 @@
       escapeHtml(label) + '" title="' + escapeHtml(label) + '"></span>';
   }
 
-  function tagList(tags) {
+  /* modifier is an extra class on every pill in the list, for callers that need one
+     kind of tag to stay distinguishable from another in the same row. */
+  function tagList(tags, modifier) {
+    var cls = "tag" + (modifier ? " " + modifier : "");
     return (tags || []).map(function (tag) {
-      return '<span class="tag">' + escapeHtml(tag) + "</span>";
+      var full = tagTitle(tag);
+      var text = full
+        ? '<abbr title="' + escapeHtml(full) + '">' + escapeHtml(tag) + "</abbr>"
+        : escapeHtml(tag);
+      return '<span class="' + cls + '">' + text + "</span>";
     }).join("");
   }
 
@@ -134,10 +155,14 @@
      is listed. Shared so the quadrant panels and the browse list cannot drift into
      showing different things about the same source. Topic tags are left out here
      deliberately: on the browse page a source's own topics are implied by which
-     topic filter is ticked, and repeating them on every row would be noise. */
+     topic filter is ticked, and repeating them on every row would be noise.
+
+     Source type is a pill rather than the bare span it used to be. Both it and the
+     geography tags drive a filter on the browse page, and drawing one as a pill and
+     the other as loose text reads as though only one of them did. */
   function metaRow(study) {
     return accessBadge(study.access) + tagList(study.geoTags) +
-      "<span>" + escapeHtml(study.sourceGroup) + "</span>";
+      tagList(study.sourceGroup ? [study.sourceGroup] : [], "tag--type");
   }
 
   function externalLink(url, label) {
@@ -243,6 +268,7 @@
     currentTopicId: currentTopicId,
     legacyAppToTopic: legacyAppToTopic,
     tagList: tagList,
+    tagTitle: tagTitle,
     metaRow: metaRow,
     externalLink: externalLink,
     shortHost: shortHost,

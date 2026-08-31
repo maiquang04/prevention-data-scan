@@ -25,11 +25,17 @@
       label: function (v) { return v; },
       of: function (s) { return [s.access]; } },
 
+    /* The only facet that spells its abbreviations out in full. Everywhere else on
+       the site LGA, PHN and HHS stay short with the full name on hover, but hover
+       does not exist on a phone and a tag on a result row sits inside the button
+       that opens it. This label is neither, so it is the one place the vocabulary
+       can be taught on any device. Display only - the value, the id and the URL all
+       still carry the short form. */
     { key: "geo", legend: "Geographic level", multi: true,
       values: function () {
         return meta.geoTags.filter(function (t) { return countAll("geo", t) > 0; });
       },
-      label: function (v) { return v; },
+      label: function (v) { var full = S.tagTitle(v); return full ? v + " - " + full : v; },
       of: function (s) { return s.geoTags; } },
 
     { key: "region", legend: "Where it is from", multi: true,

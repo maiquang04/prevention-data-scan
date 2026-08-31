@@ -162,6 +162,17 @@ section { margin-bottom: 40px; }
   border: 1px solid var(--rule); border-radius: 999px;
   font-size: .74rem; color: var(--ink-soft); background: #fff;
 }
+/* Source type. Same pill as a geography tag because it filters the same way, filled
+   rather than outlined so the two are still told apart at a glance. */
+.tag--type { background: var(--panel-2); border-color: var(--panel-2); }
+
+/* LGA, PHN and HHS carry their full name on hover. The dotted underline is the only
+   thing telling a reader there is anything to hover for, so it is set here rather
+   than left to whatever the browser happens to do. */
+abbr[title] {
+  cursor: help; text-decoration: underline dotted;
+  text-decoration-color: var(--muted); text-underline-offset: 2px;
+}
 
 /* ---------- home ---------- */
 

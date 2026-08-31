@@ -75,6 +75,12 @@ cell holds anything outside these lists.
 `Address`, `Small area`, `LGA`, `PHN`, `HHS`, `Remoteness`, `State`, `National`,
 `International`, `Individual`, `Any`
 
+Three of those are abbreviations: `LGA` is a local government area, `PHN` a Primary Health
+Network, `HHS` a Hospital and Health Service. The site keeps them short and shows the full
+name on hover, from `TAG_TITLE` in `assets/common.js`. The browse page's "Geographic level"
+filter is the exception and spells them out, because hover is no use on a phone. Adding
+another abbreviation to this list means adding it there too.
+
 `Small area` covers any sub-council statistical unit — Statistical Area Level 1, 2 or 3, the
 older Statistical Local Area, a census tract. The exact unit each source uses is spelled out
 in its own "Geographic level" text; the tag is only the coarse bucket used for filtering.
