@@ -25,6 +25,9 @@
       "National",
       "International"
     ],
+    "domains": [
+      "Prosperity & Productivity"
+    ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "International"
@@ -59,6 +62,7 @@
       "Remoteness",
       "National"
     ],
+    "domains": [],
     "sourceGroup": "Government report",
     "regions": [
       "Australia"
@@ -97,6 +101,9 @@
       "State",
       "Individual"
     ],
+    "domains": [
+      "Equity"
+    ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Australia"
@@ -134,6 +141,9 @@
       "Individual",
       "State"
     ],
+    "domains": [
+      "Equity"
+    ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Australia"
@@ -164,6 +174,9 @@
     "priority": "highly-relevant",
     "geoTags": [
       "National"
+    ],
+    "domains": [
+      "Prosperity & Productivity"
     ],
     "sourceGroup": "Academic or institutional report",
     "regions": [
@@ -197,6 +210,9 @@
       "National",
       "International"
     ],
+    "domains": [
+      "Prosperity & Productivity"
+    ],
     "sourceGroup": "International agency report",
     "regions": [
       "International"
@@ -227,6 +243,9 @@
     "priority": "relevant",
     "geoTags": [
       "National"
+    ],
+    "domains": [
+      "Prosperity & Productivity"
     ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
@@ -259,6 +278,7 @@
     "geoTags": [
       "National"
     ],
+    "domains": [],
     "sourceGroup": "Academic or institutional report",
     "regions": [
       "International"
@@ -291,6 +311,7 @@
       "National",
       "International"
     ],
+    "domains": [],
     "sourceGroup": "International agency report",
     "regions": [
       "International"
@@ -327,6 +348,7 @@
     "geoTags": [
       "State"
     ],
+    "domains": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Queensland",
@@ -364,6 +386,9 @@
     "geoTags": [
       "Any"
     ],
+    "domains": [
+      "Equity"
+    ],
     "sourceGroup": "International agency report",
     "regions": [
       "International"
@@ -395,6 +420,9 @@
     "geoTags": [
       "Small area",
       "National"
+    ],
+    "domains": [
+      "Equity"
     ],
     "sourceGroup": "Academic or institutional report",
     "regions": [
@@ -438,6 +466,9 @@
       "Remoteness",
       "State"
     ],
+    "domains": [
+      "Equity"
+    ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Australia"
@@ -472,6 +503,9 @@
       "Remoteness",
       "State"
     ],
+    "domains": [
+      "Equity"
+    ],
     "sourceGroup": "Government report",
     "regions": [
       "Australia"
@@ -502,6 +536,9 @@
     "priority": "relevant",
     "geoTags": [
       "National"
+    ],
+    "domains": [
+      "Equity"
     ],
     "sourceGroup": "Government report",
     "regions": [
@@ -534,6 +571,9 @@
     "geoTags": [
       "Small area",
       "International"
+    ],
+    "domains": [
+      "Equity"
     ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
@@ -572,6 +612,9 @@
       "Small area",
       "National"
     ],
+    "domains": [
+      "Equity"
+    ],
     "sourceGroup": "Academic or institutional report",
     "regions": [
       "International"
@@ -608,6 +651,9 @@
     "geoTags": [
       "Any"
     ],
+    "domains": [
+      "Equity"
+    ],
     "sourceGroup": "Academic or institutional report",
     "regions": [
       "Australia"
@@ -639,6 +685,9 @@
     "geoTags": [
       "Address",
       "Small area"
+    ],
+    "domains": [
+      "Physical Activity"
     ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
@@ -677,6 +726,9 @@
       "Address",
       "Small area"
     ],
+    "domains": [
+      "Physical Activity"
+    ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Australia"
@@ -713,6 +765,9 @@
     "geoTags": [
       "International"
     ],
+    "domains": [
+      "Physical Activity"
+    ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "International"
@@ -744,6 +799,10 @@
     "geoTags": [
       "Small area",
       "International"
+    ],
+    "domains": [
+      "Physical Activity",
+      "Healthy Eating"
     ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
@@ -785,6 +844,7 @@
     "geoTags": [
       "LGA"
     ],
+    "domains": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Australia"
@@ -817,6 +877,7 @@
       "Small area",
       "International"
     ],
+    "domains": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "International"
@@ -849,6 +910,9 @@
       "Individual",
       "Any"
     ],
+    "domains": [
+      "Mental Wellbeing"
+    ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "International"
@@ -879,6 +943,9 @@
     "priority": "relevant",
     "geoTags": [
       "Small area"
+    ],
+    "domains": [
+      "Healthy Eating"
     ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
@@ -911,6 +978,7 @@
     "geoTags": [
       "Any"
     ],
+    "domains": [],
     "sourceGroup": "International agency report",
     "regions": [
       "International"

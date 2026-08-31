@@ -10,6 +10,13 @@
   var meta = null;
   var expanded = {};
 
+  /* Results are paged. Without it the results column runs to several screens while
+     the filter panel beside it is one screen tall, so the filters scroll out of
+     reach long before the list ends - the panel is pinned, but a pinned panel
+     taller than the window still hides its own bottom. Ten rows keeps the page
+     about as tall as the filters, so both columns end at roughly the same place. */
+  var PAGE_SIZE = 10;
+
   // key -> how to read the value off a study, and what to call it on screen.
   var FACETS = [
     // Values are topic ids; a source matches if it carries any of the ticked
@@ -19,6 +26,19 @@
       values: function () { return meta.topics.map(function (t) { return t.id; }); },
       label: function (v) { return S.topicTitle(v); },
       of: function (s) { return s.topics; } },
+
+    /* Which health issue a source speaks to - see the README for where the seven
+       domains come from and why they are worded the way they are. Plenty of
+       sources have none (a method text, a paper about hospital admissions), so this
+       facet is narrower than the others: ticking a box hides everything untagged.
+       Values with no sources are hidden the same way the geographic level does it,
+       so a domain nothing covers yet does not sit there reading as a dead end. */
+    { key: "domain", legend: "Health domain", multi: true,
+      values: function () {
+        return meta.domains.filter(function (d) { return countAll("domain", d) > 0; });
+      },
+      label: function (v) { return v; },
+      of: function (s) { return s.domains; } },
 
     { key: "access", legend: "Can we get the data?", multi: true,
       values: function () { return meta.accessValues; },
@@ -48,8 +68,13 @@
       label: function (v) { return S.priorityLabel[v]; },
       of: function (s) { return [s.priority]; } },
 
+    /* Same hidden-when-empty rule as the two facets above. A bucket exists in the
+       vocabulary before anything lands in it - "Statistical agency release" was added
+       ahead of the datasets it is for - and an option reading zero is a dead end. */
     { key: "type", legend: "Source type", multi: true,
-      values: function () { return meta.sourceGroups; },
+      values: function () {
+        return meta.sourceGroups.filter(function (g) { return countAll("type", g) > 0; });
+      },
       label: function (v) { return v; },
       of: function (s) { return [s.sourceGroup]; } }
   ];
@@ -63,7 +88,7 @@
 
   function readState() {
     var params = new URLSearchParams(window.location.search);
-    var state = { q: params.get("q") || "" };
+    var state = { q: params.get("q") || "", page: Math.max(1, parseInt(params.get("page"), 10) || 1) };
     FACETS.forEach(function (facet) {
       var raw = params.get(facet.key);
       state[facet.key] = raw ? raw.split(",").filter(Boolean) : [];
@@ -88,11 +113,13 @@
       if (state[facet.key].length) params.set(facet.key, state[facet.key].join(","));
     });
     if (state.q) params.set("q", state.q);
+    // Page 1 is the default, so leave it out and keep the common address short.
+    if (state.page > 1) params.set("page", state.page);
     var query = params.toString();
     history.replaceState(null, "", query ? "?" + query : window.location.pathname);
   }
 
-  var state = { q: "" };
+  var state = { q: "", page: 1 };
 
   /* ---------- filtering ---------- */
 
@@ -108,7 +135,8 @@
   function matchesSearch(study, query) {
     if (!query) return true;
     var haystack = [study.reference, study.task, study.metrics, study.dataSources,
-      study.keyAttributes, study.country, study.geoLevel].join(" ").toLowerCase();
+      study.keyAttributes, study.country, study.geoLevel,
+      (study.domains || []).join(" ")].join(" ").toLowerCase();
     return query.toLowerCase().split(/\s+/).every(function (word) {
       return haystack.indexOf(word) !== -1;
     });
@@ -159,21 +187,84 @@
     host.innerHTML = html;
   }
 
+  function pageCount(total) {
+    return Math.max(1, Math.ceil(total / PAGE_SIZE));
+  }
+
+  /* Numbered buttons, with the ends always shown and an ellipsis standing in for
+     any stretch skipped over. 27 sources is only three pages today, but the list
+     grows, and a row of forty numbers is its own problem. */
+  function pageNumbers(current, last) {
+    var wanted = {1: 1};
+    wanted[last] = 1;
+    for (var i = current - 1; i <= current + 1; i++) if (i >= 1 && i <= last) wanted[i] = 1;
+    var pages = Object.keys(wanted).map(Number).sort(function (a, b) { return a - b; });
+    var out = [];
+    pages.forEach(function (n, i) {
+      if (i && n - pages[i - 1] > 1) out.push(null);   // a gap - render an ellipsis
+      out.push(n);
+    });
+    return out;
+  }
+
+  function pagerHtml(current, last) {
+    if (last < 2) return "";
+    var step = function (label, target, enabled, rel) {
+      return '<button type="button" class="pager__step" data-page="' + target + '"' +
+        (enabled ? "" : " disabled") + (rel ? ' rel="' + rel + '"' : "") + ">" +
+        label + "</button>";
+    };
+    var numbers = pageNumbers(current, last).map(function (n) {
+      if (n === null) return '<span class="pager__gap" aria-hidden="true">&hellip;</span>';
+      return '<button type="button" class="pager__num" data-page="' + n + '"' +
+        (n === current ? ' aria-current="page"' : "") +
+        ' aria-label="Page ' + n + '">' + n + "</button>";
+    }).join("");
+
+    return '<nav class="pager" aria-label="Result pages">' +
+      step("&larr; Previous", current - 1, current > 1, "prev") +
+      '<span class="pager__nums">' + numbers + "</span>" +
+      step("Next &rarr;", current + 1, current < last, "next") +
+      "</nav>";
+  }
+
   function renderResults() {
     var results = currentResults();
     var bar = document.getElementById("resultbar");
     var active = FACETS.reduce(function (n, f) { return n + state[f.key].length; }, 0) + (state.q ? 1 : 0);
 
-    bar.innerHTML = "<span><b>" + results.length + "</b> of " + studies.length + " sources</span>" +
+    // Filtering can leave the current page past the end of a shorter list.
+    var last = pageCount(results.length);
+    if (state.page > last) state.page = last;
+    var from = (state.page - 1) * PAGE_SIZE;
+    var page = results.slice(from, from + PAGE_SIZE);
+
+    // Say which slice is on screen, not just the total, or the count reads as a
+    // contradiction of the ten rows underneath it.
+    var shown = results.length > PAGE_SIZE
+      ? "<span>Showing <b>" + (from + 1) + "&ndash;" + (from + page.length) +
+        "</b> of <b>" + results.length + "</b> sources</span>"
+      : "<span><b>" + results.length + "</b> of " + studies.length + " sources</span>";
+
+    bar.innerHTML = shown +
       (active ? '<button type="button" class="linkish" id="clear">Clear all filters</button>' : "");
+    // How many matched, independent of how many are drawn on this page. The bar says
+    // it in prose two lines up; this is the same number somewhere it can be read back.
+    bar.setAttribute("data-total", results.length);
+    bar.setAttribute("data-page", state.page);
+    bar.setAttribute("data-pages", last);
 
     var list = document.getElementById("results");
+    var pager = document.getElementById("pager");
     if (!results.length) {
       list.innerHTML = '<li class="empty">Nothing matches that combination.</li>';
+      pager.innerHTML = "";
       return;
     }
 
-    list.innerHTML = results.map(function (study) {
+    pager.innerHTML = pagerHtml(state.page, last);
+
+    list.innerHTML = page.map(function (study) {
       var open = !!expanded[study.id];
       return '<li class="result">' +
         '<button type="button" class="result__head" data-id="' + study.id + '" aria-expanded="' +
@@ -209,6 +300,7 @@
 
     return "<dl>" +
       row("Topics", S.topicTags(study)) +
+      row("Health domain", S.tagList(study.domains)) +
       row("What it does", S.escapeHtml(study.task)) +
       row("What goes in", S.escapeHtml(study.inputData)) +
       row("What comes out", S.escapeHtml(study.output)) +
@@ -245,6 +337,8 @@
       var at = list.indexOf(input.value);
       if (input.checked && at === -1) list.push(input.value);
       if (!input.checked && at !== -1) list.splice(at, 1);
+      // A different result set means the old page number means nothing.
+      state.page = 1;
       render();
     });
 
@@ -252,15 +346,26 @@
     var timer = null;
     search.addEventListener("input", function () {
       clearTimeout(timer);
-      timer = setTimeout(function () { state.q = search.value.trim(); render(); }, 150);
+      timer = setTimeout(function () { state.q = search.value.trim(); state.page = 1; render(); }, 150);
     });
 
     document.getElementById("resultbar").addEventListener("click", function (event) {
       if (event.target.id !== "clear") return;
       FACETS.forEach(function (f) { state[f.key] = []; });
       state.q = "";
+      state.page = 1;
       search.value = "";
       render();
+    });
+
+    document.getElementById("pager").addEventListener("click", function (event) {
+      var button = event.target.closest("[data-page]");
+      if (!button || button.disabled) return;
+      state.page = Number(button.dataset.page);
+      render();
+      // Put the reader at the top of the new page rather than wherever the old one
+      // left them, which on a short last page is below everything there is to see.
+      document.getElementById("resultbar").scrollIntoView({ block: "start" });
     });
 
     document.getElementById("results").addEventListener("click", function (event) {

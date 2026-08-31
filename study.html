@@ -6,7 +6,7 @@
 <!-- Draft: reachable by link, kept out of search results. Remove when it is finished. -->
 <meta name="robots" content="noindex">
 <title>Source - Prevention data scan</title>
-<link rel="stylesheet" href="assets/style.css?v=c81f47ce">
+<link rel="stylesheet" href="assets/style.css?v=823d4b7c">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -86,6 +86,10 @@
         row("Topics", study.topics.map(function (id) {
           return '<a class="tag" href="browse.html?topic=' + encodeURIComponent(id) + '">' +
             S.escapeHtml(S.topicTitle(id)) + "</a>";
+        }).join("")) +
+        row("Health domain", study.domains.map(function (d) {
+          return '<a class="tag" href="browse.html?domain=' + encodeURIComponent(d) + '">' +
+            S.escapeHtml(d) + "</a>";
         }).join("")) +
         row("What it does", S.escapeHtml(study.task)) +
         row("What goes in", S.escapeHtml(study.inputData)) +

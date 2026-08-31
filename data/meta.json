@@ -61,9 +61,19 @@
     "Individual",
     "Any"
   ],
+  "domains": [
+    "Physical Activity",
+    "Healthy Eating",
+    "Implementation",
+    "Social",
+    "Equity",
+    "Prosperity & Productivity",
+    "Mental Wellbeing"
+  ],
   "sourceGroups": [
     "Peer-reviewed",
     "Government report",
+    "Statistical agency release",
     "International agency report",
     "Academic or institutional report"
   ],

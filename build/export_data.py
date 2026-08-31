@@ -50,6 +50,7 @@ FIELDS = {
     "Access": "access",
     "Geo tags": "geoTagsRaw",
     "Topics": "topicsRaw",
+    "Domain": "domainsRaw",
 }
 
 # Controlled vocabulary. Anything outside these lists is a data-entry mistake and
@@ -75,6 +76,25 @@ GEO_TAGS = [
     "Any",
 ]
 
+# Which health issue a source speaks to. Not our vocabulary: these are the seven
+# domains from the partner agency's own measures spreadsheet, kept in their wording
+# and their order so a tag here means to them what it means here. Seven is few
+# enough to stay in code; the 61 indicators underneath them are not, and belong in
+# a data file if they are ever added.
+#
+# Blank is allowed and common. A source about how to build an index, or about
+# hospital admissions, has no health-issue domain, and inventing one to fill the
+# column would be worse than leaving it empty.
+DOMAINS = [
+    "Physical Activity",
+    "Healthy Eating",
+    "Implementation",
+    "Social",
+    "Equity",
+    "Prosperity & Productivity",
+    "Mental Wellbeing",
+]
+
 # Two derived facets. The workbook's own "Source type" and "Country/system" columns
 # are prose and have around a dozen distinct values each, which makes a useless
 # filter. These roll them into buckets people actually filter by. The original
@@ -82,29 +102,56 @@ GEO_TAGS = [
 SOURCE_GROUPS = [
     "Peer-reviewed",
     "Government report",
+    "Statistical agency release",
     "International agency report",
     "Academic or institutional report",
 ]
 REGIONS = ["Queensland", "Australia", "International"]
 
+# First rule whose wording appears in the cell wins, so order matters: "Peer-reviewed,
+# plus a government data tool" is peer-reviewed, not a government report.
+#
+# This used to end in a bare `return "Academic or institutional report"`, which meant
+# any wording nobody had thought of - a blank cell included - was quietly filed as an
+# academic report. The counts still added up and nothing flagged it. That is exactly
+# the failure the Access and Geo tags columns are designed to prevent, so unmatched
+# wording is now a data-entry error like any other.
+SOURCE_GROUP_RULES = [
+    ("Peer-reviewed", ("peer-reviewed", "peer reviewed", "journal article")),
+    ("Statistical agency release", ("statistical agency", "statistician", "official statistics",
+                                    "statistics release", "survey data", "administrative data",
+                                    "census", "data release", "dataset")),
+    ("Government report", ("government", "department of", "ministry", "public agency")),
+    ("International agency report", ("international agency", "world health organization",
+                                     "united nations", "oecd")),
+    ("Academic or institutional report", ("academic", "institutional", "university",
+                                          "think tank", "communique", "statement of principles",
+                                          "collective")),
+]
+
 URL_RE = re.compile(r"https?://\S+")
 
 
 def source_group(source_type):
+    """The bucket this source is filtered under, or None if the wording matches no
+    rule - the caller turns that into a data-entry error rather than a guess."""
     text = source_type.lower()
-    if text.startswith("peer-reviewed"):
-        return "Peer-reviewed"
-    if "government" in text:
-        return "Government report"
-    if "international agency" in text:
-        return "International agency report"
-    return "Academic or institutional report"
+    for group, needles in SOURCE_GROUP_RULES:
+        if any(needle in text for needle in needles):
+            return group
+    return None
 
 
 def regions_of(country):
     """Australian and Queensland evidence is wanted first, so that is the split
-    worth filtering on - not the fifteen different country strings."""
-    text = country.lower()
+    worth filtering on - not the fifteen different country strings.
+
+    Returns None for a blank cell. It used to return International, which is a
+    plausible-looking answer to a question nobody answered - an unfilled row would
+    appear in the filters as overseas evidence."""
+    text = country.lower().strip()
+    if not text:
+        return None
     tags = []
     if "queensland" in text:
         tags.append("Queensland")
@@ -235,6 +282,13 @@ def export(src, out_dir, quiet=False):
             if not tags:
                 problems.append("%s: no geo tags" % where)
 
+            # Same split and check as the geo tags, without the "must have at least
+            # one" rule - plenty of sources genuinely have no health-issue domain.
+            domains = [d.strip() for d in record.pop("domainsRaw", "").split(";") if d.strip()]
+            for domain in domains:
+                if domain not in DOMAINS:
+                    problems.append("%s: domain '%s' is not in the vocabulary" % (where, domain))
+
             # A blank cell means "whatever this sheet is about", so the column only
             # has to be filled in where a source genuinely spans more than one topic.
             named = [t.strip() for t in record.pop("topicsRaw", "").split(";") if t.strip()]
@@ -257,8 +311,18 @@ def export(src, out_dir, quiet=False):
             record["topics"] = topic_ids
             record["priority"] = priority_of(row)
             record["geoTags"] = tags
-            record["sourceGroup"] = source_group(record.get("sourceType", ""))
-            record["regions"] = regions_of(record.get("country", ""))
+            record["domains"] = domains
+            group = source_group(record.get("sourceType", ""))
+            if group is None:
+                problems.append("%s: source type '%s' matches no rule in "
+                                "SOURCE_GROUP_RULES - add a rule or fix the cell"
+                                % (where, record.get("sourceType", "")))
+            record["sourceGroup"] = group or ""
+
+            regions = regions_of(record.get("country", ""))
+            if regions is None:
+                problems.append("%s: no country or system given" % where)
+            record["regions"] = regions or []
             record["dataLinks"] = parse_links(record.pop("dataLinkRaw", ""))
 
             if not record["reference"]:
@@ -302,6 +366,7 @@ def export(src, out_dir, quiet=False):
         "byAccess": counts,
         "accessValues": ACCESS_VALUES,
         "geoTags": GEO_TAGS,
+        "domains": DOMAINS,
         "sourceGroups": SOURCE_GROUPS,
         "regions": REGIONS,
         "withDownloadableData": sum(

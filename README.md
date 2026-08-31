@@ -54,9 +54,9 @@ the pages
 measure belongs under People or under Places is a judgement, not something to infer from a
 spreadsheet column.
 
-### The two controlled columns
+### The three controlled columns
 
-Filtering needs clean categories, which the workbook's prose columns cannot give. Two
+Filtering needs clean categories, which the workbook's prose columns cannot give. Three
 columns exist purely to drive the filters, and `export_data.py` stops with an error if a
 cell holds anything outside these lists.
 
@@ -85,8 +85,34 @@ another abbreviation to this list means adding it there too.
 older Statistical Local Area, a census tract. The exact unit each source uses is spelled out
 in its own "Geographic level" text; the tag is only the coarse bucket used for filtering.
 
+**Domain** — which health issue a source speaks to. None, one or several, separated by
+semicolons:
+
+`Physical Activity`, `Healthy Eating`, `Implementation`, `Social`, `Equity`,
+`Prosperity & Productivity`, `Mental Wellbeing`
+
+These are not our words. They are the seven domains from the partner agency's own measures
+spreadsheet, kept in their wording and their order so a tag here means to them what it means
+here. Unlike Access and Geo tags, **blank is allowed and is common** — 7 of the 27 sources
+have no domain, because a text about how to build a composite index, or one about hospital
+admission rates, is not about a health issue. Filling the column in for the sake of filling
+it in would be worse than leaving it empty. A domain no source carries yet is hidden from the
+filter rather than shown with a count of zero.
+
 Two more facets, source type and region, are derived in `export_data.py` from the prose
-columns rather than stored, so there is nothing extra to maintain.
+columns rather than stored, so there is nothing extra to maintain. They are still checked:
+a Source type whose wording matches no rule in `SOURCE_GROUP_RULES`, and a blank
+Country/system, both stop the export. They used to fall back silently — anything unrecognised
+became an academic report from overseas, which is the kind of wrong answer that looks exactly
+like a right one.
+
+### Adding a controlled column
+
+`python build/add_column.py "Indicators" --width 44` adds an empty column to every sheet,
+styled so the relevance highlighting stays unbroken across it — `priority_of()` reads those
+cell fills back, so a white gap through a highlighted row is a real hazard, not a cosmetic
+one. Fill the column, then add it to `FIELDS` in `export_data.py`; a heading listed in
+`FIELDS` but missing from a sheet stops the export.
 
 ## Before pushing
 
@@ -133,6 +159,7 @@ data/
   quadrants.json    hand-authored — keyed by topic id
 build/
   export_data.py    workbook → JSON, then re-stamps the asset links
+  add_column.py     adds an empty controlled column to every sheet, styling and all
   add_topics_column.py  one-off: adds the Topics column to the workbook
   stamp_assets.py   adds ?v=<hash> to each stylesheet and script link
   check_publish.py  pre-push safety scan

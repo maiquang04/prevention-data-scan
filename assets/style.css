@@ -281,8 +281,22 @@ abbr[title] {
 
 .browse { display: grid; grid-template-columns: 250px 1fr; gap: 32px; align-items: start; }
 
-.filters { position: sticky; top: 16px; }
+/* Pinned beside the results, and scrollable in its own right. The height cap is the
+   part that matters: sticky alone pins the top edge, so once the filter list grew
+   past the viewport its last group sat permanently below the fold with no way to
+   reach it - the page scroll moved the results instead. Capping the height and
+   letting it scroll internally puts those groups back within reach.
+   overscroll-behavior stops a flick at the end of the list carrying on into the
+   page behind it. */
+.filters {
+  position: sticky; top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto; overscroll-behavior: contain;
+  /* room for the scrollbar so the labels do not reflow when it appears */
+  padding-right: 4px; scrollbar-width: thin;
+}
 .filters fieldset { border: 0; padding: 0; margin: 0 0 20px; }
+.filters fieldset:last-child { margin-bottom: 4px; }
 .filters legend {
   font-weight: 650; font-size: .82rem; text-transform: uppercase;
   letter-spacing: .04em; color: var(--muted); padding: 0 0 8px;
@@ -336,6 +350,31 @@ abbr[title] {
 .meta-row .tag { margin: 0; }
 .result__chev { flex: none; color: var(--muted); font-size: .8rem; padding-top: .35em; }
 
+/* ---------- pager ---------- */
+
+.pager {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  margin: 22px 0 4px; padding-top: 16px; border-top: 1px solid var(--rule-soft);
+}
+.pager__nums { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 auto; }
+.pager__step, .pager__num {
+  font: inherit; font-size: .86rem; line-height: 1.4; cursor: pointer;
+  border: 1px solid var(--rule); border-radius: var(--radius);
+  background: #fff; color: var(--ink-soft); padding: 6px 12px;
+  transition: background-color .12s, border-color .12s, color .12s;
+}
+.pager__num { padding: 6px 11px; font-variant-numeric: tabular-nums; }
+.pager__step:hover:not(:disabled), .pager__num:hover:not([aria-current]) {
+  color: var(--accent-dark); border-color: var(--accent); background: var(--accent-soft);
+}
+/* Disabled at the ends rather than hidden, so the row does not shift sideways as
+   you move through the pages. */
+.pager__step:disabled { color: var(--muted); opacity: .45; cursor: default; }
+.pager__num[aria-current] {
+  background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600;
+}
+.pager__gap { color: var(--muted); padding: 6px 2px; font-size: .86rem; }
+
 .detail { padding: 14px 0 4px 4.6em; }
 .detail dl { display: grid; grid-template-columns: 190px 1fr; gap: 6px 18px; margin: 0 0 14px; font-size: .88rem; }
 .detail dt { color: var(--muted); font-weight: 600; }
@@ -369,9 +408,17 @@ abbr[title] {
 
 @media (max-width: 900px) {
   .browse { grid-template-columns: 1fr; gap: 20px; }
-  .filters { position: static; }
+  /* Stacked above the results, so it is neither pinned nor capped - a filter panel
+     that scrolls inside its own box on a phone is worse than one that just sits
+     there and lets the page scroll. */
+  .filters {
+    position: static; max-height: none; overflow: visible;
+    padding-right: 0;
+  }
   .filters fieldset { margin-bottom: 14px; }
   .detail { padding-left: 0; }
+  /* The numbers alone on a phone; Previous and Next carry the arrows. */
+  .pager__step { padding: 6px 10px; }
   .detail dl, .record dl { grid-template-columns: 1fr; gap: 2px; }
   .detail dt, .record dt { margin-top: 8px; }
 }
