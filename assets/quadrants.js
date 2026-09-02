@@ -78,7 +78,7 @@
         '<span class="meta-row">' + S.metaRow(study) + "</span>" +
         '<span class="small">' +
           (study.accessNote ? S.escapeHtml(study.accessNote) : S.escapeHtml(S.accessMeaning[study.access] || "")) +
-          (where ? "<br>Where to get it: " + where : "") +
+          (where ? "<br>Source links: " + where : "") +
         "</span></li>";
     }).join("");
 

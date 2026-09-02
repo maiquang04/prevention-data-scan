@@ -9,12 +9,12 @@
     "question for each topic live - not repeated here, so there is one place to edit."
   ],
   "rows": [
-    { "key": "people", "label": "People", "note": "Population groups - who is affected" },
-    { "key": "places", "label": "Places", "note": "Areas - where the difference shows up" }
+    { "key": "people", "label": "People", "note": "Population groups affected" },
+    { "key": "places", "label": "Places", "note": "Areas with measurable differences" }
   ],
   "cols": [
-    { "key": "actions", "label": "Actions", "note": "What can be done" },
-    { "key": "measures", "label": "Measures", "note": "How the effect would be measured" }
+    { "key": "actions", "label": "Actions", "note": "Available actions" },
+    { "key": "measures", "label": "Measures", "note": "Measurement approach" }
   ],
   "topics": {
     "health-system": {
@@ -23,7 +23,7 @@
         "people-actions": [
           {
             "name": "Prevention delivered to individuals, with a return on investment attached",
-            "note": "Programmes aimed at particular people - screening, counselling, vaccination - where someone has costed the return. Across the published studies the median return was 14 dollars back for every dollar spent.",
+            "note": "Programmes aimed at particular people - screening, counselling, vaccination - with a costed return. Across the published studies the median return was 14 dollars back for every dollar spent.",
             "studies": ["app1-01", "app1-07"]
           },
           {
@@ -33,7 +33,7 @@
           },
           {
             "name": "A ranked list of 123 preventive interventions by value for money",
-            "note": "An Australian exercise, led by the University of Queensland, that put preventive measures in order of cost per healthy year of life gained. The nearest thing to a menu of what to fund first.",
+            "note": "An Australian exercise, led by the University of Queensland, that put preventive measures in order of cost per healthy year of life gained. The nearest thing to a priority funding menu.",
             "studies": ["app1-05"]
           }
         ],
@@ -72,7 +72,7 @@
           },
           {
             "name": "A caution before comparing one area with another",
-            "note": "When one area looks worse than another, that mostly reflects who lives there rather than how local services perform. General practitioner supply explained 2.9 per cent of the difference between areas; people's own circumstances explained 36.9 per cent.",
+            "note": "A worse area result mostly reflects the resident population rather than local service performance. General practitioner supply explained 2.9 per cent of the difference between areas; people's own circumstances explained 36.9 per cent.",
             "studies": ["app1-03"]
           }
         ],
@@ -83,17 +83,17 @@
             "studies": ["app1-02"]
           },
           {
-            "name": "How much of the gap between areas is services, and how much is population",
-            "note": "A method for splitting the difference between areas into the part explained by service supply and the part explained by who lives there.",
+            "name": "Service and population contributions to area gaps",
+            "note": "A method for splitting the difference between areas into the part explained by service supply and the part explained by resident population.",
             "studies": ["app1-03"]
           },
           {
-            "name": "Regional share of preventable admissions, and what they cost",
+            "name": "Regional share and cost of preventable admissions",
             "note": "The one study in this set that looks specifically at regional Queensland.",
             "studies": ["app1-10"]
           },
           {
-            "name": "How Australia compares with other wealthy countries",
+            "name": "Australia compared with other wealthy countries",
             "note": "Avoidable admission rates for asthma, chronic lung disease, heart failure and diabetes, on a comparable basis across countries.",
             "studies": ["app1-09"]
           }

@@ -16,7 +16,7 @@
     <a class="site-head__title" href="index.html">Prevention data scan <span>&middot; working draft</span></a>
     <nav class="site-nav" aria-label="Main">
       <a href="index.html">Overview</a>
-      <a href="application.html?app=1" data-grid-nav>Application 1</a>
+      <a href="application.html?app=1" data-grid-nav>Topic view</a>
       <a href="browse.html">Browse sources</a>
     </nav>
   </div>
@@ -36,7 +36,7 @@
   </div>
 </footer>
 
-<script src="assets/common.js?v=59f71396"></script>
+<script src="assets/common.js?v=d33add98"></script>
 <script>
 (function () {
   "use strict";
@@ -58,7 +58,7 @@
 
     if (!study) {
       document.getElementById("record").innerHTML =
-        '<div class="error"><p><b>No source with that reference.</b></p>' +
+        '<div class="error"><p><b>That source link does not match anything in the scan.</b></p>' +
         '<p>Try the <a href="browse.html">browse page</a>.</p></div>';
       return;
     }
@@ -83,31 +83,31 @@
         " &middot; " + S.escapeHtml(study.sourceType) + " &middot; " + S.escapeHtml(study.country) + "</span></p>" +
       (study.link ? "<p>" + S.externalLink(study.link, "Read the source") + "</p>" : "") +
       '<div class="record"><dl>' +
-        row("Topics", study.topics.map(function (id) {
+        row(S.label("topics"), study.topics.map(function (id) {
           return '<a class="tag" href="browse.html?topic=' + encodeURIComponent(id) + '">' +
             S.escapeHtml(S.topicTitle(id)) + "</a>";
         }).join("")) +
-        row("Health domain", study.domains.map(function (d) {
+        row(S.label("healthDomain"), study.domains.map(function (d) {
           return '<a class="tag" href="browse.html?domain=' + encodeURIComponent(d) + '">' +
-            S.escapeHtml(d) + "</a>";
+            S.escapeHtml(S.domainLabel(d)) + "</a>";
         }).join("")) +
-        row("What it does", S.escapeHtml(study.task)) +
-        row("What goes in", S.escapeHtml(study.inputData)) +
-        row("What comes out", S.escapeHtml(study.output)) +
-        row("Measures used", S.escapeHtml(study.metrics)) +
-        row("Geographic level", S.escapeHtml(study.geoLevel)) +
-        row("Filed under", study.geoTags.map(function (t) {
+        row(S.label("summary"), S.escapeHtml(study.task)) +
+        row(S.label("inputs"), S.escapeHtml(study.inputData)) +
+        row(S.label("outputs"), S.escapeHtml(study.output)) +
+        row(S.label("measures"), S.escapeHtml(study.metrics)) +
+        row(S.label("geography"), S.escapeHtml(study.geoLevel)) +
+        row(S.label("geographyTags"), study.geoTags.map(function (t) {
           var full = S.tagTitle(t);
           return '<a class="tag" href="browse.html?geo=' + encodeURIComponent(t) + '"' +
             (full ? ' title="' + S.escapeHtml(full) + '"' : "") + ">" +
             S.escapeHtml(t) + "</a>";
         }).join("")) +
-        row("Data behind it", S.escapeHtml(study.dataSources)) +
-        row("Can we get it?", S.accessBadge(study.access) + " " +
+        row(S.label("dataSources"), S.escapeHtml(study.dataSources)) +
+        row(S.label("access"), S.accessBadge(study.access) + " " +
           S.escapeHtml(study.accessNote || S.accessMeaning[study.access] || "")) +
-        row("Where to get it", links ? "<ul>" + links + "</ul>" : "") +
-        row("How big it is", S.escapeHtml(study.scale)) +
-        row("What is in it", S.escapeHtml(study.keyAttributes)) +
+        row(S.label("sourceLinks"), links ? "<ul>" + links + "</ul>" : "") +
+        row(S.label("scale"), S.escapeHtml(study.scale)) +
+        row(S.label("keyAttributes"), S.escapeHtml(study.keyAttributes)) +
       "</dl></div>" +
       '<p style="margin-top:28px"><a href="browse.html">Back to browse</a></p>';
   }).catch(function (err) {

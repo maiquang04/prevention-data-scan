@@ -28,9 +28,9 @@
       label: function (v) { return S.topicTitle(v); },
       of: function (s) { return s.topics; } },
 
-    { key: "access", legend: "Can we get the data?", multi: true,
+    { key: "access", legend: "Access", multi: true,
       values: function () { return meta.accessValues; },
-      label: function (v) { return v; },
+      label: function (v) { return S.accessLabel(v); },
       of: function (s) { return [s.access]; } },
 
     /* The only facet that spells its abbreviations out in full. Everywhere else on
@@ -39,7 +39,7 @@
        that opens it. This label is neither, so it is the one place the vocabulary
        can be taught on any device. Display only - the value, the id and the URL all
        still carry the short form. */
-    { key: "geo", legend: "Geographic level", multi: true,
+    { key: "geo", legend: "Geography", multi: true,
       values: function () {
         return meta.geoTags.filter(function (t) { return countAll("geo", t) > 0; });
       },
@@ -52,24 +52,24 @@
        facet is narrower than the others: ticking a box hides everything untagged.
        Values with no sources are hidden the same way the geographic level does it,
        so a domain nothing covers yet does not sit there reading as a dead end. */
-    { key: "domain", legend: "Health domain", multi: true, collapsed: true,
+    { key: "domain", legend: "Health focus", multi: true, collapsed: true,
       values: function () {
         return meta.domains.filter(function (d) { return countAll("domain", d) > 0; });
       },
-      label: function (v) { return v; },
+      label: function (v) { return S.domainLabel(v); },
       of: function (s) { return s.domains; } },
 
     /* Same hidden-when-empty rule as the two facets above. A bucket exists in the
        vocabulary before anything lands in it - "Statistical agency release" was added
        ahead of the datasets it is for - and an option reading zero is a dead end. */
-    { key: "type", legend: "Source type", multi: true, collapsed: true,
+    { key: "type", legend: "Kind of source", multi: true, collapsed: true,
       values: function () {
         return meta.sourceGroups.filter(function (g) { return countAll("type", g) > 0; });
       },
-      label: function (v) { return v; },
+      label: function (v) { return S.sourceGroupLabel(v); },
       of: function (s) { return [s.sourceGroup]; } },
 
-    { key: "region", legend: "Where it is from", multi: true, collapsed: true,
+    { key: "region", legend: "Region", multi: true, collapsed: true,
       values: function () { return meta.regions; },
       label: function (v) { return v; },
       of: function (s) { return s.regions; } },
@@ -137,7 +137,9 @@
     if (!query) return true;
     var haystack = [study.reference, study.task, study.metrics, study.dataSources,
       study.keyAttributes, study.country, study.geoLevel,
-      (study.domains || []).join(" ")].join(" ").toLowerCase();
+      (study.domains || []).join(" "),
+      (study.domains || []).map(S.domainLabel).join(" "),
+      S.sourceGroupLabel(study.sourceGroup)].join(" ").toLowerCase();
     return query.toLowerCase().split(/\s+/).every(function (word) {
       return haystack.indexOf(word) !== -1;
     });
@@ -328,25 +330,25 @@
     }).join("");
 
     return "<dl>" +
-      row("Topics", S.topicTags(study)) +
-      row("Health domain", S.tagList(study.domains)) +
-      row("What it does", S.escapeHtml(study.task)) +
-      row("What goes in", S.escapeHtml(study.inputData)) +
-      row("What comes out", S.escapeHtml(study.output)) +
-      row("Measures used", S.escapeHtml(study.metrics)) +
-      row("Geographic level", S.escapeHtml(study.geoLevel)) +
-      row("Data behind it", S.escapeHtml(study.dataSources)) +
-      row("Can we get it?", S.accessBadge(study.access) +
+      row(S.label("topics"), S.topicTags(study)) +
+      row(S.label("healthDomain"), S.tagList((study.domains || []).map(S.domainLabel))) +
+      row(S.label("summary"), S.escapeHtml(study.task)) +
+      row(S.label("inputs"), S.escapeHtml(study.inputData)) +
+      row(S.label("outputs"), S.escapeHtml(study.output)) +
+      row(S.label("measures"), S.escapeHtml(study.metrics)) +
+      row(S.label("geography"), S.escapeHtml(study.geoLevel)) +
+      row(S.label("dataSources"), S.escapeHtml(study.dataSources)) +
+      row(S.label("access"), S.accessBadge(study.access) +
         (study.accessNote ? " " + S.escapeHtml(study.accessNote) : "")) +
-      row("Where to get it", links ? "<ul>" + links + "</ul>" : "") +
-      row("How big it is", S.escapeHtml(study.scale)) +
-      row("What is in it", S.escapeHtml(study.keyAttributes)) +
-      row("Country or system", S.escapeHtml(study.country)) +
-      row("Source type", S.escapeHtml(study.sourceType)) +
+      row(S.label("sourceLinks"), links ? "<ul>" + links + "</ul>" : "") +
+      row(S.label("scale"), S.escapeHtml(study.scale)) +
+      row(S.label("keyAttributes"), S.escapeHtml(study.keyAttributes)) +
+      row(S.label("country"), S.escapeHtml(study.country)) +
+      row(S.label("sourceType"), S.escapeHtml(study.sourceType)) +
       "</dl>" +
       '<p class="small">' +
         (study.link ? S.externalLink(study.link, "Read the source") + " &nbsp;&middot;&nbsp; " : "") +
-        '<a href="study.html?id=' + encodeURIComponent(study.id) + '">Open its own page</a>' +
+        '<a href="study.html?id=' + encodeURIComponent(study.id) + '">Open source page</a>' +
       "</p>";
   }
 

@@ -11,14 +11,59 @@
     "Not yet assessed": "badge--unassessed"
   };
 
+  var ACCESS_LABEL = {
+    "Public": "Public data",
+    "Public (aggregate only)": "Public summaries",
+    "Restricted - application": "Apply for access",
+    "Not a dataset": "No dataset",
+    "Not yet assessed": "Access unchecked"
+  };
+
   // Shown next to the badge so a reader who has never met the word "restricted"
   // in this context still knows what it means.
   var ACCESS_MEANING = {
-    "Public": "Free to download now.",
-    "Public (aggregate only)": "The published results and maps are free. The records behind them are not released.",
-    "Restricted - application": "The data exists, but it takes an application to whoever holds it.",
-    "Not a dataset": "A review, guide or set of principles rather than data to download.",
-    "Not yet assessed": "How obtainable this one is has not been checked yet."
+    "Public": "Ready to download.",
+    "Public (aggregate only)": "Published tables, maps or summaries are available; record-level data is not.",
+    "Restricted - application": "The data exists, but you need approval from the data holder.",
+    "Not a dataset": "A paper, guide or method rather than data to download.",
+    "Not yet assessed": "Access has not been checked yet."
+  };
+
+  var FIELD_LABEL = {
+    topics: "Related topics",
+    healthDomain: "Health focus",
+    summary: "Purpose",
+    inputs: "Input",
+    outputs: "Output",
+    measures: "Measures",
+    geography: "Geography",
+    geographyTags: "Geography tags",
+    dataSources: "Underlying data",
+    access: "Access",
+    sourceLinks: "Source links",
+    scale: "Scale",
+    keyAttributes: "Key details",
+    country: "Country or system",
+    sourceType: "Specific source type",
+    sourceKind: "Kind of source"
+  };
+
+  var DOMAIN_LABEL = {
+    "Physical Activity": "Physical activity",
+    "Healthy Eating": "Healthy eating",
+    "Implementation": "Implementation",
+    "Social": "Social connection",
+    "Equity": "Equity",
+    "Prosperity & Productivity": "Prosperity and productivity",
+    "Mental Wellbeing": "Mental wellbeing"
+  };
+
+  var SOURCE_GROUP_LABEL = {
+    "Peer-reviewed": "Peer-reviewed paper",
+    "Government report": "Government report",
+    "Statistical agency release": "Official data release",
+    "International agency report": "International agency report",
+    "Academic or institutional report": "Academic or institutional source"
   };
 
   var PRIORITY_LABEL = {
@@ -29,7 +74,7 @@
 
   // Same shape as ACCESS_MEANING above, so the two keys on the site read alike.
   var PRIORITY_MEANING = {
-    "highly-relevant": "Closest to what this application needs.",
+    "highly-relevant": "Closest fit for this application.",
     "relevant": "Useful, though not the first place to look.",
     "unmarked": "Included in the scan but not singled out."
   };
@@ -65,7 +110,7 @@
       TOPIC_BY_ID[t.id] = t;
       if (t.legacyApp != null) LEGACY_APP_TO_TOPIC[String(t.legacyApp)] = t.id;
     });
-    // The header link to the grid view is hardcoded HTML ("Application 1"), because
+    // The header link to the grid view is hardcoded HTML ("Topic view"), because
     // it exists on several pages and none of them can know the topic list before
     // this data arrives. Point it at whichever topic actually has a grid, so a
     // second one being built later needs no page edited by hand. data-grid-nav
@@ -103,6 +148,22 @@
     return tagList((study.topics || []).map(topicTitle));
   }
 
+  function label(key) {
+    return FIELD_LABEL[key] || key;
+  }
+
+  function accessLabel(access) {
+    return ACCESS_LABEL[access] || access || "Access unchecked";
+  }
+
+  function domainLabel(domain) {
+    return DOMAIN_LABEL[domain] || domain;
+  }
+
+  function sourceGroupLabel(group) {
+    return SOURCE_GROUP_LABEL[group] || group;
+  }
+
   /* The topic id meant by the current page: ?topic= first, then the legacy ?app=
      link already sent out, then the first topic with a built grid, then
      whatever topic is listed first. */
@@ -129,7 +190,7 @@
   function accessBadge(access) {
     var cls = ACCESS_CLASS[access] || "badge--notdata";
     return '<span class="badge ' + cls + '" title="' + escapeHtml(ACCESS_MEANING[access] || "") +
-      '">' + escapeHtml(access || "Not yet assessed") + "</span>";
+      '">' + escapeHtml(accessLabel(access)) + "</span>";
   }
 
   function priorityDot(priority) {
@@ -162,7 +223,7 @@
      the other as loose text reads as though only one of them did. */
   function metaRow(study) {
     return accessBadge(study.access) + tagList(study.geoTags) +
-      tagList(study.sourceGroup ? [study.sourceGroup] : [], "tag--type");
+      tagList(study.sourceGroup ? [sourceGroupLabel(study.sourceGroup)] : [], "tag--type");
   }
 
   function externalLink(url, label) {
@@ -257,6 +318,7 @@
   global.scan = {
     escapeHtml: escapeHtml,
     accessBadge: accessBadge,
+    accessLabel: accessLabel,
     accessMeaning: ACCESS_MEANING,
     priorityDot: priorityDot,
     priorityLabel: PRIORITY_LABEL,
@@ -265,6 +327,9 @@
     setTopics: setTopics,
     topicTitle: topicTitle,
     topicTags: topicTags,
+    label: label,
+    domainLabel: domainLabel,
+    sourceGroupLabel: sourceGroupLabel,
     currentTopicId: currentTopicId,
     legacyAppToTopic: legacyAppToTopic,
     tagList: tagList,

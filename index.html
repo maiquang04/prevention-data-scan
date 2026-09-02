@@ -6,7 +6,7 @@
 <!-- Draft: reachable by link, kept out of search results. Remove when it is finished. -->
 <meta name="robots" content="noindex">
 <title>Prevention data scan</title>
-<meta name="description" content="A scan of what data already exists for measuring prevention, and how obtainable each source is.">
+<meta name="description" content="A scan of existing prevention data sources, with access conditions and measurement uses.">
 <link rel="stylesheet" href="assets/style.css?v=6c420df3">
 </head>
 <body>
@@ -17,7 +17,7 @@
     <a class="site-head__title" href="index.html">Prevention data scan <span>&middot; working draft</span></a>
     <nav class="site-nav" aria-label="Main">
       <a href="index.html">Overview</a>
-      <a href="application.html?app=1" data-grid-nav>Application 1</a>
+      <a href="application.html?app=1" data-grid-nav>Topic view</a>
       <a href="browse.html">Browse sources</a>
     </nav>
   </div>
@@ -35,17 +35,17 @@
     </div>
 
     <div class="buttons">
-      <a class="button" href="application.html?app=1" data-grid-nav="Explore">Explore Application 1</a>
+      <a class="button" href="application.html?app=1" data-grid-nav="Explore">Explore topic view</a>
       <a class="button button--ghost" href="browse.html">Browse every source</a>
     </div>
 
     <section style="margin-top:44px">
-      <h2>Three questions being scanned</h2>
+      <h2>Questions being scanned</h2>
       <div class="cards" id="cards"></div>
     </section>
 
     <section>
-      <h2>How to read this</h2>
+      <h2>Access key</h2>
       <div class="note">
         <ul id="access-key" style="margin:0;padding-left:0;list-style:none"></ul>
       </div>
@@ -60,7 +60,7 @@
   </div>
 </footer>
 
-<script src="assets/common.js?v=59f71396"></script>
+<script src="assets/common.js?v=d33add98"></script>
 <script>
 (function () {
   "use strict";
@@ -90,8 +90,8 @@
         "<p>" + S.escapeHtml(topic.blurb) + "</p>" +
         '<p class="card__meta">' + topic.count + " sources &middot; " +
           (topic.hasGrid
-            ? "grid view built"
-            : '<a href="browse.html?topic=' + topic.id + '">listed on the browse page</a>, grid view to come') +
+            ? "structured view ready"
+            : '<a href="browse.html?topic=' + topic.id + '">listed on the browse page</a>, structured view to come') +
         "</p></article>";
     }).join("");
 
