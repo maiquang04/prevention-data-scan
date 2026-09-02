@@ -362,6 +362,88 @@
     ]
   },
   {
+    "reference": "Joint Regional Needs Assessments, Queensland (series). Produced jointly by each Primary Health Network and its Hospital and Health Service, 2025-2027 cycle",
+    "link": "https://www.metrosouth.health.qld.gov.au/__data/assets/pdf_file/0022/386014/brisbane-south-jrna-report-2025-2027.pdf",
+    "sourceType": "Government report",
+    "country": "Australia (Queensland)",
+    "task": "Each Queensland region publishes an assessment of what its population needs and where services fall short, agreed jointly by the local Primary Health Network and hospital service. These are not datasets, but they name the priority indicators each region has settled on and say where the numbers came from - and unlike a research paper they are redone on a cycle, so they stay current. Seven Primary Health Networks means roughly seven documents. This row covers the series; Brisbane South and North Brisbane and Moreton Bay are the two linked.",
+    "metrics": "Whatever each region has prioritised - typically chronic disease, obesity, smoking, mental health, alcohol and other drugs, and potentially preventable hospitalisations",
+    "geoLevel": "Primary Health Network catchment and Hospital and Health Service, broken down to Statistical Area Level 2 and 3 and local government area",
+    "inputData": "Population and hospital data for the region, plus consultation with local services and community",
+    "output": "A free report per region setting out priority health needs and service gaps",
+    "dataSources": "Brisbane South cites the Queensland Preventive Health Survey, the 2021 Census through the Queensland Government Statistician's Office, Australian Institute of Health and Welfare data, Medicare claims, and Queensland Health's non-admitted patient collection",
+    "accessNote": "Free PDFs, Creative Commons Attribution 3.0 Australia. Useful mainly as a map to other people's data: they say which indicator a region cares about and which collection it came from, which is faster than working that out from scratch.",
+    "scale": "One report per Primary Health Network catchment; Brisbane South covers 23 per cent of Queensland's population",
+    "keyAttributes": "Priority health needs per region, with the source of each figure named",
+    "access": "Not a dataset",
+    "id": "app1-11",
+    "app": 1,
+    "num": 11,
+    "topics": [
+      "health-system",
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "PHN",
+      "HHS",
+      "Small area",
+      "LGA"
+    ],
+    "domains": [],
+    "sourceGroup": "Government report",
+    "regions": [
+      "Queensland",
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "Brisbane South 2025-2027",
+        "url": "https://www.metrosouth.health.qld.gov.au/__data/assets/pdf_file/0022/386014/brisbane-south-jrna-report-2025-2027.pdf"
+      },
+      {
+        "label": "North Brisbane and Moreton Bay 2025-27",
+        "url": "https://metronorth.health.qld.gov.au/wp-content/uploads/2025/05/jrna-summary-25-27.pdf"
+      }
+    ]
+  },
+  {
+    "reference": "Department of Health (2025). Health Indicators 2025: Snapshot series I. Population profiles. Metro South Health, Brisbane",
+    "link": "https://www.metrosouth.health.qld.gov.au/__data/assets/pdf_file/0039/392979/health-indicators-25-population-profiles.pdf",
+    "sourceType": "Government report",
+    "country": "Australia (Queensland)",
+    "task": "A worked example of one Queensland hospital service profiling its own population down to suburb groupings, and reporting it by council area. It shows the level of detail a Queensland health service can already produce for a council-sized area, which is the question Application 6 keeps running into.",
+    "metrics": "Population and projections, growth, median age, Aboriginal and Torres Strait Islander share, country of birth, language, and the health indicators in the wider snapshot series",
+    "geoLevel": "Hospital and Health Service, local government area (Logan, Redland and southern Brisbane), and Statistical Area Level 2 and 3",
+    "inputData": "Population estimates and projections, the 2021 Census, and Queensland Health collections",
+    "output": "A free 64-page report with tables per area, including an appendix of the underlying figures",
+    "dataSources": "Australian Bureau of Statistics population estimates and the 2021 Census; Queensland Health collections",
+    "accessNote": "Free PDF, Creative Commons Attribution 3.0 Australia. The report is public; the tables come as a PDF appendix rather than a data file, so anything computed from it has to be retyped. Note the report also points at an internal Queensland Health address for an electronic version, which is not reachable from outside.",
+    "scale": "1.31 million residents, 23 per cent of Queensland, across 20 Statistical Area Level 3s and 116 Statistical Area Level 2s",
+    "keyAttributes": "Population and demographic profile per area, with Queensland figures alongside for comparison",
+    "access": "Public (aggregate only)",
+    "id": "app1-12",
+    "app": 1,
+    "num": 12,
+    "topics": [
+      "health-system",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "HHS",
+      "LGA",
+      "Small area"
+    ],
+    "domains": [],
+    "sourceGroup": "Government report",
+    "regions": [
+      "Queensland",
+      "Australia"
+    ],
+    "dataLinks": []
+  },
+  {
     "reference": "World Health Organization (2013). Handbook on health inequality monitoring: with a special focus on low- and middle-income countries. Geneva: World Health Organization",
     "link": "https://www.who.int/publications/i/item/9789241548632",
     "sourceType": "International agency handbook",
@@ -659,6 +741,92 @@
       "Australia"
     ],
     "dataLinks": []
+  },
+  {
+    "reference": "Public Health Information Development Unit (PHIDU). Social Health Atlas of Australia. Adelaide: Torrens University Australia",
+    "link": "https://phidu.torrens.edu.au/social-health-atlases",
+    "sourceType": "Institutional data release",
+    "country": "Australia",
+    "task": "Brings health, social and economic figures for small areas together in one place so differences between areas can be seen side by side. It is the usual starting point in Australia for asking which areas are worse off and on what.",
+    "metrics": "Chronic disease, health risk factors, socioeconomic position, and use of health services, with separate sets for Aboriginal and Torres Strait Islander populations, older people, and children and young people",
+    "geoLevel": "Local government area, Primary Health Network, Statistical Area Level 3, and Population Health Area",
+    "inputData": "Census, administrative health collections and national surveys, compiled per area",
+    "output": "Downloadable spreadsheets and maps, one workbook per geographic structure",
+    "dataSources": "Australian Bureau of Statistics collections, Medicare and other administrative health data, national surveys",
+    "accessNote": "Free Excel workbooks, no registration. Attribution conditions apply - check the copyright page before republishing anything.",
+    "scale": "All of Australia at small-area level",
+    "keyAttributes": "One row per area, one column per indicator, with the Australian rate alongside for comparison",
+    "access": "Public",
+    "id": "app5-09",
+    "app": 5,
+    "num": 9,
+    "topics": [
+      "health-inequities",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Small area",
+      "LGA",
+      "PHN",
+      "National"
+    ],
+    "domains": [
+      "Equity"
+    ],
+    "sourceGroup": "Statistical agency release",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "Workbooks by geography",
+        "url": "https://phidu.torrens.edu.au/social-health-atlases/data"
+      }
+    ]
+  },
+  {
+    "reference": "Australian Bureau of Statistics (2023). Socio-Economic Indexes for Areas (SEIFA), Australia, 2021. Canberra: Australian Bureau of Statistics",
+    "link": "https://www.abs.gov.au/statistics/people/people-and-communities/socio-economic-indexes-areas-seifa-australia/2021",
+    "sourceType": "Government statistical agency data release",
+    "country": "Australia",
+    "task": "Ranks every area in Australia by social and economic disadvantage, from census answers. It is what most Australian work means when it says 'the most disadvantaged areas', so using it makes results comparable with everyone else's.",
+    "metrics": "Four indexes: Relative Socio-economic Disadvantage; Relative Socio-economic Advantage and Disadvantage; Economic Resources; and Education and Occupation. Each is reported as a score, a rank, a decile and a quintile.",
+    "geoLevel": "Statistical Area Level 1 and 2, local government area, and larger areas",
+    "inputData": "Census variables covering income, education, employment, occupation, housing and other household characteristics",
+    "output": "A score and a rank for every area, with areas also sorted into tenths and fifths",
+    "dataSources": "Census of Population and Housing 2021",
+    "accessNote": "Free Excel downloads, no registration.",
+    "scale": "Every area in Australia, rebuilt after each census",
+    "keyAttributes": "Index score, national and state rank, decile and quintile per area",
+    "access": "Public",
+    "id": "app5-10",
+    "app": 5,
+    "num": 10,
+    "topics": [
+      "health-inequities",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Small area",
+      "LGA",
+      "State",
+      "National"
+    ],
+    "domains": [
+      "Equity"
+    ],
+    "sourceGroup": "Statistical agency release",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.abs.gov.au/statistics/people/people-and-communities/socio-economic-indexes-areas-seifa-australia/2021"
+      }
+    ]
   },
   {
     "reference": "Higgs C, Badland H, Simons K, Knibbs LD, Giles-Corti B (2019). The Urban Liveability Index: developing a policy-relevant urban liveability composite measure and evaluating associations with transport mode choice. International Journal of Health Geographics 18:14",
@@ -984,5 +1152,262 @@
       "International"
     ],
     "dataLinks": []
+  },
+  {
+    "reference": "Queensland Health. Preventive health survey series and the Queensland survey analytic system (QSAS). Brisbane: Queensland Health (ongoing series)",
+    "link": "https://www.health.qld.gov.au/research-reports/population-health/preventive-health-surveys",
+    "sourceType": "Government survey data release",
+    "country": "Australia (Queensland)",
+    "task": "Queensland's own repeated telephone survey of adults and children, reporting how many people meet health guidelines and how that differs between parts of the state. This is the closest thing in the scan to a ready-made Queensland answer for a council-sized area, and the only source here that reports at local government area, Hospital and Health Service and Primary Health Network at once.",
+    "metrics": "Adults: overweight and obesity, daily smoking, physical activity, fruit and vegetable intake, alcohol, sunburn and sun protection. Children: the equivalent child indicators.",
+    "geoLevel": "Queensland, Hospital and Health Service, Primary Health Network and local government area for adults; Queensland, Hospital and Health Service and Primary Health Network for children",
+    "inputData": "Telephone interviews with a random sample of Queensland residents. Regional figures pool two survey years together so the numbers are large enough to report.",
+    "output": "Percentages by region and by sociodemographic group, through an interactive viewer, plus spreadsheets on the Queensland open data portal.",
+    "dataSources": "Queensland preventive health telephone survey",
+    "accessNote": "Free, no registration, Creative Commons Attribution 4.0. Note the years do not agree between sources: the open data portal record lists adult surveys 2009-10 to 2015-16, while the Brisbane South needs assessment cites QPHS 2017-2022, so later years exist somewhere. Worth asking the agency which years they can actually get.",
+    "scale": "A statewide random sample, pooled over two years for regional reporting",
+    "keyAttributes": "Region, age, sex and sociodemographic group, against each health indicator",
+    "access": "Public",
+    "id": "app6-10",
+    "app": 6,
+    "num": 10,
+    "topics": [
+      "local-government",
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "LGA",
+      "PHN",
+      "HHS",
+      "State"
+    ],
+    "domains": [
+      "Physical Activity",
+      "Healthy Eating"
+    ],
+    "sourceGroup": "Statistical agency release",
+    "regions": [
+      "Queensland",
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "Open data portal record",
+        "url": "https://www.data.qld.gov.au/dataset/self-reported-health-status-srhs-survey-series"
+      },
+      {
+        "label": "Interactive regional viewer (QSAS)",
+        "url": "https://public.tableau.com/app/profile/population.epidemiology/viz/QSAS_Regional_By_Region/Adult"
+      }
+    ]
+  },
+  {
+    "reference": "Queensland Government Statistician's Office. Queensland regional profiles and the Queensland regional database. Brisbane: Queensland Treasury",
+    "link": "https://www.qgso.qld.gov.au/statistics/queensland-regions/regional-tools-statistics",
+    "sourceType": "Government statistical agency data release",
+    "country": "Australia (Queensland)",
+    "task": "Builds a statistical profile of any Queensland region on request, including a region the user defines by combining smaller areas. It is the general-purpose background picture of a council area - who lives there, how they are employed, how the population is changing - rather than a health source.",
+    "metrics": "Population and projections, age and sex, country of birth, education, disability, long-term health conditions, employment and income, business counts, building approvals, recorded offences",
+    "geoLevel": "Local government area, Statistical Area Level 2 to 4, Greater Capital City Statistical Area, state electoral district, or a custom region built from Statistical Area Level 2 pieces",
+    "inputData": "Census, population estimates and projections, and administrative collections held across Queensland Government",
+    "output": "A profile report as PDF or web page. The companion regional database gives the same kind of figures as a time series that can be pulled out directly.",
+    "dataSources": "Australian Bureau of Statistics collections and Queensland Government administrative data",
+    "accessNote": "Free and no registration. The profile tool gives finished reports rather than a data file, so it answers a question rather than feeding a calculation - use the regional database for figures you need to work with.",
+    "scale": "All of Queensland, down to suburb-sized areas",
+    "keyAttributes": "Demographic, social and economic characteristics per region",
+    "access": "Public (aggregate only)",
+    "id": "app6-11",
+    "app": 6,
+    "num": 11,
+    "topics": [
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "LGA",
+      "Small area",
+      "State"
+    ],
+    "domains": [],
+    "sourceGroup": "Statistical agency release",
+    "regions": [
+      "Queensland",
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "Regional profiles",
+        "url": "https://statistics.qgso.qld.gov.au/qld-regional-profiles"
+      },
+      {
+        "label": "Regional database",
+        "url": "https://www.qgso.qld.gov.au/statistics/queensland-regions/regional-tools-statistics/queensland-regional-database"
+      }
+    ]
+  },
+  {
+    "reference": "Australian Urban Observatory. Liveability indicators for Australian cities. Melbourne: RMIT University Centre for Urban Research",
+    "link": "https://auo.org.au/",
+    "sourceType": "University research tool",
+    "country": "Australia",
+    "task": "Maps liveability across Australia's larger cities and reports it back to councils and planners. It is the finished, maintained version of the liveability work already in this table as sources 1 and 2 of this application.",
+    "metrics": "Walkability, public transport access, access to supermarkets and grocers, public open space, social infrastructure, employment, housing, alcohol outlet access, and area demographics",
+    "geoLevel": "Local government area, suburb and neighbourhood, across 21 Australian cities including Brisbane",
+    "inputData": "The national liveability indicator datasets built from census, mapping and public transport data",
+    "output": "Interactive maps and area scores for each liveability domain",
+    "dataSources": "The Australian national liveability datasets produced by the same team",
+    "accessNote": "Seeing the mapped data needs a paid partnership - the site's own wording is 'Become a Paid Partner to see Liveability Mapped'. Worth knowing before anyone plans around it. The underlying 2018 national liveability dataset is free and open, and is already in this table as source 2 of this application (Higgs et al. 2023), so the measures can be obtained without the subscription if someone is willing to do the processing.",
+    "scale": "21 Australian cities",
+    "keyAttributes": "A score per liveability domain for each small area",
+    "access": "Restricted - application",
+    "id": "app6-12",
+    "app": 6,
+    "num": 12,
+    "topics": [
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "LGA",
+      "Small area"
+    ],
+    "domains": [
+      "Physical Activity",
+      "Healthy Eating"
+    ],
+    "sourceGroup": "Academic or institutional report",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "Indicator descriptions",
+        "url": "https://auo.org.au/measure/"
+      }
+    ]
+  },
+  {
+    "reference": "Global Observatory of Healthy and Sustainable Cities. 1000 Cities Challenge. Melbourne: RMIT University",
+    "link": "https://www.healthysustainablecities.org/1000cities",
+    "sourceType": "Institutional research tool",
+    "country": "Many countries",
+    "task": "Computes the same set of city measures the same way in every participating city, so one city can be compared against another rather than only against itself. Brisbane is one of the cities included. The method behind it is source 4 of this application.",
+    "metrics": "Population within walking distance of public transport, fresh food and public open space; street connectivity; walkability; population density. Alongside these, policy measures covering transport, air quality, parking, cycling and walking infrastructure, and housing density rules.",
+    "geoLevel": "Whole city, and smaller areas within a city",
+    "inputData": "Open mapping and transport data for each city, plus a policy questionnaire completed locally",
+    "output": "A scorecard and report per city, and the spatial indicators behind them",
+    "dataSources": "OpenStreetMap and equivalent open data, plus locally completed policy scorecards",
+    "accessNote": "The scorecards and reports are published free. What is downloadable, and on what terms, is not stated on the site - it would need an email to the team. The software and method are open, through source 4 of this application.",
+    "scale": "Around 80 cities across six continents, including Adelaide, Brisbane, Canberra, Melbourne and Sydney",
+    "keyAttributes": "Spatial and policy indicators per city",
+    "access": "Not yet assessed",
+    "id": "app6-13",
+    "app": 6,
+    "num": 13,
+    "topics": [
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Small area",
+      "International"
+    ],
+    "domains": [
+      "Physical Activity",
+      "Healthy Eating"
+    ],
+    "sourceGroup": "Academic or institutional report",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.healthysustainablecities.org/"
+      }
+    ]
+  },
+  {
+    "reference": "Centre of Research Excellence in Healthy Liveable Communities. Urban Liveability Checklist. Melbourne: RMIT University Centre for Urban Research",
+    "link": "https://www.rmit.edu.au/research/centres-collaborations/centre-for-urban-research/current-projects/healthy-liveable-communities-urban-liveability-checklist",
+    "sourceType": "University guidance document",
+    "country": "Australia",
+    "task": "A checklist a planner works through to judge whether a place, built or proposed, supports health and wellbeing. It turns the liveability research into something someone can apply to a development without needing the data first.",
+    "metrics": "The built-environment features shown to support health and wellbeing, as a checklist rather than as scored measures",
+    "geoLevel": "A single neighbourhood or development site",
+    "inputData": "Local knowledge of the area being assessed",
+    "output": "A completed assessment of an area against the built-environment features the research links to health",
+    "dataSources": "Not applicable - it is applied to a place, not computed from a dataset",
+    "accessNote": "Free PDF from the page above. It produces an assessment rather than data, so nothing is downloadable from it.",
+    "scale": "One site or neighbourhood at a time",
+    "keyAttributes": "Not applicable",
+    "access": "Not a dataset",
+    "id": "app6-14",
+    "app": 6,
+    "num": 14,
+    "topics": [
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Small area"
+    ],
+    "domains": [
+      "Physical Activity"
+    ],
+    "sourceGroup": "Academic or institutional report",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Australian Bureau of Statistics (2022). Census of Population and Housing, 2021. Canberra: Australian Bureau of Statistics",
+    "link": "https://www.abs.gov.au/census",
+    "sourceType": "Census data release",
+    "country": "Australia",
+    "task": "Counts everyone in the country every five years. It matters here because it is the only source that measures how people travel to work, and how many people volunteer, for every small area in Queensland at once - two of the measures on the agency's own list that nothing else in this table covers.",
+    "metrics": "Method of travel to work, which gives active transport mode share directly; voluntary work for an organisation; unpaid domestic work and unpaid care; long-term health conditions; plus the usual population, income, housing and employment counts",
+    "geoLevel": "Released down to Statistical Area Level 1, and for local government areas, suburbs and larger areas",
+    "inputData": "A form completed by every household on census night",
+    "output": "Counts and cross-tabulations for any area, as downloadable packs or built to order in the online table tool",
+    "dataSources": "The census itself",
+    "accessNote": "Free, no registration. Downloadable area packs, or build a table to order online.",
+    "scale": "Every household in Australia, every five years; 2021 is the latest",
+    "keyAttributes": "Method of travel to work (MTWP), voluntary work (VOLWP), unpaid domestic work (DOMP), unpaid care (UNCAREP), long-term health conditions (LTHP)",
+    "access": "Public",
+    "id": "app6-15",
+    "app": 6,
+    "num": 15,
+    "topics": [
+      "local-government",
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Small area",
+      "LGA",
+      "State",
+      "National"
+    ],
+    "domains": [
+      "Physical Activity",
+      "Social"
+    ],
+    "sourceGroup": "Statistical agency release",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "Downloadable area packs",
+        "url": "https://www.abs.gov.au/census/find-census-data/datapacks"
+      },
+      {
+        "label": "Build a table",
+        "url": "https://www.abs.gov.au/websitedbs/censushome.nsf/home/tablebuilder"
+      }
+    ]
   }
 ]
