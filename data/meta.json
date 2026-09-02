@@ -1,7 +1,7 @@
 {
   "generated": "2026-09-02",
   "source": "lit-scan-draft.xlsx",
-  "total": 37,
+  "total": 61,
   "topics": [
     {
       "id": "health-system",
@@ -9,9 +9,39 @@
       "heading": "Prevention and the health system",
       "question": "How do we show that prevention changes what happens in hospitals?",
       "blurb": "Waiting lists, bed days, ambulance ramping and potentially preventable hospitalisations.",
-      "count": 12,
+      "count": 16,
       "hasGrid": true,
       "legacyApp": 1
+    },
+    {
+      "id": "regional-environments",
+      "title": "Regional environments",
+      "heading": "Improving regional environments for prevention",
+      "question": "What is already there to support healthy behaviour, and where are the gaps?",
+      "blurb": "Parks, active transport, green space and food environments - the surroundings that make a healthy choice easy or hard, and who is missing out.",
+      "count": 20,
+      "hasGrid": false,
+      "legacyApp": 2
+    },
+    {
+      "id": "prevention-programs",
+      "title": "Prevention programs",
+      "heading": "Gaps in prevention programs, and what they are worth",
+      "question": "Where are the gaps in prevention services, and what do the programs return?",
+      "blurb": "What prevention is delivered where, especially through primary care, and the evidence for what it achieves.",
+      "count": 14,
+      "hasGrid": false,
+      "legacyApp": 3
+    },
+    {
+      "id": "regional-partnerships",
+      "title": "Regional partnerships",
+      "heading": "Strengthening regional partnerships",
+      "question": "Who does what in a region, and what would let them share data?",
+      "blurb": "Joint planning between health services, councils and other partners, and the data-sharing arrangements that make it possible.",
+      "count": 12,
+      "hasGrid": false,
+      "legacyApp": 4
     },
     {
       "id": "health-inequities",
@@ -19,7 +49,7 @@
       "heading": "Targeting prevention to reduce health inequities",
       "question": "Where should prevention effort go, so the gap between groups narrows?",
       "blurb": "Differences in health between population groups and between areas, and how they are measured.",
-      "count": 13,
+      "count": 20,
       "hasGrid": false,
       "legacyApp": 5
     },
@@ -29,17 +59,17 @@
       "heading": "A prevention measurement framework for local government",
       "question": "How would a council know whether its area is getting healthier?",
       "blurb": "Walkability, green space, food environment and participation, measured at council level.",
-      "count": 18,
+      "count": 30,
       "hasGrid": false,
       "legacyApp": 6
     }
   ],
   "byAccess": {
-    "Not a dataset": 15,
-    "Public": 12,
-    "Restricted - application": 4,
-    "Public (aggregate only)": 3,
-    "Not yet assessed": 3
+    "Not a dataset": 24,
+    "Public": 16,
+    "Restricted - application": 9,
+    "Public (aggregate only)": 8,
+    "Not yet assessed": 4
   },
   "accessValues": [
     "Public",
@@ -82,5 +112,5 @@
     "Australia",
     "International"
   ],
-  "withDownloadableData": 15
+  "withDownloadableData": 24
 }

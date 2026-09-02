@@ -18,7 +18,8 @@
     "app": 1,
     "num": 1,
     "topics": [
-      "health-system"
+      "health-system",
+      "prevention-programs"
     ],
     "priority": "relevant",
     "geoTags": [
@@ -169,7 +170,8 @@
     "app": 1,
     "num": 5,
     "topics": [
-      "health-system"
+      "health-system",
+      "prevention-programs"
     ],
     "priority": "highly-relevant",
     "geoTags": [
@@ -203,7 +205,8 @@
     "app": 1,
     "num": 6,
     "topics": [
-      "health-system"
+      "health-system",
+      "prevention-programs"
     ],
     "priority": "unmarked",
     "geoTags": [
@@ -238,7 +241,8 @@
     "app": 1,
     "num": 7,
     "topics": [
-      "health-system"
+      "health-system",
+      "prevention-programs"
     ],
     "priority": "relevant",
     "geoTags": [
@@ -272,7 +276,8 @@
     "app": 1,
     "num": 8,
     "topics": [
-      "health-system"
+      "health-system",
+      "prevention-programs"
     ],
     "priority": "unmarked",
     "geoTags": [
@@ -381,7 +386,9 @@
     "num": 11,
     "topics": [
       "health-system",
-      "health-inequities"
+      "health-inequities",
+      "regional-partnerships",
+      "prevention-programs"
     ],
     "priority": "unmarked",
     "geoTags": [
@@ -442,6 +449,940 @@
       "Australia"
     ],
     "dataLinks": []
+  },
+  {
+    "reference": "Sallis JF, Cerin E, Conway TL, Adams MA, Frank LD, Pratt M, et al. (2016). Physical activity in relation to urban environments in 14 cities worldwide: a cross-sectional study. The Lancet 387:2207-2217",
+    "link": "https://doi.org/10.1016/S0140-6736(15)01284-2",
+    "sourceType": "Peer-reviewed",
+    "country": "14 cities across 10 countries",
+    "task": "Tests whether the design of a neighbourhood actually changes how much people move, using the same measurements in every city. The strongest single piece of evidence that the built environment is worth investing in at all.",
+    "metrics": "Minutes of moderate-to-vigorous physical activity per day, against residential density, street intersection density, public transport stop density and park count",
+    "geoLevel": "The area within 0.5 to 1 kilometre of a person's home",
+    "inputData": "Accelerometers worn by 6,822 adults, plus mapped features of the neighbourhood around each person's home",
+    "output": "Four environment features explained a difference of up to 89 minutes of physical activity a week between neighbourhoods",
+    "dataSources": "The International Physical Activity and Environment Network (IPEN) Adult study",
+    "accessNote": "The paper is open access. The pooled study data is held by the IPEN collaboration and takes a request.",
+    "scale": "6,822 adults, aged 18 to 66",
+    "keyAttributes": "Per person: measured activity, age, sex, education. Per neighbourhood: density, street connectivity, transport stops, parks",
+    "access": "Restricted - application",
+    "id": "app2-01",
+    "app": 2,
+    "num": 1,
+    "topics": [
+      "regional-environments",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Small area",
+      "Individual",
+      "International"
+    ],
+    "domains": [
+      "Physical Activity"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Astell-Burt T, Feng X (2019). Urban green space, tree canopy and prevention of cardiometabolic diseases: a multilevel longitudinal study of 46,786 Australians. The Lancet Planetary Health 3(9)",
+    "link": "https://doi.org/10.1016/s2542-5196(19)30159-7",
+    "sourceType": "Peer-reviewed",
+    "country": "Australia (New South Wales)",
+    "task": "Follows the same people over years to see whether living near tree cover, specifically, protects against heart disease and diabetes. It separates tree canopy from grass, which matters because councils choose what to plant.",
+    "metrics": "Percentage of tree canopy and of open grass within 1.6 kilometres of home, against new diagnoses over time",
+    "geoLevel": "The area within 1.6 kilometres of a person's home",
+    "inputData": "A large cohort survey linked to mapped green space around each home",
+    "output": "More tree canopy was associated with lower odds of developing heart disease, high blood pressure and diabetes; open grass was not",
+    "dataSources": "The 45 and Up Study, linked to land-cover mapping",
+    "accessNote": "The paper is open access. The 45 and Up Study data takes a formal application to the Sax Institute.",
+    "scale": "46,786 adults followed over roughly six years",
+    "keyAttributes": "Tree canopy share, grass share, and incident heart disease, hypertension and diabetes per person",
+    "access": "Restricted - application",
+    "id": "app2-02",
+    "app": 2,
+    "num": 2,
+    "topics": [
+      "regional-environments",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Small area",
+      "Individual"
+    ],
+    "domains": [
+      "Physical Activity"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Alderton A, O'Connor M, Badland H, Gunn L, Boulange C, Villanueva K (2022). Access to and quality of neighbourhood public open space and children's mental health outcomes: evidence from populated areas across Australia. International Journal of Environmental Research and Public Health 19(11):6780",
+    "link": "https://doi.org/10.3390/ijerph19116780",
+    "sourceType": "Peer-reviewed",
+    "country": "Australia",
+    "task": "Asks whether it is having a park nearby that matters, or having a good one. The answer bears directly on whether a council should build more parks or improve the ones it has.",
+    "metrics": "Distance to public open space and its size, against teacher-reported child emotional and social development",
+    "geoLevel": "Neighbourhood, across populated areas of Australia",
+    "inputData": "A national children's development census linked to mapped open space",
+    "output": "Quality mattered as well as distance - being near a large park was linked to better emotional outcomes for children",
+    "dataSources": "Australian Early Development Census, linked to open space mapping",
+    "accessNote": "The paper is open access. The Early Development Census is published as area summaries; record-level data takes a request.",
+    "scale": "Children in their first year of full-time school, nationally",
+    "keyAttributes": "Open space distance and size, child development domain scores, area disadvantage",
+    "access": "Public (aggregate only)",
+    "id": "app2-03",
+    "app": 2,
+    "num": 3,
+    "topics": [
+      "regional-environments",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Small area",
+      "National"
+    ],
+    "domains": [
+      "Physical Activity",
+      "Mental Wellbeing"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Needham C, Allender S, Blake MR, Rennie J, Orellana L, Sacks G (2025). The influence of access to healthy food retail on BMI: implications for obesity prevention policy at the local government level. Health & Place 95",
+    "link": "https://doi.org/10.1016/j.healthplace.2025.103521",
+    "sourceType": "Peer-reviewed",
+    "country": "Australia",
+    "task": "The closest match in this scan to what a Queensland council could act on for healthy eating: it tests whether the mix of food outlets in a council area is linked to residents' weight, and draws out what that means for local policy.",
+    "metrics": "Counts and proportions of healthy versus unhealthy food outlets in an area, against body mass index",
+    "geoLevel": "Local government area",
+    "inputData": "Mapped food retail outlets by type, and measured body mass index",
+    "output": "Findings on how the local food retail mix relates to body mass index, framed for local government decisions",
+    "dataSources": "Food outlet business listings mapped geographically, and population health survey data",
+    "accessNote": "Check the paper for access. Outlet listings are usually commercial; the health measures come from survey collections.",
+    "scale": "Australian local government areas",
+    "keyAttributes": "Food outlet counts by type per area, body mass index, area disadvantage",
+    "access": "Not yet assessed",
+    "id": "app2-04",
+    "app": 2,
+    "num": 4,
+    "topics": [
+      "regional-environments",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "LGA",
+      "Small area"
+    ],
+    "domains": [
+      "Healthy Eating"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Sacks G, Kwon J, Vandevijvere S, Swinburn B (2021). Benchmarking as a public health strategy for creating healthy food environments: an evaluation of the INFORMAS framework. Annual Review of Public Health 42:345-362",
+    "link": "https://doi.org/10.1146/annurev-publhealth-100919-114442",
+    "sourceType": "Peer-reviewed",
+    "country": "Many countries",
+    "task": "Reviews whether publishing a scorecard that ranks governments and companies on food policy actually changes what they do. Directly relevant to the benchmarking idea behind a council measurement framework.",
+    "metrics": "The INFORMAS food environment policy index and the modules underneath it - food composition, labelling, promotion, prices, provision, retail and trade",
+    "geoLevel": "National, with some sub-national application",
+    "inputData": "Ten years of monitoring work across the INFORMAS network",
+    "output": "An assessment of where benchmarking has shifted policy and where it has not",
+    "dataSources": "The INFORMAS monitoring modules",
+    "accessNote": "The framework and its methods are published. Country assessments are released as reports.",
+    "scale": "A global network covering many countries",
+    "keyAttributes": "Policy domains scored against international best practice",
+    "access": "Not a dataset",
+    "id": "app2-05",
+    "app": 2,
+    "num": 5,
+    "topics": [
+      "regional-environments",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "National",
+      "International"
+    ],
+    "domains": [
+      "Healthy Eating",
+      "Implementation"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Department of Transport and Main Roads. Queensland Household Travel Survey series. Brisbane: Queensland Government",
+    "link": "https://www.data.qld.gov.au/dataset/queensland-household-travel-survey-series",
+    "sourceType": "Government survey data release",
+    "country": "Australia (Queensland)",
+    "task": "Records how Queensland households actually travelled over a single day - by what means, where to and why. It is the state's own measure of active transport, and the only Queensland source here that captures walking and cycling trips directly rather than only the journey to work.",
+    "metrics": "Trips by mode including walking and cycling, trip purpose, time of day, distance and duration",
+    "geoLevel": "South East Queensland and regional centres; released by travel zone and larger areas",
+    "inputData": "Travel diaries from randomly approached households over a 24-hour period",
+    "output": "Downloadable trip records, released as single years and as pooled multi-year files so smaller areas have enough trips to report",
+    "dataSources": "The Queensland Household Travel Survey itself",
+    "accessNote": "Free from the Queensland open data portal, no registration. Surveys have run in South East Queensland since 1976 and in regional centres since 1986, so there is a long back series.",
+    "scale": "Randomly sampled Queensland households, pooled across three-year windows",
+    "keyAttributes": "One record per trip: mode, purpose, origin and destination zone, start time, distance, duration, plus household characteristics",
+    "access": "Public",
+    "id": "app2-06",
+    "app": 2,
+    "num": 6,
+    "topics": [
+      "regional-environments",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Small area",
+      "LGA",
+      "State"
+    ],
+    "domains": [
+      "Physical Activity"
+    ],
+    "sourceGroup": "Statistical agency release",
+    "regions": [
+      "Queensland",
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.data.qld.gov.au/dataset/queensland-household-travel-survey-series"
+      }
+    ]
+  },
+  {
+    "reference": "Queensland Government. Queensland Globe and the Queensland Spatial Catalogue. Brisbane: Department of Resources",
+    "link": "https://qldglobe.information.qld.gov.au/",
+    "sourceType": "Government spatial data release",
+    "country": "Australia (Queensland)",
+    "task": "The state's map of itself - parks, land use, roads, vegetation and property boundaries, viewable and downloadable. It is where the physical side of a council area comes from when nobody has already turned it into an indicator.",
+    "metrics": "Not indicators as such - the underlying layers from which green space, park access and land use measures get built",
+    "geoLevel": "Any, down to individual parcels",
+    "inputData": "Queensland Government spatial and land administration collections",
+    "output": "An online map, and downloadable spatial layers",
+    "dataSources": "Queensland Government departmental spatial data",
+    "accessNote": "Free to view and download, no registration. This is raw mapping rather than finished measures, so using it means someone has to compute the indicator.",
+    "scale": "All of Queensland",
+    "keyAttributes": "Spatial layers: land use, tenure, vegetation, protected areas, transport, addresses",
+    "access": "Public",
+    "id": "app2-07",
+    "app": 2,
+    "num": 7,
+    "topics": [
+      "regional-environments",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Address",
+      "Small area",
+      "LGA",
+      "State"
+    ],
+    "domains": [],
+    "sourceGroup": "Statistical agency release",
+    "regions": [
+      "Queensland",
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://qldglobe.information.qld.gov.au/"
+      }
+    ]
+  },
+  {
+    "reference": "Queensland Government. Queensland Government Open Data Portal. Brisbane: Queensland Government",
+    "link": "https://www.data.qld.gov.au/",
+    "sourceType": "Government administrative data release",
+    "country": "Australia (Queensland)",
+    "task": "The single place Queensland agencies publish their data. Several of the sources in this scan are hosted here, and it is the first place to look before assuming a Queensland figure does not exist.",
+    "metrics": "Varies by dataset",
+    "geoLevel": "Varies by dataset, from state down to address",
+    "inputData": "Whatever Queensland agencies choose to publish",
+    "output": "Downloadable files and interfaces, dataset by dataset",
+    "dataSources": "Queensland Government agencies",
+    "accessNote": "Free, no registration. Most datasets are Creative Commons Attribution. Coverage is uneven - it holds what agencies have chosen to publish, not everything they hold.",
+    "scale": "All of Queensland",
+    "keyAttributes": "Varies by dataset",
+    "access": "Public",
+    "id": "app2-08",
+    "app": 2,
+    "num": 8,
+    "topics": [
+      "regional-environments",
+      "regional-partnerships",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Any",
+      "State"
+    ],
+    "domains": [],
+    "sourceGroup": "Statistical agency release",
+    "regions": [
+      "Queensland",
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.data.qld.gov.au/"
+      }
+    ]
+  },
+  {
+    "reference": "Australian Bureau of Statistics. General Social Survey, Australia. Canberra: Australian Bureau of Statistics",
+    "link": "https://www.abs.gov.au/statistics/people/people-and-communities/general-social-survey-summary-results-australia/latest-release",
+    "sourceType": "Government survey data release",
+    "country": "Australia",
+    "task": "The national measure of how connected people are - who they can turn to, whether they feel lonely, whether they volunteer. It fills the social side of the indicator list, which nothing else in this scan measures directly.",
+    "metrics": "Social connection and support, feelings of loneliness, volunteering, community involvement, trust, and experience of discrimination",
+    "geoLevel": "Australia and states and territories; not published below that",
+    "inputData": "A national household survey of people aged 15 and over",
+    "output": "Published tables and summary results; detailed data through the ABS on request",
+    "dataSources": "The General Social Survey itself",
+    "accessNote": "Summary tables are free. This is its limitation for council work: the sample is not large enough to publish below state level, so it cannot compare one council area with another.",
+    "scale": "A national household sample, run every few years",
+    "keyAttributes": "Social support, loneliness, volunteering, trust, community involvement, by age, sex and state",
+    "access": "Public (aggregate only)",
+    "id": "app2-09",
+    "app": 2,
+    "num": 9,
+    "topics": [
+      "regional-environments",
+      "regional-partnerships",
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "State",
+      "National"
+    ],
+    "domains": [
+      "Social",
+      "Mental Wellbeing"
+    ],
+    "sourceGroup": "Statistical agency release",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.abs.gov.au/statistics/people/people-and-communities/general-social-survey-summary-results-australia/latest-release"
+      }
+    ]
+  },
+  {
+    "reference": "Australian Early Development Census. Canberra: Australian Government Department of Education",
+    "link": "https://www.aedc.gov.au/",
+    "sourceType": "Government survey data release",
+    "country": "Australia",
+    "task": "Teachers assess every child in their first year of school on how they are doing physically, socially, emotionally and in language. Because it covers every child rather than a sample, it reports at community and council level - which almost nothing else about wellbeing does.",
+    "metrics": "Proportion of children developmentally vulnerable on each of five domains: physical health and wellbeing, social competence, emotional maturity, language and cognitive skills, and communication",
+    "geoLevel": "AEDC community, local government area, state and national",
+    "inputData": "A teacher-completed instrument for each child, run every three years",
+    "output": "Free community profiles and downloadable data tables by area",
+    "dataSources": "The census itself",
+    "accessNote": "Free community profiles and data tables, no registration. Record-level data takes an application. Small communities are suppressed to protect identifiable children.",
+    "scale": "Every child in their first year of full-time school, every three years since 2009",
+    "keyAttributes": "Percentage developmentally vulnerable per domain, per area, over successive cycles",
+    "access": "Public (aggregate only)",
+    "id": "app2-10",
+    "app": 2,
+    "num": 10,
+    "topics": [
+      "regional-environments",
+      "health-inequities",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Small area",
+      "LGA",
+      "State",
+      "National"
+    ],
+    "domains": [
+      "Social",
+      "Mental Wellbeing",
+      "Equity"
+    ],
+    "sourceGroup": "Statistical agency release",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.aedc.gov.au/data"
+      }
+    ]
+  },
+  {
+    "reference": "Australian Bureau of Statistics. National Health Survey. Canberra: Australian Bureau of Statistics",
+    "link": "https://www.abs.gov.au/statistics/health/health-conditions-and-risks/national-health-survey/latest-release",
+    "sourceType": "Government survey data release",
+    "country": "Australia",
+    "task": "The national measure of health conditions and risk factors, and the benchmark a Queensland figure gets compared against. Worth holding next to the Queensland preventive health survey: this one covers the country but stops at state level, while the Queensland one reaches council areas.",
+    "metrics": "Long-term health conditions, measured height and weight, physical activity, fruit and vegetable intake, smoking, alcohol, and psychological distress",
+    "geoLevel": "Australia and states and territories",
+    "inputData": "A national household survey with interviews and physical measurements",
+    "output": "Published tables and summary results; detailed microdata through the ABS on application",
+    "dataSources": "The National Health Survey itself",
+    "accessNote": "Summary tables are free. Detailed microdata takes a DataLab or microdata application. The limitation for council work is the same as the General Social Survey - the sample does not support figures below state level.",
+    "scale": "A national household sample, run every few years",
+    "keyAttributes": "Condition prevalence, measured body mass index, activity, diet, smoking and distress, by age, sex and state",
+    "access": "Public (aggregate only)",
+    "id": "app3-01",
+    "app": 3,
+    "num": 1,
+    "topics": [
+      "prevention-programs",
+      "health-system",
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "State",
+      "National"
+    ],
+    "domains": [
+      "Physical Activity",
+      "Healthy Eating",
+      "Mental Wellbeing"
+    ],
+    "sourceGroup": "Statistical agency release",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.abs.gov.au/statistics/health/health-conditions-and-risks/national-health-survey/latest-release"
+      }
+    ]
+  },
+  {
+    "reference": "Milat AJ, Bauman A, Redman S (2015). Narrative review of models and success factors for scaling up public health interventions. Implementation Science 10:113",
+    "link": "https://doi.org/10.1186/s13012-015-0301-6",
+    "sourceType": "Peer-reviewed",
+    "country": "Many countries",
+    "task": "Asks why prevention programs that work in a trial so often fail when rolled out widely, and what separates the ones that survive. Written from within the New South Wales health system, so the constraints it describes are the local ones.",
+    "metrics": "Not measures - the conditions to check before committing to a wider rollout",
+    "geoLevel": "Not applicable",
+    "inputData": "Published models and evaluations of scaled-up public health programs",
+    "output": "The factors that repeatedly decide whether a program scales: fit with existing delivery systems, cost, workforce, and political support",
+    "dataSources": "Published literature",
+    "accessNote": "Open access paper. It is guidance rather than data.",
+    "scale": "A review of the published evidence",
+    "keyAttributes": "Not applicable",
+    "access": "Not a dataset",
+    "id": "app3-02",
+    "app": 3,
+    "num": 2,
+    "topics": [
+      "prevention-programs"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Any"
+    ],
+    "domains": [
+      "Implementation"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Glasgow RE, Vogt TM, Boles SM (1999). Evaluating the public health impact of health promotion interventions: the RE-AIM framework. American Journal of Public Health 89(9):1322-1327",
+    "link": "https://doi.org/10.2105/AJPH.89.9.1322",
+    "sourceType": "Peer-reviewed",
+    "country": "United States",
+    "task": "The standard way of judging a prevention program on more than whether it worked for the people who took part. It asks how many were reached, how many settings adopted it, whether it was delivered as intended, and whether it lasted - which is the gap-finding question for Application 3.",
+    "metrics": "Reach, Effectiveness, Adoption, Implementation and Maintenance",
+    "geoLevel": "Whatever the program covers",
+    "inputData": "Program delivery and outcome records",
+    "output": "A five-part assessment that stops a program looking successful because it reached a small and willing group",
+    "dataSources": "Whatever the program collects",
+    "accessNote": "The framework is published and freely used. It is a method, not data.",
+    "scale": "Applies to a single program",
+    "keyAttributes": "Not applicable",
+    "access": "Not a dataset",
+    "id": "app3-03",
+    "app": 3,
+    "num": 3,
+    "topics": [
+      "prevention-programs",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Any"
+    ],
+    "domains": [
+      "Implementation"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Smith JL, Reece LJ, Rose CL, Owen KB (2022). Improving access to public physical activity events for disadvantaged communities in Australia. BMC Public Health 22:1613",
+    "link": "https://doi.org/10.1186/s12889-022-13981-5",
+    "sourceType": "Peer-reviewed",
+    "country": "Australia",
+    "task": "Looks at who actually turns up to free community physical activity events, and finds participation is lower in disadvantaged areas. A worked example of the question this application asks - whether prevention is reaching the people it should.",
+    "metrics": "Participation rates by area disadvantage",
+    "geoLevel": "Small area, across Australia",
+    "inputData": "Registration and participation records from public physical activity events, matched to area disadvantage",
+    "output": "Evidence that participation follows advantage, with suggestions for closing the gap",
+    "dataSources": "Event participation records linked to area disadvantage indexes",
+    "accessNote": "Open access paper. The participation records belong to the event organisers.",
+    "scale": "Public event participants nationally",
+    "keyAttributes": "Participant counts by area, area disadvantage decile",
+    "access": "Restricted - application",
+    "id": "app3-04",
+    "app": 3,
+    "num": 4,
+    "topics": [
+      "prevention-programs",
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Small area",
+      "National"
+    ],
+    "domains": [
+      "Physical Activity",
+      "Equity"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Australian Institute of Health and Welfare. Medicare-subsidised GP, allied health and specialist health care across local areas. Canberra: AIHW",
+    "link": "https://www.aihw.gov.au/reports-data/health-welfare-services/primary-health-care/data",
+    "sourceType": "Government statistical agency data release",
+    "country": "Australia",
+    "task": "Counts how much general practice, allied health and specialist care people in each local area actually used. This is the closest thing to a map of where primary care is thin, which is the gap question this application asks.",
+    "metrics": "Services per 100 people, patients seen, and out-of-pocket costs, by service group",
+    "geoLevel": "Primary Health Network area and Statistical Area Level 3",
+    "inputData": "Medicare claims for non-hospital services",
+    "output": "Downloadable tables of services and patients per area, with rates adjusted so areas can be compared",
+    "dataSources": "Medicare Benefits Schedule claims",
+    "accessNote": "Free spreadsheets and zipped CSV files, no registration. Note it counts services claimed through Medicare, so anything delivered another way is invisible to it.",
+    "scale": "All Medicare non-hospital services nationally, updated annually",
+    "keyAttributes": "Service group, area, services per 100 people, patients, bulk billing and out-of-pocket cost",
+    "access": "Public",
+    "id": "app3-05",
+    "app": 3,
+    "num": 5,
+    "topics": [
+      "prevention-programs",
+      "health-system",
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "PHN",
+      "Small area",
+      "National"
+    ],
+    "domains": [],
+    "sourceGroup": "Statistical agency release",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.aihw.gov.au/reports-data/health-welfare-services/primary-health-care/data"
+      }
+    ]
+  },
+  {
+    "reference": "Australian Sports Commission. AusPlay survey. Canberra: Australian Sports Commission",
+    "link": "https://www.clearinghouseforsport.gov.au/research/ausplay",
+    "sourceType": "Government survey data release",
+    "country": "Australia",
+    "task": "The national count of who plays sport and takes part in physical activity, and through what - a club, a gym, or on their own. It answers the participation half of the physical activity measures, which the preventive health survey does not break down by setting.",
+    "metrics": "Participation rates by activity, frequency, whether organised through a club, and reasons for not taking part",
+    "geoLevel": "Australia, states and territories, and some larger sub-state areas",
+    "inputData": "A continuous national telephone survey of adults and, through their parents, children",
+    "output": "Published tables and an online explorer, plus data on request",
+    "dataSources": "The AusPlay survey itself",
+    "accessNote": "Results are free. Below state level the sample thins out, so council-level figures generally are not available.",
+    "scale": "A continuous national sample",
+    "keyAttributes": "Activity type, frequency, setting, club membership, barriers, by age, sex and area",
+    "access": "Public (aggregate only)",
+    "id": "app3-06",
+    "app": 3,
+    "num": 6,
+    "topics": [
+      "prevention-programs",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "State",
+      "National"
+    ],
+    "domains": [
+      "Physical Activity",
+      "Social"
+    ],
+    "sourceGroup": "Statistical agency release",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.clearinghouseforsport.gov.au/research/ausplay"
+      }
+    ]
+  },
+  {
+    "reference": "CQUniversity Australia. 10,000 Steps program. Rockhampton: Physical Activity Research Group, CQUniversity",
+    "link": "https://www.10000steps.org.au/",
+    "sourceType": "University research tool",
+    "country": "Australia (Queensland)",
+    "task": "A long-running Queensland physical activity program that people and workplaces log steps into. Worth knowing about because it is a prevention program with its own participation records, run from a Queensland university, rather than a survey of the population.",
+    "metrics": "Steps logged, participants registered, challenges completed",
+    "geoLevel": "Wherever participants are; not a population measure",
+    "inputData": "Steps logged by registered participants and workplace teams",
+    "output": "Participant dashboards and challenge results; research outputs from the team",
+    "dataSources": "The program's own registration and logging records",
+    "accessNote": "The program is free to join. The participation records are held by the research group and are not published as a dataset - using them would mean approaching them. Note this measures who signed up, not the population, so it cannot be read as a rate.",
+    "scale": "A national participant base, run from Queensland since 2001",
+    "keyAttributes": "Participant registrations, steps logged, workplace and team challenge records",
+    "access": "Restricted - application",
+    "id": "app3-07",
+    "app": 3,
+    "num": 7,
+    "topics": [
+      "prevention-programs"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Individual",
+      "State",
+      "National"
+    ],
+    "domains": [
+      "Physical Activity",
+      "Implementation"
+    ],
+    "sourceGroup": "Academic or institutional report",
+    "regions": [
+      "Queensland",
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.10000steps.org.au/"
+      }
+    ]
+  },
+  {
+    "reference": "Baum F, Lawless A, Delany T, Macdougall C, Williams C, Broderick D, et al. (2014). Evaluation of Health in All Policies: concept, theory and application. Health Promotion International 29(suppl 1):i130-i142",
+    "link": "https://doi.org/10.1093/heapro/dau032",
+    "sourceType": "Peer-reviewed",
+    "country": "Australia (South Australia)",
+    "task": "Evaluates South Australia's attempt to make health everyone's business across government, not just the health department. The closest Australian precedent for what this application is trying to set up, and it says plainly what was hard.",
+    "metrics": "Not measures - the conditions that make cross-portfolio work hold together, including central agency backing and a shared mandate",
+    "geoLevel": "State government",
+    "inputData": "Interviews, documents and case studies from the South Australian program",
+    "output": "A framework for evaluating cross-government health work, and findings on what sustained it",
+    "dataSources": "Program documents and interviews",
+    "accessNote": "Journal article; check for access. It is guidance rather than data.",
+    "scale": "One state's whole-of-government program",
+    "keyAttributes": "Not applicable",
+    "access": "Not a dataset",
+    "id": "app4-01",
+    "app": 4,
+    "num": 1,
+    "topics": [
+      "regional-partnerships",
+      "prevention-programs"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "State"
+    ],
+    "domains": [
+      "Implementation"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Corbin JH, Jones J, Barry MM (2016). What makes intersectoral partnerships for health promotion work? A review of the international literature. Health Promotion International 33(1):4-26",
+    "link": "https://doi.org/10.1093/heapro/daw061",
+    "sourceType": "Peer-reviewed",
+    "country": "Many countries",
+    "task": "Pulls together what is known about why partnerships between health, councils and other sectors succeed or fall apart. Directly answers this application's question about coordination, with evidence rather than assertion.",
+    "metrics": "Not measures - the factors to assess a partnership against",
+    "geoLevel": "Not applicable",
+    "inputData": "Published studies of intersectoral health promotion partnerships",
+    "output": "The recurring factors: shared purpose, trust, clear roles, resourcing, and leadership that survives staff turnover",
+    "dataSources": "Published literature",
+    "accessNote": "Journal article; check for access. Guidance rather than data.",
+    "scale": "An international review",
+    "keyAttributes": "Not applicable",
+    "access": "Not a dataset",
+    "id": "app4-02",
+    "app": 4,
+    "num": 2,
+    "topics": [
+      "regional-partnerships"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Any",
+      "International"
+    ],
+    "domains": [
+      "Implementation"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Alderwick H, Hutchings A, Mays N (2024). Cross-sector collaboration to reduce health inequalities: a qualitative study of local collaboration between health care, social services, and other sectors under health system reforms in England. BMC Public Health 24:2606",
+    "link": "https://doi.org/10.1186/s12889-024-20089-5",
+    "sourceType": "Peer-reviewed",
+    "country": "England",
+    "task": "Recent evidence on what actually happens when a health system is reorganised to make local partnership compulsory. Useful as a caution: the paper finds the structures were created but the money and the power stayed where they were.",
+    "metrics": "Not measures - what to watch for when setting up joint arrangements",
+    "geoLevel": "Local health and care systems",
+    "inputData": "Interviews with people running local partnerships under England's health system reforms",
+    "output": "Findings on the gap between partnership structures on paper and what changes on the ground",
+    "dataSources": "Interview data",
+    "accessNote": "Open access paper. Guidance rather than data.",
+    "scale": "Local systems across England",
+    "keyAttributes": "Not applicable",
+    "access": "Not a dataset",
+    "id": "app4-03",
+    "app": 4,
+    "num": 3,
+    "topics": [
+      "regional-partnerships",
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Small area",
+      "International"
+    ],
+    "domains": [
+      "Equity",
+      "Implementation"
+    ],
+    "sourceGroup": "Peer-reviewed",
+    "regions": [
+      "International"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Australian Bureau of Statistics. Person Level Integrated Data Asset (PLIDA). Canberra: Australian Bureau of Statistics",
+    "link": "https://www.abs.gov.au/about/data-services/data-integration/integrated-data/person-level-integrated-data-asset-plida",
+    "sourceType": "Government statistical agency data asset",
+    "country": "Australia",
+    "task": "Links health, tax, education, welfare and census records for the same people, so a question like 'did this program change hospital use' can actually be answered. It is the mechanism behind most Australian work that follows people across services.",
+    "metrics": "Whatever the linked collections hold - Medicare, pharmaceuticals, hospital, income, education, welfare",
+    "geoLevel": "Person level, reportable at small area",
+    "inputData": "Commonwealth administrative collections linked at person level, without names",
+    "output": "Analysis run inside a controlled environment; results are checked before release",
+    "dataSources": "Census, Medicare, Pharmaceutical Benefits Scheme, hospital, tax, social security and education collections",
+    "accessNote": "Not public. Access takes a formal application, an approved project, and analysis inside the ABS environment rather than on your own machine. Slow and demanding, but it is the only route to person-level linkage at this scale.",
+    "scale": "The Australian population, linked across collections",
+    "keyAttributes": "Linked person records across health, income, education and welfare",
+    "access": "Restricted - application",
+    "id": "app4-04",
+    "app": 4,
+    "num": 4,
+    "topics": [
+      "regional-partnerships",
+      "health-system",
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Individual",
+      "Small area",
+      "National"
+    ],
+    "domains": [],
+    "sourceGroup": "Statistical agency release",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.abs.gov.au/about/data-services/data-integration/integrated-data/person-level-integrated-data-asset-plida"
+      }
+    ]
+  },
+  {
+    "reference": "Australian Bureau of Statistics. The Five Safes framework. Canberra: Australian Bureau of Statistics",
+    "link": "https://www.abs.gov.au/about/data-services/data-confidentiality-guide/five-safes-framework",
+    "sourceType": "Government agency methodology",
+    "country": "Australia",
+    "task": "The vocabulary Australian agencies use when deciding whether data can be shared: is the project safe, the people, the setting, the data, the output. If this project ends up asking for data it does not hold, this is the language the answer will come back in.",
+    "metrics": "Safe projects, safe people, safe settings, safe data, safe outputs",
+    "geoLevel": "Not applicable",
+    "inputData": "Not applicable",
+    "output": "A five-part test applied to any proposed data access",
+    "dataSources": "Not applicable",
+    "accessNote": "The framework is published free. It is a method for deciding access, not data.",
+    "scale": "Applies to any data-sharing request",
+    "keyAttributes": "Not applicable",
+    "access": "Not a dataset",
+    "id": "app4-05",
+    "app": 4,
+    "num": 5,
+    "topics": [
+      "regional-partnerships"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Any"
+    ],
+    "domains": [],
+    "sourceGroup": "Government report",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": []
+  },
+  {
+    "reference": "Office of the National Data Commissioner. The Data Availability and Transparency scheme. Canberra: Australian Government",
+    "link": "https://www.datacommissioner.gov.au/",
+    "sourceType": "Government agency methodology",
+    "country": "Australia",
+    "task": "The legal route by which Australian Government data can be shared with state bodies and researchers, and the register of who is accredited to receive it. Relevant because it sets what an agency can lawfully ask for and on what terms.",
+    "metrics": "Not applicable",
+    "geoLevel": "National",
+    "inputData": "Not applicable",
+    "output": "Accreditation, registered data-sharing agreements, and published guidance",
+    "dataSources": "Not applicable",
+    "accessNote": "The scheme, its guidance and the register of data-sharing agreements are public. It governs access rather than holding data itself.",
+    "scale": "Commonwealth data sharing",
+    "keyAttributes": "Not applicable",
+    "access": "Not a dataset",
+    "id": "app4-06",
+    "app": 4,
+    "num": 6,
+    "topics": [
+      "regional-partnerships"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "National"
+    ],
+    "domains": [],
+    "sourceGroup": "Government report",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.datacommissioner.gov.au/"
+      }
+    ]
+  },
+  {
+    "reference": "Australian Institute of Health and Welfare. AIHW data by geography. Canberra: AIHW",
+    "link": "https://www.aihw.gov.au/about-our-data/aihw-data-by-geography",
+    "sourceType": "Government statistical agency data release",
+    "country": "Australia",
+    "task": "A single index of which national health collections are published at which geographic level. Worth having because the recurring question in this scan is not whether a figure exists but whether it exists for a council-sized area.",
+    "metrics": "Varies by collection",
+    "geoLevel": "Indexes national collections by their available geography",
+    "inputData": "AIHW's own catalogue of collections",
+    "output": "A guide to what is available at Primary Health Network, Statistical Area Level 3, local government area and remoteness levels",
+    "dataSources": "AIHW collections",
+    "accessNote": "Free, no registration. It is a finding aid rather than data.",
+    "scale": "National collections",
+    "keyAttributes": "Collection name against available geographic levels",
+    "access": "Not a dataset",
+    "id": "app4-07",
+    "app": 4,
+    "num": 7,
+    "topics": [
+      "regional-partnerships",
+      "local-government",
+      "health-system"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "PHN",
+      "LGA",
+      "Small area",
+      "Remoteness",
+      "National"
+    ],
+    "domains": [],
+    "sourceGroup": "Statistical agency release",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.aihw.gov.au/about-our-data/aihw-data-by-geography"
+      }
+    ]
   },
   {
     "reference": "World Health Organization (2013). Handbook on health inequality monitoring: with a special focus on low- and middle-income countries. Geneva: World Health Organization",
@@ -613,7 +1554,8 @@
     "app": 5,
     "num": 5,
     "topics": [
-      "health-inequities"
+      "health-inequities",
+      "regional-partnerships"
     ],
     "priority": "relevant",
     "geoTags": [
@@ -727,7 +1669,8 @@
     "app": 5,
     "num": 8,
     "topics": [
-      "health-inequities"
+      "health-inequities",
+      "regional-partnerships"
     ],
     "priority": "unmarked",
     "geoTags": [
@@ -762,7 +1705,8 @@
     "num": 9,
     "topics": [
       "health-inequities",
-      "local-government"
+      "local-government",
+      "regional-environments"
     ],
     "priority": "unmarked",
     "geoTags": [
@@ -847,7 +1791,8 @@
     "app": 6,
     "num": 1,
     "topics": [
-      "local-government"
+      "local-government",
+      "regional-environments"
     ],
     "priority": "highly-relevant",
     "geoTags": [
@@ -887,7 +1832,8 @@
     "app": 6,
     "num": 2,
     "topics": [
-      "local-government"
+      "local-government",
+      "regional-environments"
     ],
     "priority": "highly-relevant",
     "geoTags": [
@@ -927,7 +1873,8 @@
     "app": 6,
     "num": 3,
     "topics": [
-      "local-government"
+      "local-government",
+      "regional-environments"
     ],
     "priority": "unmarked",
     "geoTags": [
@@ -961,7 +1908,8 @@
     "app": 6,
     "num": 4,
     "topics": [
-      "local-government"
+      "local-government",
+      "regional-environments"
     ],
     "priority": "relevant",
     "geoTags": [
@@ -1038,7 +1986,8 @@
     "app": 6,
     "num": 6,
     "topics": [
-      "local-government"
+      "local-government",
+      "regional-environments"
     ],
     "priority": "unmarked",
     "geoTags": [
@@ -1106,7 +2055,8 @@
     "app": 6,
     "num": 8,
     "topics": [
-      "local-government"
+      "local-government",
+      "regional-environments"
     ],
     "priority": "relevant",
     "geoTags": [
@@ -1221,7 +2171,8 @@
     "app": 6,
     "num": 11,
     "topics": [
-      "local-government"
+      "local-government",
+      "regional-environments"
     ],
     "priority": "unmarked",
     "geoTags": [
@@ -1265,7 +2216,8 @@
     "app": 6,
     "num": 12,
     "topics": [
-      "local-government"
+      "local-government",
+      "regional-environments"
     ],
     "priority": "unmarked",
     "geoTags": [
@@ -1382,7 +2334,8 @@
     "num": 15,
     "topics": [
       "local-government",
-      "health-inequities"
+      "health-inequities",
+      "regional-environments"
     ],
     "priority": "unmarked",
     "geoTags": [
