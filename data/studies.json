@@ -29,6 +29,7 @@
     "domains": [
       "Prosperity & Productivity"
     ],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "International"
@@ -64,6 +65,7 @@
       "National"
     ],
     "domains": [],
+    "indicators": [],
     "sourceGroup": "Government report",
     "regions": [
       "Australia"
@@ -105,6 +107,7 @@
     "domains": [
       "Equity"
     ],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Australia"
@@ -145,6 +148,7 @@
     "domains": [
       "Equity"
     ],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Australia"
@@ -180,6 +184,7 @@
     "domains": [
       "Prosperity & Productivity"
     ],
+    "indicators": [],
     "sourceGroup": "Academic or institutional report",
     "regions": [
       "Australia"
@@ -216,6 +221,7 @@
     "domains": [
       "Prosperity & Productivity"
     ],
+    "indicators": [],
     "sourceGroup": "International agency report",
     "regions": [
       "International"
@@ -251,6 +257,7 @@
     "domains": [
       "Prosperity & Productivity"
     ],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "International"
@@ -284,6 +291,7 @@
       "National"
     ],
     "domains": [],
+    "indicators": [],
     "sourceGroup": "Academic or institutional report",
     "regions": [
       "International"
@@ -317,6 +325,7 @@
       "International"
     ],
     "domains": [],
+    "indicators": [],
     "sourceGroup": "International agency report",
     "regions": [
       "International"
@@ -354,6 +363,7 @@
       "State"
     ],
     "domains": [],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Queensland",
@@ -398,6 +408,7 @@
       "LGA"
     ],
     "domains": [],
+    "indicators": [],
     "sourceGroup": "Government report",
     "regions": [
       "Queensland",
@@ -443,6 +454,7 @@
       "Small area"
     ],
     "domains": [],
+    "indicators": [],
     "sourceGroup": "Government report",
     "regions": [
       "Queensland",
@@ -461,10 +473,10 @@
     "inputData": "Accelerometers worn by 6,822 adults, plus mapped features of the neighbourhood around each person's home",
     "output": "Four environment features explained a difference of up to 89 minutes of physical activity a week between neighbourhoods",
     "dataSources": "The International Physical Activity and Environment Network (IPEN) Adult study",
-    "accessNote": "The paper is open access. The pooled study data is held by the IPEN collaboration and takes a request.",
+    "accessNote": "The paper is open access. Whether the pooled study data can be obtained is not stated on any public page - the collaboration would have to be asked.",
     "scale": "6,822 adults, aged 18 to 66",
     "keyAttributes": "Per person: measured activity, age, sex, education. Per neighbourhood: density, street connectivity, transport stops, parks",
-    "access": "Restricted - application",
+    "access": "Not yet assessed",
     "id": "app2-01",
     "app": 2,
     "num": 1,
@@ -480,6 +492,11 @@
     ],
     "domains": [
       "Physical Activity"
+    ],
+    "indicators": [
+      "Street connectivity",
+      "Dwelling density",
+      "Public transport accessibility"
     ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
@@ -517,6 +534,10 @@
     "domains": [
       "Physical Activity"
     ],
+    "indicators": [
+      "Tree canopy/shade coverage",
+      "Green space access"
+    ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Australia"
@@ -553,6 +574,9 @@
       "Physical Activity",
       "Mental Wellbeing"
     ],
+    "indicators": [
+      "Green space access"
+    ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Australia"
@@ -588,6 +612,10 @@
     ],
     "domains": [
       "Healthy Eating"
+    ],
+    "indicators": [
+      "Healthy food outlet density",
+      "Healthy food access"
     ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
@@ -626,6 +654,7 @@
       "Healthy Eating",
       "Implementation"
     ],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "International"
@@ -662,7 +691,10 @@
     "domains": [
       "Physical Activity"
     ],
-    "sourceGroup": "Statistical agency release",
+    "indicators": [
+      "Active transport mode share"
+    ],
+    "sourceGroup": "Published dataset",
     "regions": [
       "Queensland",
       "Australia"
@@ -704,7 +736,11 @@
       "State"
     ],
     "domains": [],
-    "sourceGroup": "Statistical agency release",
+    "indicators": [
+      "Tree canopy/shade coverage",
+      "Green space access"
+    ],
+    "sourceGroup": "Published dataset",
     "regions": [
       "Queensland",
       "Australia"
@@ -745,7 +781,8 @@
       "State"
     ],
     "domains": [],
-    "sourceGroup": "Statistical agency release",
+    "indicators": [],
+    "sourceGroup": "Published dataset",
     "regions": [
       "Queensland",
       "Australia"
@@ -789,7 +826,13 @@
       "Social",
       "Mental Wellbeing"
     ],
-    "sourceGroup": "Statistical agency release",
+    "indicators": [
+      "Loneliness",
+      "Social connectedness",
+      "Volunteering rate",
+      "Community participation"
+    ],
+    "sourceGroup": "Published dataset",
     "regions": [
       "Australia"
     ],
@@ -835,7 +878,8 @@
       "Mental Wellbeing",
       "Equity"
     ],
-    "sourceGroup": "Statistical agency release",
+    "indicators": [],
+    "sourceGroup": "Published dataset",
     "regions": [
       "Australia"
     ],
@@ -879,7 +923,14 @@
       "Healthy Eating",
       "Mental Wellbeing"
     ],
-    "sourceGroup": "Statistical agency release",
+    "indicators": [
+      "Fruit intake",
+      "Vegetable intake",
+      "Adults meeting PA guidelines",
+      "Psychological distress",
+      "Self-rated health"
+    ],
+    "sourceGroup": "Published dataset",
     "regions": [
       "Australia"
     ],
@@ -918,6 +969,7 @@
     "domains": [
       "Implementation"
     ],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "International"
@@ -953,6 +1005,7 @@
     "domains": [
       "Implementation"
     ],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "International"
@@ -990,6 +1043,7 @@
       "Physical Activity",
       "Equity"
     ],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Australia"
@@ -1026,7 +1080,8 @@
       "National"
     ],
     "domains": [],
-    "sourceGroup": "Statistical agency release",
+    "indicators": [],
+    "sourceGroup": "Published dataset",
     "regions": [
       "Australia"
     ],
@@ -1068,7 +1123,10 @@
       "Physical Activity",
       "Social"
     ],
-    "sourceGroup": "Statistical agency release",
+    "indicators": [
+      "Club/sport membership"
+    ],
+    "sourceGroup": "Published dataset",
     "regions": [
       "Australia"
     ],
@@ -1090,10 +1148,10 @@
     "inputData": "Steps logged by registered participants and workplace teams",
     "output": "Participant dashboards and challenge results; research outputs from the team",
     "dataSources": "The program's own registration and logging records",
-    "accessNote": "The program is free to join. The participation records are held by the research group and are not published as a dataset - using them would mean approaching them. Note this measures who signed up, not the population, so it cannot be read as a rate.",
+    "accessNote": "The programme is free to join. Nothing published says whether the participation records can be obtained or on what terms, so the research group at CQUniversity would have to be asked. Note the records count sign-ups rather than the population, so they cannot be read as a participation rate.",
     "scale": "A national participant base, run from Queensland since 2001",
     "keyAttributes": "Participant registrations, steps logged, workplace and team challenge records",
-    "access": "Restricted - application",
+    "access": "Not yet assessed",
     "id": "app3-07",
     "app": 3,
     "num": 7,
@@ -1110,6 +1168,7 @@
       "Physical Activity",
       "Implementation"
     ],
+    "indicators": [],
     "sourceGroup": "Academic or institutional report",
     "regions": [
       "Queensland",
@@ -1151,6 +1210,7 @@
     "domains": [
       "Implementation"
     ],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Australia"
@@ -1186,6 +1246,7 @@
     "domains": [
       "Implementation"
     ],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "International"
@@ -1223,6 +1284,7 @@
       "Equity",
       "Implementation"
     ],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "International"
@@ -1259,7 +1321,8 @@
       "National"
     ],
     "domains": [],
-    "sourceGroup": "Statistical agency release",
+    "indicators": [],
+    "sourceGroup": "Published dataset",
     "regions": [
       "Australia"
     ],
@@ -1296,6 +1359,7 @@
       "Any"
     ],
     "domains": [],
+    "indicators": [],
     "sourceGroup": "Government report",
     "regions": [
       "Australia"
@@ -1328,6 +1392,7 @@
       "National"
     ],
     "domains": [],
+    "indicators": [],
     "sourceGroup": "Government report",
     "regions": [
       "Australia"
@@ -1371,7 +1436,8 @@
       "National"
     ],
     "domains": [],
-    "sourceGroup": "Statistical agency release",
+    "indicators": [],
+    "sourceGroup": "Published dataset",
     "regions": [
       "Australia"
     ],
@@ -1410,6 +1476,7 @@
     "domains": [
       "Equity"
     ],
+    "indicators": [],
     "sourceGroup": "International agency report",
     "regions": [
       "International"
@@ -1445,6 +1512,7 @@
     "domains": [
       "Equity"
     ],
+    "indicators": [],
     "sourceGroup": "Academic or institutional report",
     "regions": [
       "International"
@@ -1490,6 +1558,7 @@
     "domains": [
       "Equity"
     ],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Australia"
@@ -1527,6 +1596,7 @@
     "domains": [
       "Equity"
     ],
+    "indicators": [],
     "sourceGroup": "Government report",
     "regions": [
       "Australia"
@@ -1562,6 +1632,7 @@
     "domains": [
       "Equity"
     ],
+    "indicators": [],
     "sourceGroup": "Government report",
     "regions": [
       "International"
@@ -1597,6 +1668,7 @@
     "domains": [
       "Equity"
     ],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "International"
@@ -1637,6 +1709,7 @@
     "domains": [
       "Equity"
     ],
+    "indicators": [],
     "sourceGroup": "Academic or institutional report",
     "regions": [
       "International"
@@ -1677,6 +1750,7 @@
     "domains": [
       "Equity"
     ],
+    "indicators": [],
     "sourceGroup": "Academic or institutional report",
     "regions": [
       "Australia"
@@ -1716,7 +1790,8 @@
     "domains": [
       "Equity"
     ],
-    "sourceGroup": "Statistical agency release",
+    "indicators": [],
+    "sourceGroup": "Published dataset",
     "regions": [
       "Australia"
     ],
@@ -1759,7 +1834,8 @@
     "domains": [
       "Equity"
     ],
-    "sourceGroup": "Statistical agency release",
+    "indicators": [],
+    "sourceGroup": "Published dataset",
     "regions": [
       "Australia"
     ],
@@ -1799,6 +1875,17 @@
     ],
     "domains": [
       "Physical Activity"
+    ],
+    "indicators": [
+      "Walkability Index",
+      "Street connectivity",
+      "Dwelling density",
+      "Daily living destination index",
+      "Public transport accessibility",
+      "Green space access",
+      "% dwellings within 400m open space",
+      "Supermarket access",
+      "Housing affordability"
     ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
@@ -1841,6 +1928,18 @@
     "domains": [
       "Physical Activity"
     ],
+    "indicators": [
+      "Walkability Index",
+      "Street connectivity",
+      "Dwelling density",
+      "Daily living destination index",
+      "Public transport accessibility",
+      "Green space access",
+      "Supermarket access",
+      "Healthy food access",
+      "Housing affordability",
+      "Local employment"
+    ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Australia"
@@ -1881,6 +1980,7 @@
     "domains": [
       "Physical Activity"
     ],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "International"
@@ -1917,6 +2017,14 @@
     "domains": [
       "Physical Activity",
       "Healthy Eating"
+    ],
+    "indicators": [
+      "Walkability Index",
+      "Street connectivity",
+      "Dwelling density",
+      "Public transport accessibility",
+      "Green space access",
+      "Healthy food access"
     ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
@@ -1959,6 +2067,7 @@
       "LGA"
     ],
     "domains": [],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "Australia"
@@ -1993,6 +2102,7 @@
       "International"
     ],
     "domains": [],
+    "indicators": [],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "International"
@@ -2027,6 +2137,9 @@
     ],
     "domains": [
       "Mental Wellbeing"
+    ],
+    "indicators": [
+      "WHO-5 wellbeing score"
     ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
@@ -2063,6 +2176,11 @@
     "domains": [
       "Healthy Eating"
     ],
+    "indicators": [
+      "Healthy food outlet density",
+      "Healthy food access",
+      "Healthy food basket affordability"
+    ],
     "sourceGroup": "Peer-reviewed",
     "regions": [
       "International"
@@ -2095,6 +2213,7 @@
       "Any"
     ],
     "domains": [],
+    "indicators": [],
     "sourceGroup": "International agency report",
     "regions": [
       "International"
@@ -2134,7 +2253,13 @@
       "Physical Activity",
       "Healthy Eating"
     ],
-    "sourceGroup": "Statistical agency release",
+    "indicators": [
+      "Fruit intake",
+      "Vegetable intake",
+      "Adults meeting PA guidelines",
+      "Children meeting PA guidelines"
+    ],
+    "sourceGroup": "Published dataset",
     "regions": [
       "Queensland",
       "Australia"
@@ -2179,7 +2304,8 @@
       "State"
     ],
     "domains": [],
-    "sourceGroup": "Statistical agency release",
+    "indicators": [],
+    "sourceGroup": "Published dataset",
     "regions": [
       "Queensland",
       "Australia"
@@ -2226,6 +2352,12 @@
       "Physical Activity",
       "Healthy Eating"
     ],
+    "indicators": [
+      "Walkability Index",
+      "Public transport accessibility",
+      "Supermarket access",
+      "Green space access"
+    ],
     "sourceGroup": "Academic or institutional report",
     "regions": [
       "Australia"
@@ -2242,14 +2374,14 @@
     "link": "https://www.healthysustainablecities.org/1000cities",
     "sourceType": "Institutional research tool",
     "country": "Many countries",
-    "task": "Computes the same set of city measures the same way in every participating city, so one city can be compared against another rather than only against itself. Brisbane is one of the cities included. The method behind it is source 4 of this application.",
+    "task": "Computes the same set of city measures the same way in every participating city, so one city can be compared against another rather than only against itself. Several Australian cities take part, Brisbane among them. The site sorts cities into those with a full report available and those still to come, and the list is loaded by script so it could not be read here - check where Brisbane sits before relying on it. The method behind it is source 4 of this application.",
     "metrics": "Population within walking distance of public transport, fresh food and public open space; street connectivity; walkability; population density. Alongside these, policy measures covering transport, air quality, parking, cycling and walking infrastructure, and housing density rules.",
     "geoLevel": "Whole city, and smaller areas within a city",
     "inputData": "Open mapping and transport data for each city, plus a policy questionnaire completed locally",
     "output": "A scorecard and report per city, and the spatial indicators behind them",
     "dataSources": "OpenStreetMap and equivalent open data, plus locally completed policy scorecards",
     "accessNote": "The scorecards and reports are published free. What is downloadable, and on what terms, is not stated on the site - it would need an email to the team. The software and method are open, through source 4 of this application.",
-    "scale": "Around 80 cities across six continents, including Adelaide, Brisbane, Canberra, Melbourne and Sydney",
+    "scale": "Around 80 cities across six continents, several of them Australian. Not every listed city has a published report yet.",
     "keyAttributes": "Spatial and policy indicators per city",
     "access": "Not yet assessed",
     "id": "app6-13",
@@ -2266,6 +2398,14 @@
     "domains": [
       "Physical Activity",
       "Healthy Eating"
+    ],
+    "indicators": [
+      "Walkability Index",
+      "Street connectivity",
+      "Dwelling density",
+      "Public transport accessibility",
+      "Green space access",
+      "Healthy food access"
     ],
     "sourceGroup": "Academic or institutional report",
     "regions": [
@@ -2306,6 +2446,7 @@
     "domains": [
       "Physical Activity"
     ],
+    "indicators": [],
     "sourceGroup": "Academic or institutional report",
     "regions": [
       "Australia"
@@ -2346,7 +2487,11 @@
       "Physical Activity",
       "Social"
     ],
-    "sourceGroup": "Statistical agency release",
+    "indicators": [
+      "Active transport mode share",
+      "Volunteering rate"
+    ],
+    "sourceGroup": "Published dataset",
     "regions": [
       "Australia"
     ],

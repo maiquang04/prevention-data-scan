@@ -6,7 +6,7 @@
 <!-- Draft: reachable by link, kept out of search results. Remove when it is finished. -->
 <meta name="robots" content="noindex">
 <title>Source - Prevention data scan</title>
-<link rel="stylesheet" href="assets/style.css?v=6c420df3">
+<link rel="stylesheet" href="assets/style.css?v=38e454e2">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -36,7 +36,7 @@
   </div>
 </footer>
 
-<script src="assets/common.js?v=d33add98"></script>
+<script src="assets/common.js?v=d14d68a5"></script>
 <script>
 (function () {
   "use strict";
@@ -90,6 +90,10 @@
         row(S.label("healthDomain"), study.domains.map(function (d) {
           return '<a class="tag" href="browse.html?domain=' + encodeURIComponent(d) + '">' +
             S.escapeHtml(S.domainLabel(d)) + "</a>";
+        }).join("")) +
+        row(S.label("indicators"), study.indicators.map(function (name) {
+          return '<a class="tag" href="browse.html?q=' + encodeURIComponent(name) + '">' +
+            S.escapeHtml(name) + "</a>";
         }).join("")) +
         row(S.label("summary"), S.escapeHtml(study.task)) +
         row(S.label("inputs"), S.escapeHtml(study.inputData)) +

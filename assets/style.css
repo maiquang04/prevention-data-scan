@@ -16,6 +16,14 @@
   --accent-soft: #e7f0f7;
   --focus: #b8500a;
 
+  /* Result-row pills. Kept clear of the greens and ambers the access badges use, for
+     the same reason the quadrant headings below are: a tag tinted like "Public" would
+     say something it does not mean. */
+  --tag-domain-bg: #efe9e2;
+  --tag-domain-fg: #5a4a3a;
+  --tag-indicator-bg: #e9e3f5;
+  --tag-indicator-fg: #443872;
+
   /* One colour per heading, so no two edges of the grid look alike. All four steer
      clear of green and amber: those carry meaning in the access badges, and a
      header tinted like "Public" would say something it does not mean. */
@@ -162,9 +170,26 @@ section { margin-bottom: 40px; }
   border: 1px solid var(--rule); border-radius: 999px;
   font-size: .74rem; color: var(--ink-soft); background: #fff;
 }
-/* Source type. Same pill as a geography tag because it filters the same way, filled
-   rather than outlined so the two are still told apart at a glance. */
+/* Every checkbox group in the filter panel has a matching pill on each result, so a
+   reader can see why a row came back without opening it. Seven groups means seven
+   looks, and they are told apart by fill and border rather than by colour alone -
+   these sit next to the access badges, which do use colour to mean something.
+
+   Relevance is the exception: it is already the coloured dot beside the row number.
+
+   Order on the row is deliberate. The short, always-present ones come first and the
+   indicators, of which one source carries ten, come last so they cannot push
+   everything else off the first line. */
+.tag--topic {
+  background: var(--accent-soft); border-color: var(--accent); color: var(--accent-dark);
+}
+.tag--domain { background: var(--tag-domain-bg); border-color: var(--tag-domain-bg); color: var(--tag-domain-fg); }
+.tag--region { background: var(--panel); border-color: var(--rule); color: var(--muted); }
 .tag--type { background: var(--panel-2); border-color: var(--panel-2); }
+.tag--indicator {
+  background: var(--tag-indicator-bg); border-color: var(--tag-indicator-bg);
+  color: var(--tag-indicator-fg);
+}
 
 /* LGA, PHN and HHS carry their full name on hover. The dotted underline is the only
    thing telling a reader there is anything to hover for, so it is set here rather
@@ -325,6 +350,26 @@ abbr[title] {
 .filters label:hover { color: var(--ink); }
 .filters input[type="checkbox"] { margin: .3em 0 0; flex: none; }
 .filters .count { margin-left: auto; color: var(--muted); font-size: .78rem; font-variant-numeric: tabular-nums; }
+
+/* The agency's measures, nested under the health focus each belongs to. Indented and
+   hung off a rule so the level is unmistakable - a measure filters differently from
+   the domain above it, and a reader who takes the two for one list will not
+   understand why ticking "Fruit intake" is narrower than ticking "Healthy eating".
+   Folded away by default: seven domains open at once is 61 checkboxes, taller than
+   the rest of the panel put together. */
+.facet-sub { margin: 0 0 6px 22px; padding-left: 10px; border-left: 2px solid var(--rule-soft); }
+.facet-sub-toggle {
+  display: flex; gap: 6px; align-items: center; width: 100%;
+  border: 0; background: transparent; color: var(--muted); cursor: pointer;
+  padding: 4px 0 5px; font: inherit; font-size: .8rem; font-weight: 600; text-align: left;
+}
+.facet-sub-toggle:hover { color: var(--ink); }
+.facet-sub-toggle:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 2px; }
+.facet-sub-chevron {
+  margin-left: auto; color: var(--muted); font-size: .8rem; line-height: 1;
+}
+.facet-sub-options > label { font-size: .84rem; }
+.facet-sub:not(.is-collapsed) { border-left-color: var(--rule); }
 
 .search {
   width: 100%; padding: 9px 12px; font: inherit; font-size: .92rem;

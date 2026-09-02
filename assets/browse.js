@@ -10,6 +10,7 @@
   var meta = null;
   var expanded = {};
   var collapsedFacets = {};
+  var collapsedSubs = {};
 
   /* Results are paged. Without it the results column runs to several screens while
      the filter panel beside it is one screen tall, so the filters scroll out of
@@ -50,18 +51,47 @@
        domains come from and why they are worded the way they are. Plenty of
        sources have none (a method text, a paper about hospital admissions), so this
        facet is narrower than the others: ticking a box hides everything untagged.
-       Values with no sources are hidden the same way the geographic level does it,
-       so a domain nothing covers yet does not sit there reading as a dead end. */
+
+       Unlike the geography and source-type facets, this one keeps a value with no
+       sources. It has to: each domain now owns the agency's measures that sit under
+       it, and hiding the domain would hide its measures with it. The measures are
+       the reason - see the indicator facet below. */
     { key: "domain", legend: "Health focus", multi: true, collapsed: true,
-      values: function () {
-        return meta.domains.filter(function (d) { return countAll("domain", d) > 0; });
-      },
+      values: function () { return meta.domains; },
       label: function (v) { return S.domainLabel(v); },
-      of: function (s) { return s.domains; } },
+      of: function (s) { return s.domains; },
+
+      /* The agency's 61 measures hang off the domain each one belongs to, rather
+         than sitting in a filter group of their own. Their spreadsheet is built the
+         same way - a Domain column and an Indicator column inside it - so a reader
+         who knows the source document finds them where they expect. It also stops
+         61 checkboxes from becoming an eighth group taller than the other seven put
+         together. */
+      childKey: "indicator",
+      children: function (domain) {
+        return meta.indicators.filter(function (i) { return i.domain === domain; })
+          .map(function (i) { return i.name; });
+      } },
+
+    /* Not drawn as a group of its own - renderFilters skips it and the domain facet
+       above draws its values nested underneath. It stays in this list because that
+       is what gives it a state key, a share of the URL, and its counts.
+
+       This is the one facet that deliberately keeps its zeros. Everywhere else an
+       option reading zero is a dead end and gets hidden; here the zero is the
+       finding. 34 of the 61 measures have no source in the scan, and that gap list
+       is a thing the agency asked for, so ticking one gives a message saying so
+       rather than the generic "nothing matches". */
+    { key: "indicator", legend: "Indicators", multi: true, nested: true,
+      values: function () {
+        return meta.indicators.map(function (i) { return i.name; });
+      },
+      label: function (v) { return v; },
+      of: function (s) { return s.indicators || []; } },
 
     /* Same hidden-when-empty rule as the two facets above. A bucket exists in the
-       vocabulary before anything lands in it - "Statistical agency release" was added
-       ahead of the datasets it is for - and an option reading zero is a dead end. */
+       vocabulary before anything lands in it - "Published dataset" was added ahead of
+       the datasets it is for - and an option reading zero is a dead end. */
     { key: "type", legend: "Kind of source", multi: true, collapsed: true,
       values: function () {
         return meta.sourceGroups.filter(function (g) { return countAll("type", g) > 0; });
@@ -83,6 +113,101 @@
   function facetByKey(key) {
     for (var i = 0; i < FACETS.length; i++) if (FACETS[i].key === key) return FACETS[i];
     return null;
+  }
+
+  function optionId(key, value) {
+    return "f-" + key + "-" + value.replace(/[^a-z0-9]+/gi, "-");
+  }
+
+  function addSelected(key, value) {
+    if (state[key].indexOf(value) === -1) state[key].push(value);
+  }
+
+  function removeSelected(key, value) {
+    var at = state[key].indexOf(value);
+    if (at !== -1) state[key].splice(at, 1);
+  }
+
+  function setSelected(key, value, selected) {
+    if (selected) addSelected(key, value);
+    else removeSelected(key, value);
+  }
+
+  function indicatorDomain(name) {
+    for (var i = 0; i < meta.indicators.length; i++) {
+      if (meta.indicators[i].name === name) return meta.indicators[i].domain;
+    }
+    return null;
+  }
+
+  function indicatorsForDomain(domain) {
+    var facet = facetByKey("domain");
+    return facet && facet.children ? facet.children(domain) : [];
+  }
+
+  function setDomainTree(domain, selected) {
+    setSelected("domain", domain, selected);
+    indicatorsForDomain(domain).forEach(function (name) {
+      setSelected("indicator", name, selected);
+    });
+    if (selected && !Object.prototype.hasOwnProperty.call(collapsedSubs, domain)) {
+      collapsedSubs[domain] = true;
+    }
+  }
+
+  function syncDomainFromIndicators(domain) {
+    var kids = indicatorsForDomain(domain);
+    if (!kids.length) return;
+    var selected = kids.filter(function (name) {
+      return state.indicator.indexOf(name) !== -1;
+    }).length;
+    setSelected("domain", domain, selected === kids.length);
+    if (selected) collapsedSubs[domain] = false;
+  }
+
+  function normaliseNestedState() {
+    meta.domains.forEach(function (domain) {
+      if (state.domain.indexOf(domain) !== -1) {
+        setDomainTree(domain, true);
+      } else {
+        syncDomainFromIndicators(domain);
+      }
+    });
+  }
+
+  function sameFilterGroup(a, b) {
+    if (a === b) return true;
+    return (a === "domain" && b === "indicator") || (a === "indicator" && b === "domain");
+  }
+
+  function matchesHealthTree(study, domains, indicators) {
+    if (!domains.length && !indicators.length) return true;
+    var mineDomains = study.domains || [];
+    var mineIndicators = study.indicators || [];
+    for (var i = 0; i < domains.length; i++) {
+      if (mineDomains.indexOf(domains[i]) !== -1) return true;
+    }
+    for (var j = 0; j < indicators.length; j++) {
+      if (mineIndicators.indexOf(indicators[j]) !== -1) return true;
+    }
+    return false;
+  }
+
+  function selectedCount(facet) {
+    if (facet.nested) return 0;
+    var count = state[facet.key].length;
+    var child = facet.childKey ? facetByKey(facet.childKey) : null;
+    if (!child) return count;
+    state[child.key].forEach(function (name) {
+      if (state[facet.key].indexOf(indicatorDomain(name)) === -1) count++;
+    });
+    return count;
+  }
+
+  function activeFilterCount() {
+    return FACETS.reduce(function (n, facet) {
+      return n + selectedCount(facet);
+    }, 0);
   }
 
   /* ---------- URL state ---------- */
@@ -111,7 +236,13 @@
   function writeState(state) {
     var params = new URLSearchParams();
     FACETS.forEach(function (facet) {
-      if (state[facet.key].length) params.set(facet.key, state[facet.key].join(","));
+      var values = state[facet.key];
+      if (facet.key === "indicator") {
+        values = values.filter(function (name) {
+          return state.domain.indexOf(indicatorDomain(name)) === -1;
+        });
+      }
+      if (values.length) params.set(facet.key, values.join(","));
     });
     if (state.q) params.set("q", state.q);
     // Page 1 is the default, so leave it out and keep the common address short.
@@ -125,6 +256,8 @@
   /* ---------- filtering ---------- */
 
   function matchesFacet(study, facet, selected) {
+    if (facet.key === "domain") return matchesHealthTree(study, selected, state.indicator);
+    if (facet.key === "indicator") return true;
     if (!selected.length) return true;
     var mine = facet.of(study);
     for (var i = 0; i < selected.length; i++) {
@@ -139,6 +272,9 @@
       study.keyAttributes, study.country, study.geoLevel,
       (study.domains || []).join(" "),
       (study.domains || []).map(S.domainLabel).join(" "),
+      // Indicators also stay searchable, including when the reader does not know
+      // which health focus they sit under.
+      (study.indicators || []).join(" "),
       S.sourceGroupLabel(study.sourceGroup)].join(" ").toLowerCase();
     return query.toLowerCase().split(/\s+/).every(function (word) {
       return haystack.indexOf(word) !== -1;
@@ -151,7 +287,8 @@
     return studies.filter(function (study) {
       if (!matchesSearch(study, state.q)) return false;
       return FACETS.every(function (facet) {
-        return facet.key === skipKey || matchesFacet(study, facet, state[facet.key]);
+        return (skipKey && sameFilterGroup(skipKey, facet.key)) ||
+          matchesFacet(study, facet, state[facet.key]);
       });
     });
   }
@@ -171,10 +308,13 @@
     var host = document.getElementById("filters");
     var html = "";
     FACETS.forEach(function (facet) {
+      if (facet.nested) return;               // drawn inside its parent, not on its own
       var subset = subsetExcluding(facet.key);
       var values = facet.values();
       if (!values.length) return;
-      var selected = state[facet.key].length;
+      var child = facet.childKey ? facetByKey(facet.childKey) : null;
+      var childSubset = child ? subsetExcluding(child.key) : null;
+      var selected = selectedCount(facet);
       var collapsed = isFacetCollapsed(facet);
       var bodyId = "facet-" + facet.key;
       html += '<fieldset class="facet' + (collapsed ? " is-collapsed" : "") + '">' +
@@ -185,26 +325,91 @@
         '<span class="facet-chevron" aria-hidden="true">' + (collapsed ? "&#9660;" : "&#9650;") +
         "</span></button></legend>" +
         '<div class="facet-options" id="' + bodyId + '"' + (collapsed ? " hidden" : "") + ">";
-      values.forEach(function (value) {
-        var n = subset.filter(function (s) { return facet.of(s).indexOf(value) !== -1; }).length;
-        var checked = state[facet.key].indexOf(value) !== -1;
-        var id = "f-" + facet.key + "-" + value.replace(/[^a-z0-9]+/gi, "-");
-        html += '<label for="' + id + '">' +
-          '<input type="checkbox" id="' + id + '" data-facet="' + facet.key +
+
+      function optionHtml(which, pool, value) {
+        var n = pool.filter(function (s) { return which.of(s).indexOf(value) !== -1; }).length;
+        var checked = state[which.key].indexOf(value) !== -1;
+        var id = optionId(which.key, value);
+        return '<label for="' + id + '">' +
+          '<input type="checkbox" id="' + id + '" data-facet="' + which.key +
           '" value="' + S.escapeHtml(value) + '"' + (checked ? " checked" : "") + ">" +
-          "<span>" + S.escapeHtml(facet.label(value)) + "</span>" +
+          "<span>" + S.escapeHtml(which.label(value)) + "</span>" +
           '<span class="count">' + n + "</span></label>";
+      }
+
+      values.forEach(function (value) {
+        html += optionHtml(facet, subset, value);
+        if (!child) return;
+
+        /* Each domain's measures, folded away until asked for. Seven domains open at
+           once would be 61 checkboxes and the group would be taller than the rest of
+           the panel together. A domain with a ticked measure under it starts open, so
+           an active filter is never hidden behind a fold. */
+        var kids = facet.children(value);
+        if (!kids.length) return;
+        var subId = "sub-" + facet.key + "-" + value.replace(/[^a-z0-9]+/gi, "-");
+        var shut = isSubCollapsed(value, kids);
+        var ticked = kids.filter(function (k) { return state[child.key].indexOf(k) !== -1; }).length;
+        html += '<div class="facet-sub' + (shut ? " is-collapsed" : "") + '">' +
+          '<button type="button" class="facet-sub-toggle" data-toggle-sub="' +
+            S.escapeHtml(value) + '" aria-expanded="' + (!shut) + '" aria-controls="' + subId + '">' +
+            "<span>" + kids.length + " measure" + (kids.length === 1 ? "" : "s") +
+            (ticked ? ", " + ticked + " selected" : "") + "</span>" +
+            '<span class="facet-sub-chevron" aria-hidden="true">' + (shut ? "&#9660;" : "&#9650;") +
+            "</span>" +
+          "</button>" +
+          '<div class="facet-sub-options" id="' + subId + '"' + (shut ? " hidden" : "") + ">";
+        kids.forEach(function (kid) { html += optionHtml(child, childSubset, kid); });
+        html += "</div></div>";
       });
       html += "</div></fieldset>";
     });
     host.innerHTML = html;
+    syncNestedParents();
+  }
+
+  function syncNestedParents() {
+    meta.domains.forEach(function (domain) {
+      var input = document.getElementById(optionId("domain", domain));
+      if (!input) return;
+      var kids = indicatorsForDomain(domain);
+      var selected = kids.filter(function (name) {
+        return state.indicator.indexOf(name) !== -1;
+      }).length;
+      input.indeterminate = selected > 0 && selected < kids.length;
+    });
   }
 
   function isFacetCollapsed(facet) {
     if (Object.prototype.hasOwnProperty.call(collapsedFacets, facet.key)) {
       return collapsedFacets[facet.key];
     }
-    return !!facet.collapsed && !state[facet.key].length;
+    /* A ticked measure lives inside Health focus, so it has to hold that group open
+       too - otherwise arriving on a shared ?indicator= link shows a shut group and no
+       sign of what is filtering the list. */
+    var child = facet.childKey ? facetByKey(facet.childKey) : null;
+    var anySelected = state[facet.key].length || (child && state[child.key].length);
+    return !!facet.collapsed && !anySelected;
+  }
+
+  /* Per-domain fold state for the nested measures. Shut unless the reader opened it
+     or something inside it is ticked. */
+  function isSubCollapsed(value, kids) {
+    if (Object.prototype.hasOwnProperty.call(collapsedSubs, value)) {
+      return collapsedSubs[value];
+    }
+    return !kids.some(function (k) { return state.indicator.indexOf(k) !== -1; });
+  }
+
+  function setSubCollapsed(button, collapsed) {
+    var wrap = button.closest(".facet-sub");
+    var body = document.getElementById(button.getAttribute("aria-controls"));
+    if (!wrap || !body) return;
+    wrap.classList.toggle("is-collapsed", collapsed);
+    body.hidden = collapsed;
+    button.setAttribute("aria-expanded", String(!collapsed));
+    var chevron = button.querySelector(".facet-sub-chevron");
+    if (chevron) chevron.innerHTML = collapsed ? "&#9660;" : "&#9650;";
   }
 
   function setFacetCollapsed(button, collapsed) {
@@ -262,7 +467,7 @@
   function renderResults() {
     var results = currentResults();
     var bar = document.getElementById("resultbar");
-    var active = FACETS.reduce(function (n, f) { return n + state[f.key].length; }, 0) + (state.q ? 1 : 0);
+    var active = activeFilterCount() + (state.q ? 1 : 0);
 
     // Filtering can leave the current page past the end of a shorter list.
     var last = pageCount(results.length);
@@ -288,7 +493,14 @@
     var list = document.getElementById("results");
     var pager = document.getElementById("pager");
     if (!results.length) {
-      list.innerHTML = '<li class="empty">Nothing matches that combination.</li>';
+      /* Ticking a measure nothing covers is the commonest way to land here, and it
+         is not a dead end - it is the answer. Say which measure, so the reader knows
+         the scan looked and found nothing rather than that the page broke. */
+      var barren = state.indicator.filter(function (name) { return countAll("indicator", name) === 0; });
+      list.innerHTML = '<li class="empty">' + (barren.length
+        ? "No source identified for " + (barren.length > 1 ? "these measures" : "this measure") +
+          " in the current scan: " + S.escapeHtml(barren.join(", ")) + "."
+        : "Nothing matches that combination.") + "</li>";
       pager.innerHTML = "";
       return;
     }
@@ -332,6 +544,7 @@
     return "<dl>" +
       row(S.label("topics"), S.topicTags(study)) +
       row(S.label("healthDomain"), S.tagList((study.domains || []).map(S.domainLabel))) +
+      row(S.label("indicators"), S.tagList(study.indicators || [])) +
       row(S.label("summary"), S.escapeHtml(study.task)) +
       row(S.label("inputs"), S.escapeHtml(study.inputData)) +
       row(S.label("outputs"), S.escapeHtml(study.output)) +
@@ -375,16 +588,31 @@
     document.getElementById("filters").addEventListener("change", function (event) {
       var input = event.target;
       if (!input.dataset || !input.dataset.facet) return;
-      var list = state[input.dataset.facet];
-      var at = list.indexOf(input.value);
-      if (input.checked && at === -1) list.push(input.value);
-      if (!input.checked && at !== -1) list.splice(at, 1);
+      if (input.dataset.facet === "domain") {
+        setDomainTree(input.value, input.checked);
+      } else if (input.dataset.facet === "indicator") {
+        setSelected("indicator", input.value, input.checked);
+        var domain = indicatorDomain(input.value);
+        if (domain) syncDomainFromIndicators(domain);
+      } else {
+        setSelected(input.dataset.facet, input.value, input.checked);
+      }
       // A different result set means the old page number means nothing.
       state.page = 1;
       render();
     });
 
     document.getElementById("filters").addEventListener("click", function (event) {
+      var sub = event.target.closest("[data-toggle-sub]");
+      if (sub) {
+        var value = sub.dataset.toggleSub;
+        var open = sub.getAttribute("aria-expanded") === "true";
+        collapsedSubs[value] = open;
+        setSubCollapsed(sub, open);
+        syncFilterHeight();
+        return;
+      }
+
       var button = event.target.closest("[data-toggle-facet]");
       if (!button) return;
       var facet = facetByKey(button.dataset.toggleFacet);
@@ -437,6 +665,7 @@
     meta = loaded[1];
     S.setTopics(meta.topics);   // before readState(): it resolves the ?app= alias
     state = readState();
+    normaliseNestedState();
     S.stampGenerated(meta);
     document.getElementById("search").value = state.q;
     wire();

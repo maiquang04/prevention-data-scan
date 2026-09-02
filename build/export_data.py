@@ -25,6 +25,7 @@ REPO = os.path.dirname(HERE)
 DEFAULT_SRC = os.path.normpath(os.path.join(REPO, "..", "lit-scan", "lit-scan-draft.xlsx"))
 OUT_DIR = os.path.join(REPO, "data")
 TOPICS_FILE = os.path.join(OUT_DIR, "topics.json")
+INDICATORS_FILE = os.path.join(OUT_DIR, "indicators.json")
 QUADRANTS_FILE = os.path.join(OUT_DIR, "quadrants.json")
 
 HEADER_ROW = 2
@@ -51,6 +52,7 @@ FIELDS = {
     "Geo tags": "geoTagsRaw",
     "Topics": "topicsRaw",
     "Domain": "domainsRaw",
+    "Indicators": "indicatorsRaw",
 }
 
 # Controlled vocabulary. Anything outside these lists is a data-entry mistake and
@@ -102,7 +104,7 @@ DOMAINS = [
 SOURCE_GROUPS = [
     "Peer-reviewed",
     "Government report",
-    "Statistical agency release",
+    "Published dataset",
     "International agency report",
     "Academic or institutional report",
 ]
@@ -118,9 +120,13 @@ REGIONS = ["Queensland", "Australia", "International"]
 # wording is now a data-entry error like any other.
 SOURCE_GROUP_RULES = [
     ("Peer-reviewed", ("peer-reviewed", "peer reviewed", "journal article")),
-    ("Statistical agency release", ("statistical agency", "statistician", "official statistics",
-                                    "statistics release", "survey data", "administrative data",
-                                    "census", "data release", "dataset")),
+    # Renamed from "Statistical agency release". Of the 15 rows it holds, two are not
+    # statistical agencies at all: PHIDU is a university unit and Queensland Globe is a
+    # mapping service. Both are still published datasets, which is what a reader wants
+    # to know, so the bucket now says that instead of guessing at who published it.
+    ("Published dataset", ("statistical agency", "statistician", "official statistics",
+                           "statistics release", "survey data", "administrative data",
+                           "census", "data release", "dataset", "spatial data")),
     ("Government report", ("government", "department of", "ministry", "public agency")),
     ("International agency report", ("international agency", "world health organization",
                                      "united nations", "oecd")),
@@ -229,6 +235,34 @@ def load_topics():
     return topics
 
 
+def load_indicators():
+    """The 61 measures come from the partner agency and change when they revise them,
+    so they live in data/indicators.json rather than in a list here. The seven domains
+    stay in code above because they are few and stable.
+
+    Returns {name, domain} in file order. Order matters: it is the agency's own ranking
+    and the pages show them in it. The domain travels with the name because the browse
+    filter groups all 61 under their seven domain headings - sixty-one flat checkboxes
+    would drown the six filter groups below them."""
+    with open(INDICATORS_FILE, encoding="utf-8") as handle:
+        entries = json.load(handle)["indicators"]
+
+    out, seen = [], set()
+    for entry in entries:
+        name = (entry.get("name") or "").strip()
+        if not name:
+            raise SystemExit("indicators.json: an entry has no 'name'")
+        if name in seen:
+            raise SystemExit("indicators.json: duplicate indicator '%s'" % name)
+        domain = (entry.get("domain") or "").strip()
+        if domain and domain not in DOMAINS:
+            raise SystemExit("indicators.json: '%s' has domain '%s', which is not one of "
+                             "the seven" % (name, domain))
+        seen.add(name)
+        out.append({"name": name, "domain": domain})
+    return out
+
+
 def gridded_topic_ids():
     """Which topics have a hand-authored quadrant grid. Lets the pages stop hardcoding
     that Application 1 is the only one built."""
@@ -244,6 +278,8 @@ def export(src, out_dir, quiet=False):
         raise SystemExit("Workbook not found: " + src)
 
     topics = load_topics()
+    indicators_meta = load_indicators()
+    indicator_names = [i["name"] for i in indicators_meta]
     topic_by_title = {t["title"]: t["id"] for t in topics}
     topic_by_sheet = {t["sheet"]: t["id"] for t in topics if t.get("sheet")}
 
@@ -289,6 +325,15 @@ def export(src, out_dir, quiet=False):
                 if domain not in DOMAINS:
                     problems.append("%s: domain '%s' is not in the vocabulary" % (where, domain))
 
+            # Same again for the indicators, and blank is the usual answer here. A
+            # source earns a tag only by naming or computing the measure; the agency
+            # said they would fill in the rest, so gaps are the plan and not a lapse.
+            indicators = [i.strip() for i in record.pop("indicatorsRaw", "").split(";") if i.strip()]
+            for indicator in indicators:
+                if indicator not in indicator_names:
+                    problems.append("%s: indicator '%s' is not in indicators.json"
+                                    % (where, indicator))
+
             # A blank cell means "whatever this sheet is about", so the column only
             # has to be filled in where a source genuinely spans more than one topic.
             named = [t.strip() for t in record.pop("topicsRaw", "").split(";") if t.strip()]
@@ -312,6 +357,7 @@ def export(src, out_dir, quiet=False):
             record["priority"] = priority_of(row)
             record["geoTags"] = tags
             record["domains"] = domains
+            record["indicators"] = indicators
             group = source_group(record.get("sourceType", ""))
             if group is None:
                 problems.append("%s: source type '%s' matches no rule in "
@@ -367,6 +413,7 @@ def export(src, out_dir, quiet=False):
         "accessValues": ACCESS_VALUES,
         "geoTags": GEO_TAGS,
         "domains": DOMAINS,
+        "indicators": indicators_meta,
         "sourceGroups": SOURCE_GROUPS,
         "regions": REGIONS,
         "withDownloadableData": sum(

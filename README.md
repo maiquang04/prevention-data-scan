@@ -93,11 +93,57 @@ semicolons:
 
 These are not our words. They are the seven domains from the partner agency's own measures
 spreadsheet, kept in their wording and their order so a tag here means to them what it means
-here. Unlike Access and Geo tags, **blank is allowed and is common** — 7 of the 27 sources
+here. Unlike Access and Geo tags, **blank is allowed and is common** — 17 of the 61 sources
 have no domain, because a text about how to build a composite index, or one about hospital
 admission rates, is not about a health issue. Filling the column in for the sake of filling
 it in would be worse than leaving it empty. A domain no source carries yet is hidden from the
 filter rather than shown with a count of zero.
+
+**Indicators** — which of the agency's named measures a source actually uses. None, one or
+several, separated by semicolons. The 61 allowed values live in `data/indicators.json`, not
+in the export script, because the agency revises the list and updating it should be an edit
+to a data file rather than a code change. Add to that file first: the export stops on any
+value it does not recognise.
+
+The rule for filling it in:
+
+> Assign an indicator only if the source explicitly names, computes, validates, or directly
+> provides the data needed for that exact measure.
+
+"Validates" is why the WHO-5 paper carries one. "Directly provides the data needed" is why
+the datasets do: an agency does not need a source to publish the finished measure, it needs
+to know where the raw material is. Belonging to the same health focus is **not** enough — a
+source can be about physical activity and match no specific measure.
+
+Blank is the usual answer, and is right. 18 of the 61 sources carry an indicator and 43 do
+not. Deciding whether a paper loosely counts as "Community belonging" is a judgement, and a
+guess here puts wrong information in front of a government agency. The agency offered to
+fill the rest in themselves, so a blank cell is a question for them and a wrong tag is
+something they have to catch. `tests/fill_indicators.py` quotes the evidence beside every
+tag, and lists the sources deliberately left untagged with the reason.
+
+**In the filter panel the measures are a sub-level of Health focus**, not a group of their
+own. Each of the seven domains carries a fold reading "18 measures", and opening it shows
+that domain's measures as nested checkboxes. The agency's spreadsheet is built the same way,
+a Domain column with an Indicator column inside it, so a reader who knows the source
+document finds them where they expect. It also keeps 61 checkboxes from becoming an eighth
+group taller than the other seven together.
+
+Mechanically the indicator facet stays in `FACETS` — that is what gives it a state key, a
+share of the URL and its counts — but carries `nested: true` so `renderFilters()` skips
+drawing it, and the domain facet carries `childKey` and `children()` to draw it underneath.
+The folds are shut by default and open when something inside them is ticked, so arriving on
+a shared `?indicator=` link never shows a closed panel with no sign of what is filtering.
+
+This is the one filter that keeps its zeros. Everywhere else an option reading zero is a
+dead end and gets hidden, but here 34 measures with no source is the finding, and it is a
+list the agency asked for. Ticking one gives *"No source identified for this measure in the
+current scan: <name>"* rather than the generic empty message. Health focus therefore also
+stops hiding a domain with no sources, because hiding the domain would take its measures
+with it.
+
+Indicators are also in `matchesSearch()`, so typing a measure name into the search box
+finds the sources that use it.
 
 Two more facets, source type and region, are derived in `export_data.py` from the prose
 columns rather than stored, so there is nothing extra to maintain. They are still checked:
@@ -156,11 +202,12 @@ data/
   studies.json      generated
   meta.json         generated
   topics.json       hand-authored — the taxonomy: id, title, heading, question, blurb
+  indicators.json   hand-authored — the partner agency's 61 named measures
   quadrants.json    hand-authored — keyed by topic id
 build/
   export_data.py    workbook → JSON, then re-stamps the asset links
   add_column.py     adds an empty controlled column to every sheet, styling and all
-  add_topics_column.py  one-off: adds the Topics column to the workbook
+  add_topics_column.py  superseded by add_column.py; kept only as a record of the first migration
   stamp_assets.py   adds ?v=<hash> to each stylesheet and script link
   check_publish.py  pre-push safety scan
   check_links.py    checks the outbound links still resolve
@@ -169,6 +216,24 @@ build/
 
 Plain HTML, CSS and JavaScript, no build step and no dependencies beyond `openpyxl` for the
 export script. GitHub Pages serves the files as they are.
+
+## Tags on a result row
+
+Every checkbox group in the browse filter panel has a matching pill on each result, so a
+reader can see why a row came back without opening it. `metaRow()` in `assets/common.js`
+draws them, in this order: access, topic, health focus, geography, region, kind of source,
+indicators. Each has its own pill style, told apart by fill and border rather than by colour
+alone — they sit beside the access badges, which do use colour to mean something.
+
+Relevance is the exception. It is the coloured dot beside the row number, not a pill.
+
+Indicators come last because one source carries ten of them and they would otherwise push
+the short, always-present tags off the first line. The busiest row has 17 pills.
+
+`tests/facettags.mjs` states this rule as a test: add a facet later without a tag and it
+fails there. A pill is not a button — the whole row sits inside a `<button>` on both the
+browse list and the quadrant cards, and an `<a>` cannot nest in one. Tags are links only on
+a source's own page, where nothing wraps them.
 
 ## Topics
 
@@ -185,9 +250,11 @@ shared breaks.
 
 ## Status
 
-Working draft. One topic has the grid view; the other two are on the browse page while their
-framing is settled. Where a source's data has not been checked yet, it is marked
-`Not yet assessed` rather than guessed at.
+Working draft, 61 sources across six topics. One topic has the grid view; the other five are
+on the browse page while their framing is settled — that is the existing behaviour for a topic
+without a `quadrants.json` entry, not a fault. Where a source's data has not been checked yet,
+it is marked `Not yet assessed` rather than guessed at, and where a claim could not be
+confirmed it is left out rather than softened into something that reads as fact.
 
 Every page carries `<meta name="robots" content="noindex">`, so the site is reachable by
 anyone with the link but will not turn up in a search. **Delete those four lines when the

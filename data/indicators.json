@@ -1,104 +1,24 @@
 {
-  "generated": "2026-09-02",
-  "source": "lit-scan-draft.xlsx",
-  "total": 61,
-  "topics": [
-    {
-      "id": "health-system",
-      "title": "Health system impact",
-      "heading": "Prevention and the health system",
-      "question": "Evidence linking prevention to hospital demand",
-      "blurb": "Waiting lists, bed days, ambulance ramping and potentially preventable hospitalisations.",
-      "count": 16,
-      "hasGrid": true,
-      "legacyApp": 1
-    },
-    {
-      "id": "regional-environments",
-      "title": "Regional environments",
-      "heading": "Improving regional environments for prevention",
-      "question": "Existing supports for healthy behaviour and local gaps",
-      "blurb": "Parks, active transport, green space and food environments - the surroundings that make a healthy choice easy or hard, including underserved groups.",
-      "count": 20,
-      "hasGrid": false,
-      "legacyApp": 2
-    },
-    {
-      "id": "prevention-programs",
-      "title": "Prevention programs",
-      "heading": "Prevention service gaps and return on investment",
-      "question": "Prevention service gaps and return on investment",
-      "blurb": "Prevention delivery across settings, especially primary care, and evidence of results.",
-      "count": 14,
-      "hasGrid": false,
-      "legacyApp": 3
-    },
-    {
-      "id": "regional-partnerships",
-      "title": "Regional partnerships",
-      "heading": "Strengthening regional partnerships",
-      "question": "Regional roles and practical data-sharing conditions",
-      "blurb": "Joint planning between health services, councils and other partners, and the data-sharing arrangements that make it possible.",
-      "count": 12,
-      "hasGrid": false,
-      "legacyApp": 4
-    },
-    {
-      "id": "health-inequities",
-      "title": "Health inequities",
-      "heading": "Targeting prevention to reduce health inequities",
-      "question": "Priority groups and places for reducing gaps",
-      "blurb": "Differences in health between population groups and between areas, with measurement approaches.",
-      "count": 20,
-      "hasGrid": false,
-      "legacyApp": 5
-    },
-    {
-      "id": "local-government",
-      "title": "Local government measurement",
-      "heading": "A prevention measurement framework for local government",
-      "question": "Council-level signals of a healthier local area",
-      "blurb": "Walkability, green space, food environment and participation, measured at council level.",
-      "count": 30,
-      "hasGrid": false,
-      "legacyApp": 6
-    }
-  ],
-  "byAccess": {
-    "Not a dataset": 24,
-    "Public": 16,
-    "Restricted - application": 6,
-    "Public (aggregate only)": 9,
-    "Not yet assessed": 6
-  },
-  "accessValues": [
-    "Public",
-    "Public (aggregate only)",
-    "Restricted - application",
-    "Not a dataset",
-    "Not yet assessed"
-  ],
-  "geoTags": [
-    "Address",
-    "Small area",
-    "LGA",
-    "PHN",
-    "HHS",
-    "Remoteness",
-    "State",
-    "National",
-    "International",
-    "Individual",
-    "Any"
-  ],
-  "domains": [
-    "Physical Activity",
-    "Healthy Eating",
-    "Implementation",
-    "Social",
-    "Equity",
-    "Prosperity & Productivity",
-    "Mental Wellbeing"
+  "_comment": [
+    "Hand-authored, and not ours to invent. These are the 61 measures from the partner",
+    "agency's own measures spreadsheet, in their wording, their order and their",
+    "domain grouping, so a tag here means to them what it means here.",
+    "",
+    "export_data.py reads this and never writes it. The list is expected to change as the",
+    "agency revises it, which is why it is a data file rather than a Python list: updating",
+    "it is an edit here and a re-export, no code change.",
+    "",
+    "  name    the exact wording from their spreadsheet. Never reword one - the workbook's",
+    "          Indicators cells are matched against these strings and the export stops on",
+    "          anything it does not recognise.",
+    "  domain  which of the seven domains they filed it under. Kept so the two columns",
+    "          cannot drift apart.",
+    "",
+    "Filling the workbook's Indicators column: tag a source only where it explicitly names",
+    "or computes the measure. Deciding whether something loosely counts as 'Community",
+    "belonging' is a judgement, and a guess here puts wrong information in front of a",
+    "government agency. Blank is the right answer for most rows. The agency offered to",
+    "complete the tagging themselves, so gaps are expected and are not a failure."
   ],
   "indicators": [
     {
@@ -345,18 +265,5 @@
       "name": "Workplace absenteeism",
       "domain": "Prosperity & Productivity"
     }
-  ],
-  "sourceGroups": [
-    "Peer-reviewed",
-    "Government report",
-    "Published dataset",
-    "International agency report",
-    "Academic or institutional report"
-  ],
-  "regions": [
-    "Queensland",
-    "Australia",
-    "International"
-  ],
-  "withDownloadableData": 25
+  ]
 }

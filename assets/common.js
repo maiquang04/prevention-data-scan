@@ -32,6 +32,7 @@
   var FIELD_LABEL = {
     topics: "Related topics",
     healthDomain: "Health focus",
+    indicators: "Indicators",
     summary: "Purpose",
     inputs: "Input",
     outputs: "Output",
@@ -61,7 +62,7 @@
   var SOURCE_GROUP_LABEL = {
     "Peer-reviewed": "Peer-reviewed paper",
     "Government report": "Government report",
-    "Statistical agency release": "Official data release",
+    "Published dataset": "Published dataset",
     "International agency report": "International agency report",
     "Academic or institutional report": "Academic or institutional source"
   };
@@ -212,18 +213,25 @@
     }).join("");
   }
 
-  /* Access badge, geography tags, source type - in that order, everywhere a source
-     is listed. Shared so the quadrant panels and the browse list cannot drift into
-     showing different things about the same source. Topic tags are left out here
-     deliberately: on the browse page a source's own topics are implied by which
-     topic filter is ticked, and repeating them on every row would be noise.
+  /* Every checkbox group in the browse filter panel has a matching pill here, so a
+     reader can see why a row came back without opening it. Relevance is the one
+     exception and stays the coloured dot beside the row number.
 
-     Source type is a pill rather than the bare span it used to be. Both it and the
-     geography tags drive a filter on the browse page, and drawing one as a pill and
-     the other as loose text reads as though only one of them did. */
+     A pill is still not a button. The whole row sits inside a <button> on both the
+     browse list and the quadrant cards, and an <a> cannot nest in one, so these look
+     like the filter they belong to without being clickable. The study page is where
+     they are links, because nothing wraps them there.
+
+     Indicators go last. One source carries ten of them, and put anywhere earlier they
+     would push the short, always-present tags off the first line. */
   function metaRow(study) {
-    return accessBadge(study.access) + tagList(study.geoTags) +
-      tagList(study.sourceGroup ? [sourceGroupLabel(study.sourceGroup)] : [], "tag--type");
+    return accessBadge(study.access) +
+      tagList((study.topics || []).map(topicTitle), "tag--topic") +
+      tagList((study.domains || []).map(domainLabel), "tag--domain") +
+      tagList(study.geoTags) +
+      tagList(study.regions || [], "tag--region") +
+      tagList(study.sourceGroup ? [sourceGroupLabel(study.sourceGroup)] : [], "tag--type") +
+      tagList(study.indicators || [], "tag--indicator");
   }
 
   function externalLink(url, label) {
