@@ -281,25 +281,42 @@ abbr[title] {
 
 .browse { display: grid; grid-template-columns: 250px 1fr; gap: 32px; align-items: start; }
 
-/* Pinned beside the results, and scrollable in its own right. The height cap is the
-   part that matters: sticky alone pins the top edge, so once the filter list grew
-   past the viewport its last group sat permanently below the fold with no way to
-   reach it - the page scroll moved the results instead. Capping the height and
-   letting it scroll internally puts those groups back within reach.
-   overscroll-behavior stops a flick at the end of the list carrying on into the
-   page behind it. */
+/* Pinned beside the results, and scrollable in its own right. The visible top of
+   the panel changes: at the top of the page it sits below the heading, then once
+   sticky it sits near the top of the viewport. JS updates --filters-viewport-top
+   so the height cap always matches the space actually available on screen. */
 .filters {
   position: sticky; top: 16px;
-  max-height: calc(100vh - 32px);
+  max-height: calc(100vh - var(--filters-viewport-top, 16px) - 16px);
   overflow-y: auto; overscroll-behavior: contain;
   /* room for the scrollbar so the labels do not reflow when it appears */
-  padding-right: 4px; scrollbar-width: thin;
+  padding-right: 4px; scrollbar-width: thin; scrollbar-gutter: stable;
 }
-.filters fieldset { border: 0; padding: 0; margin: 0 0 20px; }
+.filters fieldset { border: 0; padding: 0; margin: 0 0 14px; }
 .filters fieldset:last-child { margin-bottom: 4px; }
 .filters legend {
-  font-weight: 650; font-size: .82rem; text-transform: uppercase;
-  letter-spacing: .04em; color: var(--muted); padding: 0 0 8px;
+  display: block; width: 100%;
+  padding: 0;
+}
+.facet-toggle {
+  display: flex; gap: 8px; align-items: center; width: 100%;
+  border: 0; border-top: 1px solid var(--rule-soft);
+  background: transparent; color: var(--muted); cursor: pointer;
+  padding: 10px 0 8px; font: inherit; font-weight: 650; font-size: .82rem;
+  text-align: left; text-transform: uppercase; letter-spacing: .04em;
+}
+.filters fieldset:first-child .facet-toggle { border-top: 0; padding-top: 0; }
+.facet-toggle:hover { color: var(--ink); }
+.facet-selected {
+  margin-left: auto; color: var(--accent); font-size: .72rem;
+  font-weight: 600; letter-spacing: 0; text-transform: none; white-space: nowrap;
+}
+.facet-chevron {
+  margin-left: auto; color: var(--muted); font-size: .8rem; line-height: 1;
+}
+.facet-selected + .facet-chevron { margin-left: 0; }
+.facet-options {
+  padding-bottom: 2px;
 }
 .filters label {
   display: flex; gap: 8px; align-items: flex-start;

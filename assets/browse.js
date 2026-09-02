@@ -9,6 +9,7 @@
   var studies = [];
   var meta = null;
   var expanded = {};
+  var collapsedFacets = {};
 
   /* Results are paged. Without it the results column runs to several screens while
      the filter panel beside it is one screen tall, so the filters scroll out of
@@ -26,19 +27,6 @@
       values: function () { return meta.topics.map(function (t) { return t.id; }); },
       label: function (v) { return S.topicTitle(v); },
       of: function (s) { return s.topics; } },
-
-    /* Which health issue a source speaks to - see the README for where the seven
-       domains come from and why they are worded the way they are. Plenty of
-       sources have none (a method text, a paper about hospital admissions), so this
-       facet is narrower than the others: ticking a box hides everything untagged.
-       Values with no sources are hidden the same way the geographic level does it,
-       so a domain nothing covers yet does not sit there reading as a dead end. */
-    { key: "domain", legend: "Health domain", multi: true,
-      values: function () {
-        return meta.domains.filter(function (d) { return countAll("domain", d) > 0; });
-      },
-      label: function (v) { return v; },
-      of: function (s) { return s.domains; } },
 
     { key: "access", legend: "Can we get the data?", multi: true,
       values: function () { return meta.accessValues; },
@@ -58,25 +46,38 @@
       label: function (v) { var full = S.tagTitle(v); return full ? v + " - " + full : v; },
       of: function (s) { return s.geoTags; } },
 
-    { key: "region", legend: "Where it is from", multi: true,
-      values: function () { return meta.regions; },
+    /* Which health issue a source speaks to - see the README for where the seven
+       domains come from and why they are worded the way they are. Plenty of
+       sources have none (a method text, a paper about hospital admissions), so this
+       facet is narrower than the others: ticking a box hides everything untagged.
+       Values with no sources are hidden the same way the geographic level does it,
+       so a domain nothing covers yet does not sit there reading as a dead end. */
+    { key: "domain", legend: "Health domain", multi: true, collapsed: true,
+      values: function () {
+        return meta.domains.filter(function (d) { return countAll("domain", d) > 0; });
+      },
       label: function (v) { return v; },
-      of: function (s) { return s.regions; } },
-
-    { key: "priority", legend: "Relevance", multi: true,
-      values: function () { return ["highly-relevant", "relevant", "unmarked"]; },
-      label: function (v) { return S.priorityLabel[v]; },
-      of: function (s) { return [s.priority]; } },
+      of: function (s) { return s.domains; } },
 
     /* Same hidden-when-empty rule as the two facets above. A bucket exists in the
        vocabulary before anything lands in it - "Statistical agency release" was added
        ahead of the datasets it is for - and an option reading zero is a dead end. */
-    { key: "type", legend: "Source type", multi: true,
+    { key: "type", legend: "Source type", multi: true, collapsed: true,
       values: function () {
         return meta.sourceGroups.filter(function (g) { return countAll("type", g) > 0; });
       },
       label: function (v) { return v; },
-      of: function (s) { return [s.sourceGroup]; } }
+      of: function (s) { return [s.sourceGroup]; } },
+
+    { key: "region", legend: "Where it is from", multi: true, collapsed: true,
+      values: function () { return meta.regions; },
+      label: function (v) { return v; },
+      of: function (s) { return s.regions; } },
+
+    { key: "priority", legend: "Relevance", multi: true, collapsed: true,
+      values: function () { return ["highly-relevant", "relevant", "unmarked"]; },
+      label: function (v) { return S.priorityLabel[v]; },
+      of: function (s) { return [s.priority]; } }
   ];
 
   function facetByKey(key) {
@@ -171,7 +172,17 @@
       var subset = subsetExcluding(facet.key);
       var values = facet.values();
       if (!values.length) return;
-      html += '<fieldset><legend>' + S.escapeHtml(facet.legend) + "</legend>";
+      var selected = state[facet.key].length;
+      var collapsed = isFacetCollapsed(facet);
+      var bodyId = "facet-" + facet.key;
+      html += '<fieldset class="facet' + (collapsed ? " is-collapsed" : "") + '">' +
+        '<legend><button type="button" class="facet-toggle" data-toggle-facet="' +
+        facet.key + '" aria-expanded="' + (!collapsed) + '" aria-controls="' + bodyId + '">' +
+        '<span>' + S.escapeHtml(facet.legend) + "</span>" +
+        (selected ? '<span class="facet-selected">' + selected + " selected</span>" : "") +
+        '<span class="facet-chevron" aria-hidden="true">' + (collapsed ? "&#9660;" : "&#9650;") +
+        "</span></button></legend>" +
+        '<div class="facet-options" id="' + bodyId + '"' + (collapsed ? " hidden" : "") + ">";
       values.forEach(function (value) {
         var n = subset.filter(function (s) { return facet.of(s).indexOf(value) !== -1; }).length;
         var checked = state[facet.key].indexOf(value) !== -1;
@@ -182,9 +193,27 @@
           "<span>" + S.escapeHtml(facet.label(value)) + "</span>" +
           '<span class="count">' + n + "</span></label>";
       });
-      html += "</fieldset>";
+      html += "</div></fieldset>";
     });
     host.innerHTML = html;
+  }
+
+  function isFacetCollapsed(facet) {
+    if (Object.prototype.hasOwnProperty.call(collapsedFacets, facet.key)) {
+      return collapsedFacets[facet.key];
+    }
+    return !!facet.collapsed && !state[facet.key].length;
+  }
+
+  function setFacetCollapsed(button, collapsed) {
+    var fieldset = button.closest(".facet");
+    var body = document.getElementById(button.getAttribute("aria-controls"));
+    if (!fieldset || !body) return;
+    fieldset.classList.toggle("is-collapsed", collapsed);
+    body.hidden = collapsed;
+    button.setAttribute("aria-expanded", String(!collapsed));
+    var chevron = button.querySelector(".facet-chevron");
+    if (chevron) chevron.innerHTML = collapsed ? "&#9660;" : "&#9650;";
   }
 
   function pageCount(total) {
@@ -325,11 +354,22 @@
     renderFilters();
     renderResults();
     writeState(state);
+    syncFilterHeight();
+  }
+
+  function syncFilterHeight() {
+    var form = document.getElementById("filter-form");
+    if (!form) return;
+    var top = Math.max(16, Math.round(form.getBoundingClientRect().top));
+    form.style.setProperty("--filters-viewport-top", top + "px");
   }
 
   /* ---------- events ---------- */
 
   function wire() {
+    window.addEventListener("scroll", syncFilterHeight, { passive: true });
+    window.addEventListener("resize", syncFilterHeight);
+
     document.getElementById("filters").addEventListener("change", function (event) {
       var input = event.target;
       if (!input.dataset || !input.dataset.facet) return;
@@ -340,6 +380,16 @@
       // A different result set means the old page number means nothing.
       state.page = 1;
       render();
+    });
+
+    document.getElementById("filters").addEventListener("click", function (event) {
+      var button = event.target.closest("[data-toggle-facet]");
+      if (!button) return;
+      var facet = facetByKey(button.dataset.toggleFacet);
+      if (!facet) return;
+      collapsedFacets[facet.key] = !isFacetCollapsed(facet);
+      setFacetCollapsed(button, collapsedFacets[facet.key]);
+      syncFilterHeight();
     });
 
     var search = document.getElementById("search");
