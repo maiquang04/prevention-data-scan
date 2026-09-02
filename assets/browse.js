@@ -40,7 +40,7 @@
        that opens it. This label is neither, so it is the one place the vocabulary
        can be taught on any device. Display only - the value, the id and the URL all
        still carry the short form. */
-    { key: "geo", legend: "Geography", multi: true,
+    { key: "geo", legend: "Geography", multi: true, collapsed: true,
       values: function () {
         return meta.geoTags.filter(function (t) { return countAll("geo", t) > 0; });
       },
