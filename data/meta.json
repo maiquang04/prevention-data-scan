@@ -67,8 +67,8 @@
   "byAccess": {
     "Not a dataset": 24,
     "Public": 16,
-    "Restricted - application": 9,
-    "Public (aggregate only)": 8,
+    "Restricted - application": 8,
+    "Public (aggregate only)": 9,
     "Not yet assessed": 4
   },
   "accessValues": [
@@ -112,5 +112,5 @@
     "Australia",
     "International"
   ],
-  "withDownloadableData": 24
+  "withDownloadableData": 25
 }
