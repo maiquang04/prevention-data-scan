@@ -19,6 +19,40 @@
      about as tall as the filters, so both columns end at roughly the same place. */
   var PAGE_SIZE = 10;
 
+  /* Newest first is the default. The workbook's own order used to be, and it is gone:
+     it meant something to whoever built the sheet and nothing to a reader, and a
+     shared ?page= link that depends on it is not worth keeping.
+
+     A source with no year is an ongoing collection - the National Health Survey,
+     PLIDA, the Social Health Atlas - not an old one. It sorts to the bottom under
+     both year orders rather than being handed a date it does not have. 20 of the 61
+     are like this, so under the default order none of them is on page 1.
+
+     A to Z runs on the reference, which is the line the reader sees: author surname
+     for a paper, agency name for a dataset. */
+  var DEFAULT_SORT = "newest";
+
+  var SORTS = {
+    newest: { label: "Newest first", compare: byYear(-1) },
+    oldest: { label: "Oldest first", compare: byYear(1) },
+    az: { label: "A to Z", compare: byReference(1) },
+    za: { label: "Z to A", compare: byReference(-1) }
+  };
+
+  function byYear(direction) {
+    return function (a, b) {
+      if (!a.year !== !b.year) return a.year ? -1 : 1;
+      if (!a.year) return 0;
+      return direction * (a.year - b.year);
+    };
+  }
+
+  function byReference(direction) {
+    return function (a, b) {
+      return direction * a.reference.localeCompare(b.reference, "en", { sensitivity: "base" });
+    };
+  }
+
   // key -> how to read the value off a study, and what to call it on screen.
   var FACETS = [
     // Values are topic ids; a source matches if it carries any of the ticked
@@ -29,10 +63,21 @@
       label: function (v) { return S.topicTitle(v); },
       of: function (s) { return s.topics; } },
 
-    { key: "access", legend: "Access", multi: true,
-      values: function () { return meta.accessValues; },
-      label: function (v) { return S.accessLabel(v); },
-      of: function (s) { return [s.access]; } },
+    /* Open at the start, with Access collapsed below it. Whether a source is a paper,
+       a government report or a dataset is the cut most readers make first, and a
+       source's access is on its row as a coloured badge whether or not that filter is
+       open, so collapsing Access hides the checkboxes and none of the information.
+
+       Hides a bucket holding nothing, the same rule Geography and Health focus follow.
+       A bucket exists in the vocabulary before anything lands in it - "Published
+       dataset" was added ahead of the datasets it is for - and an option reading zero
+       is a dead end. */
+    { key: "type", legend: "Kind of source", multi: true,
+      values: function () {
+        return meta.sourceGroups.filter(function (g) { return countAll("type", g) > 0; });
+      },
+      label: function (v) { return S.sourceGroupLabel(v); },
+      of: function (s) { return [s.sourceGroup]; } },
 
     /* The only facet that spells its abbreviations out in full. Everywhere else on
        the site LGA, PHN and HHS stay short with the full name on hover, but hover
@@ -89,15 +134,10 @@
       label: function (v) { return v; },
       of: function (s) { return s.indicators || []; } },
 
-    /* Same hidden-when-empty rule as the two facets above. A bucket exists in the
-       vocabulary before anything lands in it - "Published dataset" was added ahead of
-       the datasets it is for - and an option reading zero is a dead end. */
-    { key: "type", legend: "Kind of source", multi: true, collapsed: true,
-      values: function () {
-        return meta.sourceGroups.filter(function (g) { return countAll("type", g) > 0; });
-      },
-      label: function (v) { return S.sourceGroupLabel(v); },
-      of: function (s) { return [s.sourceGroup]; } },
+    { key: "access", legend: "Access", multi: true, collapsed: true,
+      values: function () { return meta.accessValues; },
+      label: function (v) { return S.accessLabel(v); },
+      of: function (s) { return [s.access]; } },
 
     { key: "region", legend: "Region", multi: true, collapsed: true,
       values: function () { return meta.regions; },
@@ -214,7 +254,10 @@
 
   function readState() {
     var params = new URLSearchParams(window.location.search);
-    var state = { q: params.get("q") || "", page: Math.max(1, parseInt(params.get("page"), 10) || 1) };
+    var sort = params.get("sort") || DEFAULT_SORT;
+    if (!Object.prototype.hasOwnProperty.call(SORTS, sort)) sort = DEFAULT_SORT;
+    var state = { q: params.get("q") || "", sort: sort,
+                  page: Math.max(1, parseInt(params.get("page"), 10) || 1) };
     FACETS.forEach(function (facet) {
       var raw = params.get(facet.key);
       state[facet.key] = raw ? raw.split(",").filter(Boolean) : [];
@@ -245,13 +288,14 @@
       if (values.length) params.set(facet.key, values.join(","));
     });
     if (state.q) params.set("q", state.q);
+    if (state.sort !== DEFAULT_SORT) params.set("sort", state.sort);
     // Page 1 is the default, so leave it out and keep the common address short.
     if (state.page > 1) params.set("page", state.page);
     var query = params.toString();
     history.replaceState(null, "", query ? "?" + query : window.location.pathname);
   }
 
-  var state = { q: "", page: 1 };
+  var state = { q: "", sort: DEFAULT_SORT, page: 1 };
 
   /* ---------- filtering ---------- */
 
@@ -299,7 +343,10 @@
   }
 
   function currentResults() {
-    return subsetExcluding(null);
+    // subsetExcluding hands back a fresh array, so this does not reorder the loaded
+    // data. Array.sort is stable, so sources sharing a year stay in workbook order
+    // underneath the year sort rather than shuffling between renders.
+    return subsetExcluding(null).sort(SORTS[state.sort].compare);
   }
 
   /* ---------- rendering ---------- */
@@ -464,6 +511,20 @@
       "</nav>";
   }
 
+  /* The order control, drawn into the result bar so it sits with the count it
+     reorders. */
+  function sortHtml() {
+    var options = "";
+    for (var key in SORTS) {
+      if (!Object.prototype.hasOwnProperty.call(SORTS, key)) continue;
+      options += '<option value="' + key + '"' + (state.sort === key ? " selected" : "") +
+        ">" + S.escapeHtml(SORTS[key].label) + "</option>";
+    }
+    return '<span class="sortbox">' +
+      '<label for="sort" class="small muted">Order</label>' +
+      '<select id="sort">' + options + "</select></span>";
+  }
+
   function renderResults() {
     var results = currentResults();
     var bar = document.getElementById("resultbar");
@@ -483,7 +544,8 @@
       : "<span><b>" + results.length + "</b> of " + studies.length + " sources</span>";
 
     bar.innerHTML = shown +
-      (active ? '<button type="button" class="linkish" id="clear">Clear all filters</button>' : "");
+      (active ? '<button type="button" class="linkish" id="clear">Clear all filters</button>' : "") +
+      sortHtml();
     // How many matched, independent of how many are drawn on this page. The bar says
     // it in prose two lines up; this is the same number somewhere it can be read back.
     bar.setAttribute("data-total", results.length);
@@ -635,6 +697,13 @@
       state.q = "";
       state.page = 1;
       search.value = "";
+      render();
+    });
+
+    document.getElementById("resultbar").addEventListener("change", function (event) {
+      if (event.target.id !== "sort") return;
+      state.sort = event.target.value;
+      state.page = 1;
       render();
     });
 

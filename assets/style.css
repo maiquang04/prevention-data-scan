@@ -387,6 +387,17 @@ abbr[title] {
   color: var(--accent); text-decoration: underline; cursor: pointer;
 }
 
+/* Pushed to the right of the result bar so the count keeps the left edge it has
+   always had. Wraps onto its own line on a narrow screen, which the bar's flex-wrap
+   already handles. */
+.sortbox { display: flex; gap: 8px; align-items: baseline; margin-left: auto; }
+.sortbox select {
+  font: inherit; font-size: .88rem; padding: 3px 6px;
+  border: 1px solid var(--rule); border-radius: 4px;
+  background: #fff; color: inherit; cursor: pointer;
+}
+.sortbox select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
 .results { list-style: none; margin: 0; padding: 0; }
 .result { border-bottom: 1px solid var(--rule-soft); padding: 14px 0; }
 .result__head {

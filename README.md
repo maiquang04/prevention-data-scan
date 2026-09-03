@@ -135,6 +135,12 @@ drawing it, and the domain facet carries `childKey` and `children()` to draw it 
 The folds are shut by default and open when something inside them is ticked, so arriving on
 a shared `?indicator=` link never shows a closed panel with no sign of what is filtering.
 
+Ticking a domain ticks every measure under it, which is what a nested checkbox tree is
+expected to do and has one consequence worth knowing: `?domain=Physical Activity` returns
+18 sources, one more than the 17 carrying that domain tag. The extra is `app2-07`
+(Queensland Globe), which carries no domain but does carry two Physical Activity measures,
+and it belongs in that filter. `tests/domainfacet.mjs` prints both counts side by side.
+
 This is the one filter that keeps its zeros. Everywhere else an option reading zero is a
 dead end and gets hidden, but here 34 measures with no source is the finding, and it is a
 list the agency asked for. Ticking one gives *"No source identified for this measure in the
@@ -216,6 +222,48 @@ build/
 
 Plain HTML, CSS and JavaScript, no build step and no dependencies beyond `openpyxl` for the
 export script. GitHub Pages serves the files as they are.
+
+## Which filters start open
+
+Topic and **Kind of source** are drawn open. Geography, Health focus, **Access**, Region
+and Relevance start collapsed and are marked `collapsed: true` in `FACETS`. Access was one
+of the open two until September 2026 and Kind of source took its place: whether a source
+is a paper, a government report or a dataset is the cut most readers make first, and a
+source's access shows on its row as a coloured badge whether or not that filter is open,
+so collapsing it hides the checkboxes and none of the information.
+
+A collapsed group opens by itself when something inside it is ticked, so a shared link
+never lands on a shut panel with no sign of what is filtering the list.
+
+## Order of the results
+
+The dropdown in the result bar offers four orders. **Newest first** is the default.
+
+| Order | Sorts on |
+|---|---|
+| Newest first | Publication year, most recent first |
+| Oldest first | Publication year, earliest first |
+| A to Z | The reference line, so author surname for a paper and agency name for a dataset |
+| Z to A | The same, reversed |
+
+The year is not a column in the workbook. `publication_year()` in `export_data.py` reads
+it out of the reference, and only from the bracketed form every reference uses:
+`Masters R, ... (2017). Return on investment ...`. A bare four-digit number elsewhere in
+the string is usually part of a title or a survey name and would date the source wrongly,
+so it is ignored.
+
+**41 of the 61 sources have a year. The other 20 do not, and that is correct.** They are
+the ongoing collections - the National Health Survey, PLIDA, the Social Health Atlas,
+AusPlay - which have no single publication year. Under either year order they sort to the
+bottom rather than being handed a date, so none of them is on page 1 of the opening view.
+Under A to Z they sort with everything else.
+
+The workbook's own order used to be the default and is gone. It meant something to
+whoever built the sheet and nothing to a reader. One consequence worth knowing: a
+`?page=` link shared before this change now points at a different slice.
+
+`tests/sorttest.mjs` covers all four orders across every page, the undated sources going
+last, the default, and an unknown `?sort=` value falling back to it.
 
 ## Tags on a result row
 

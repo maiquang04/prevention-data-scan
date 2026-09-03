@@ -34,7 +34,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2017
   },
   {
     "reference": "Australian Institute of Health and Welfare (2026). Potentially preventable hospitalisations in Australia by small geographic areas: 2017-18 to 2023-24. Web report, catalogue number HPF 76",
@@ -75,14 +76,15 @@
         "label": "",
         "url": "https://www.aihw.gov.au/reports/primary-health-care/potentially-preventable-hospitalisations-2017-2024/data"
       }
-    ]
+    ],
+    "year": 2026
   },
   {
     "reference": "Falster MO, Jorm LR, Douglas KA, Blyth FM, Elliott RF, Leyland AH (2015). Sociodemographic and health characteristics, rather than primary care supply, are major drivers of geographic variation in preventable hospitalizations in Australia. Medical Care 53(5):436-445",
     "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4396734/",
     "sourceType": "Peer-reviewed",
     "country": "Australia (New South Wales)",
-    "task": "An important caution for this topic: it works out WHY preventable hospitalisation rates differ between areas, and finds the answer is mostly who lives there, not how many services are available. Guards against over-crediting or over-blaming local programs",
+    "task": "An important caution for this topic: it works out why preventable hospitalisation rates differ between areas, and finds the answer is mostly who lives there, not how many services are available. Guards against over-crediting or over-blaming local programs",
     "metrics": "Share of the between-area difference explained: general practitioner supply 2.9%, versus people's own social and health characteristics 36.9%",
     "geoLevel": "Statistical Local Area (199 areas across New South Wales)",
     "inputData": "267,091 people surveyed in the 45 and Up Study (262,755 analysed after exclusions), linked to New South Wales hospital and death records; plus general practitioner supply across 199 small areas",
@@ -117,7 +119,8 @@
         "label": "",
         "url": "https://www.saxinstitute.org.au/solutions/45-and-up-study/"
       }
-    ]
+    ],
+    "year": 2015
   },
   {
     "reference": "Jorm LR, Leyland AH, Blyth FM, Elliott RF, Douglas KMA, Redman S, on behalf of the APHID Investigators (2012). Assessing Preventable Hospitalisation InDicators (APHID): protocol for a data-linkage study using cohort study and administrative data. BMJ Open 2:e002344",
@@ -153,7 +156,8 @@
     "regions": [
       "Australia"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2012
   },
   {
     "reference": "Vos T, Carter R, Barendregt J, Mihalopoulos C, Veerman L, Magnus A, Cobiac L, Bertram M, Wallace A (2010). Assessing Cost-Effectiveness in Prevention (ACE-Prevention): Final Report. University of Queensland & Deakin University",
@@ -189,7 +193,8 @@
     "regions": [
       "Australia"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2010
   },
   {
     "reference": "World Health Organization (2018). Saving lives, spending less: a strategic response to noncommunicable diseases. Geneva: World Health Organization",
@@ -226,7 +231,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2018
   },
   {
     "reference": "Owen L, Morgan A, Fischer A, Ellis S, Hoy A, Kelly MP (2012). The cost-effectiveness of public health interventions. Journal of Public Health 34(1):37-45",
@@ -262,7 +268,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2012
   },
   {
     "reference": "Purdy S (2010). Avoiding hospital admissions: what does the research evidence say? London: The King's Fund",
@@ -296,7 +303,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2010
   },
   {
     "reference": "Organisation for Economic Co-operation and Development (2023). Health at a Glance 2023: OECD Indicators. Paris: OECD Publishing",
@@ -335,7 +343,8 @@
         "label": "",
         "url": "https://data-explorer.oecd.org"
       }
-    ]
+    ],
+    "year": 2023
   },
   {
     "reference": "Harriss LR, Thompson F, Lawson K, O'Loughlin M, McDermott R (2019). Preventable hospitalisations in regional Queensland: potential for primary health? Australian Health Review 43(4):371-381",
@@ -374,7 +383,8 @@
         "label": "",
         "url": "https://www.health.qld.gov.au/dsb/collections/qhapdc"
       }
-    ]
+    ],
+    "year": 2019
   },
   {
     "reference": "Joint Regional Needs Assessments, Queensland (series). Produced jointly by each Primary Health Network and its Hospital and Health Service, 2025-2027 cycle",
@@ -423,7 +433,8 @@
         "label": "North Brisbane and Moreton Bay 2025-27",
         "url": "https://metronorth.health.qld.gov.au/wp-content/uploads/2025/05/jrna-summary-25-27.pdf"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Department of Health (2025). Health Indicators 2025: Snapshot series I. Population profiles. Metro South Health, Brisbane",
@@ -460,7 +471,8 @@
       "Queensland",
       "Australia"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2025
   },
   {
     "reference": "Sallis JF, Cerin E, Conway TL, Adams MA, Frank LD, Pratt M, et al. (2016). Physical activity in relation to urban environments in 14 cities worldwide: a cross-sectional study. The Lancet 387:2207-2217",
@@ -502,7 +514,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2016
   },
   {
     "reference": "Astell-Burt T, Feng X (2019). Urban green space, tree canopy and prevention of cardiometabolic diseases: a multilevel longitudinal study of 46,786 Australians. International Journal of Epidemiology 49(3):926-933",
@@ -542,7 +555,8 @@
     "regions": [
       "Australia"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2019
   },
   {
     "reference": "Alderton A, O'Connor M, Badland H, Gunn L, Boulange C, Villanueva K (2022). Access to and quality of neighbourhood public open space and children's mental health outcomes: evidence from population linked data across eight Australian capital cities. International Journal of Environmental Research and Public Health 19(11):6780",
@@ -581,7 +595,8 @@
     "regions": [
       "Australia"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2022
   },
   {
     "reference": "Needham C, Allender S, Blake MR, Horta A (2025). The influence of access to healthy food retail on BMI: implications for obesity prevention policy at the local government level. Health & Place 95:103521",
@@ -621,7 +636,8 @@
     "regions": [
       "Australia"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2025
   },
   {
     "reference": "Sacks G, Kwon J, Vandevijvere S, Swinburn B (2021). Benchmarking as a public health strategy for creating healthy food environments: an evaluation of the INFORMAS initiative (2012-2020). Annual Review of Public Health 42:345-362",
@@ -659,7 +675,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2021
   },
   {
     "reference": "Department of Transport and Main Roads. Queensland Household Travel Survey series. Brisbane: Queensland Government",
@@ -704,7 +721,8 @@
         "label": "",
         "url": "https://www.data.qld.gov.au/dataset/queensland-household-travel-survey-series"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Queensland Government. Queensland Globe and the Queensland Spatial Catalogue. Brisbane: Department of Resources",
@@ -750,7 +768,8 @@
         "label": "",
         "url": "https://qldglobe.information.qld.gov.au/"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Queensland Government. Queensland Government Open Data Portal. Brisbane: Queensland Government",
@@ -792,7 +811,8 @@
         "label": "",
         "url": "https://www.data.qld.gov.au/"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Australian Bureau of Statistics. General Social Survey, Australia. Canberra: Australian Bureau of Statistics",
@@ -841,7 +861,8 @@
         "label": "",
         "url": "https://www.abs.gov.au/statistics/people/people-and-communities/general-social-survey-summary-results-australia/latest-release"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Australian Early Development Census. Canberra: Australian Government Department of Education",
@@ -888,7 +909,8 @@
         "label": "",
         "url": "https://www.aedc.gov.au/data"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Australian Bureau of Statistics. National Health Survey. Canberra: Australian Bureau of Statistics",
@@ -939,7 +961,8 @@
         "label": "",
         "url": "https://www.abs.gov.au/statistics/health/health-conditions-and-risks/national-health-survey/latest-release"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Milat AJ, Bauman A, Redman S (2015). Narrative review of models and success factors for scaling up public health interventions. Implementation Science 10:113",
@@ -974,7 +997,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2015
   },
   {
     "reference": "Glasgow RE, Vogt TM, Boles SM (1999). Evaluating the public health impact of health promotion interventions: the RE-AIM framework. American Journal of Public Health 89(9):1322-1327",
@@ -1010,7 +1034,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 1999
   },
   {
     "reference": "Smith JL, Reece LJ, Rose CL, Owen KB (2022). Improving access to public physical activity events for disadvantaged communities in Australia. BMC Public Health 22:1542",
@@ -1048,7 +1073,8 @@
     "regions": [
       "Australia"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2022
   },
   {
     "reference": "Australian Institute of Health and Welfare. Medicare-subsidised GP, allied health and specialist health care across local areas. Canberra: AIHW",
@@ -1090,7 +1116,8 @@
         "label": "",
         "url": "https://www.aihw.gov.au/reports-data/health-welfare-services/primary-health-care/data"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Australian Sports Commission. AusPlay survey. Canberra: Australian Sports Commission",
@@ -1135,7 +1162,8 @@
         "label": "",
         "url": "https://www.clearinghouseforsport.gov.au/research/ausplay"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "CQUniversity Australia. 10,000 Steps program. Rockhampton: Physical Activity Research Group, CQUniversity",
@@ -1179,7 +1207,8 @@
         "label": "",
         "url": "https://www.10000steps.org.au/"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Baum F, Lawless A, Delany T, Macdougall C, Williams C, Broderick D, et al. (2014). Evaluation of Health in All Policies: concept, theory and application. Health Promotion International 29(suppl 1):i130-i142",
@@ -1215,7 +1244,8 @@
     "regions": [
       "Australia"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2014
   },
   {
     "reference": "Corbin JH, Jones J, Barry MM (2016). What makes intersectoral partnerships for health promotion work? A review of the international literature. Health Promotion International 33(1):4-26",
@@ -1251,7 +1281,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2016
   },
   {
     "reference": "Alderwick H, Hutchings A, Mays N (2024). Cross-sector collaboration to reduce health inequalities: a qualitative study of local collaboration between health care, social services, and other sectors under health system reforms in England. BMC Public Health 24:2613",
@@ -1289,7 +1320,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2024
   },
   {
     "reference": "Australian Bureau of Statistics. Person Level Integrated Data Asset (PLIDA). Canberra: Australian Bureau of Statistics",
@@ -1331,7 +1363,8 @@
         "label": "",
         "url": "https://www.abs.gov.au/about/data-services/data-integration/integrated-data/person-level-integrated-data-asset-plida"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Australian Bureau of Statistics. The Five Safes framework. Canberra: Australian Bureau of Statistics",
@@ -1364,7 +1397,8 @@
     "regions": [
       "Australia"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": null
   },
   {
     "reference": "Office of the National Data Commissioner. The Data Availability and Transparency scheme. Canberra: Australian Government",
@@ -1402,7 +1436,8 @@
         "label": "",
         "url": "https://www.datacommissioner.gov.au/"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Australian Institute of Health and Welfare. AIHW data by geography. Canberra: AIHW",
@@ -1446,7 +1481,8 @@
         "label": "",
         "url": "https://www.aihw.gov.au/about-our-data/aihw-data-by-geography"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "World Health Organization (2013). Handbook on health inequality monitoring: with a special focus on low- and middle-income countries. Geneva: World Health Organization",
@@ -1481,7 +1517,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2013
   },
   {
     "reference": "Marmot M, Allen J, Boyce T, Goldblatt P, Morrison J (2020). Health Equity in England: The Marmot Review 10 Years On. London: Institute of Health Equity / The Health Foundation",
@@ -1526,7 +1563,8 @@
         "label": "Deprivation data",
         "url": "https://deprivation.communities.gov.uk/download-all"
       }
-    ]
+    ],
+    "year": 2020
   },
   {
     "reference": "Flavel J, Kedzior SGE, Isaac V, Cameron D, Baum F (2024). Regional health inequalities in Australia and social determinants of health: analysis of trends and distribution by remoteness. Rural and Remote Health 24:7726",
@@ -1563,7 +1601,8 @@
     "regions": [
       "Australia"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2024
   },
   {
     "reference": "Australian Commission on Safety and Quality in Health Care and Australian Institute of Health and Welfare (2021). The Fourth Australian Atlas of Healthcare Variation. Sydney: Australian Commission on Safety and Quality in Health Care. ISBN 978-1-922563-06-4",
@@ -1601,7 +1640,8 @@
     "regions": [
       "Australia"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2021
   },
   {
     "reference": "Canadian Institute for Health Information (2018). In Pursuit of Health Equity: Defining Stratifiers for Measuring Health Inequality - A Focus on Age, Sex, Gender, Income, Education and Geographic Location. Ottawa: Canadian Institute for Health Information",
@@ -1637,7 +1677,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2018
   },
   {
     "reference": "Flanagan BE, Gregory EW, Hallisey EJ, Heitgerd JL, Lewis B (2011). A Social Vulnerability Index for Disaster Management. Journal of Homeland Security and Emergency Management 8(1), Article 3",
@@ -1678,7 +1719,8 @@
         "label": "",
         "url": "https://www.atsdr.cdc.gov/place-health/php/svi/svi-data-documentation-download.html"
       }
-    ]
+    ],
+    "year": 2011
   },
   {
     "reference": "Atkinson J, Salmond C, Crampton P, Viggers H, Lacey K (2024). NZDep2023 Index of Socioeconomic Deprivation: Research Report. Wellington: University of Otago",
@@ -1719,7 +1761,8 @@
         "label": "",
         "url": "https://www.otago.ac.nz/wellington/research/groups/research-groups-in-the-department-of-public-health/hirp/socioeconomic-deprivation-indexes"
       }
-    ]
+    ],
+    "year": 2024
   },
   {
     "reference": "Maiam nayri Wingara Indigenous Data Sovereignty Collective and Australian Indigenous Governance Institute (2018). Indigenous Data Sovereignty Communique, Indigenous Data Sovereignty Summit, 20 June 2018, Canberra",
@@ -1755,7 +1798,8 @@
     "regions": [
       "Australia"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2018
   },
   {
     "reference": "Public Health Information Development Unit (PHIDU). Social Health Atlas of Australia. Adelaide: Torrens University Australia",
@@ -1800,7 +1844,8 @@
         "label": "Workbooks by geography",
         "url": "https://phidu.torrens.edu.au/social-health-atlases/data"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Australian Bureau of Statistics (2023). Socio-Economic Indexes for Areas (SEIFA), Australia, 2021. Canberra: Australian Bureau of Statistics",
@@ -1844,7 +1889,8 @@
         "label": "",
         "url": "https://www.abs.gov.au/statistics/people/people-and-communities/socio-economic-indexes-areas-seifa-australia/2021"
       }
-    ]
+    ],
+    "year": 2023
   },
   {
     "reference": "Higgs C, Badland H, Simons K, Knibbs LD, Giles-Corti B (2019). The Urban Liveability Index: developing a policy-relevant urban liveability composite measure and evaluating associations with transport mode choice. International Journal of Health Geographics 18:14",
@@ -1896,7 +1942,8 @@
         "label": "",
         "url": "https://opendata.transport.vic.gov.au/dataset/victorian-integrated-survey-of-travel-and-activity-vista"
       }
-    ]
+    ],
+    "year": 2019
   },
   {
     "reference": "Higgs C, Lowe M, Hooper P, Mavoa S, Arundel J, Gunn L, Simons K, Giles-Corti B (2023). Policy relevant health related liveability indicator datasets for addresses in Australia's 21 largest cities. Scientific Data 10:113",
@@ -1949,7 +1996,8 @@
         "label": "",
         "url": "https://doi.org/10.25439/rmt.15001230"
       }
-    ]
+    ],
+    "year": 2023
   },
   {
     "reference": "Giles-Corti B, Vernez-Moudon A, Reis R, Turrell G, Dannenberg AL, Badland H, Foster S, Lowe M, Sallis JF, Stevenson M, Owen N (2016). City planning and population health: a global challenge. The Lancet 388:2912-2924",
@@ -1985,7 +2033,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2016
   },
   {
     "reference": "Boeing G, Higgs C, Liu S, Giles-Corti B, Sallis JF, Cerin E, et al. (2022). Using open data and open-source software to develop spatial indicators of urban design and transport features for achieving healthy and sustainable cities. Lancet Global Health 10(6):e907-e918",
@@ -2039,7 +2088,8 @@
         "label": "Tool",
         "url": "https://github.com/healthysustainablecities/global-indicators"
       }
-    ]
+    ],
+    "year": 2022
   },
   {
     "reference": "Lowe M, Whitzman C, Badland H, Davern M, Aye L, Hes D, Butterworth I, Giles-Corti B (2015). Planning Healthy, Liveable and Sustainable Cities: How Can Indicators Inform Policy? Urban Policy and Research 33(2):131-144",
@@ -2072,7 +2122,8 @@
     "regions": [
       "Australia"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2015
   },
   {
     "reference": "Gourevitch MN, Athens JK, Levine SE, Kleiman N, Thorpe LE (2019). City-Level Measures of Health, Health Determinants, and Equity to Foster Population Health Improvement: The City Health Dashboard. American Journal of Public Health 109(4):585-592",
@@ -2107,7 +2158,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2019
   },
   {
     "reference": "Topp CW, Ostergaard SD, Sondergaard S, Bech P (2015). The WHO-5 Well-Being Index: A Systematic Review of the Literature. Psychotherapy and Psychosomatics 84(3):167-176",
@@ -2145,7 +2197,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2015
   },
   {
     "reference": "Lytle LA, Sokol RL (2017). Measures of the food environment: A systematic review of the field, 2007-2015. Health & Place 44:18-34",
@@ -2185,7 +2238,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2017
   },
   {
     "reference": "Organisation for Economic Co-operation and Development & European Commission Joint Research Centre (2008). Handbook on Constructing Composite Indicators: Methodology and User Guide. Paris: OECD Publishing",
@@ -2218,7 +2272,8 @@
     "regions": [
       "International"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": 2008
   },
   {
     "reference": "Queensland Health. Preventive health survey series and the Queensland survey analytic system (QSAS). Brisbane: Queensland Health (ongoing series)",
@@ -2273,7 +2328,8 @@
         "label": "Interactive regional viewer (QSAS)",
         "url": "https://public.tableau.com/app/profile/population.epidemiology/viz/QSAS_Regional_By_Region/Adult"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Queensland Government Statistician's Office. Queensland regional profiles and the Queensland regional database. Brisbane: Queensland Treasury",
@@ -2319,7 +2375,8 @@
         "label": "Regional database",
         "url": "https://www.qgso.qld.gov.au/statistics/queensland-regions/regional-tools-statistics/queensland-regional-database"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Australian Urban Observatory. Liveability indicators for Australian cities. Melbourne: RMIT University Centre for Urban Research",
@@ -2367,7 +2424,8 @@
         "label": "Indicator descriptions",
         "url": "https://auo.org.au/measure/"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Global Observatory of Healthy and Sustainable Cities. 1000 Cities Challenge. Melbourne: RMIT University",
@@ -2416,7 +2474,8 @@
         "label": "",
         "url": "https://www.healthysustainablecities.org/"
       }
-    ]
+    ],
+    "year": null
   },
   {
     "reference": "Centre of Research Excellence in Healthy Liveable Communities. Urban Liveability Checklist. Melbourne: RMIT University Centre for Urban Research",
@@ -2451,7 +2510,8 @@
     "regions": [
       "Australia"
     ],
-    "dataLinks": []
+    "dataLinks": [],
+    "year": null
   },
   {
     "reference": "Australian Bureau of Statistics (2022). Census of Population and Housing, 2021. Canberra: Australian Bureau of Statistics",
@@ -2504,6 +2564,7 @@
         "label": "Build a table",
         "url": "https://www.abs.gov.au/websitedbs/censushome.nsf/home/tablebuilder"
       }
-    ]
+    ],
+    "year": 2022
   }
 ]

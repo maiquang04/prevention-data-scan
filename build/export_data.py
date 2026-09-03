@@ -168,6 +168,22 @@ def regions_of(country):
     return tags
 
 
+def publication_year(reference):
+    """The year in the reference, for the newest/oldest sort on the browse page.
+
+    Every reference that has a year writes it the same way, in brackets after the
+    authors: "Masters R, ... (2017). Return on investment ...". So the bracketed form
+    is the only one read. A bare four-digit number elsewhere in the string is usually
+    part of a title or a survey name and would date the source wrongly.
+
+    Returns None for the 20 rows with no year, which are the ongoing collections -
+    the National Health Survey, PLIDA, the Social Health Atlas, AusPlay. They have no
+    single publication year, and giving them one would be inventing it. The browse
+    page sorts them to the bottom whichever direction is chosen."""
+    match = re.search(r"\((\d{4})[a-z]?\)", reference)
+    return int(match.group(1)) if match else None
+
+
 def clean(value):
     """Collapse whitespace; treat blanks and None alike."""
     if value is None:
@@ -371,6 +387,8 @@ def export(src, out_dir, quiet=False):
             record["regions"] = regions or []
             record["dataLinks"] = parse_links(record.pop("dataLinkRaw", ""))
 
+            record["year"] = publication_year(record["reference"])
+
             if not record["reference"]:
                 problems.append("%s: no reference" % where)
 
@@ -436,6 +454,12 @@ def export(src, out_dir, quiet=False):
         ))
         for value in ACCESS_VALUES:
             print("  %-26s %d" % (value, counts.get(value, 0)))
+        dated = [s2["year"] for s2 in studies if s2["year"]]
+        print()
+        print("%d of %d sources carry a publication year (%d-%d); "
+              "%d are ongoing collections with none"
+              % (len(dated), len(studies), min(dated), max(dated),
+                 len(studies) - len(dated)))
 
     # Re-stamp the asset links here too, so the one command people actually run
     # leaves the site in a publishable state.
@@ -455,3 +479,4 @@ if __name__ == "__main__":
     parser.add_argument("--quiet", action="store_true")
     args = parser.parse_args()
     export(args.src, args.out, args.quiet)
+
