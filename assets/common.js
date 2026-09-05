@@ -30,7 +30,7 @@
   };
 
   var FIELD_LABEL = {
-    topics: "Related topics",
+    topics: "Related focus areas",
     healthDomain: "Health focus",
     indicators: "Indicators",
     summary: "Purpose",
@@ -66,21 +66,6 @@
     "International agency report": "International agency report",
     "Academic or institutional report": "Academic or institutional source"
   };
-
-  var PRIORITY_LABEL = {
-    "highly-relevant": "Highly relevant",
-    "relevant": "Relevant",
-    "unmarked": "Not marked"
-  };
-
-  // Same shape as ACCESS_MEANING above, so the two keys on the site read alike.
-  var PRIORITY_MEANING = {
-    "highly-relevant": "Closest fit for this application.",
-    "relevant": "Useful, though not the first place to look.",
-    "unmarked": "Included in the scan but not singled out."
-  };
-
-  var PRIORITY_ORDER = ["highly-relevant", "relevant", "unmarked"];
 
   /* The three geography tags that are abbreviations. They stay short on screen and
      expand on hover: the short form is what the workbook, the filter and the URL all
@@ -192,12 +177,6 @@
     var cls = ACCESS_CLASS[access] || "badge--notdata";
     return '<span class="badge ' + cls + '" title="' + escapeHtml(ACCESS_MEANING[access] || "") +
       '">' + escapeHtml(accessLabel(access)) + "</span>";
-  }
-
-  function priorityDot(priority) {
-    var label = PRIORITY_LABEL[priority] || "Not marked";
-    return '<span class="dot dot--' + escapeHtml(priority) + '" role="img" aria-label="' +
-      escapeHtml(label) + '" title="' + escapeHtml(label) + '"></span>';
   }
 
   /* modifier is an extra class on every pill in the list, for callers that need one
@@ -328,10 +307,6 @@
     accessBadge: accessBadge,
     accessLabel: accessLabel,
     accessMeaning: ACCESS_MEANING,
-    priorityDot: priorityDot,
-    priorityLabel: PRIORITY_LABEL,
-    priorityMeaning: PRIORITY_MEANING,
-    priorityOrder: PRIORITY_ORDER,
     setTopics: setTopics,
     topicTitle: topicTitle,
     topicTags: topicTags,

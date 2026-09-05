@@ -6,15 +6,36 @@
     "'studies' list must exist in studies.json - check_publish.py verifies that.",
     "",
     "Keyed by topic id from data/topics.json, which is where the title, heading and",
-    "question for each topic live - not repeated here, so there is one place to edit."
+    "question for each topic live - not repeated here, so there is one place to edit.",
+    "",
+    "'name' is no longer drawn on screen. A card is titled by the reference of each",
+    "source it cites, because a summary sitting where a title sits reads as though it",
+    "were the name of a source. Keep it as the editorial label for whoever edits this",
+    "file; 'note' is what the reader sees under the title."
   ],
   "rows": [
-    { "key": "people", "label": "People", "note": "Population groups affected" },
-    { "key": "places", "label": "Places", "note": "Areas with measurable differences" }
+    {
+      "key": "people",
+      "label": "People",
+      "note": "Population groups affected"
+    },
+    {
+      "key": "places",
+      "label": "Places",
+      "note": "Areas with measurable differences"
+    }
   ],
   "cols": [
-    { "key": "actions", "label": "Actions", "note": "Available actions" },
-    { "key": "measures", "label": "Measures", "note": "Measurement approach" }
+    {
+      "key": "actions",
+      "label": "Actions",
+      "note": "Available actions"
+    },
+    {
+      "key": "measures",
+      "label": "Measures",
+      "note": "Measurement approach"
+    }
   ],
   "topics": {
     "health-system": {
@@ -24,78 +45,109 @@
           {
             "name": "Prevention delivered to individuals, with a return on investment attached",
             "note": "Programmes aimed at particular people - screening, counselling, vaccination - with a costed return. Across the published studies the median return was 14 dollars back for every dollar spent.",
-            "studies": ["app1-01", "app1-07"]
+            "studies": [
+              "app1-01",
+              "app1-07"
+            ]
           },
           {
             "name": "Best-buy interventions for chronic disease",
             "note": "The World Health Organization's shortlist of prevention measures for heart disease, cancer and diabetes, each with a modelled return.",
-            "studies": ["app1-06"]
+            "studies": [
+              "app1-06"
+            ]
           },
           {
             "name": "A ranked list of 123 preventive interventions by value for money",
             "note": "An Australian exercise, led by the University of Queensland, that put preventive measures in order of cost per healthy year of life gained. The nearest thing to a priority funding menu.",
-            "studies": ["app1-05"]
+            "studies": [
+              "app1-05"
+            ]
           }
         ],
         "people-measures": [
           {
             "name": "Preventable hospitalisation rate, split by age and sex",
             "note": "The standard national indicator, already published broken down by sex and by age group. Downloadable now, seven years of it.",
-            "studies": ["app1-02"]
+            "studies": [
+              "app1-02"
+            ]
           },
           {
             "name": "Preventable admissions set against a person's own circumstances",
             "note": "Smoking, physical activity, body mass index, income and education linked to whether that person was later admitted. Needs an application to the data custodians.",
-            "studies": ["app1-03", "app1-04"]
+            "studies": [
+              "app1-03",
+              "app1-04"
+            ]
           },
           {
             "name": "Healthy years of life gained per person",
             "note": "The common currency for comparing very different interventions. Used in both the Australian and the English costing work.",
-            "studies": ["app1-05", "app1-07"]
+            "studies": [
+              "app1-05",
+              "app1-07"
+            ]
           }
         ],
         "places-actions": [
           {
             "name": "Population-wide measures such as taxes and regulation",
             "note": "In the Australian ranking these came out strongest - they change the environment for everyone rather than one person at a time.",
-            "studies": ["app1-05"]
+            "studies": [
+              "app1-05"
+            ]
           },
           {
             "name": "National delivery against local delivery",
             "note": "Worth knowing before designing anything: the same review found local interventions returned 4.1 to 1 while national ones returned 27.2 to 1.",
-            "studies": ["app1-01"]
+            "studies": [
+              "app1-01"
+            ]
           },
           {
             "name": "Programmes intended to avoid hospital admissions",
             "note": "A review that grades the evidence rather than assuming it. Several widely used approaches turn out to have weak support.",
-            "studies": ["app1-08"]
+            "studies": [
+              "app1-08"
+            ]
           },
           {
             "name": "A caution before comparing one area with another",
             "note": "A worse area result mostly reflects the resident population rather than local service performance. General practitioner supply explained 2.9 per cent of the difference between areas; people's own circumstances explained 36.9 per cent.",
-            "studies": ["app1-03"]
+            "studies": [
+              "app1-03"
+            ]
           }
         ],
         "places-measures": [
           {
             "name": "Preventable hospitalisation rate by area",
             "note": "Published for 346 small areas, 33 primary health network regions, four remoteness categories and five socioeconomic groups. Not published by local government area or hospital and health service, which is a real gap.",
-            "studies": ["app1-02"]
+            "studies": [
+              "app1-02"
+            ]
           },
           {
             "name": "Service and population contributions to area gaps",
             "note": "A method for splitting the difference between areas into the part explained by service supply and the part explained by resident population.",
-            "studies": ["app1-03"]
+            "studies": [
+              "app1-03"
+            ]
           },
           {
             "name": "Regional share and cost of preventable admissions",
             "note": "The one study in this set that looks specifically at regional Queensland.",
-            "studies": ["app1-10"]
+            "studies": [
+              "app1-10"
+            ]
           },
           {
             "name": "Australia compared with other wealthy countries",
             "note": "Avoidable admission rates for asthma, chronic lung disease, heart failure and diabetes, on a comparable basis across countries.",
-            "studies": ["app1-09"]
+            "studies": [
+              "app1-09"
+            ]
           }
         ]
       }

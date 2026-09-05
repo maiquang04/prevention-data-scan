@@ -5,18 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Draft: reachable by link, kept out of search results. Remove when it is finished. -->
 <meta name="robots" content="noindex">
-<title>Source - Prevention data scan</title>
-<link rel="stylesheet" href="assets/style.css?v=68c55df6">
+<title>Source - Prevention data observatory</title>
+<link rel="stylesheet" href="assets/style.css?v=c068f2e7">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="site-head">
   <div class="site-head__inner">
-    <a class="site-head__title" href="index.html">Prevention data scan <span>&middot; working draft</span></a>
+    <a class="site-head__title" href="index.html">Prevention data observatory <span>&middot; working draft</span></a>
     <nav class="site-nav" aria-label="Main">
       <a href="index.html">Overview</a>
-      <a href="application.html?app=1" data-grid-nav>Topic view</a>
+      <a href="application.html?app=1" data-grid-nav>Focus area view</a>
       <a href="browse.html">Browse sources</a>
     </nav>
   </div>
@@ -36,7 +36,7 @@
   </div>
 </footer>
 
-<script src="assets/common.js?v=d14d68a5"></script>
+<script src="assets/common.js?v=132ac9ae"></script>
 <script>
 (function () {
   "use strict";
@@ -64,9 +64,9 @@
     }
 
     var topicNames = study.topics.map(S.topicTitle).join(", ");
-    document.title = topicNames + " source " + study.num + " - Prevention data scan";
-    // A source can carry more than one topic, so the breadcrumb names none of them
-    // specifically - the Topics row below links to each.
+    document.title = topicNames + " source " + study.num + " - Prevention data observatory";
+    // A source can sit in more than one focus area, so the breadcrumb names none of
+    // them specifically - the Related focus areas row below links to each.
     document.getElementById("crumb").innerHTML =
       '<a href="index.html">Overview</a> &rsaquo; ' +
       '<a href="browse.html">Browse sources</a> &rsaquo; source ' + study.num;
@@ -78,9 +78,8 @@
 
     document.getElementById("record").innerHTML =
       "<h1>" + S.escapeHtml(study.reference) + "</h1>" +
-      '<p>' + S.priorityDot(study.priority) +
-        '<span class="small muted">' + S.escapeHtml(S.priorityLabel[study.priority]) +
-        " &middot; " + S.escapeHtml(study.sourceType) + " &middot; " + S.escapeHtml(study.country) + "</span></p>" +
+      '<p><span class="small muted">' + S.escapeHtml(study.sourceType) +
+        " &middot; " + S.escapeHtml(study.country) + "</span></p>" +
       (study.link ? "<p>" + S.externalLink(study.link, "Read the source") + "</p>" : "") +
       '<div class="record"><dl>' +
         row(S.label("topics"), study.topics.map(function (id) {

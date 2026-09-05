@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Draft: reachable by link, kept out of search results. Remove when it is finished. -->
 <meta name="robots" content="noindex">
-<title>Prevention data scan</title>
+<title>Prevention data observatory</title>
 <meta name="description" content="A scan of existing prevention data sources, with access conditions and measurement uses.">
-<link rel="stylesheet" href="assets/style.css?v=68c55df6">
+<link rel="stylesheet" href="assets/style.css?v=c068f2e7">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="site-head">
   <div class="site-head__inner">
-    <a class="site-head__title" href="index.html">Prevention data scan <span>&middot; working draft</span></a>
+    <a class="site-head__title" href="index.html">Prevention data observatory <span>&middot; working draft</span></a>
     <nav class="site-nav" aria-label="Main">
       <a href="index.html">Overview</a>
-      <a href="application.html?app=1" data-grid-nav>Topic view</a>
+      <a href="application.html?app=1" data-grid-nav>Focus area view</a>
       <a href="browse.html">Browse sources</a>
     </nav>
   </div>
@@ -27,7 +27,7 @@
   <div class="wrap">
 
     <div class="hero">
-      <h1>Prevention data scan</h1>
+      <h1>Prevention data observatory</h1>
     </div>
 
     <div class="stats" id="stats" aria-live="polite">
@@ -35,12 +35,12 @@
     </div>
 
     <div class="buttons">
-      <a class="button" href="application.html?app=1" data-grid-nav="Explore">Explore topic view</a>
+      <a class="button" href="application.html?app=1" data-grid-nav="Explore">Explore focus areas</a>
       <a class="button button--ghost" href="browse.html">Browse every source</a>
     </div>
 
     <section style="margin-top:44px">
-      <h2>Questions being scanned</h2>
+      <h2>Focus areas</h2>
       <div class="cards" id="cards"></div>
     </section>
 
@@ -60,7 +60,7 @@
   </div>
 </footer>
 
-<script src="assets/common.js?v=d14d68a5"></script>
+<script src="assets/common.js?v=132ac9ae"></script>
 <script>
 (function () {
   "use strict";
@@ -76,7 +76,7 @@
       [meta.total, "sources scanned"],
       [meta.withDownloadableData, "with downloadable data"],
       [restricted, "needing an application"],
-      [meta.topics.length, "topics covered"]
+      [meta.topics.length, "focus areas"]
     ];
     document.getElementById("stats").innerHTML = stats.map(function (s) {
       return '<div class="stat"><b>' + s[0] + "</b><span>" + s[1] + "</span></div>";

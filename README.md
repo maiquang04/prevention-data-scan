@@ -1,4 +1,4 @@
-# Prevention data scan
+# Prevention data observatory
 
 A small static site that presents a scan of published work on measuring prevention:
 what has been measured, how, and whether the underlying data can actually be obtained.
@@ -225,8 +225,8 @@ export script. GitHub Pages serves the files as they are.
 
 ## Which filters start open
 
-Topic and **Kind of source** are drawn open. Geography, Health focus, **Access**, Region
-and Relevance start collapsed and are marked `collapsed: true` in `FACETS`. Access was one
+Focus area and **Kind of source** are drawn open. Geography, Health focus, **Access** and
+Region start collapsed and are marked `collapsed: true` in `FACETS`. Access was one
 of the open two until September 2026 and Kind of source took its place: whether a source
 is a paper, a government report or a dataset is the cut most readers make first, and a
 source's access shows on its row as a coloured badge whether or not that filter is open,
@@ -269,11 +269,9 @@ last, the default, and an unknown `?sort=` value falling back to it.
 
 Every checkbox group in the browse filter panel has a matching pill on each result, so a
 reader can see why a row came back without opening it. `metaRow()` in `assets/common.js`
-draws them, in this order: access, topic, health focus, geography, region, kind of source,
-indicators. Each has its own pill style, told apart by fill and border rather than by colour
-alone — they sit beside the access badges, which do use colour to mean something.
-
-Relevance is the exception. It is the coloured dot beside the row number, not a pill.
+draws them, in this order: access, focus area, health focus, geography, region, kind of
+source, indicators. Each has its own pill style, told apart by fill and border rather than
+by colour alone — they sit beside the access badges, which do use colour to mean something.
 
 Indicators come last because one source carries ten of them and they would otherwise push
 the short, always-present tags off the first line. The busiest row has 17 pills.
@@ -283,26 +281,67 @@ fails there. A pill is not a button — the whole row sits inside a `<button>` o
 browse list and the quadrant cards, and an `<a>` cannot nest in one. Tags are links only on
 a source's own page, where nothing wraps them.
 
-## Topics
+## Focus areas
 
-The site groups sources by topic rather than by "Application N" - that numbering is internal
-project shorthand and means nothing to an outside reader. The taxonomy lives in
-`data/topics.json`; adding a topic there is enough, no code change needed. A source can belong
-to more than one topic: add to its `Topics` cell in the workbook, semicolon-separated, e.g.
-`Local government measurement; Health inequities`. A blank cell defaults to whichever topic
-claims that sheet.
+The site groups sources by focus area rather than by "Application N" - that numbering is
+internal project shorthand and means nothing to an outside reader. The taxonomy lives in
+`data/topics.json`; adding one there is enough, no code change needed. A source can belong to
+more than one: add to its `Topics` cell in the workbook, semicolon-separated, e.g.
+`Local government measurement; Health inequities`. A blank cell defaults to whichever focus
+area claims that sheet.
+
+**Removing one does not remove any source.** The export then stops with `topic '<name>' is not
+in topics.json` for every source that carried it, until those cells are pointed somewhere
+else. That is deliberate: it forces a decision rather than leaving sources silently untagged.
+
+The word on screen is "focus area", asked for by the supervisors in September 2026. Everything
+underneath still says topic - the `?topic=` parameter, the `topics` key in `meta.json`, the
+`topics.json` filename, the `Topics` column in the workbook. Same split as `e4cc3d1` made for
+the source field labels: display text moved, keys did not, so no link already sent out breaks.
 
 `?topic=<id>` is the current parameter on `application.html` and `browse.html`. The older
 `?app=1` style links already sent out still resolve to the same place, so nothing already
 shared breaks.
 
+## The structured view
+
+`application.html` draws one focus area as an Actions/Measures by People/Places grid from
+`data/quadrants.json`. Health system impact is the only one with a grid; the rest fall back
+to the browse page.
+
+**Each card is titled by the reference of every source it cites**, the same line the browse
+page uses as a result's title. A card also carries `name` in the JSON, an editorial summary
+of what the card argues, and that used to be the title. A summary sitting where a title sits
+reads as though it were the name of a source, which is what the supervisors asked about in
+September 2026, so `name` is no longer drawn. `note` still says what the card is about.
+
+A source can title more than one card - `app1-05` and `app1-03` each appear on three - but
+never twice in the same quadrant, so the People/Places and Actions/Measures heading tells
+them apart. `tests/cardtags.mjs` checks all 14 titles against `studies.json`.
+
+## Relevance marks
+
+Rocky marks relevance by filling cells in the workbook, yellow for relevant and red for
+highly relevant, and `priority_of()` in `export_data.py` reads those fills back into a
+`priority` field on every source.
+
+**Nothing on the site draws it any more.** Rocky marked 17 sources before the scan grew to
+61, so 44 now carry no mark, and a source can sit in several focus areas, so a mark made
+against one no longer means what it looks like. The dot and the Relevance filter both went
+in September 2026. The field is still exported, so putting them back is a display change
+rather than a re-derivation, and `add_column.py` still styles new columns so the
+highlighting stays unbroken.
+
+A `?priority=` link shared before this is not an error and does not filter; it is ignored
+and the reader sees the whole list.
+
 ## Status
 
-Working draft, 61 sources across six topics. One topic has the grid view; the other five are
-on the browse page while their framing is settled — that is the existing behaviour for a topic
-without a `quadrants.json` entry, not a fault. Where a source's data has not been checked yet,
-it is marked `Not yet assessed` rather than guessed at, and where a claim could not be
-confirmed it is left out rather than softened into something that reads as fact.
+Working draft, 61 sources across six focus areas. One has the grid view; the other five are
+on the browse page while their framing is settled — that is the existing behaviour for a
+focus area without a `quadrants.json` entry, not a fault. Where a source's data has not been
+checked yet, it is marked `Not yet assessed` rather than guessed at, and where a claim
+could not be confirmed it is left out rather than softened into something that reads as fact.
 
 Every page carries `<meta name="robots" content="noindex">`, so the site is reachable by
 anyone with the link but will not turn up in a search. **Delete those four lines when the

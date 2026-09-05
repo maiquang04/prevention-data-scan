@@ -50,12 +50,27 @@
     });
   }
 
+  /* The card is titled by the reference of each source it draws on, the same line the
+     browse page uses as a result's title. It used to carry card.name, an editorial
+     summary of what the card argues, and a summary that sits where a title sits reads
+     as though it were the name of a source. card.note still says what the card is
+     about, so nothing is lost by dropping the name.
+
+     A source can title more than one card - app1-05 and app1-03 each appear on three -
+     but never twice in the same quadrant, so the People/Places and Actions/Measures
+     heading tells them apart and the notes differ. */
+  function referenceTitle(ids) {
+    return ids.map(function (sid) {
+      return byId[sid] ? S.escapeHtml(byId[sid].reference) : "Unknown source " + S.escapeHtml(sid);
+    }).join("<br>");
+  }
+
   function cardHtml(card, cellKey, index) {
     var id = cellKey + "-" + index;
     var known = card.studies.filter(function (sid) { return byId[sid]; });
     return '<button type="button" class="qcard" data-card="' + id +
       '" aria-expanded="false" aria-controls="p-' + id + '">' +
-      '<span class="qcard__name">' + S.escapeHtml(card.name) + "</span>" +
+      '<span class="qcard__name">' + referenceTitle(card.studies) + "</span>" +
       '<span class="qcard__note">' + S.escapeHtml(card.note) + "</span>" +
       '<span class="qcard__meta">' + S.accessBadge(bestAccess(card.studies)) +
         S.tagList(geoTagsFor(card.studies)) +
@@ -72,7 +87,7 @@
       var where = study.dataLinks.filter(function (l) { return l.url; }).map(function (l) {
         return S.externalLink(l.url, l.label || S.shortHost(l.url));
       }).join(", ");
-      return "<li>" + S.priorityDot(study.priority) +
+      return "<li>" +
         '<a href="study.html?id=' + encodeURIComponent(study.id) + '">' +
           S.escapeHtml(study.reference) + "</a>" +
         '<span class="meta-row">' + S.metaRow(study) + "</span>" +
@@ -85,7 +100,7 @@
     return '<div class="panel" id="p-' + id + '">' +
       '<button type="button" class="panel__close" data-close="' + id +
         '" aria-label="Close">&times;</button>' +
-      "<h3>" + S.escapeHtml(card.name) + "</h3>" +
+      "<h3>" + referenceTitle(card.studies) + "</h3>" +
       "<p class=\"small\">" + S.escapeHtml(card.note) + "</p>" +
       "<ul>" + items + "</ul></div>";
   }
@@ -95,7 +110,7 @@
     document.getElementById("app-question").textContent = topic.question;
     document.getElementById("app-intro").textContent = gridBody.intro || "";
     document.getElementById("crumb-app").textContent = topic.title;
-    document.title = topic.heading + " - Prevention data scan";
+    document.title = topic.heading + " - Prevention data observatory";
 
     var rows = quadData.rows, cols = quadData.cols;
     // data-key drives the header colours in the stylesheet, so adding a row or a
@@ -132,16 +147,8 @@
       .filter(function (s) { return s.topics.indexOf(topic.id) !== -1; })
       .sort(function (a, b) { return a.app - b.app || a.num - b.num; });
 
-    // Same shape as the access key on the overview page: the mark itself, its name,
-    // then what it means. Reads better than a sentence describing three colours.
-    document.getElementById("priority-key").innerHTML = S.priorityOrder.map(function (p) {
-      return '<li style="margin-bottom:.5em">' + S.priorityDot(p) +
-        "<b>" + S.escapeHtml(S.priorityLabel[p]) + "</b> " +
-        S.escapeHtml(S.priorityMeaning[p]) + "</li>";
-    }).join("");
-
     document.getElementById("studies").innerHTML = mine.map(function (s) {
-      return "<li>" + S.priorityDot(s.priority) +
+      return "<li>" +
         '<a href="study.html?id=' + encodeURIComponent(s.id) + '">' + S.escapeHtml(s.reference) + "</a>" +
         "<p>" + S.escapeHtml(s.task) + "</p>" +
         '<span class="meta-row">' + S.metaRow(s) + "</span></li>";

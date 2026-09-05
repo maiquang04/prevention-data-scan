@@ -157,25 +157,15 @@ section { margin-bottom: 40px; }
 .badge--notdata         { background: var(--none-bg); color: var(--none-fg); }
 .badge--unassessed      { background: transparent; color: var(--muted); border: 1px dashed var(--rule); }
 
-.dot {
-  display: inline-block; width: .62em; height: .62em; border-radius: 50%;
-  margin-right: .45em; vertical-align: baseline;
-}
-.dot--highly-relevant { background: #c0392b; }
-.dot--relevant        { background: #e8b923; }
-.dot--unmarked        { background: transparent; border: 1px solid var(--rule); }
-
 .tag {
   display: inline-block; padding: 1px 8px; margin: 0 4px 4px 0;
   border: 1px solid var(--rule); border-radius: 999px;
   font-size: .74rem; color: var(--ink-soft); background: #fff;
 }
 /* Every checkbox group in the filter panel has a matching pill on each result, so a
-   reader can see why a row came back without opening it. Seven groups means seven
-   looks, and they are told apart by fill and border rather than by colour alone -
-   these sit next to the access badges, which do use colour to mean something.
-
-   Relevance is the exception: it is already the coloured dot beside the row number.
+   reader can see why a row came back without opening it. Six groups means six looks,
+   and they are told apart by fill and border rather than by colour alone - these sit
+   next to the access badges, which do use colour to mean something.
 
    Order on the row is deliberate. The short, always-present ones come first and the
    indicators, of which one source carries ten, come last so they cannot push

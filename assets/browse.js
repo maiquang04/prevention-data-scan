@@ -58,7 +58,7 @@
     // Values are topic ids; a source matches if it carries any of the ticked
     // topics, which the shared matchesFacet() below already handles - a source
     // with more than one topic needs no special case here.
-    { key: "topic", legend: "Topic", multi: true,
+    { key: "topic", legend: "Focus area", multi: true,
       values: function () { return meta.topics.map(function (t) { return t.id; }); },
       label: function (v) { return S.topicTitle(v); },
       of: function (s) { return s.topics; } },
@@ -142,12 +142,7 @@
     { key: "region", legend: "Region", multi: true, collapsed: true,
       values: function () { return meta.regions; },
       label: function (v) { return v; },
-      of: function (s) { return s.regions; } },
-
-    { key: "priority", legend: "Relevance", multi: true, collapsed: true,
-      values: function () { return ["highly-relevant", "relevant", "unmarked"]; },
-      label: function (v) { return S.priorityLabel[v]; },
-      of: function (s) { return [s.priority]; } }
+      of: function (s) { return s.regions; } }
   ];
 
   function facetByKey(key) {
@@ -574,7 +569,7 @@
       return '<li class="result">' +
         '<button type="button" class="result__head" data-id="' + study.id + '" aria-expanded="' +
           open + '" aria-controls="d-' + study.id + '">' +
-          '<span class="result__num">' + S.priorityDot(study.priority) + study.app + "." + study.num + "</span>" +
+          '<span class="result__num">' + study.app + "." + study.num + "</span>" +
           '<span class="result__body">' +
             '<span class="result__ref">' + S.escapeHtml(study.reference) + "</span>" +
             '<span class="result__task">' + S.escapeHtml(trim(study.task, 210)) + "</span>" +
