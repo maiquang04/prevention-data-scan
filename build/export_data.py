@@ -381,6 +381,17 @@ def export(src, out_dir, quiet=False):
                                 % (where, record.get("sourceType", "")))
             record["sourceGroup"] = group or ""
 
+            # Access answers "can you get the data" and Source type answers "what kind
+            # of thing is this", so a row can hold both without either being checked
+            # against the other. These two values contradict each other, and app4-07
+            # shipped reading "No dataset" and "Published dataset" side by side until
+            # someone spotted it on the page.
+            if access == "Not a dataset" and group == "Published dataset":
+                problems.append("%s: Access says 'Not a dataset' but the Source type "
+                                "'%s' files it under Published dataset - the row would "
+                                "show both. Fix whichever is wrong"
+                                % (where, record.get("sourceType", "")))
+
             regions = regions_of(record.get("country", ""))
             if regions is None:
                 problems.append("%s: no country or system given" % where)

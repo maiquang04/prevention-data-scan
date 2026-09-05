@@ -1442,7 +1442,7 @@
   {
     "reference": "Australian Institute of Health and Welfare. AIHW data by geography. Canberra: AIHW",
     "link": "https://www.aihw.gov.au/about-our-data/aihw-data-by-geography",
-    "sourceType": "Government statistical agency data release",
+    "sourceType": "Government agency finding aid",
     "country": "Australia",
     "task": "A single index of which national health collections are published at which geographic level. Worth having because the recurring question in this scan is not whether a figure exists but whether it exists for a council-sized area.",
     "metrics": "Varies by collection",
@@ -1472,7 +1472,7 @@
     ],
     "domains": [],
     "indicators": [],
-    "sourceGroup": "Published dataset",
+    "sourceGroup": "Government report",
     "regions": [
       "Australia"
     ],
