@@ -396,10 +396,6 @@ abbr[title] {
   width: 100%; cursor: pointer; color: inherit;
 }
 .result__head:hover .result__ref { color: var(--accent); }
-.result__num {
-  flex: none; width: 3.6em; font-size: .78rem; color: var(--muted);
-  font-variant-numeric: tabular-nums; padding-top: .25em;
-}
 .result__body { flex: 1; min-width: 0; }
 .result__ref { font-weight: 600; font-size: .95rem; display: block; margin-bottom: 4px; }
 .result__task { font-size: .87rem; color: var(--ink-soft); margin-bottom: 6px; }
@@ -511,7 +507,6 @@ abbr[title] {
   }
   .quad__cell[data-col="actions"]::before  { border-left-color: var(--quad-actions-fg); }
   .quad__cell[data-col="measures"]::before { border-left-color: var(--quad-measures-fg); }
-  .result__num { width: 3em; }
 }
 
 /* ---------- print ---------- */

@@ -569,7 +569,6 @@
       return '<li class="result">' +
         '<button type="button" class="result__head" data-id="' + study.id + '" aria-expanded="' +
           open + '" aria-controls="d-' + study.id + '">' +
-          '<span class="result__num">' + study.app + "." + study.num + "</span>" +
           '<span class="result__body">' +
             '<span class="result__ref">' + S.escapeHtml(study.reference) + "</span>" +
             '<span class="result__task">' + S.escapeHtml(trim(study.task, 210)) + "</span>" +
