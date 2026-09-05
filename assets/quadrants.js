@@ -108,7 +108,11 @@
   function render() {
     document.getElementById("app-title").textContent = topic.heading;
     document.getElementById("app-question").textContent = topic.question;
-    document.getElementById("app-intro").textContent = gridBody.intro || "";
+    // Optional. An empty one is hidden rather than left as a blank paragraph holding
+    // its own margins open above the grid.
+    var intro = document.getElementById("app-intro");
+    intro.textContent = gridBody.intro || "";
+    intro.hidden = !gridBody.intro;
     document.getElementById("crumb-app").textContent = topic.title;
     document.title = topic.heading + " - Prevention data observatory";
 
