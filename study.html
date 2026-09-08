@@ -80,7 +80,7 @@
       "<h1>" + S.escapeHtml(study.reference) + "</h1>" +
       '<p><span class="small muted">' + S.escapeHtml(study.sourceType) +
         " &middot; " + S.escapeHtml(study.country) + "</span></p>" +
-      (study.link ? "<p>" + S.externalLink(study.link, "Read the source") + "</p>" : "") +
+      (study.link ? "<p>" + S.externalLink(study.link, "Visit original source") + "</p>" : "") +
       '<div class="record"><dl>' +
         row(S.label("topics"), study.topics.map(function (id) {
           return '<a class="tag" href="browse.html?topic=' + encodeURIComponent(id) + '">' +

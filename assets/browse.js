@@ -616,8 +616,8 @@
       row(S.label("sourceType"), S.escapeHtml(study.sourceType)) +
       "</dl>" +
       '<p class="small">' +
-        (study.link ? S.externalLink(study.link, "Read the source") + " &nbsp;&middot;&nbsp; " : "") +
-        '<a href="study.html?id=' + encodeURIComponent(study.id) + '">Open source page</a>' +
+        (study.link ? S.externalLink(study.link, "Visit original source") + " &nbsp;&middot;&nbsp; " : "") +
+        '<a href="study.html?id=' + encodeURIComponent(study.id) + '">View full record</a>' +
       "</p>";
   }
 
