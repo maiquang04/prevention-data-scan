@@ -14,6 +14,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app1-01",
     "app": 1,
     "num": 1,
@@ -35,7 +37,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2017
+    "year": 2017,
+    "dataYear": null
   },
   {
     "reference": "Australian Institute of Health and Welfare (2026). Potentially preventable hospitalisations in Australia by small geographic areas: 2017-18 to 2023-24. Web report, catalogue number HPF 76",
@@ -52,6 +55,8 @@
     "scale": "868,000 rows covering 7 financial years (2017-18 to 2023-24). Covers 346 small areas, 33 Primary Health Networks, 4 remoteness categories, and 5 disadvantage quintiles.",
     "keyAttributes": "Splits by year, area, sex, age (under 65 and 65 plus), condition (22 of them) and category (acute, chronic, vaccine-preventable). Measures: number of admissions, rate per 100,000, bed days, and average length of stay",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2017-18 to 2023-24",
     "id": "app1-02",
     "app": 1,
     "num": 2,
@@ -77,7 +82,8 @@
         "url": "https://www.aihw.gov.au/reports/primary-health-care/potentially-preventable-hospitalisations-2017-2024/data"
       }
     ],
-    "year": 2026
+    "year": 2026,
+    "dataYear": 2024
   },
   {
     "reference": "Falster MO, Jorm LR, Douglas KA, Blyth FM, Elliott RF, Leyland AH (2015). Sociodemographic and health characteristics, rather than primary care supply, are major drivers of geographic variation in preventable hospitalizations in Australia. Medical Care 53(5):436-445",
@@ -94,6 +100,8 @@
     "scale": "",
     "keyAttributes": "Per person: age, sex, income, education, smoking, physical activity, body mass index, long-term conditions. Per area: number of general practitioners. Outcome: preventable admissions",
     "access": "Restricted - application",
+    "applicationFee": "Fee required",
+    "dataYears": "2006 to 2010",
     "id": "app1-03",
     "app": 1,
     "num": 3,
@@ -120,7 +128,8 @@
         "url": "https://www.saxinstitute.org.au/solutions/45-and-up-study/"
       }
     ],
-    "year": 2015
+    "year": 2015,
+    "dataYear": 2010
   },
   {
     "reference": "Jorm LR, Leyland AH, Blyth FM, Elliott RF, Douglas KMA, Redman S, on behalf of the APHID Investigators (2012). Assessing Preventable Hospitalisation InDicators (APHID): protocol for a data-linkage study using cohort study and administrative data. BMJ Open 2:e002344",
@@ -137,6 +146,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Restricted - application",
+    "applicationFee": "Fee required",
+    "dataYears": "2000 to 2011",
     "id": "app1-04",
     "app": 1,
     "num": 4,
@@ -157,7 +168,8 @@
       "Australia"
     ],
     "dataLinks": [],
-    "year": 2012
+    "year": 2012,
+    "dataYear": 2011
   },
   {
     "reference": "Vos T, Carter R, Barendregt J, Mihalopoulos C, Veerman L, Magnus A, Cobiac L, Bertram M, Wallace A (2010). Assessing Cost-Effectiveness in Prevention (ACE-Prevention): Final Report. University of Queensland & Deakin University",
@@ -174,6 +186,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app1-05",
     "app": 1,
     "num": 5,
@@ -194,7 +208,8 @@
       "Australia"
     ],
     "dataLinks": [],
-    "year": 2010
+    "year": 2010,
+    "dataYear": null
   },
   {
     "reference": "World Health Organization (2018). Saving lives, spending less: a strategic response to noncommunicable diseases. Geneva: World Health Organization",
@@ -211,6 +226,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app1-06",
     "app": 1,
     "num": 6,
@@ -232,7 +249,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2018
+    "year": 2018,
+    "dataYear": null
   },
   {
     "reference": "Owen L, Morgan A, Fischer A, Ellis S, Hoy A, Kelly MP (2012). The cost-effectiveness of public health interventions. Journal of Public Health 34(1):37-45",
@@ -249,6 +267,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app1-07",
     "app": 1,
     "num": 7,
@@ -269,7 +289,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2012
+    "year": 2012,
+    "dataYear": null
   },
   {
     "reference": "Purdy S (2010). Avoiding hospital admissions: what does the research evidence say? London: The King's Fund",
@@ -286,6 +307,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app1-08",
     "app": 1,
     "num": 8,
@@ -304,7 +327,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2010
+    "year": 2010,
+    "dataYear": null
   },
   {
     "reference": "Organisation for Economic Co-operation and Development (2023). Health at a Glance 2023: OECD Indicators. Paris: OECD Publishing",
@@ -321,6 +345,8 @@
     "scale": "38 member countries plus selected partners",
     "keyAttributes": "",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2019 to 2022, mostly 2021",
     "id": "app1-09",
     "app": 1,
     "num": 9,
@@ -344,7 +370,8 @@
         "url": "https://data-explorer.oecd.org"
       }
     ],
-    "year": 2023
+    "year": 2023,
+    "dataYear": 2022
   },
   {
     "reference": "Harriss LR, Thompson F, Lawson K, O'Loughlin M, McDermott R (2019). Preventable hospitalisations in regional Queensland: potential for primary health? Australian Health Review 43(4):371-381",
@@ -361,6 +388,8 @@
     "scale": "Demographic data and clinical information on all admitted patients separated from both public and licensed private hospitals and private day surgeries in Queensland",
     "keyAttributes": "",
     "access": "Restricted - application",
+    "applicationFee": "Not yet assessed",
+    "dataYears": "2012-13 to 2013-14",
     "id": "app1-10",
     "app": 1,
     "num": 10,
@@ -384,7 +413,8 @@
         "url": "https://www.health.qld.gov.au/dsb/collections/qhapdc"
       }
     ],
-    "year": 2019
+    "year": 2019,
+    "dataYear": 2014
   },
   {
     "reference": "Joint Regional Needs Assessments, Queensland (series). Produced jointly by each Primary Health Network and its Hospital and Health Service, 2025-2027 cycle",
@@ -401,6 +431,8 @@
     "scale": "One report per Primary Health Network catchment; Brisbane South covers 23 per cent of Queensland's population",
     "keyAttributes": "Priority health needs per region, with the source of each figure named",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app1-11",
     "app": 1,
     "num": 11,
@@ -434,7 +466,8 @@
         "url": "https://metronorth.health.qld.gov.au/wp-content/uploads/2025/05/jrna-summary-25-27.pdf"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": null
   },
   {
     "reference": "Department of Health (2025). Health Indicators 2025: Snapshot series I. Population profiles. Metro South Health, Brisbane",
@@ -451,6 +484,8 @@
     "scale": "1.31 million residents, 23 per cent of Queensland, across 20 Statistical Area Level 3s and 116 Statistical Area Level 2s",
     "keyAttributes": "Population and demographic profile per area, with Queensland figures alongside for comparison",
     "access": "Public (aggregate only)",
+    "applicationFee": "Not applicable",
+    "dataYears": "2021 Census and later population estimates",
     "id": "app1-12",
     "app": 1,
     "num": 12,
@@ -472,7 +507,8 @@
       "Australia"
     ],
     "dataLinks": [],
-    "year": 2025
+    "year": 2025,
+    "dataYear": 2021
   },
   {
     "reference": "Sallis JF, Cerin E, Conway TL, Adams MA, Frank LD, Pratt M, et al. (2016). Physical activity in relation to urban environments in 14 cities worldwide: a cross-sectional study. The Lancet 387:2207-2217",
@@ -489,6 +525,8 @@
     "scale": "6,822 adults, aged 18 to 66",
     "keyAttributes": "Per person: measured activity, age, sex, education. Per neighbourhood: density, street connectivity, transport stops, parks",
     "access": "Not yet assessed",
+    "applicationFee": "Not yet assessed",
+    "dataYears": "Not yet assessed",
     "id": "app2-01",
     "app": 2,
     "num": 1,
@@ -515,7 +553,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2016
+    "year": 2016,
+    "dataYear": null
   },
   {
     "reference": "Astell-Burt T, Feng X (2019). Urban green space, tree canopy and prevention of cardiometabolic diseases: a multilevel longitudinal study of 46,786 Australians. International Journal of Epidemiology 49(3):926-933",
@@ -532,6 +571,8 @@
     "scale": "46,786 adults followed over roughly six years",
     "keyAttributes": "Tree canopy share, grass share, and incident heart disease, hypertension and diabetes per person",
     "access": "Restricted - application",
+    "applicationFee": "Fee required",
+    "dataYears": "2006 to 2015",
     "id": "app2-02",
     "app": 2,
     "num": 2,
@@ -556,7 +597,8 @@
       "Australia"
     ],
     "dataLinks": [],
-    "year": 2019
+    "year": 2019,
+    "dataYear": 2015
   },
   {
     "reference": "Alderton A, O'Connor M, Badland H, Gunn L, Boulange C, Villanueva K (2022). Access to and quality of neighbourhood public open space and children's mental health outcomes: evidence from population linked data across eight Australian capital cities. International Journal of Environmental Research and Public Health 19(11):6780",
@@ -573,6 +615,8 @@
     "scale": "Children in their first year of full-time school, across eight capital cities",
     "keyAttributes": "Open space distance and size, child development domain scores, area disadvantage",
     "access": "Public (aggregate only)",
+    "applicationFee": "Not yet assessed",
+    "dataYears": "2015 (Early Development Census)",
     "id": "app2-03",
     "app": 2,
     "num": 3,
@@ -596,7 +640,8 @@
       "Australia"
     ],
     "dataLinks": [],
-    "year": 2022
+    "year": 2022,
+    "dataYear": 2015
   },
   {
     "reference": "Needham C, Allender S, Blake MR, Horta A (2025). The influence of access to healthy food retail on BMI: implications for obesity prevention policy at the local government level. Health & Place 95:103521",
@@ -613,6 +658,8 @@
     "scale": "Australian local government areas",
     "keyAttributes": "Food outlet counts by type per area, body mass index, area disadvantage",
     "access": "Not yet assessed",
+    "applicationFee": "Not yet assessed",
+    "dataYears": "Not yet assessed",
     "id": "app2-04",
     "app": 2,
     "num": 4,
@@ -637,7 +684,8 @@
       "Australia"
     ],
     "dataLinks": [],
-    "year": 2025
+    "year": 2025,
+    "dataYear": null
   },
   {
     "reference": "Sacks G, Kwon J, Vandevijvere S, Swinburn B (2021). Benchmarking as a public health strategy for creating healthy food environments: an evaluation of the INFORMAS initiative (2012-2020). Annual Review of Public Health 42:345-362",
@@ -654,6 +702,8 @@
     "scale": "A global network covering many countries",
     "keyAttributes": "Policy domains scored against international best practice",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app2-05",
     "app": 2,
     "num": 5,
@@ -676,7 +726,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2021
+    "year": 2021,
+    "dataYear": null
   },
   {
     "reference": "Department of Transport and Main Roads. Queensland Household Travel Survey series. Brisbane: Queensland Government",
@@ -693,6 +744,8 @@
     "scale": "Randomly sampled Queensland households, pooled across three-year windows",
     "keyAttributes": "One record per trip: mode, purpose, origin and destination zone, start time, distance, duration, plus household characteristics",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2017 to 2024-25, pooled in three-year windows",
     "id": "app2-06",
     "app": 2,
     "num": 6,
@@ -722,7 +775,8 @@
         "url": "https://www.data.qld.gov.au/dataset/queensland-household-travel-survey-series"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": 2025
   },
   {
     "reference": "Queensland Government. Queensland Globe and the Queensland Spatial Catalogue. Brisbane: Department of Resources",
@@ -739,6 +793,8 @@
     "scale": "All of Queensland",
     "keyAttributes": "Spatial layers: land use, tenure, vegetation, protected areas, transport, addresses",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "Varies by layer",
     "id": "app2-07",
     "app": 2,
     "num": 7,
@@ -769,7 +825,8 @@
         "url": "https://qldglobe.information.qld.gov.au/"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": null
   },
   {
     "reference": "Queensland Government. Queensland Government Open Data Portal. Brisbane: Queensland Government",
@@ -786,6 +843,8 @@
     "scale": "All of Queensland",
     "keyAttributes": "Varies by dataset",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "Varies by dataset",
     "id": "app2-08",
     "app": 2,
     "num": 8,
@@ -812,7 +871,8 @@
         "url": "https://www.data.qld.gov.au/"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": null
   },
   {
     "reference": "Australian Bureau of Statistics. General Social Survey, Australia. Canberra: Australian Bureau of Statistics",
@@ -829,6 +889,8 @@
     "scale": "A national household sample, run every few years",
     "keyAttributes": "Social support, loneliness, volunteering, trust, community involvement, by age, sex and state",
     "access": "Public (aggregate only)",
+    "applicationFee": "Fee required",
+    "dataYears": "2025 survey",
     "id": "app2-09",
     "app": 2,
     "num": 9,
@@ -862,7 +924,8 @@
         "url": "https://www.abs.gov.au/statistics/people/people-and-communities/general-social-survey-summary-results-australia/latest-release"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": 2025
   },
   {
     "reference": "Australian Early Development Census. Canberra: Australian Government Department of Education",
@@ -879,6 +942,8 @@
     "scale": "Every child in their first year of full-time school, every three years since 2009",
     "keyAttributes": "Percentage developmentally vulnerable per domain, per area, over successive cycles",
     "access": "Public (aggregate only)",
+    "applicationFee": "Not yet assessed",
+    "dataYears": "2009 to 2024, every three years",
     "id": "app2-10",
     "app": 2,
     "num": 10,
@@ -910,7 +975,8 @@
         "url": "https://www.aedc.gov.au/data"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": 2024
   },
   {
     "reference": "Australian Bureau of Statistics. National Health Survey. Canberra: Australian Bureau of Statistics",
@@ -927,6 +993,8 @@
     "scale": "A national household sample, run every few years",
     "keyAttributes": "Condition prevalence, measured body mass index, activity, diet, smoking and distress, by age, sex and state",
     "access": "Public (aggregate only)",
+    "applicationFee": "Fee required",
+    "dataYears": "2022 survey",
     "id": "app3-01",
     "app": 3,
     "num": 1,
@@ -962,7 +1030,8 @@
         "url": "https://www.abs.gov.au/statistics/health/health-conditions-and-risks/national-health-survey/latest-release"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": 2022
   },
   {
     "reference": "Milat AJ, Bauman A, Redman S (2015). Narrative review of models and success factors for scaling up public health interventions. Implementation Science 10:113",
@@ -979,6 +1048,8 @@
     "scale": "A review of the published evidence",
     "keyAttributes": "Not applicable",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app3-02",
     "app": 3,
     "num": 2,
@@ -998,7 +1069,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2015
+    "year": 2015,
+    "dataYear": null
   },
   {
     "reference": "Glasgow RE, Vogt TM, Boles SM (1999). Evaluating the public health impact of health promotion interventions: the RE-AIM framework. American Journal of Public Health 89(9):1322-1327",
@@ -1015,6 +1087,8 @@
     "scale": "Applies to a single program",
     "keyAttributes": "Not applicable",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app3-03",
     "app": 3,
     "num": 3,
@@ -1035,7 +1109,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 1999
+    "year": 1999,
+    "dataYear": null
   },
   {
     "reference": "Smith JL, Reece LJ, Rose CL, Owen KB (2022). Improving access to public physical activity events for disadvantaged communities in Australia. BMC Public Health 22:1542",
@@ -1052,6 +1127,8 @@
     "scale": "The whole Australian population measured against 403 existing events. 63 per cent live within 5 kilometres of one; the most disadvantaged fifth average 27 kilometres away against 7 for the least.",
     "keyAttributes": "Per area: population, disadvantage group, and distance to the nearest event",
     "access": "Public (aggregate only)",
+    "applicationFee": "Not applicable",
+    "dataYears": "2016 Census areas, 2020 population, events at July 2021",
     "id": "app3-04",
     "app": 3,
     "num": 4,
@@ -1074,7 +1151,8 @@
       "Australia"
     ],
     "dataLinks": [],
-    "year": 2022
+    "year": 2022,
+    "dataYear": 2021
   },
   {
     "reference": "Australian Institute of Health and Welfare. Medicare-subsidised GP, allied health and specialist health care across local areas. Canberra: AIHW",
@@ -1091,6 +1169,8 @@
     "scale": "All Medicare non-hospital services nationally, updated annually",
     "keyAttributes": "Service group, area, services per 100 people, patients, bulk billing and out-of-pocket cost",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2017-18 to 2024-25",
     "id": "app3-05",
     "app": 3,
     "num": 5,
@@ -1117,11 +1197,12 @@
         "url": "https://www.aihw.gov.au/reports-data/health-welfare-services/primary-health-care/data"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": 2025
   },
   {
     "reference": "Australian Sports Commission. AusPlay survey. Canberra: Australian Sports Commission",
-    "link": "https://www.clearinghouseforsport.gov.au/research/ausplay",
+    "link": "https://www.ausport.gov.au/clearinghouse/research/ausplay",
     "sourceType": "Government survey data release",
     "country": "Australia",
     "task": "The national count of who plays sport and takes part in physical activity, and through what - a club, a gym, or on their own. It answers the participation half of the physical activity measures, which the preventive health survey does not break down by setting.",
@@ -1134,6 +1215,8 @@
     "scale": "A continuous national sample",
     "keyAttributes": "Activity type, frequency, setting, club membership, barriers, by age, sex and area",
     "access": "Public (aggregate only)",
+    "applicationFee": "Not yet assessed",
+    "dataYears": "2015 to 2025, continuous survey",
     "id": "app3-06",
     "app": 3,
     "num": 6,
@@ -1160,10 +1243,11 @@
     "dataLinks": [
       {
         "label": "",
-        "url": "https://www.clearinghouseforsport.gov.au/research/ausplay"
+        "url": "https://www.ausport.gov.au/clearinghouse/research/ausplay"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": 2025
   },
   {
     "reference": "CQUniversity Australia. 10,000 Steps program. Rockhampton: Physical Activity Research Group, CQUniversity",
@@ -1180,6 +1264,8 @@
     "scale": "A national participant base, run from Queensland since 2001",
     "keyAttributes": "Participant registrations, steps logged, workplace and team challenge records",
     "access": "Not yet assessed",
+    "applicationFee": "Not yet assessed",
+    "dataYears": "Not yet assessed",
     "id": "app3-07",
     "app": 3,
     "num": 7,
@@ -1208,7 +1294,8 @@
         "url": "https://www.10000steps.org.au/"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": null
   },
   {
     "reference": "Baum F, Lawless A, Delany T, Macdougall C, Williams C, Broderick D, et al. (2014). Evaluation of Health in All Policies: concept, theory and application. Health Promotion International 29(suppl 1):i130-i142",
@@ -1225,6 +1312,8 @@
     "scale": "One state's whole-of-government program",
     "keyAttributes": "Not applicable",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app4-01",
     "app": 4,
     "num": 1,
@@ -1245,7 +1334,8 @@
       "Australia"
     ],
     "dataLinks": [],
-    "year": 2014
+    "year": 2014,
+    "dataYear": null
   },
   {
     "reference": "Corbin JH, Jones J, Barry MM (2016). What makes intersectoral partnerships for health promotion work? A review of the international literature. Health Promotion International 33(1):4-26",
@@ -1262,6 +1352,8 @@
     "scale": "An international review",
     "keyAttributes": "Not applicable",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app4-02",
     "app": 4,
     "num": 2,
@@ -1282,7 +1374,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2016
+    "year": 2016,
+    "dataYear": null
   },
   {
     "reference": "Alderwick H, Hutchings A, Mays N (2024). Cross-sector collaboration to reduce health inequalities: a qualitative study of local collaboration between health care, social services, and other sectors under health system reforms in England. BMC Public Health 24:2613",
@@ -1299,6 +1392,8 @@
     "scale": "Local systems across England",
     "keyAttributes": "Not applicable",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app4-03",
     "app": 4,
     "num": 3,
@@ -1321,7 +1416,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2024
+    "year": 2024,
+    "dataYear": null
   },
   {
     "reference": "Australian Bureau of Statistics. Person Level Integrated Data Asset (PLIDA). Canberra: Australian Bureau of Statistics",
@@ -1338,6 +1434,8 @@
     "scale": "The Australian population, linked across collections",
     "keyAttributes": "Linked person records across health, income, education and welfare",
     "access": "Restricted - application",
+    "applicationFee": "Fee required",
+    "dataYears": "Varies by collection",
     "id": "app4-04",
     "app": 4,
     "num": 4,
@@ -1364,7 +1462,8 @@
         "url": "https://www.abs.gov.au/about/data-services/data-integration/integrated-data/person-level-integrated-data-asset-plida"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": null
   },
   {
     "reference": "Australian Bureau of Statistics. The Five Safes framework. Canberra: Australian Bureau of Statistics",
@@ -1381,6 +1480,8 @@
     "scale": "Applies to any data-sharing request",
     "keyAttributes": "Not applicable",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app4-05",
     "app": 4,
     "num": 5,
@@ -1398,7 +1499,8 @@
       "Australia"
     ],
     "dataLinks": [],
-    "year": null
+    "year": null,
+    "dataYear": null
   },
   {
     "reference": "Office of the National Data Commissioner. The Data Availability and Transparency scheme. Canberra: Australian Government",
@@ -1415,6 +1517,8 @@
     "scale": "Commonwealth data sharing",
     "keyAttributes": "Not applicable",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app4-06",
     "app": 4,
     "num": 6,
@@ -1437,7 +1541,8 @@
         "url": "https://www.datacommissioner.gov.au/"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": null
   },
   {
     "reference": "Australian Institute of Health and Welfare. AIHW data by geography. Canberra: AIHW",
@@ -1454,6 +1559,8 @@
     "scale": "National collections",
     "keyAttributes": "Collection name against available geographic levels",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app4-07",
     "app": 4,
     "num": 7,
@@ -1482,7 +1589,8 @@
         "url": "https://www.aihw.gov.au/about-our-data/aihw-data-by-geography"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": null
   },
   {
     "reference": "World Health Organization (2013). Handbook on health inequality monitoring: with a special focus on low- and middle-income countries. Geneva: World Health Organization",
@@ -1499,6 +1607,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app5-01",
     "app": 5,
     "num": 1,
@@ -1518,7 +1628,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2013
+    "year": 2013,
+    "dataYear": null
   },
   {
     "reference": "Marmot M, Allen J, Boyce T, Goldblatt P, Morrison J (2020). Health Equity in England: The Marmot Review 10 Years On. London: Institute of Health Equity / The Health Foundation",
@@ -1535,6 +1646,8 @@
     "scale": "England (2010 to about 2018-19)",
     "keyAttributes": "Deprivation files: rank and decile per neighbourhood",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2010 to 2018-19",
     "id": "app5-02",
     "app": 5,
     "num": 2,
@@ -1564,7 +1677,8 @@
         "url": "https://deprivation.communities.gov.uk/download-all"
       }
     ],
-    "year": 2020
+    "year": 2020,
+    "dataYear": 2019
   },
   {
     "reference": "Flavel J, Kedzior SGE, Isaac V, Cameron D, Baum F (2024). Regional health inequalities in Australia and social determinants of health: analysis of trends and distribution by remoteness. Rural and Remote Health 24:7726",
@@ -1581,6 +1695,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Not yet assessed",
+    "applicationFee": "Not yet assessed",
+    "dataYears": "1986 to 2018",
     "id": "app5-03",
     "app": 5,
     "num": 3,
@@ -1602,7 +1718,8 @@
       "Australia"
     ],
     "dataLinks": [],
-    "year": 2024
+    "year": 2024,
+    "dataYear": 2018
   },
   {
     "reference": "Australian Commission on Safety and Quality in Health Care and Australian Institute of Health and Welfare (2021). The Fourth Australian Atlas of Healthcare Variation. Sydney: Australian Commission on Safety and Quality in Health Care. ISBN 978-1-922563-06-4",
@@ -1619,6 +1736,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Public (aggregate only)",
+    "applicationFee": "Not applicable",
+    "dataYears": "2014-15 to 2018-19",
     "id": "app5-04",
     "app": 5,
     "num": 4,
@@ -1641,7 +1760,8 @@
       "Australia"
     ],
     "dataLinks": [],
-    "year": 2021
+    "year": 2021,
+    "dataYear": 2019
   },
   {
     "reference": "Canadian Institute for Health Information (2018). In Pursuit of Health Equity: Defining Stratifiers for Measuring Health Inequality - A Focus on Age, Sex, Gender, Income, Education and Geographic Location. Ottawa: Canadian Institute for Health Information",
@@ -1658,6 +1778,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app5-05",
     "app": 5,
     "num": 5,
@@ -1678,7 +1800,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2018
+    "year": 2018,
+    "dataYear": null
   },
   {
     "reference": "Flanagan BE, Gregory EW, Hallisey EJ, Heitgerd JL, Lewis B (2011). A Social Vulnerability Index for Disaster Management. Journal of Homeland Security and Emergency Management 8(1), Article 3",
@@ -1695,6 +1818,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2000 Census in the paper; the index is published to 2022",
     "id": "app5-06",
     "app": 5,
     "num": 6,
@@ -1720,7 +1845,8 @@
         "url": "https://www.atsdr.cdc.gov/place-health/php/svi/svi-data-documentation-download.html"
       }
     ],
-    "year": 2011
+    "year": 2011,
+    "dataYear": 2022
   },
   {
     "reference": "Atkinson J, Salmond C, Crampton P, Viggers H, Lacey K (2024). NZDep2023 Index of Socioeconomic Deprivation: Research Report. Wellington: University of Otago",
@@ -1737,6 +1863,8 @@
     "scale": "~32,000 small areas covering all of New Zealand, generally 100-200 residents each",
     "keyAttributes": "Nine census variables (income, employment, communication, support, qualifications, home ownership, space, damp housing), combined into one score reported as deciles 1-10",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2023 Census",
     "id": "app5-07",
     "app": 5,
     "num": 7,
@@ -1762,7 +1890,8 @@
         "url": "https://www.otago.ac.nz/wellington/research/groups/research-groups-in-the-department-of-public-health/hirp/socioeconomic-deprivation-indexes"
       }
     ],
-    "year": 2024
+    "year": 2024,
+    "dataYear": 2023
   },
   {
     "reference": "Maiam nayri Wingara Indigenous Data Sovereignty Collective and Australian Indigenous Governance Institute (2018). Indigenous Data Sovereignty Communique, Indigenous Data Sovereignty Summit, 20 June 2018, Canberra",
@@ -1779,6 +1908,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app5-08",
     "app": 5,
     "num": 8,
@@ -1799,7 +1930,8 @@
       "Australia"
     ],
     "dataLinks": [],
-    "year": 2018
+    "year": 2018,
+    "dataYear": null
   },
   {
     "reference": "Public Health Information Development Unit (PHIDU). Social Health Atlas of Australia. Adelaide: Torrens University Australia",
@@ -1816,6 +1948,8 @@
     "scale": "All of Australia at small-area level",
     "keyAttributes": "One row per area, one column per indicator, with the Australian rate alongside for comparison",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "Varies by indicator",
     "id": "app5-09",
     "app": 5,
     "num": 9,
@@ -1845,7 +1979,8 @@
         "url": "https://phidu.torrens.edu.au/social-health-atlases/data"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": null
   },
   {
     "reference": "Australian Bureau of Statistics (2023). Socio-Economic Indexes for Areas (SEIFA), Australia, 2021. Canberra: Australian Bureau of Statistics",
@@ -1862,6 +1997,8 @@
     "scale": "Every area in Australia, rebuilt after each census",
     "keyAttributes": "Index score, national and state rank, decile and quintile per area",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2021 Census",
     "id": "app5-10",
     "app": 5,
     "num": 10,
@@ -1890,7 +2027,242 @@
         "url": "https://www.abs.gov.au/statistics/people/people-and-communities/socio-economic-indexes-areas-seifa-australia/2021"
       }
     ],
-    "year": 2023
+    "year": 2023,
+    "dataYear": 2021
+  },
+  {
+    "reference": "Australian Longitudinal Study on Women's Health (ALSWH). Universities of Newcastle and Queensland, funded by the Australian Government Department of Health, Disability and Ageing (ongoing since 1996)",
+    "link": "https://alswh.org.au/",
+    "sourceType": "Academic longitudinal survey dataset",
+    "country": "Australia",
+    "task": "Follows four cohorts of Australian women, born 1921-26, 1946-51, 1973-78 and 1989-95, with a survey about every three years, to see how health and its causes change across a lifetime and differ between groups. One dataset behind many papers, rather than a single study.",
+    "metrics": "Self-reported health, health behaviours, use of services, reproductive and social circumstances, followed over time",
+    "geoLevel": "Individual respondents nationally; area of residence held by the study rather than published",
+    "inputData": "Postal and online surveys of more than 57,000 women, with consent to link Medicare, hospital and other administrative records",
+    "output": "Survey datasets by cohort and wave, plus linked administrative data on application",
+    "dataSources": "The study's own surveys; linked Medicare, Pharmaceutical Benefits and state hospital records for approved projects",
+    "accessNote": "Application to the ALSWH Data Access Committee. No charge for a data request; a project using linked data from outside Brisbane or Newcastle should budget for travel or remote access. Commercial use is not permitted.",
+    "scale": "Over 57,000 women in four cohorts. First surveys in 1996: 14,247 (1973-78), 13,714 (1946-51), about 12,500 (1921-26); the 1989-95 cohort recruited 17,009 in 2013",
+    "keyAttributes": "Latest completed surveys: 1946-51 cohort survey 10 in 2022 (7,159 responses), 1989-95 cohort survey 7 in 2023 (6,335), 1973-78 cohort survey 10 in 2024 (5,789)",
+    "access": "Restricted - application",
+    "applicationFee": "No fee",
+    "dataYears": "1996 to 2024",
+    "id": "app5-11",
+    "app": 5,
+    "num": 11,
+    "topics": [
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Individual",
+      "National"
+    ],
+    "domains": [
+      "Equity"
+    ],
+    "indicators": [],
+    "sourceGroup": "Published dataset",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "Applying for data",
+        "url": "https://alswh.org.au/for-data-users/applying-for-data/"
+      }
+    ],
+    "year": null,
+    "dataYear": 2024
+  },
+  {
+    "reference": "Household, Income and Labour Dynamics in Australia (HILDA) Survey. Melbourne Institute of Applied Economic and Social Research, University of Melbourne, for the Department of Social Services (ongoing since 2001)",
+    "link": "https://melbourneinstitute.unimelb.edu.au/hilda",
+    "sourceType": "Government longitudinal survey dataset",
+    "country": "Australia",
+    "task": "A household panel that interviews every member aged 15 and over of the same households each year, so income, work, family and health can be followed for the same people across two decades.",
+    "metrics": "Income, employment, housing, family circumstances, and health including the SF-36 health survey and the K10 psychological distress scale",
+    "geoLevel": "Individual and household, nationally; finer area detail only in the restricted release",
+    "inputData": "Annual interviews and self-completion questionnaires with about 17,000 people in a nationally representative household sample",
+    "output": "A general release and a restricted release, each covering every wave to date",
+    "dataSources": "The survey itself",
+    "accessNote": "Application through the Australian Data Archive, with a signed undertaking. No cost. Restricted release needs a further application.",
+    "scale": "About 17,000 respondents a year; 23 waves, 2001 to 2023, in release 23",
+    "keyAttributes": "One row per person per wave, linkable across waves; household and family identifiers",
+    "access": "Restricted - application",
+    "applicationFee": "No fee",
+    "dataYears": "2001 to 2023, annual",
+    "id": "app5-12",
+    "app": 5,
+    "num": 12,
+    "topics": [
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Individual",
+      "National"
+    ],
+    "domains": [
+      "Mental Wellbeing",
+      "Prosperity & Productivity",
+      "Equity"
+    ],
+    "indicators": [
+      "Psychological distress",
+      "Self-rated health"
+    ],
+    "sourceGroup": "Published dataset",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "ADA dataverse",
+        "url": "https://dataverse.ada.edu.au/dataverse/hilda"
+      }
+    ],
+    "year": null,
+    "dataYear": 2023
+  },
+  {
+    "reference": "Growing Up in Australia: the Longitudinal Study of Australian Children (LSAC). Department of Social Services with the Australian Institute of Family Studies (ongoing since 2004)",
+    "link": "https://aifs.gov.au/growing-australia",
+    "sourceType": "Government longitudinal survey dataset",
+    "country": "Australia",
+    "task": "Follows two cohorts of children recruited in 2004, one from infancy and one from age four to five, through childhood into adulthood, to show how early circumstances shape later health and wellbeing.",
+    "metrics": "Child development, physical and mental health, education, family and neighbourhood circumstances",
+    "geoLevel": "Individual children nationally",
+    "inputData": "Interviews and questionnaires with parents, teachers and the children themselves every two years, plus a one-off physical health assessment at ages 11 to 12",
+    "output": "Wave-by-wave datasets for both cohorts, ten main waves by 2024",
+    "dataSources": "The study itself; linked administrative data for approved projects",
+    "accessNote": "Application through the Australian Data Archive with a project description and a deed of confidentiality. No cost.",
+    "scale": "Two cohorts recruited in 2004: 5,107 infants and a kindergarten cohort aged four to five; ten waves, the latest collected in 2023",
+    "keyAttributes": "One row per child per wave with parent, teacher and child reports",
+    "access": "Restricted - application",
+    "applicationFee": "No fee",
+    "dataYears": "2004 to 2023, ten waves",
+    "id": "app5-13",
+    "app": 5,
+    "num": 13,
+    "topics": [
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Individual",
+      "National"
+    ],
+    "domains": [
+      "Mental Wellbeing",
+      "Equity"
+    ],
+    "indicators": [],
+    "sourceGroup": "Published dataset",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "ADA dataverse",
+        "url": "https://dataverse.ada.edu.au/dataverse/lsac"
+      }
+    ],
+    "year": null,
+    "dataYear": 2023
+  },
+  {
+    "reference": "Footprints in Time: the Longitudinal Study of Indigenous Children (LSIC). Department of Social Services (ongoing since 2008)",
+    "link": "https://footprintsintime.com.au/",
+    "sourceType": "Government longitudinal survey dataset",
+    "country": "Australia",
+    "task": "Follows about 1,700 Aboriginal and Torres Strait Islander children and their families from 2008, across urban, regional and remote areas, to learn what helps children grow up strong.",
+    "metrics": "Child health and development, social and emotional wellbeing, culture and connection to Country, family and community circumstances",
+    "geoLevel": "Individual children in eleven sites chosen to span urban, regional and remote Australia",
+    "inputData": "Annual interviews with the child's main carer and, as they grow, the children themselves, by Indigenous interviewers",
+    "output": "Annual waves; wave 17 collected in 2024, with published releases some waves behind collection",
+    "dataSources": "The study itself",
+    "accessNote": "Application through the Australian Data Archive with a signed undertaking. No cost. Use is bound by the study's Indigenous data protocols, including consultation on publication.",
+    "scale": "Two age groups recruited in 2008, aged 6 to 18 months and 3.5 to 5 years; about 1,700 children",
+    "keyAttributes": "One row per child per wave; site and remoteness of residence",
+    "access": "Restricted - application",
+    "applicationFee": "No fee",
+    "dataYears": "2008 to 2024, annual",
+    "id": "app5-14",
+    "app": 5,
+    "num": 14,
+    "topics": [
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Individual",
+      "Remoteness",
+      "National"
+    ],
+    "domains": [
+      "Social",
+      "Equity"
+    ],
+    "indicators": [],
+    "sourceGroup": "Published dataset",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "DSS study page",
+        "url": "https://www.dss.gov.au/long-term-research/footprints-time-longitudinal-study-indigenous-children"
+      }
+    ],
+    "year": null,
+    "dataYear": 2024
+  },
+  {
+    "reference": "Building a New Life in Australia (BNLA): the Longitudinal Study of Humanitarian Migrants. Department of Social Services with the Australian Institute of Family Studies, 2013 to 2023",
+    "link": "https://www.dss.gov.au/long-term-research/building-new-life-australia-longitudinal-study-humanitarian-migrants",
+    "sourceType": "Government longitudinal survey dataset",
+    "country": "Australia",
+    "task": "Follows humanitarian migrants who arrived or were granted permanent visas in 2013, to see what helps or hinders settlement, including physical and mental health.",
+    "metrics": "Settlement, housing, employment, English, health and mental health including post-traumatic stress",
+    "geoLevel": "Individual and household, nationally",
+    "inputData": "Interviews with 2,399 adults from 1,509 migrating units in wave 1, face to face and by telephone, in the respondent's own language where needed",
+    "output": "Six waves of data: five annual waves 2013-14 to 2018, then a sixth in 2023",
+    "dataSources": "The study itself",
+    "accessNote": "Application through the Australian Data Archive with a signed undertaking. No cost.",
+    "scale": "2,399 respondents in wave 1 (October 2013 to March 2014); 1,223 in wave 6 (January to July 2023)",
+    "keyAttributes": "One row per person per wave; adult, youth and child questionnaires",
+    "access": "Restricted - application",
+    "applicationFee": "No fee",
+    "dataYears": "2013-14 to 2023, six waves",
+    "id": "app5-15",
+    "app": 5,
+    "num": 15,
+    "topics": [
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Individual",
+      "National"
+    ],
+    "domains": [
+      "Mental Wellbeing",
+      "Equity"
+    ],
+    "indicators": [],
+    "sourceGroup": "Published dataset",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "ADA release 6",
+        "url": "https://ada.edu.au/building-a-new-life-in-australia-the-longitudinal-study-of-humanitarian-migrants-release-6-waves-1-6/"
+      }
+    ],
+    "year": null,
+    "dataYear": 2023
   },
   {
     "reference": "Higgs C, Badland H, Simons K, Knibbs LD, Giles-Corti B (2019). The Urban Liveability Index: developing a policy-relevant urban liveability composite measure and evaluating associations with transport mode choice. International Journal of Health Geographics 18:14",
@@ -1907,6 +2279,8 @@
     "scale": "The survey is conducted throughout the year across greater Melbourne, and periodically in Geelong and other key regional centres. Over 32,000 households contributed to this survey since 2012",
     "keyAttributes": "Travel survey comes as six linked files: households, persons, trips, stops, journey to work, journey to education",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2011 Census and the 2012 to 2014 Victorian travel survey",
     "id": "app6-01",
     "app": 6,
     "num": 1,
@@ -1943,7 +2317,8 @@
         "url": "https://opendata.transport.vic.gov.au/dataset/victorian-integrated-survey-of-travel-and-activity-vista"
       }
     ],
-    "year": 2019
+    "year": 2019,
+    "dataYear": 2014
   },
   {
     "reference": "Higgs C, Lowe M, Hooper P, Mavoa S, Arundel J, Gunn L, Simons K, Giles-Corti B (2023). Policy relevant health related liveability indicator datasets for addresses in Australia's 21 largest cities. Scientific Data 10:113",
@@ -1960,6 +2335,8 @@
     "scale": "Residential address points across Australia's 21 largest cities",
     "keyAttributes": "",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2018, built on the 2016 Census",
     "id": "app6-02",
     "app": 6,
     "num": 2,
@@ -1997,7 +2374,8 @@
         "url": "https://doi.org/10.25439/rmt.15001230"
       }
     ],
-    "year": 2023
+    "year": 2023,
+    "dataYear": 2018
   },
   {
     "reference": "Giles-Corti B, Vernez-Moudon A, Reis R, Turrell G, Dannenberg AL, Badland H, Foster S, Lowe M, Sallis JF, Stevenson M, Owen N (2016). City planning and population health: a global challenge. The Lancet 388:2912-2924",
@@ -2014,6 +2392,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app6-03",
     "app": 6,
     "num": 3,
@@ -2034,7 +2414,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2016
+    "year": 2016,
+    "dataYear": null
   },
   {
     "reference": "Boeing G, Higgs C, Liu S, Giles-Corti B, Sallis JF, Cerin E, et al. (2022). Using open data and open-source software to develop spatial indicators of urban design and transport features for achieving healthy and sustainable cities. Lancet Global Health 10(6):e907-e918",
@@ -2051,6 +2432,8 @@
     "scale": "25 diverse cities in 19 countrie",
     "keyAttributes": "Population and street density, street connectivity, walkability, and distance to fresh food, shops, public transport and open space",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2015 population and urban boundaries; map extract date in the appendix",
     "id": "app6-04",
     "app": 6,
     "num": 4,
@@ -2089,7 +2472,8 @@
         "url": "https://github.com/healthysustainablecities/global-indicators"
       }
     ],
-    "year": 2022
+    "year": 2022,
+    "dataYear": 2015
   },
   {
     "reference": "Lowe M, Whitzman C, Badland H, Davern M, Aye L, Hes D, Butterworth I, Giles-Corti B (2015). Planning Healthy, Liveable and Sustainable Cities: How Can Indicators Inform Policy? Urban Policy and Research 33(2):131-144",
@@ -2106,6 +2490,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app6-05",
     "app": 6,
     "num": 5,
@@ -2123,7 +2509,8 @@
       "Australia"
     ],
     "dataLinks": [],
-    "year": 2015
+    "year": 2015,
+    "dataYear": null
   },
   {
     "reference": "Gourevitch MN, Athens JK, Levine SE, Kleiman N, Thorpe LE (2019). City-Level Measures of Health, Health Determinants, and Equity to Foster Population Health Improvement: The City Health Dashboard. American Journal of Public Health 109(4):585-592",
@@ -2140,6 +2527,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Not yet assessed",
+    "applicationFee": "Not yet assessed",
+    "dataYears": "2011 to 2016, varies by measure",
     "id": "app6-06",
     "app": 6,
     "num": 6,
@@ -2159,7 +2548,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2019
+    "year": 2019,
+    "dataYear": 2016
   },
   {
     "reference": "Topp CW, Ostergaard SD, Sondergaard S, Bech P (2015). The WHO-5 Well-Being Index: A Systematic Review of the Literature. Psychotherapy and Psychosomatics 84(3):167-176",
@@ -2176,6 +2566,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app6-07",
     "app": 6,
     "num": 7,
@@ -2198,7 +2590,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2015
+    "year": 2015,
+    "dataYear": null
   },
   {
     "reference": "Lytle LA, Sokol RL (2017). Measures of the food environment: A systematic review of the field, 2007-2015. Health & Place 44:18-34",
@@ -2215,6 +2608,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app6-08",
     "app": 6,
     "num": 8,
@@ -2239,7 +2634,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2017
+    "year": 2017,
+    "dataYear": null
   },
   {
     "reference": "Organisation for Economic Co-operation and Development & European Commission Joint Research Centre (2008). Handbook on Constructing Composite Indicators: Methodology and User Guide. Paris: OECD Publishing",
@@ -2256,6 +2652,8 @@
     "scale": "",
     "keyAttributes": "",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app6-09",
     "app": 6,
     "num": 9,
@@ -2273,7 +2671,8 @@
       "International"
     ],
     "dataLinks": [],
-    "year": 2008
+    "year": 2008,
+    "dataYear": null
   },
   {
     "reference": "Queensland Health. Preventive health survey series and the Queensland survey analytic system (QSAS). Brisbane: Queensland Health (ongoing series)",
@@ -2290,6 +2689,8 @@
     "scale": "A statewide random sample, pooled over two years for regional reporting",
     "keyAttributes": "Region, age, sex and sociodemographic group, against each health indicator",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2009-10 to 2015-16 on the open data portal; later surveys to 2022 reported elsewhere",
     "id": "app6-10",
     "app": 6,
     "num": 10,
@@ -2329,7 +2730,8 @@
         "url": "https://public.tableau.com/app/profile/population.epidemiology/viz/QSAS_Regional_By_Region/Adult"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": 2022
   },
   {
     "reference": "Queensland Government Statistician's Office. Queensland regional profiles and the Queensland regional database. Brisbane: Queensland Treasury",
@@ -2346,6 +2748,8 @@
     "scale": "All of Queensland, down to suburb-sized areas",
     "keyAttributes": "Demographic, social and economic characteristics per region",
     "access": "Public (aggregate only)",
+    "applicationFee": "Not applicable",
+    "dataYears": "Varies by dataset",
     "id": "app6-11",
     "app": 6,
     "num": 11,
@@ -2376,7 +2780,8 @@
         "url": "https://www.qgso.qld.gov.au/statistics/queensland-regions/regional-tools-statistics/queensland-regional-database"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": null
   },
   {
     "reference": "Australian Urban Observatory. Liveability indicators for Australian cities. Melbourne: RMIT University Centre for Urban Research",
@@ -2393,6 +2798,8 @@
     "scale": "21 Australian cities",
     "keyAttributes": "A score per liveability domain for each small area",
     "access": "Restricted - application",
+    "applicationFee": "Fee required",
+    "dataYears": "2018 (the national liveability datasets it maps)",
     "id": "app6-12",
     "app": 6,
     "num": 12,
@@ -2425,7 +2832,8 @@
         "url": "https://auo.org.au/measure/"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": 2018
   },
   {
     "reference": "Global Observatory of Healthy and Sustainable Cities. 1000 Cities Challenge. Melbourne: RMIT University",
@@ -2442,6 +2850,8 @@
     "scale": "Around 80 cities across six continents, several of them Australian. Not every listed city has a published report yet.",
     "keyAttributes": "Spatial and policy indicators per city",
     "access": "Not yet assessed",
+    "applicationFee": "Not yet assessed",
+    "dataYears": "Not yet assessed",
     "id": "app6-13",
     "app": 6,
     "num": 13,
@@ -2475,7 +2885,8 @@
         "url": "https://www.healthysustainablecities.org/"
       }
     ],
-    "year": null
+    "year": null,
+    "dataYear": null
   },
   {
     "reference": "Centre of Research Excellence in Healthy Liveable Communities. Urban Liveability Checklist. Melbourne: RMIT University Centre for Urban Research",
@@ -2492,6 +2903,8 @@
     "scale": "One site or neighbourhood at a time",
     "keyAttributes": "Not applicable",
     "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
     "id": "app6-14",
     "app": 6,
     "num": 14,
@@ -2511,7 +2924,8 @@
       "Australia"
     ],
     "dataLinks": [],
-    "year": null
+    "year": null,
+    "dataYear": null
   },
   {
     "reference": "Australian Bureau of Statistics (2022). Census of Population and Housing, 2021. Canberra: Australian Bureau of Statistics",
@@ -2528,6 +2942,8 @@
     "scale": "Every household in Australia, every five years; 2021 is the latest",
     "keyAttributes": "Method of travel to work (MTWP), voluntary work (VOLWP), unpaid domestic work (DOMP), unpaid care (UNCAREP), long-term health conditions (LTHP)",
     "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2021 Census",
     "id": "app6-15",
     "app": 6,
     "num": 15,
@@ -2565,6 +2981,7 @@
         "url": "https://www.abs.gov.au/websitedbs/censushome.nsf/home/tablebuilder"
       }
     ],
-    "year": 2022
+    "year": 2022,
+    "dataYear": 2021
   }
 ]

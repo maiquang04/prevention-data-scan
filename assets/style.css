@@ -180,6 +180,12 @@ section { margin-bottom: 40px; }
   background: var(--tag-indicator-bg); border-color: var(--tag-indicator-bg);
   color: var(--tag-indicator-fg);
 }
+/* The fee sits right after the access badge it qualifies, in the badge's own
+   apply-for-access colours so the two read as one statement. The dollar sign is
+   drawn here rather than put in the text, so the harnesses that read the pill's
+   words see the vocabulary value and nothing else. */
+.tag--fee { background: #fff; border-color: var(--gate-fg); color: var(--gate-fg); font-weight: 600; }
+.tag--fee-required::before { content: "$ "; }
 
 /* LGA, PHN and HHS carry their full name on hover. The dotted underline is the only
    thing telling a reader there is anything to hover for, so it is set here rather
@@ -398,6 +404,7 @@ abbr[title] {
 .result__head:hover .result__ref { color: var(--accent); }
 .result__body { flex: 1; min-width: 0; }
 .result__ref { font-weight: 600; font-size: .95rem; display: block; margin-bottom: 4px; }
+.result__years { display: block; font-size: .8rem; color: var(--muted); margin-bottom: 4px; }
 .result__task { font-size: .87rem; color: var(--ink-soft); margin-bottom: 6px; }
 /* The badge, geography tags and source type. Same markup and same look in the
    browse list, the quadrant panels and the per-application list. */

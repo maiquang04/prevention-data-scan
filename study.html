@@ -6,7 +6,7 @@
 <!-- Draft: reachable by link, kept out of search results. Remove when it is finished. -->
 <meta name="robots" content="noindex">
 <title>Source - Prevention data observatory</title>
-<link rel="stylesheet" href="assets/style.css?v=4b03c46d">
+<link rel="stylesheet" href="assets/style.css?v=173255b2">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -36,7 +36,7 @@
   </div>
 </footer>
 
-<script src="assets/common.js?v=132ac9ae"></script>
+<script src="assets/common.js?v=4e9dbe37"></script>
 <script>
 (function () {
   "use strict";
@@ -106,8 +106,12 @@
             S.escapeHtml(t) + "</a>";
         }).join("")) +
         row(S.label("dataSources"), S.escapeHtml(study.dataSources)) +
-        row(S.label("access"), S.accessBadge(study.access) + " " +
-          S.escapeHtml(study.accessNote || S.accessMeaning[study.access] || "")) +
+        row(S.label("dataYears"), S.escapeHtml(S.dataYearsText(study))) +
+        row(S.label("access"), S.accessBadge(study.access) +
+          S.tagList(S.feeTags(study).map(S.feeLabel), S.feeTagClass(study)) + " " +
+          S.escapeHtml(study.accessNote || S.accessMeaning[study.access] || "") +
+          (S.feeTags(study).length
+            ? " " + S.escapeHtml(S.feeMeaning[study.applicationFee] || "") : "")) +
         row(S.label("sourceLinks"), links ? "<ul>" + links + "</ul>" : "") +
         row(S.label("scale"), S.escapeHtml(study.scale)) +
         row(S.label("keyAttributes"), S.escapeHtml(study.keyAttributes)) +

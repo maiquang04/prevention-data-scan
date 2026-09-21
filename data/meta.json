@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-05",
+  "generated": "2026-09-21",
   "source": "lit-scan-draft.xlsx",
-  "total": 61,
+  "total": 66,
   "topics": [
     {
       "id": "health-system",
@@ -49,7 +49,7 @@
       "heading": "Targeting prevention to reduce health inequities",
       "question": "Priority groups and places for reducing gaps",
       "blurb": "Differences in health between population groups and between areas, with measurement approaches.",
-      "count": 20,
+      "count": 25,
       "hasGrid": false,
       "legacyApp": 5
     },
@@ -67,7 +67,7 @@
   "byAccess": {
     "Not a dataset": 24,
     "Public": 16,
-    "Restricted - application": 6,
+    "Restricted - application": 11,
     "Public (aggregate only)": 9,
     "Not yet assessed": 6
   },
@@ -352,6 +352,12 @@
     "Published dataset",
     "International agency report",
     "Academic or institutional report"
+  ],
+  "applicationFeeValues": [
+    "Fee required",
+    "No fee",
+    "Not yet assessed",
+    "Not applicable"
   ],
   "regions": [
     "Queensland",

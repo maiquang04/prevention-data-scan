@@ -53,6 +53,8 @@ FIELDS = {
     "Topics": "topicsRaw",
     "Domain": "domainsRaw",
     "Indicators": "indicatorsRaw",
+    "Application fee": "applicationFee",
+    "Data source year(s)": "dataYears",
 }
 
 # Controlled vocabulary. Anything outside these lists is a data-entry mistake and
@@ -64,6 +66,31 @@ ACCESS_VALUES = [
     "Not a dataset",
     "Not yet assessed",
 ]
+
+# Whether getting the data costs money on top of the application. Asked for by the
+# partner agency in September 2026: they need to know what exists behind a paywall so
+# they can make a case to pay for it. The same four strings as the handover template
+# in lit-scan/build_hwqld_handover_pack.py, so a contributor's spreadsheet and the
+# site never disagree. "Not applicable" means there is no application to pay for.
+APPLICATION_FEE_VALUES = [
+    "Fee required",
+    "No fee",
+    "Not yet assessed",
+    "Not applicable",
+]
+
+# Which fee values each access value allows. Public data and non-datasets have no
+# application, so the fee can only be Not applicable; a source that needs an
+# application cannot claim there is nothing to pay for or not. Aggregate-only sources
+# go either way - some offer a microdata application behind the free tables, some do
+# not - so every value is allowed there.
+FEE_ALLOWED_BY_ACCESS = {
+    "Public": ("Not applicable",),
+    "Not a dataset": ("Not applicable",),
+    "Restricted - application": ("Fee required", "No fee", "Not yet assessed"),
+    "Public (aggregate only)": tuple(APPLICATION_FEE_VALUES),
+    "Not yet assessed": ("Not yet assessed",),
+}
 GEO_TAGS = [
     "Address",
     "Small area",
@@ -182,6 +209,33 @@ def publication_year(reference):
     page sorts them to the bottom whichever direction is chosen."""
     match = re.search(r"\((\d{4})[a-z]?\)", reference)
     return int(match.group(1)) if match else None
+
+
+def data_year(text):
+    """The latest year the data covers, for the newest-data sort on the browse page.
+
+    Reads the free-text "Data source year(s)" cell, whose convention is to state the span
+    the data covers with the latest release year written out: "2017-18 to 2023-24",
+    "2001 to 2023, annual", "2021 Census". A financial year written 2023-24 counts as
+    2024. Returns None for a blank cell and for "Not applicable", which is what a review
+    or guide says.
+
+    A cell that says "ongoing" or "onwards" without a four-digit end year is refused by
+    the caller rather than dated here: the export cannot know when an ongoing series was
+    last released, and guessing the current year would quietly go stale."""
+    text = (text or "").strip()
+    if not text or text.lower() == "not applicable":
+        return None
+    latest = None
+    for match in re.finditer(r"\b((?:19|20)\d{2})(?:[-/](\d{2}))?\b", text):
+        year = int(match.group(1))
+        if match.group(2):
+            # "2023-24": the two-digit tail is the end of a financial year.
+            tail = int(match.group(2))
+            if tail == (year + 1) % 100:
+                year += 1
+        latest = year if latest is None else max(latest, year)
+    return latest
 
 
 def clean(value):
@@ -400,6 +454,37 @@ def export(src, out_dir, quiet=False):
 
             record["year"] = publication_year(record["reference"])
 
+            fee = record.get("applicationFee", "")
+            if fee not in APPLICATION_FEE_VALUES:
+                problems.append("%s: Application fee is '%s', not one of the allowed values"
+                                % (where, fee))
+            elif access in FEE_ALLOWED_BY_ACCESS and fee not in FEE_ALLOWED_BY_ACCESS[access]:
+                problems.append("%s: Application fee '%s' does not go with Access '%s' "
+                                "(allowed: %s)" % (where, fee, access,
+                                                   ", ".join(FEE_ALLOWED_BY_ACCESS[access])))
+
+            years_text = record.get("dataYears", "")
+            record["dataYear"] = data_year(years_text)
+            if access == "Not a dataset":
+                if years_text.lower() != "not applicable":
+                    problems.append("%s: Data source year(s) must be 'Not applicable' for a "
+                                    "source that is not a dataset, got '%s'" % (where, years_text))
+            elif not years_text:
+                problems.append("%s: Data source year(s) is blank - state the span the data "
+                                "covers, or 'Not yet assessed'" % where)
+            elif (record["dataYear"] is None
+                  and years_text.lower() != "not yet assessed"
+                  and not years_text.lower().startswith("varies by")):
+                # "Varies by dataset" is the honest answer for a portal or atlas that
+                # holds many collections; it sorts as undated rather than being given
+                # one year that is wrong for most of what it holds.
+                problems.append("%s: Data source year(s) '%s' has no four-digit year the "
+                                "export can sort on" % (where, years_text))
+            elif (re.search(r"\b(ongoing|onwards|to date|present)\b", years_text, re.I)
+                  and not re.search(r"\bto (19|20)\d{2}\b|\b(19|20)\d{2}\)?\s*$", years_text)):
+                problems.append("%s: Data source year(s) '%s' says the series is ongoing "
+                                "without stating the latest release year" % (where, years_text))
+
             if not record["reference"]:
                 problems.append("%s: no reference" % where)
 
@@ -444,6 +529,7 @@ def export(src, out_dir, quiet=False):
         "domains": DOMAINS,
         "indicators": indicators_meta,
         "sourceGroups": SOURCE_GROUPS,
+        "applicationFeeValues": APPLICATION_FEE_VALUES,
         "regions": REGIONS,
         "withDownloadableData": sum(
             1 for s in studies if s["access"] in ("Public", "Public (aggregate only)")
@@ -471,6 +557,17 @@ def export(src, out_dir, quiet=False):
               "%d are ongoing collections with none"
               % (len(dated), len(studies), min(dated), max(dated),
                  len(studies) - len(dated)))
+        with_data = [s2 for s2 in studies if s2["access"] != "Not a dataset"]
+        dated_data = [s2["dataYear"] for s2 in with_data if s2["dataYear"]]
+        print("%d of the %d sources with data carry a data year (%s); %d have no single year"
+              % (len(dated_data), len(with_data),
+                 "%d-%d" % (min(dated_data), max(dated_data)) if dated_data else "none",
+                 len(with_data) - len(dated_data)))
+        fees = {}
+        for s2 in studies:
+            fees[s2["applicationFee"]] = fees.get(s2["applicationFee"], 0) + 1
+        print("application fee: " + ", ".join("%s = %d" % (v, fees.get(v, 0))
+                                               for v in APPLICATION_FEE_VALUES))
 
     # Re-stamp the asset links here too, so the one command people actually run
     # leaves the site in a publishable state.

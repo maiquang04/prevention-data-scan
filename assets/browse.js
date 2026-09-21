@@ -29,21 +29,32 @@
      are like this, so under the default order none of them is on page 1.
 
      A to Z runs on the reference, which is the line the reader sees: author surname
-     for a paper, agency name for a dataset. */
+     for a paper, agency name for a dataset.
+
+     Two orders each for two different dates. The partner agency asked in September
+     2026 whether "newest" meant when the paper came out or when the data was
+     collected, because they report against the second. So the labels say which, and
+     the data orders use dataYear, the latest year the data covers, which the export
+     reads out of the Data source year(s) column. The keys "newest" and "oldest" keep
+     meaning publication so links already shared do not change what they show. */
   var DEFAULT_SORT = "newest";
 
   var SORTS = {
-    newest: { label: "Newest first", compare: byYear(-1) },
-    oldest: { label: "Oldest first", compare: byYear(1) },
+    newest: { label: "Newest publication first", compare: byField("year", -1) },
+    oldest: { label: "Oldest publication first", compare: byField("year", 1) },
+    "newest-data": { label: "Newest data first", compare: byField("dataYear", -1) },
+    "oldest-data": { label: "Oldest data first", compare: byField("dataYear", 1) },
     az: { label: "A to Z", compare: byReference(1) },
     za: { label: "Z to A", compare: byReference(-1) }
   };
 
-  function byYear(direction) {
+  // A source without the field sorts last in both directions rather than being
+  // handed a date it does not have. Array.sort is stable, so ties keep workbook order.
+  function byField(field, direction) {
     return function (a, b) {
-      if (!a.year !== !b.year) return a.year ? -1 : 1;
-      if (!a.year) return 0;
-      return direction * (a.year - b.year);
+      if (!a[field] !== !b[field]) return a[field] ? -1 : 1;
+      if (!a[field]) return 0;
+      return direction * (a[field] - b[field]);
     };
   }
 
@@ -138,6 +149,19 @@
       values: function () { return meta.accessValues; },
       label: function (v) { return S.accessLabel(v); },
       of: function (s) { return [s.access]; } },
+
+    /* Whether the application costs money. Only sources that need an application can
+       carry a value, so "Not applicable" is left out of the options and of() returns
+       nothing for it - the same rule metaRow() draws the pill by. Hidden when empty
+       like Kind of source: "No fee" exists in the vocabulary before any row says it. */
+    { key: "fee", legend: "Application fee", multi: true, collapsed: true,
+      values: function () {
+        return meta.applicationFeeValues.filter(function (v) {
+          return v !== "Not applicable" && countAll("fee", v) > 0;
+        });
+      },
+      label: function (v) { return S.feeLabel(v); },
+      of: function (s) { return S.feeTags(s); } },
 
     { key: "region", legend: "Region", multi: true, collapsed: true,
       values: function () { return meta.regions; },
@@ -314,7 +338,9 @@
       // Indicators also stay searchable, including when the reader does not know
       // which health focus they sit under.
       (study.indicators || []).join(" "),
-      S.sourceGroupLabel(study.sourceGroup)].join(" ").toLowerCase();
+      S.sourceGroupLabel(study.sourceGroup),
+      S.dataYearsText(study),
+      S.feeTags(study).map(S.feeLabel).join(" ")].join(" ").toLowerCase();
     return query.toLowerCase().split(/\s+/).every(function (word) {
       return haystack.indexOf(word) !== -1;
     });
@@ -571,6 +597,9 @@
           open + '" aria-controls="d-' + study.id + '">' +
           '<span class="result__body">' +
             '<span class="result__ref">' + S.escapeHtml(study.reference) + "</span>" +
+            (S.dataYearsText(study)
+              ? '<span class="result__years">Data covers ' + S.escapeHtml(S.dataYearsText(study)) + "</span>"
+              : "") +
             '<span class="result__task">' + S.escapeHtml(trim(study.task, 210)) + "</span>" +
             '<span class="meta-row">' + S.metaRow(study) + "</span>" +
           "</span>" +
@@ -607,7 +636,9 @@
       row(S.label("measures"), S.escapeHtml(study.metrics)) +
       row(S.label("geography"), S.escapeHtml(study.geoLevel)) +
       row(S.label("dataSources"), S.escapeHtml(study.dataSources)) +
+      row(S.label("dataYears"), S.escapeHtml(S.dataYearsText(study))) +
       row(S.label("access"), S.accessBadge(study.access) +
+        S.tagList(S.feeTags(study).map(S.feeLabel), S.feeTagClass(study)) +
         (study.accessNote ? " " + S.escapeHtml(study.accessNote) : "")) +
       row(S.label("sourceLinks"), links ? "<ul>" + links + "</ul>" : "") +
       row(S.label("scale"), S.escapeHtml(study.scale)) +

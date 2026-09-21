@@ -29,6 +29,23 @@
     "Not yet assessed": "Access has not been checked yet."
   };
 
+  /* Whether getting the data costs money on top of the application. Asked for by the
+     partner agency in September 2026: they need to know what sits behind a paywall so
+     they can make a case to pay. "Not applicable" is a source with no application to
+     pay for (public data, or not a dataset) and draws nothing, the same as an empty
+     tag list. The values are the export's, which are the handover template's. */
+  var FEE_LABEL = {
+    "Fee required": "Fee to access",
+    "No fee": "No fee",
+    "Not yet assessed": "Fee unchecked"
+  };
+
+  var FEE_MEANING = {
+    "Fee required": "Getting the data costs money on top of the application.",
+    "No fee": "The application is free.",
+    "Not yet assessed": "Whether a fee applies has not been checked yet."
+  };
+
   var FIELD_LABEL = {
     topics: "Related focus areas",
     healthDomain: "Health focus",
@@ -46,7 +63,9 @@
     keyAttributes: "Key details",
     country: "Country or system",
     sourceType: "Specific source type",
-    sourceKind: "Kind of source"
+    sourceKind: "Kind of source",
+    applicationFee: "Fee to access the data",
+    dataYears: "Data covers"
   };
 
   var DOMAIN_LABEL = {
@@ -150,6 +169,29 @@
     return SOURCE_GROUP_LABEL[group] || group;
   }
 
+  function feeLabel(fee) {
+    return FEE_LABEL[fee] || "";
+  }
+
+  // The fee as a list for tagList(): one entry, or none when there is nothing to pay
+  // for. Keeps metaRow() and the facet reading the same rule.
+  function feeTags(study) {
+    var fee = study.applicationFee;
+    return fee && fee !== "Not applicable" ? [fee] : [];
+  }
+
+  // Only a fee that is actually charged gets the dollar sign, which the stylesheet
+  // draws off this modifier. "No fee" and "Fee unchecked" stay plain.
+  function feeTagClass(study) {
+    return "tag--fee" + (study.applicationFee === "Fee required" ? " tag--fee-required" : "");
+  }
+
+  // "Not applicable" is a review or guide, which has no data period to show.
+  function dataYearsText(study) {
+    var text = study.dataYears || "";
+    return text.toLowerCase() === "not applicable" ? "" : text;
+  }
+
   /* The topic id meant by the current page: ?topic= first, then the legacy ?app=
      link already sent out, then the first topic with a built grid, then
      whatever topic is listed first. */
@@ -205,6 +247,7 @@
      would push the short, always-present tags off the first line. */
   function metaRow(study) {
     return accessBadge(study.access) +
+      tagList(feeTags(study).map(feeLabel), feeTagClass(study)) +
       tagList((study.topics || []).map(topicTitle), "tag--topic") +
       tagList((study.domains || []).map(domainLabel), "tag--domain") +
       tagList(study.geoTags) +
@@ -313,6 +356,11 @@
     label: label,
     domainLabel: domainLabel,
     sourceGroupLabel: sourceGroupLabel,
+    feeLabel: feeLabel,
+    feeTags: feeTags,
+    feeTagClass: feeTagClass,
+    feeMeaning: FEE_MEANING,
+    dataYearsText: dataYearsText,
     currentTopicId: currentTopicId,
     legacyAppToTopic: legacyAppToTopic,
     tagList: tagList,
