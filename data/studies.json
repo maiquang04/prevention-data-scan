@@ -511,6 +511,44 @@
     "dataYear": 2021
   },
   {
+    "reference": "Australian Institute of Health and Welfare (2024). Australian Burden of Disease Study 2024. Canberra: AIHW. Catalogue number BOD 40",
+    "link": "https://www.aihw.gov.au/reports/burden-of-disease/australian-burden-of-disease-study-2024",
+    "sourceType": "Government report",
+    "country": "Australia",
+    "task": "Puts a number on how much illness and early death each disease and each risk factor causes. The standard Australian source for arguing that preventing something is worth the spend.",
+    "metrics": "Years of healthy life lost, split into years lost to early death and years lived with illness, by disease and by risk factor",
+    "geoLevel": "National only. The 2024 study publishes no state, remoteness or socioeconomic breakdowns; for those, the 2018 study is the source",
+    "inputData": "Hospital, death, survey and registry collections, projected forward using historical trends",
+    "output": "Estimates for 220 diseases and injuries, and the share of burden attributable to 20 individual risk factors",
+    "dataSources": "AIHW and ABS collections",
+    "accessNote": "Free web report, PDF and interactive data, no registration. The underlying linked collections are not released.",
+    "scale": "220 diseases and injuries; 20 risk factors",
+    "keyAttributes": "The 2024 figures are projections built on historical trends rather than fresh collection, which matters when quoting them",
+    "access": "Public (aggregate only)",
+    "applicationFee": "Not applicable",
+    "dataYears": "2024",
+    "id": "app1-13",
+    "app": 1,
+    "num": 13,
+    "topics": [
+      "health-system",
+      "prevention-programs"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "National"
+    ],
+    "domains": [],
+    "indicators": [],
+    "sourceGroup": "Government report",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [],
+    "year": 2024,
+    "dataYear": 2024
+  },
+  {
     "reference": "Sallis JF, Cerin E, Conway TL, Adams MA, Frank LD, Pratt M, et al. (2016). Physical activity in relation to urban environments in 14 cities worldwide: a cross-sectional study. The Lancet 387:2207-2217",
     "link": "https://doi.org/10.1016/S0140-6736(15)01284-2",
     "sourceType": "Peer-reviewed",
@@ -979,6 +1017,201 @@
     "dataYear": 2024
   },
   {
+    "reference": "Strava Metro. Aggregated cycling and pedestrian movement data. San Francisco: Strava, Inc. (ongoing since 2014)",
+    "link": "https://metro.strava.com/",
+    "sourceType": "Commercial mobility dataset",
+    "country": "Australia; International",
+    "task": "Counts how many people walked or cycled along each street and path, from phone and GPS-watch recordings. Answers where active travel actually happens, which a household survey is too small to show street by street.",
+    "metrics": "Counts of walking and cycling trips per street segment over time, before-and-after comparison around infrastructure changes, and the routes people take or avoid",
+    "geoLevel": "Street segment, within an area of interest chosen at the level Strava calls county, which for Australia is council-sized",
+    "inputData": "Walking, running and cycling activities recorded on the Strava app, stripped of identifiers and aggregated. Activities members marked private, and those of members who deleted their accounts, are left out.",
+    "output": "A web dashboard of counts per street segment, with origin and destination patterns, and shapefile export for anyone with mapping software",
+    "dataSources": "Strava's own member activity uploads",
+    "accessNote": "Free. Access is by application for a Metro partnership, and Strava restricts who is eligible: it works only with organisations that plan, own or maintain infrastructure or seek to positively influence planning processes, and names real estate investors, financial services and retailers as examples it will not partner with. Metro is free, but Strava does not say how much historical data a partner can access. Academics can apply separately through the Metro for Academic Researchers Program, which gives one year of access; the 2027 round closes 23 October 2026.",
+    "scale": "Millions of activities recorded each week worldwide. An Australian council, the City of Stonnington, is among the partners Strava quotes",
+    "keyAttributes": "One record per street segment per period. The caveat that matters is who is in it: Strava users are not a random sample of the population, so the counts show relative patterns rather than true volumes. Strava says academic studies have found the data correlates well with physical bike counters, and that partners who hold counter data adjust against it.",
+    "access": "Restricted - application",
+    "applicationFee": "No fee",
+    "dataYears": "Strava does not state how far back the available data goes. Metro launched in 2014 and is operating in 2026.",
+    "id": "app2-11",
+    "app": 2,
+    "num": 11,
+    "topics": [
+      "regional-environments",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Address",
+      "LGA"
+    ],
+    "domains": [
+      "Physical Activity"
+    ],
+    "indicators": [
+      "Walking & cycling counts"
+    ],
+    "sourceGroup": "Published dataset",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "Academic program",
+        "url": "https://metro.strava.com/academics"
+      }
+    ],
+    "year": null,
+    "dataYear": 2026
+  },
+  {
+    "reference": "Department of Transport and Main Roads. TMR Bicycle Counts. Brisbane: Queensland Government open data portal (updated quarterly)",
+    "link": "https://www.data.qld.gov.au/dataset/tmr-bicycle-counts",
+    "sourceType": "Government open data release",
+    "country": "Australia (Queensland)",
+    "task": "Counts bicycles passing fixed loggers around Queensland, year by year. One of the few sources that measures active travel directly rather than asking people about it.",
+    "metrics": "Bicycle numbers per counter site over time",
+    "geoLevel": "Individual counter sites across Queensland",
+    "inputData": "Automated counters placed around Queensland under the Transport and Main Roads Active Transport program",
+    "output": "One CSV per year from 2018 to 2025, plus a site list and a data dictionary",
+    "dataSources": "The department's own counter network",
+    "accessNote": "Free CSV download, no registration, Creative Commons Attribution 4.0. Updated quarterly.",
+    "scale": "Eight full years of counts, 2018 to 2025, across the Active Transport site list",
+    "keyAttributes": "Two limitations the department states itself: counts may include e-scooters and similar devices, because some counters cannot tell them from bicycles, and some sites have gaps from maintenance, faults or vandalism",
+    "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2018 to 2025, updated quarterly",
+    "id": "app2-12",
+    "app": 2,
+    "num": 12,
+    "topics": [
+      "regional-environments",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Address",
+      "State"
+    ],
+    "domains": [
+      "Physical Activity"
+    ],
+    "indicators": [
+      "Walking & cycling counts"
+    ],
+    "sourceGroup": "Published dataset",
+    "regions": [
+      "Queensland",
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.data.qld.gov.au/dataset/average-bicycle-counts-by-day-and-hour"
+      }
+    ],
+    "year": null,
+    "dataYear": 2025
+  },
+  {
+    "reference": "Brisbane City Council. Pedestrian movement counts. Brisbane: Brisbane City Council open data (updated daily)",
+    "link": "https://www.data.qld.gov.au/dataset/pedestrian-movement-counts",
+    "sourceType": "Local government open data release",
+    "country": "Australia (Queensland)",
+    "task": "Counts movements past sensors in Brisbane's main pedestrian precincts. The closest thing the scan holds to a live measure of foot traffic in a Queensland city centre.",
+    "metrics": "Pedestrian movements per sensor over time",
+    "geoLevel": "Individual sensor locations within Brisbane",
+    "inputData": "Line-breaking sensors in key economic precincts, including Queen Street Mall and Brunswick Street",
+    "output": "Counts per sensor, published through the council's open data site",
+    "dataSources": "The council's own sensor network",
+    "accessNote": "Free, no registration, Creative Commons Attribution 4.0. Updated daily. The record on the Queensland portal points at the council's own site for the download and viewing tools.",
+    "scale": "Key economic precincts in Brisbane rather than the whole council area",
+    "keyAttributes": "Counts movements, not people: the council states the sensors detect everything crossing the line regardless of mode and cannot tell a person from an object, so a figure is not a headcount. Counts below 25 are suppressed for privacy, and values estimated during sensor or network faults are flagged in the data. Covers shopping and entertainment precincts, so it measures where people already gather rather than walking across the city.",
+    "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2022 to 2026, updated daily",
+    "id": "app2-13",
+    "app": 2,
+    "num": 13,
+    "topics": [
+      "regional-environments",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Address",
+      "LGA"
+    ],
+    "domains": [
+      "Physical Activity"
+    ],
+    "indicators": [
+      "Walking & cycling counts"
+    ],
+    "sourceGroup": "Published dataset",
+    "regions": [
+      "Queensland",
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://data.brisbane.qld.gov.au"
+      }
+    ],
+    "year": null,
+    "dataYear": 2026
+  },
+  {
+    "reference": "Brisbane City Council. Bikeway counts. Brisbane: Brisbane City Council open data (updated annually)",
+    "link": "https://www.data.qld.gov.au/dataset/bikeway-counts",
+    "sourceType": "Local government open data release",
+    "country": "Australia (Queensland)",
+    "task": "Counts bikes and pedestrians on Brisbane's bikeways, used by the council to see whether a cycleway is being ridden and to plan the next one.",
+    "metrics": "Cycleway patronage by site",
+    "geoLevel": "Counter sites across the Brisbane local government area",
+    "inputData": "Automated and manual bike and pedestrian counts on council bikeways",
+    "output": "Counts by site and period. The published table holds 2022 to 2025; earlier years are in downloadable attachments, and a companion dataset holds the 2004 to 2018 manual surveys",
+    "dataSources": "The council's own bikeway monitoring",
+    "accessNote": "Free, no registration, Creative Commons Attribution 4.0. Updated annually, with the download on the council's own open data site.",
+    "scale": "Brisbane bikeway network, with counts going back to 2004 once the attachments are included alongside the tables",
+    "keyAttributes": "The council states the data is used to 'capture cycleway patronage and support bikeway plan[ning]', so it is collected to judge infrastructure rather than to represent the population",
+    "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2004 to 2025, across tables and attachments",
+    "id": "app2-14",
+    "app": 2,
+    "num": 14,
+    "topics": [
+      "regional-environments",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Address",
+      "LGA"
+    ],
+    "domains": [
+      "Physical Activity"
+    ],
+    "indicators": [
+      "Walking & cycling counts"
+    ],
+    "sourceGroup": "Published dataset",
+    "regions": [
+      "Queensland",
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.data.qld.gov.au/dataset/bikeway-counts-counter-locations"
+      }
+    ],
+    "year": null,
+    "dataYear": 2025
+  },
+  {
     "reference": "Australian Bureau of Statistics. National Health Survey. Canberra: Australian Bureau of Statistics",
     "link": "https://www.abs.gov.au/statistics/health/health-conditions-and-risks/national-health-survey/latest-release",
     "sourceType": "Government survey data release",
@@ -1298,6 +1531,143 @@
     "dataYear": null
   },
   {
+    "reference": "Australian Bureau of Statistics. National Nutrition and Physical Activity Survey. Canberra: Australian Bureau of Statistics, 2023",
+    "link": "https://www.abs.gov.au/statistics/health/food-and-nutrition/national-nutrition-and-physical-activity-survey/latest-release",
+    "sourceType": "Government statistical agency data release",
+    "country": "Australia",
+    "task": "Measures physical activity with an accelerometer rather than asking about it, alongside diet and sleep, in the same national sample. Fills a gap the self-reported National Health Survey leaves.",
+    "metrics": "Fruit and vegetable intake against the dietary guidelines, energy and discretionary food intake, device-measured physical activity and inactivity, sleep duration and quality",
+    "geoLevel": "National only. Excludes very remote areas and discrete Aboriginal and Torres Strait Islander communities",
+    "inputData": "Interviews and a 24-hour dietary recall across the sample, plus an accelerometer worn for seven days by volunteers aged 5 and over, who were 39.3 per cent of respondents",
+    "output": "National summary tables and downloadable data files by topic; microdata for approved users",
+    "dataSources": "The survey itself",
+    "accessNote": "Summary tables and data files are free. Detailed microdata is via ABS DataLab, which charges (see the National Health Survey row for current DataLab pricing).",
+    "scale": "A national sample aged 2 and over, excluding very remote areas; the previous survey in 2011-12 sampled about 9,500 households",
+    "keyAttributes": "The 2023 survey uses an accelerometer instead of the pedometer used in 2011-12. It reports time spent active and asleep, but not whether adults or children meet the guidelines. The figures for children come from a separate part of the survey based on self-reported answers.",
+    "access": "Public (aggregate only)",
+    "applicationFee": "Fee required",
+    "dataYears": "2023 to 2024",
+    "id": "app3-08",
+    "app": 3,
+    "num": 8,
+    "topics": [
+      "prevention-programs"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "National"
+    ],
+    "domains": [
+      "Physical Activity",
+      "Healthy Eating"
+    ],
+    "indicators": [
+      "Fruit intake",
+      "Vegetable intake",
+      "Children meeting PA guidelines",
+      "Discretionary food intake",
+      "Sugar-sweetened beverage intake"
+    ],
+    "sourceGroup": "Published dataset",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://www.abs.gov.au/statistics/microdata-tablebuilder/available-microdata-tablebuilder/national-nutrition-and-physical-activity-survey"
+      }
+    ],
+    "year": null,
+    "dataYear": 2024
+  },
+  {
+    "reference": "Australian Institute of Health and Welfare (2024). Physical activity. Canberra: AIHW web article",
+    "link": "https://www.aihw.gov.au/reports/physical-activity/physical-activity",
+    "sourceType": "Government report",
+    "country": "Australia",
+    "task": "Publishes the national figure for how many people meet the physical activity guidelines, and how that has moved over time. The number a business case would quote.",
+    "metrics": "Share of adults and of young people meeting the physical activity guidelines, with trends",
+    "geoLevel": "National, with remoteness breakdowns",
+    "inputData": "Australian Bureau of Statistics health surveys",
+    "output": "National and breakdown figures against each part of the guidelines",
+    "dataSources": "ABS National Health Survey and related collections",
+    "accessNote": "Free web article, no registration. It reports figures rather than releasing the records behind them, which come from the ABS surveys already in this scan.",
+    "scale": "National",
+    "keyAttributes": "Reports an improvement: 46 per cent of adults did not meet the guidelines in 2022, down from 65 per cent in 2017-18. Among young people the picture is worse, with 83 per cent of adolescents aged 15 to 17 not meeting the physical activity component in 2022",
+    "access": "Public (aggregate only)",
+    "applicationFee": "Not applicable",
+    "dataYears": "2022, with trends from 2007-08",
+    "id": "app3-09",
+    "app": 3,
+    "num": 9,
+    "topics": [
+      "prevention-programs"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Remoteness",
+      "National"
+    ],
+    "domains": [
+      "Physical Activity"
+    ],
+    "indicators": [
+      "Adults meeting PA guidelines",
+      "Children meeting PA guidelines"
+    ],
+    "sourceGroup": "Government report",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [],
+    "year": 2024,
+    "dataYear": 2022
+  },
+  {
+    "reference": "Australian Institute of Health and Welfare (2026). Overweight and obesity. Canberra: AIHW web report",
+    "link": "https://www.aihw.gov.au/reports/overweight-obesity/overweight-and-obesity",
+    "sourceType": "Government report",
+    "country": "Australia",
+    "task": "Publishes how many Australians are living with overweight or obesity, and how much ill health it causes. Recent enough to quote, which most obesity figures are not.",
+    "metrics": "Share of adults and children living with overweight or obesity, and abdominal obesity",
+    "geoLevel": "National, broken down by Primary Health Network, remoteness and socioeconomic area",
+    "inputData": "Australian Bureau of Statistics health surveys with measured height, weight and waist",
+    "output": "National prevalence figures for adults and children, with trends",
+    "dataSources": "ABS health survey collections",
+    "accessNote": "Free web report, no registration. Figures only; the measured records stay with the ABS.",
+    "scale": "National",
+    "keyAttributes": "In 2022-24 around 2 in 3 adults (67 per cent) lived with overweight or obesity, and around 1 in 4 children aged 2 to 17 (27 per cent). Abdominal obesity rose from 41 per cent in 2017-18",
+    "access": "Public (aggregate only)",
+    "applicationFee": "Not applicable",
+    "dataYears": "2022-24",
+    "id": "app3-10",
+    "app": 3,
+    "num": 10,
+    "topics": [
+      "prevention-programs",
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "PHN",
+      "Remoteness",
+      "National"
+    ],
+    "domains": [
+      "Healthy Eating",
+      "Physical Activity"
+    ],
+    "indicators": [],
+    "sourceGroup": "Government report",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [],
+    "year": 2026,
+    "dataYear": 2022
+  },
+  {
     "reference": "Baum F, Lawless A, Delany T, Macdougall C, Williams C, Broderick D, et al. (2014). Evaluation of Health in All Policies: concept, theory and application. Health Promotion International 29(suppl 1):i130-i142",
     "link": "https://doi.org/10.1093/heapro/dau032",
     "sourceType": "Peer-reviewed",
@@ -1591,6 +1961,131 @@
     ],
     "year": null,
     "dataYear": null
+  },
+  {
+    "reference": "Australian Government. data.gov.au, the national open data portal. Canberra: Australian Bureau of Statistics",
+    "link": "https://www.data.gov.au/",
+    "sourceType": "Government open data release",
+    "country": "Australia",
+    "task": "The national counterpart to the Queensland portal already in this scan. Where federal, state and local agencies publish open data, so it is the first place to look before asking an agency directly.",
+    "metrics": "Varies entirely by dataset",
+    "geoLevel": "Varies by dataset, from national to street level",
+    "inputData": "Whatever agencies choose to publish",
+    "output": "Dataset records with links, licences and contacts",
+    "dataSources": "Federal, state and local government agencies, plus some publicly funded research data",
+    "accessNote": "Free to browse, no registration. The portal says 'Anyone can access the public data published by federal, state and local agencies', but not everything listed is downloadable: it also carries records for unpublished data and for data available for purchase. Individual datasets carry their own licences.",
+    "scale": "All levels of Australian government",
+    "keyAttributes": "The organisations that publish each dataset remain responsible for its quality and timeliness. Some files are uploaded to data.gov.au, while other listings link to data held elsewhere. Being listed does not always mean the data is free to download",
+    "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "Varies by dataset",
+    "id": "app4-08",
+    "app": 4,
+    "num": 8,
+    "topics": [
+      "regional-partnerships",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Any"
+    ],
+    "domains": [],
+    "indicators": [],
+    "sourceGroup": "Published dataset",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://data.gov.au/about"
+      }
+    ],
+    "year": null,
+    "dataYear": null
+  },
+  {
+    "reference": "Australian Institute of Health and Welfare. METEOR, the Metadata Online Registry. Canberra: AIHW",
+    "link": "https://meteor.aihw.gov.au/",
+    "sourceType": "Government agency metadata registry",
+    "country": "Australia",
+    "task": "The official record of how national health indicators are defined and calculated. Directly useful when deciding the exact wording of a measure, so two agencies counting the same thing count it the same way.",
+    "metrics": "Definitions rather than values: how each indicator is worded, what it counts and who registered it",
+    "geoLevel": "National standards",
+    "inputData": "Metadata submitted and registered by health and welfare agencies",
+    "output": "Data set specifications, indicator sets, data quality statements and data dictionaries, downloadable as CSV",
+    "dataSources": "Registered metadata from AIHW and partner agencies",
+    "accessNote": "Free to browse and search, no registration for the public content. Some reporting outputs need a sign-in. It holds definitions, not data.",
+    "scale": "National health and welfare metadata",
+    "keyAttributes": "Has indicator sets and data set specifications as separate categories, which is the distinction between a named measure and the collection it is drawn from",
+    "access": "Not a dataset",
+    "applicationFee": "Not applicable",
+    "dataYears": "Not applicable",
+    "id": "app4-09",
+    "app": 4,
+    "num": 9,
+    "topics": [
+      "regional-partnerships",
+      "local-government"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "National"
+    ],
+    "domains": [],
+    "indicators": [],
+    "sourceGroup": "Government report",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [],
+    "year": null,
+    "dataYear": null
+  },
+  {
+    "reference": "Healthdirect Australia. National Health Services Directory. Sydney: Healthdirect Australia",
+    "link": "https://www.healthdirect.gov.au/australian-health-services",
+    "sourceType": "Government service directory dataset",
+    "country": "Australia",
+    "task": "A geocoded list of health services across Australia. Turns questions about whether people can reach a service into something measurable, by putting every service on a map.",
+    "metrics": "Service location, type and availability",
+    "geoLevel": "Individual service addresses nationally",
+    "inputData": "Service records maintained by the providers themselves and by state health departments",
+    "output": "A searchable directory, and a geocoded dataset for research through AURIN",
+    "dataSources": "Provider and health department registrations",
+    "accessNote": "Two different things. Anyone can search the public Healthdirect service finder for free. The geocoded dataset is separate: AURIN lists it as a restricted dataset needing an application, and whether that route carries a cost is not stated on either site.",
+    "scale": "Health services nationally",
+    "keyAttributes": "Providers register and maintain their own entries, so coverage depends on services keeping their listing current",
+    "access": "Restricted - application",
+    "applicationFee": "Not yet assessed",
+    "dataYears": "2025",
+    "id": "app4-10",
+    "app": 4,
+    "num": 10,
+    "topics": [
+      "regional-partnerships",
+      "health-inequities"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Address",
+      "National"
+    ],
+    "domains": [],
+    "indicators": [],
+    "sourceGroup": "Published dataset",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://aurin.org.au/"
+      }
+    ],
+    "year": null,
+    "dataYear": 2025
   },
   {
     "reference": "World Health Organization (2013). Handbook on health inequality monitoring: with a special focus on low- and middle-income countries. Geneva: World Health Organization",
@@ -2087,11 +2582,11 @@
     "output": "A general release and a restricted release, each covering every wave to date",
     "dataSources": "The survey itself",
     "accessNote": "Application through the Australian Data Archive, with a signed undertaking. No cost. Restricted release needs a further application.",
-    "scale": "About 17,000 respondents a year; 23 waves, 2001 to 2023, in release 23",
+    "scale": "About 17,000 respondents a year; 24 waves, 2001 to 2024, in release 24",
     "keyAttributes": "One row per person per wave, linkable across waves; household and family identifiers",
     "access": "Restricted - application",
     "applicationFee": "No fee",
-    "dataYears": "2001 to 2023, annual",
+    "dataYears": "2001 to 2024, annual",
     "id": "app5-12",
     "app": 5,
     "num": 12,
@@ -2123,7 +2618,7 @@
       }
     ],
     "year": null,
-    "dataYear": 2023
+    "dataYear": 2024
   },
   {
     "reference": "Growing Up in Australia: the Longitudinal Study of Australian Children (LSAC). Department of Social Services with the Australian Institute of Family Studies (ongoing since 2004)",
@@ -2137,11 +2632,11 @@
     "output": "Wave-by-wave datasets for both cohorts, ten main waves by 2024",
     "dataSources": "The study itself; linked administrative data for approved projects",
     "accessNote": "Application through the Australian Data Archive with a project description and a deed of confidentiality. No cost.",
-    "scale": "Two cohorts recruited in 2004: 5,107 infants and a kindergarten cohort aged four to five; ten waves, the latest collected in 2023",
+    "scale": "Two cohorts recruited in 2004: 5,107 infants and a kindergarten cohort aged four to five; ten waves, the latest collected across 2023 and 2024 and released in October 2025",
     "keyAttributes": "One row per child per wave with parent, teacher and child reports",
     "access": "Restricted - application",
     "applicationFee": "No fee",
-    "dataYears": "2004 to 2023, ten waves",
+    "dataYears": "2004 to 2024, ten waves",
     "id": "app5-13",
     "app": 5,
     "num": 13,
@@ -2169,7 +2664,7 @@
       }
     ],
     "year": null,
-    "dataYear": 2023
+    "dataYear": 2024
   },
   {
     "reference": "Footprints in Time: the Longitudinal Study of Indigenous Children (LSIC). Department of Social Services (ongoing since 2008)",
@@ -2180,14 +2675,14 @@
     "metrics": "Child health and development, social and emotional wellbeing, culture and connection to Country, family and community circumstances",
     "geoLevel": "Individual children in eleven sites chosen to span urban, regional and remote Australia",
     "inputData": "Annual interviews with the child's main carer and, as they grow, the children themselves, by Indigenous interviewers",
-    "output": "Annual waves; wave 17 collected in 2024, with published releases some waves behind collection",
+    "output": "Annual waves. What can be obtained lags collection: the latest archived release covers waves 1 to 14, while interviewing has reached wave 18",
     "dataSources": "The study itself",
     "accessNote": "Application through the Australian Data Archive with a signed undertaking. No cost. Use is bound by the study's Indigenous data protocols, including consultation on publication.",
     "scale": "Two age groups recruited in 2008, aged 6 to 18 months and 3.5 to 5 years; about 1,700 children",
-    "keyAttributes": "One row per child per wave; site and remoteness of residence",
+    "keyAttributes": "One row per child per wave; site and remoteness of residence. Collection reached wave 18 in 2025, but the newest release in the archive covers waves 1 to 14, so plan around the release rather than the fieldwork",
     "access": "Restricted - application",
     "applicationFee": "No fee",
-    "dataYears": "2008 to 2024, annual",
+    "dataYears": "2008 to 2021, Release 14 covering waves 1 to 14",
     "id": "app5-14",
     "app": 5,
     "num": 14,
@@ -2216,7 +2711,7 @@
       }
     ],
     "year": null,
-    "dataYear": 2024
+    "dataYear": 2021
   },
   {
     "reference": "Building a New Life in Australia (BNLA): the Longitudinal Study of Humanitarian Migrants. Department of Social Services with the Australian Institute of Family Studies, 2013 to 2023",
@@ -2263,6 +2758,44 @@
     ],
     "year": null,
     "dataYear": 2023
+  },
+  {
+    "reference": "Australian Institute of Health and Welfare (2022). Australia's children. Canberra: AIHW web report",
+    "link": "https://www.aihw.gov.au/reports/children-youth/australias-children",
+    "sourceType": "Government report",
+    "country": "Australia",
+    "task": "Brings together how Australian children are faring across health, education, safety and family circumstances, so differences between groups of children can be seen in one place.",
+    "metrics": "Child health, development, education, safety and family circumstances",
+    "geoLevel": "National, with population-group breakdowns",
+    "inputData": "Survey, administrative and registry collections about children",
+    "output": "Indicator-by-indicator national figures with breakdowns by population group",
+    "dataSources": "ABS and AIHW collections, education and homelessness data",
+    "accessNote": "Free web report, no registration. Published figures only.",
+    "scale": "National",
+    "keyAttributes": "An older broad source: the written summaries are from December 2019 and only some tables were refreshed in February 2022, so any figure should be checked against a newer release before it is quoted",
+    "access": "Public (aggregate only)",
+    "applicationFee": "Not applicable",
+    "dataYears": "Varies by indicator; summaries published December 2019, tables updated February 2022",
+    "id": "app5-16",
+    "app": 5,
+    "num": 16,
+    "topics": [
+      "health-inequities",
+      "prevention-programs"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "National"
+    ],
+    "domains": [],
+    "indicators": [],
+    "sourceGroup": "Government report",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [],
+    "year": 2022,
+    "dataYear": 2022
   },
   {
     "reference": "Higgs C, Badland H, Simons K, Knibbs LD, Giles-Corti B (2019). The Urban Liveability Index: developing a policy-relevant urban liveability composite measure and evaluating associations with transport mode choice. International Journal of Health Geographics 18:14",
@@ -2983,5 +3516,92 @@
     ],
     "year": 2022,
     "dataYear": 2021
+  },
+  {
+    "reference": "Department of Transport and Main Roads. Principal cycle network, Queensland. Brisbane: Queensland Government open data portal",
+    "link": "https://www.data.qld.gov.au/dataset/principal-cycle-network-queensland",
+    "sourceType": "Government spatial data release",
+    "country": "Australia (Queensland)",
+    "task": "Maps the core cycle routes the state considers necessary for everyday bicycle travel. The baseline a council would measure new cycleway building against.",
+    "metrics": "Route alignment and extent of the principal cycle network",
+    "geoLevel": "Route geometry across Queensland",
+    "inputData": "Transport and Main Roads route planning",
+    "output": "Spatial files in shapefile, MapInfo, file geodatabase, KMZ and GeoPackage formats, with a metadata record",
+    "dataSources": "The department's own network planning",
+    "accessNote": "Free download, no registration, Creative Commons Attribution 3.0. Updated on no fixed schedule.",
+    "scale": "Queensland-wide network",
+    "keyAttributes": "This is the planned network, not what has been built, so it measures intent rather than delivery. Comparing two releases would be needed to say what was actually added",
+    "access": "Public",
+    "applicationFee": "Not applicable",
+    "dataYears": "2024",
+    "id": "app6-16",
+    "app": 6,
+    "num": 16,
+    "topics": [
+      "local-government",
+      "regional-environments"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Address",
+      "State"
+    ],
+    "domains": [
+      "Physical Activity"
+    ],
+    "indicators": [],
+    "sourceGroup": "Published dataset",
+    "regions": [
+      "Queensland",
+      "Australia"
+    ],
+    "dataLinks": [],
+    "year": null,
+    "dataYear": 2024
+  },
+  {
+    "reference": "Australian Urban Research Infrastructure Network (AURIN). Melbourne: University of Melbourne, for the Australian Government",
+    "link": "https://aurin.org.au/",
+    "sourceType": "Academic spatial data platform",
+    "country": "Australia",
+    "task": "A national platform holding thousands of cleaned, mapped datasets about cities and regions, with tools to analyse them. Saves assembling the same spatial data from a dozen agencies.",
+    "metrics": "Varies by dataset; includes urban health indicators and the geocoded national health services directory",
+    "geoLevel": "Mostly small-area and council-level, varying by dataset",
+    "inputData": "Datasets contributed by government, research and other bodies, cleaned and given consistent geography",
+    "output": "Access through the AURIN Data Provider, with analytical tools",
+    "dataSources": "Government agencies, research bodies and commercial partners",
+    "accessNote": "Browsing the catalogue is open to anyone. Downloading needs an account, and a subset of datasets are marked restricted and need their own application on top of that. AURIN describes itself as supporting 'researchers, governments, not-for-profits and industry'. No page states whether a state agency pays, so the fee is unchecked.",
+    "scale": "Thousands of datasets, national coverage",
+    "keyAttributes": "Its value is the cleaning and the consistent geography rather than new collection, so each dataset still carries the limits of whoever collected it",
+    "access": "Restricted - application",
+    "applicationFee": "Not yet assessed",
+    "dataYears": "Varies by dataset",
+    "id": "app6-17",
+    "app": 6,
+    "num": 17,
+    "topics": [
+      "local-government",
+      "regional-environments"
+    ],
+    "priority": "unmarked",
+    "geoTags": [
+      "Small area",
+      "LGA",
+      "National"
+    ],
+    "domains": [],
+    "indicators": [],
+    "sourceGroup": "Published dataset",
+    "regions": [
+      "Australia"
+    ],
+    "dataLinks": [
+      {
+        "label": "",
+        "url": "https://data.aurin.org.au/"
+      }
+    ],
+    "year": null,
+    "dataYear": null
   }
 ]

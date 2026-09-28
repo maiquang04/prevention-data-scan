@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-21",
+  "generated": "2026-09-28",
   "source": "lit-scan-draft.xlsx",
-  "total": 66,
+  "total": 80,
   "topics": [
     {
       "id": "health-system",
@@ -9,7 +9,7 @@
       "heading": "Prevention and the health system",
       "question": "Evidence linking prevention to hospital demand",
       "blurb": "Waiting lists, bed days, ambulance ramping and potentially preventable hospitalisations.",
-      "count": 16,
+      "count": 17,
       "hasGrid": true,
       "legacyApp": 1
     },
@@ -19,7 +19,7 @@
       "heading": "Improving regional environments for prevention",
       "question": "Existing supports for healthy behaviour and local gaps",
       "blurb": "Parks, active transport, green space and food environments - the surroundings that make a healthy choice easy or hard, including underserved groups.",
-      "count": 20,
+      "count": 26,
       "hasGrid": false,
       "legacyApp": 2
     },
@@ -29,7 +29,7 @@
       "heading": "Prevention service gaps and return on investment",
       "question": "Prevention service gaps and return on investment",
       "blurb": "Prevention delivery across settings, especially primary care, and evidence of results.",
-      "count": 14,
+      "count": 19,
       "hasGrid": false,
       "legacyApp": 3
     },
@@ -39,7 +39,7 @@
       "heading": "Strengthening regional partnerships",
       "question": "Regional roles and practical data-sharing conditions",
       "blurb": "Joint planning between health services, councils and other partners, and the data-sharing arrangements that make it possible.",
-      "count": 12,
+      "count": 15,
       "hasGrid": false,
       "legacyApp": 4
     },
@@ -49,7 +49,7 @@
       "heading": "Targeting prevention to reduce health inequities",
       "question": "Priority groups and places for reducing gaps",
       "blurb": "Differences in health between population groups and between areas, with measurement approaches.",
-      "count": 25,
+      "count": 28,
       "hasGrid": false,
       "legacyApp": 5
     },
@@ -59,16 +59,16 @@
       "heading": "A prevention measurement framework for local government",
       "question": "Council-level signals of a healthier local area",
       "blurb": "Walkability, green space, food environment and participation, measured at council level.",
-      "count": 30,
+      "count": 38,
       "hasGrid": false,
       "legacyApp": 6
     }
   ],
   "byAccess": {
-    "Not a dataset": 24,
-    "Public": 16,
-    "Restricted - application": 11,
-    "Public (aggregate only)": 9,
+    "Not a dataset": 25,
+    "Public": 21,
+    "Restricted - application": 14,
+    "Public (aggregate only)": 14,
     "Not yet assessed": 6
   },
   "accessValues": [
@@ -364,5 +364,5 @@
     "Australia",
     "International"
   ],
-  "withDownloadableData": 25
+  "withDownloadableData": 35
 }
