@@ -643,7 +643,10 @@
       row(S.label("sourceType"), S.escapeHtml(study.sourceType)) +
       "</dl>" +
       '<p class="small">' +
-        '<a href="study.html?id=' + encodeURIComponent(study.id) + '">View full record</a>' +
+        /* Not "View full record": this panel already holds the record, and study.html
+           actually shows one field fewer. What the link offers is an address of its own,
+           to send to someone or keep. */
+        '<a href="study.html?id=' + encodeURIComponent(study.id) + '">Open on its own page</a>' +
       "</p>";
   }
 
