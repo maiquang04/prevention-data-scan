@@ -621,10 +621,6 @@
   }
 
   function detailHtml(study) {
-    var links = study.dataLinks.map(function (link) {
-      if (!link.url) return "<li>" + S.escapeHtml(link.label) + "</li>";
-      return "<li>" + S.externalLink(link.url, link.label || S.shortHost(link.url)) + "</li>";
-    }).join("");
 
     return "<dl>" +
       row(S.label("topics"), S.topicTags(study)) +
@@ -640,14 +636,13 @@
       row(S.label("access"), S.accessBadge(study.access) +
         S.tagList(S.feeTags(study).map(S.feeLabel), S.feeTagClass(study)) +
         (study.accessNote ? " " + S.escapeHtml(study.accessNote) : "")) +
-      row(S.label("sourceLinks"), links ? "<ul>" + links + "</ul>" : "") +
+      row(S.label("sourceLinks"), S.sourceLink(study)) +
       row(S.label("scale"), S.escapeHtml(study.scale)) +
       row(S.label("keyAttributes"), S.escapeHtml(study.keyAttributes)) +
       row(S.label("country"), S.escapeHtml(study.country)) +
       row(S.label("sourceType"), S.escapeHtml(study.sourceType)) +
       "</dl>" +
       '<p class="small">' +
-        (study.link ? S.externalLink(study.link, "Visit original source") + " &nbsp;&middot;&nbsp; " : "") +
         '<a href="study.html?id=' + encodeURIComponent(study.id) + '">View full record</a>' +
       "</p>";
   }

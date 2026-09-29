@@ -58,7 +58,7 @@
     geographyTags: "Geography tags",
     dataSources: "Underlying data",
     access: "Access",
-    sourceLinks: "Source links",
+    sourceLinks: "Source link",
     scale: "Scale",
     keyAttributes: "Key details",
     country: "Country or system",
@@ -270,6 +270,33 @@
     }
   }
 
+  /* Every link for a source, as <li> rows, with the original source first.
+
+     There used to be a separate "Visit original source" button above this list. It was
+     removed in September 2026 because the two competed: the button held the page for the
+     source itself, while this list held whatever the workbook's "Data sources link" cell
+     pointed at, which for some rows is a portal landing page. A reader had no way to tell
+     which of the two was the specific one.
+
+     So the source's own page always leads, labelled as such, and a data link is only
+     listed when it goes somewhere different. That keeps the answer to "where is the
+     data" for the 31 rows where it genuinely differs from the paper, without showing
+     the same address twice for the 12 where it does not. */
+  /* One link per source: the page that source lives on, showing its own address.
+
+     This row used to be a bulleted list holding the source's page plus every "Data
+     sources link" from the workbook, above a separate "Visit original source" button.
+     Three problems, all fixed here: two controls competed for the same click, the
+     wording "Original source" hid where the link actually went, and several data links
+     were portal landing pages rather than the source itself.
+
+     The data links are still in the workbook and in studies.json. They are not drawn.
+     If a source's link is a bare domain, the fix is that row's Link cell in the
+     workbook, not a second link in this row. */
+  function sourceLink(study) {
+    return study.link ? externalLink(study.link, study.link) : "";
+  }
+
   /* Load the generated JSON. Everything the site draws comes from here, so the
      failure message has to be useful - the usual cause is opening the HTML file
      directly, which browsers block fetch() for. */
@@ -368,6 +395,7 @@
     metaRow: metaRow,
     externalLink: externalLink,
     shortHost: shortHost,
+    sourceLink: sourceLink,
     loadData: loadData,
     showLoadError: showLoadError,
     markCurrentNav: markCurrentNav,

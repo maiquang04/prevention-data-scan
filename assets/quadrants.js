@@ -84,16 +84,14 @@
       if (!study) {
         return "<li>Unknown study id <code>" + S.escapeHtml(sid) + "</code></li>";
       }
-      var where = study.dataLinks.filter(function (l) { return l.url; }).map(function (l) {
-        return S.externalLink(l.url, l.label || S.shortHost(l.url));
-      }).join(", ");
+      var where = S.sourceLink(study);
       return "<li>" +
         '<a href="study.html?id=' + encodeURIComponent(study.id) + '">' +
           S.escapeHtml(study.reference) + "</a>" +
         '<span class="meta-row">' + S.metaRow(study) + "</span>" +
         '<span class="small">' +
           (study.accessNote ? S.escapeHtml(study.accessNote) : S.escapeHtml(S.accessMeaning[study.access] || "")) +
-          (where ? "<br>Source links: " + where : "") +
+          (where ? "<br>Source link: " + where : "") +
         "</span></li>";
     }).join("");
 

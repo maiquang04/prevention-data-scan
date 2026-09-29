@@ -36,7 +36,7 @@
   </div>
 </footer>
 
-<script src="assets/common.js?v=4e9dbe37"></script>
+<script src="assets/common.js?v=afe4ba69"></script>
 <script>
 (function () {
   "use strict";
@@ -71,16 +71,11 @@
       '<a href="index.html">Overview</a> &rsaquo; ' +
       '<a href="browse.html">Browse sources</a> &rsaquo; source ' + study.num;
 
-    var links = study.dataLinks.map(function (l) {
-      if (!l.url) return "<li>" + S.escapeHtml(l.label) + "</li>";
-      return "<li>" + S.externalLink(l.url, l.label || S.shortHost(l.url)) + "</li>";
-    }).join("");
 
     document.getElementById("record").innerHTML =
       "<h1>" + S.escapeHtml(study.reference) + "</h1>" +
       '<p><span class="small muted">' + S.escapeHtml(study.sourceType) +
         " &middot; " + S.escapeHtml(study.country) + "</span></p>" +
-      (study.link ? "<p>" + S.externalLink(study.link, "Visit original source") + "</p>" : "") +
       '<div class="record"><dl>' +
         row(S.label("topics"), study.topics.map(function (id) {
           return '<a class="tag" href="browse.html?topic=' + encodeURIComponent(id) + '">' +
@@ -112,7 +107,7 @@
           S.escapeHtml(study.accessNote || S.accessMeaning[study.access] || "") +
           (S.feeTags(study).length
             ? " " + S.escapeHtml(S.feeMeaning[study.applicationFee] || "") : "")) +
-        row(S.label("sourceLinks"), links ? "<ul>" + links + "</ul>" : "") +
+        row(S.label("sourceLinks"), S.sourceLink(study)) +
         row(S.label("scale"), S.escapeHtml(study.scale)) +
         row(S.label("keyAttributes"), S.escapeHtml(study.keyAttributes)) +
       "</dl></div>" +
