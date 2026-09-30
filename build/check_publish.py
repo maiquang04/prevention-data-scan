@@ -23,7 +23,7 @@ SKIP_DIRS = {".git", "node_modules", "__pycache__", ".vscode", ".idea"}
 
 # Only these extensions are expected in a static site. Anything else is probably a
 # document that wandered in from the project folder.
-ALLOWED_EXT = {".html", ".css", ".js", ".json", ".md", ".py", ".txt", ".svg",
+ALLOWED_EXT = {".html", ".css", ".js", ".mjs", ".json", ".md", ".py", ".txt", ".svg",
                ".png", ".jpg", ".jpeg", ".ico", ".webmanifest", ".gitignore", ""}
 BANNED_EXT = {".xlsx", ".xls", ".xlsm", ".docx", ".doc", ".eml", ".msg", ".pdf",
               ".pptx", ".ppt", ".csv", ".zip"}
@@ -59,7 +59,7 @@ ALLOWED_EXCEPTIONS = [
     "build/check_publish.py",   # this file lists the banned words on purpose
 ]
 
-TEXT_EXT = {".html", ".css", ".js", ".json", ".md", ".py", ".txt", ".svg"}
+TEXT_EXT = {".html", ".css", ".js", ".mjs", ".json", ".md", ".py", ".txt", ".svg"}
 
 
 def walk():
