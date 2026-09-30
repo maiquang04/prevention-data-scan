@@ -1,0 +1,141 @@
+/* The plain-language search page. Sits on top of the site's own style.css and uses
+   its colours throughout, so the page reads as part of the site rather than a
+   separate tool bolted on. */
+
+.ask { max-width: 960px; }
+
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+.ask-proto {
+  font-size: .85rem; color: var(--ink-soft); background: var(--panel);
+  border: 1px dashed var(--rule); border-radius: var(--radius);
+  padding: 8px 12px; max-width: var(--text); margin: 4px 0 0;
+}
+
+/* ---------- the question ---------- */
+
+.ask-form { margin: 24px 0 12px; }
+.ask-form__label { display: block; font-weight: 600; margin-bottom: 6px; }
+.ask-form__row { display: flex; gap: 10px; align-items: stretch; }
+.ask-form__input {
+  flex: 1; resize: vertical; min-height: 3.3em;
+  font-size: 1rem; line-height: 1.45;
+}
+.ask-form__go {
+  cursor: pointer; font: inherit; font-weight: 600; padding: 0 26px;
+}
+.ask-form__foot {
+  display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center;
+  margin-top: 8px; font-size: .84rem; color: var(--muted);
+}
+
+/* A coloured dot says at a glance whether the model is there to ask. */
+.ask-status::before {
+  content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--rule); margin-right: 7px; vertical-align: 1px;
+}
+.ask-status--ok::before { background: var(--ok-fg); }
+.ask-status--warn { color: var(--gate-fg); }
+.ask-status--warn::before { background: var(--gate-fg); }
+
+.ask-model { display: flex; gap: 8px; align-items: baseline; margin-left: auto; }
+.ask-model select {
+  font: inherit; font-size: .84rem; padding: 3px 6px; color: inherit;
+  border: 1px solid var(--rule); border-radius: 4px; background: #fff; cursor: pointer;
+}
+
+.ask-examples {
+  display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin: 0 0 28px;
+}
+.ask-examples__label { font-size: .82rem; color: var(--muted); margin-right: 2px; }
+.ask-example {
+  border: 1px solid var(--rule); background: #fff; color: var(--ink-soft);
+  border-radius: 999px; padding: 3px 12px; font: inherit; font-size: .8rem;
+  cursor: pointer; text-align: left; line-height: 1.45;
+}
+.ask-example:hover {
+  border-color: var(--accent); color: var(--accent-dark); background: var(--accent-soft);
+}
+
+/* ---------- how the search read the question ---------- */
+
+.ask-reading {
+  background: var(--panel); border: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 16px 20px 14px; margin: 0 0 24px;
+}
+.ask-reading h2 { font-size: 1.02rem; margin-bottom: .7em; }
+.ask-reading h3 {
+  font-size: .74rem; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--muted); margin: 0 0 .45em; font-weight: 650;
+}
+.ask-why p { font-size: .95rem; max-width: 76ch; margin-bottom: 14px; }
+
+/* The cursor at the end of the reasoning while the model is still writing it. */
+.ask-caret {
+  display: inline-block; width: .45em; height: 1em; margin-left: 2px;
+  background: var(--accent); vertical-align: -2px;
+  animation: ask-blink 1s steps(2, start) infinite;
+}
+@keyframes ask-blink { to { visibility: hidden; } }
+@media (prefers-reduced-motion: reduce) { .ask-caret { animation: none; } }
+
+.ask-wait { color: var(--muted); margin: 0; font-size: .92rem; }
+.ask-clock { font-variant-numeric: tabular-nums; margin-left: 4px; }
+
+.ask-tags {
+  display: grid; grid-template-columns: 130px 1fr; gap: 7px 14px;
+  margin: 0 0 10px; font-size: .88rem;
+}
+.ask-tags dt { color: var(--muted); font-weight: 600; padding-top: 3px; }
+.ask-tags dd { margin: 0; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.ask-or { color: var(--muted); font-size: .78rem; }
+
+.ask-chip {
+  display: inline-flex; align-items: center; gap: 2px;
+  border: 1px solid var(--accent); background: #fff; color: var(--accent-dark);
+  border-radius: 999px; padding: 1px 3px 1px 11px; font-size: .84rem; font-weight: 600;
+}
+.ask-chip__x {
+  border: 0; background: none; color: var(--muted); cursor: pointer;
+  font: inherit; font-size: 1.05rem; line-height: 1; padding: 1px 6px 2px;
+  border-radius: 999px;
+}
+.ask-chip__x:hover, .ask-chip__x:focus-visible { color: #8a2b1c; background: #fdf0ee; }
+
+.ask-hint, .ask-removed { font-size: .84rem; color: var(--ink-soft); margin: 6px 0 0; }
+.ask-removed .linkish { font-size: .84rem; }
+.ask-none { font-size: .92rem; color: var(--ink-soft); margin: 0; max-width: 76ch; }
+.ask-fallback { margin-bottom: 4px; }
+.ask-fallback p { margin-bottom: .4em; }
+.ask-meta { font-size: .8rem; color: var(--muted); margin: 10px 0 0; }
+
+/* ---------- results ---------- */
+
+.ask-browse { font-size: .88rem; margin-left: auto; }
+
+/* Which of the chosen tags a source carries. Ticks and crosses are drawn here, not
+   written into the text, so what a screen reader reads is the tag's own name. */
+.ask-match {
+  display: flex; flex-wrap: wrap; gap: 3px 12px; align-items: baseline;
+  font-size: .8rem; color: var(--ink-soft); margin: 0 0 4px;
+}
+.ask-match__count { font-weight: 650; color: var(--ink); }
+.ask-match--full .ask-match__count { color: var(--ok-fg); }
+.ask-hit::before { content: "\2713\00a0"; color: var(--ok-fg); font-weight: 700; }
+.ask-miss { color: var(--muted); }
+.ask-miss::before { content: "\2717\00a0"; color: #a2453a; font-weight: 700; }
+
+/* ---------- narrow screens ---------- */
+
+@media (max-width: 720px) {
+  .ask-form__row { flex-direction: column; }
+  .ask-form__go { padding: 10px 18px; }
+  .ask-tags { grid-template-columns: 1fr; gap: 2px; }
+  .ask-tags dt { margin-top: 6px; }
+  .ask-model { margin-left: 0; }
+  .ask-browse { margin-left: 0; }
+}

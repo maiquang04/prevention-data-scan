@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Prototype, served on this computer by search/serve.py. Not part of the public site. -->
+<meta name="robots" content="noindex">
+<title>Ask a question - Prevention data observatory</title>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/ask.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="site-head__inner">
+    <a class="site-head__title" href="index.html">Prevention data observatory <span>&middot; working draft</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="index.html">Overview</a>
+      <a href="application.html?app=1" data-grid-nav>Focus area view</a>
+      <a href="browse.html">Browse sources</a>
+      <a href="ask.html">Ask a question</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap ask" id="ask-main">
+    <p class="crumb"><a href="index.html">Overview</a> &rsaquo; Ask a question</p>
+    <h1>Ask a question</h1>
+    <p class="lede">Describe what you are looking for in your own words. A language model
+      running on this computer reads the question and picks the tags from this site that
+      fit it, and those tags find the sources. You can see why it chose each tag, and
+      remove any you disagree with.</p>
+    <p class="ask-proto"><b>Prototype.</b> This page works only while the search server
+      and LM Studio are running on this computer. It is not on the public site, and
+      nothing typed here leaves this computer.</p>
+
+    <form class="ask-form" id="ask-form" autocomplete="off">
+      <label for="question" class="ask-form__label">Your question</label>
+      <div class="ask-form__row">
+        <textarea id="question" class="search ask-form__input" rows="2" maxlength="500"
+          placeholder="For example: is there free data on how walkable our suburbs are?"></textarea>
+        <button type="submit" class="button ask-form__go" id="go">Search</button>
+      </div>
+      <div class="ask-form__foot">
+        <span class="ask-status" id="model-status">Checking the model&hellip;</span>
+        <span class="ask-model" id="model-pick" hidden>
+          <label for="model">Model</label>
+          <select id="model"></select>
+        </span>
+      </div>
+    </form>
+
+    <div class="ask-examples" id="examples" hidden></div>
+
+    <p class="visually-hidden" id="announce" role="status" aria-live="polite"></p>
+
+    <section class="ask-reading" id="reading" hidden aria-labelledby="reading-title">
+      <h2 id="reading-title">How the search read your question</h2>
+      <div id="reading-body"></div>
+    </section>
+
+    <section id="answer" hidden aria-labelledby="answer-title">
+      <h2 id="answer-title" class="visually-hidden">Sources</h2>
+      <div class="resultbar" id="resultbar"></div>
+      <ul class="results" id="results"></ul>
+    </section>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>Working draft &middot; data last updated <span data-generated>&mdash;</span>.</p>
+    <p>Search prototype, running on this computer only.</p>
+  </div>
+</footer>
+
+<script src="assets/common.js"></script>
+<script src="assets/ask.js"></script>
+</body>
+</html>

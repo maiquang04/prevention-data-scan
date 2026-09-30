@@ -217,11 +217,23 @@ build/
   stamp_assets.py   adds ?v=<hash> to each stylesheet and script link
   check_publish.py  pre-push safety scan
   check_links.py    checks the outbound links still resolve
+search/             a prototype, not part of the published pages — see below
 .nojekyll           stops GitHub Pages hiding files that start with an underscore
 ```
 
 Plain HTML, CSS and JavaScript, no build step and no dependencies beyond `openpyxl` for the
 export script. GitHub Pages serves the files as they are.
+
+### search/
+
+A prototype of asking for sources in plain words rather than by ticking filters. A small
+language model reads the question, picks tags the scan already uses, and those tags do the
+searching; the reader sees which tags were chosen, why, and can remove any of them.
+
+It is **not part of the published site** and nothing else here depends on it. The model
+runs on a laptop through LM Studio, which a static site cannot do, so the page is served
+locally beside the real site by `search/serve.py`. Where this would eventually run is
+still open. `search/README.md` says how to run it and what it cannot do.
 
 ## Which filters start open
 

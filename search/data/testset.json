@@ -1,0 +1,647 @@
+{
+  "frozen": false,
+  "generator": "qwen/qwen3-4b-2507",
+  "generated": "2026-09-29",
+  "items": [
+    {
+      "qid": "t001",
+      "target": "app1-01",
+      "question": "How much money do public health programs save the system on average?",
+      "basis": "abstract",
+      "leak": 0.25,
+      "attempts": 1
+    },
+    {
+      "qid": "t002",
+      "target": "app1-02",
+      "question": "How effective are community health efforts in reducing hospital visits for common, treatable conditions?",
+      "basis": "summary",
+      "leak": 0.3,
+      "attempts": 1
+    },
+    {
+      "qid": "t003",
+      "target": "app1-03",
+      "question": "How much do people's personal health and background factors affect hospital visits, compared to access to doctors?",
+      "basis": "abstract",
+      "leak": 0.5,
+      "attempts": 1
+    },
+    {
+      "qid": "t004",
+      "target": "app1-04",
+      "question": "How well does primary care prevent hospital visits for common conditions? What evidence helps decide if primary care services are effective?",
+      "basis": "abstract",
+      "leak": 0.286,
+      "attempts": 1
+    },
+    {
+      "qid": "t005",
+      "target": "app1-05",
+      "question": "How can we pick the most cost-effective health prevention programs for communities?",
+      "basis": "summary",
+      "leak": 0.375,
+      "attempts": 1
+    },
+    {
+      "qid": "t006",
+      "target": "app1-06",
+      "question": "How much could we save in healthcare costs by stopping diseases before they start?",
+      "basis": "summary",
+      "leak": 0.111,
+      "attempts": 1
+    },
+    {
+      "qid": "t007",
+      "target": "app1-07",
+      "question": "Is there evidence that preventive health measures save money for the healthcare system?",
+      "basis": "summary",
+      "leak": 0.375,
+      "attempts": 1
+    },
+    {
+      "qid": "t008",
+      "target": "app1-08",
+      "question": "How effective are common programs in preventing sudden hospital visits for treatable conditions?",
+      "basis": "summary",
+      "leak": 0.333,
+      "attempts": 1
+    },
+    {
+      "qid": "t009",
+      "target": "app1-09",
+      "question": "How do different countries compare in preventing unnecessary hospital visits for common chronic conditions?",
+      "basis": "summary",
+      "leak": 0.1,
+      "attempts": 1
+    },
+    {
+      "qid": "t010",
+      "target": "app1-10",
+      "question": "How effective are community health services in reducing avoidable hospital visits in rural areas?",
+      "basis": "summary",
+      "leak": 0.2,
+      "attempts": 1
+    },
+    {
+      "qid": "t011",
+      "target": "app1-11",
+      "question": "How can we identify current health priorities in different areas to better match services to community needs?",
+      "basis": "summary",
+      "leak": 0.364,
+      "attempts": 1
+    },
+    {
+      "qid": "t012",
+      "target": "app1-12",
+      "question": "How detailed is current health data by local area for community planning?",
+      "basis": "summary",
+      "leak": 0.286,
+      "attempts": 1
+    },
+    {
+      "qid": "t013",
+      "target": "app1-13",
+      "question": "How can we decide which health issues to target with spending, based on how much they harm people?",
+      "basis": "summary",
+      "leak": 0.1,
+      "attempts": 1
+    },
+    {
+      "qid": "t014",
+      "target": "app2-01",
+      "question": "How can city designs encourage more people to stay active?",
+      "basis": "abstract",
+      "leak": 0.0,
+      "attempts": 1
+    },
+    {
+      "qid": "t015",
+      "target": "app2-02",
+      "question": "How might having more trees in neighborhoods help reduce the risk of heart and blood pressure problems?",
+      "basis": "abstract",
+      "leak": 0.167,
+      "attempts": 1
+    },
+    {
+      "qid": "t016",
+      "target": "app2-03",
+      "question": "How can cities improve access to safe, child-friendly outdoor spaces to support kids' mental health?",
+      "basis": "abstract",
+      "leak": 0.583,
+      "attempts": 1
+    },
+    {
+      "qid": "t017",
+      "target": "app2-04",
+      "question": "How can we improve access to healthy food options for communities to help reduce obesity rates?",
+      "basis": "abstract",
+      "leak": 0.4,
+      "attempts": 1
+    },
+    {
+      "qid": "t018",
+      "target": "app2-05",
+      "question": "How can we better track and improve the food environments in our communities to promote healthier choices?",
+      "basis": "abstract",
+      "leak": 0.3,
+      "attempts": 1
+    },
+    {
+      "qid": "t019",
+      "target": "app2-06",
+      "question": "How can we understand how often people in a neighborhood walk or cycle for daily trips?",
+      "basis": "summary",
+      "leak": 0.125,
+      "attempts": 1
+    },
+    {
+      "qid": "t020",
+      "target": "app2-07",
+      "question": "How can we understand where people live in relation to green spaces and walking routes?",
+      "basis": "summary",
+      "leak": 0.125,
+      "attempts": 1
+    },
+    {
+      "qid": "t021",
+      "target": "app2-08",
+      "question": "Where can I find official data on health trends in Queensland?",
+      "basis": "summary",
+      "leak": 0.25,
+      "attempts": 1
+    },
+    {
+      "qid": "t022",
+      "target": "app2-09",
+      "question": "How can we tell if people feel supported in their communities and whether loneliness is affecting public health?",
+      "basis": "summary",
+      "leak": 0.4,
+      "attempts": 1
+    },
+    {
+      "qid": "t023",
+      "target": "app2-10",
+      "question": "How can we understand how well children are developing in different areas of a community?",
+      "basis": "summary",
+      "leak": 0.286,
+      "attempts": 1
+    },
+    {
+      "qid": "t024",
+      "target": "app2-11",
+      "question": "How can we see where and how often people walk or cycle in their daily routines, especially after changes to streets or paths?",
+      "basis": "summary",
+      "leak": 0.25,
+      "attempts": 1
+    },
+    {
+      "qid": "t025",
+      "target": "app2-12",
+      "question": "How can we tell if more people are using bicycles for daily travel instead of cars?",
+      "basis": "summary",
+      "leak": 0.375,
+      "attempts": 1
+    },
+    {
+      "qid": "t026",
+      "target": "app2-13",
+      "question": "How can we track real-time foot traffic in a city centre to understand public movement patterns?",
+      "basis": "summary",
+      "leak": 0.455,
+      "attempts": 2
+    },
+    {
+      "qid": "t027",
+      "target": "app2-14",
+      "question": "How can we tell if people are using new bike paths and whether they're getting more popular over time?",
+      "basis": "summary",
+      "leak": 0.083,
+      "attempts": 1
+    },
+    {
+      "qid": "t028",
+      "target": "app3-01",
+      "question": "How common are chronic conditions and unhealthy habits across the country, and what does that mean for public health efforts?",
+      "basis": "summary",
+      "leak": 0.25,
+      "attempts": 1
+    },
+    {
+      "qid": "t029",
+      "target": "app3-02",
+      "question": "How can we ensure health programs reach more people effectively and stay supported as they grow?",
+      "basis": "abstract",
+      "leak": 0.091,
+      "attempts": 1
+    },
+    {
+      "qid": "t030",
+      "target": "app3-03",
+      "question": "How can we better assess whether health programs actually work in real-world settings?",
+      "basis": "abstract",
+      "leak": 0.3,
+      "attempts": 1
+    },
+    {
+      "qid": "t031",
+      "target": "app3-04",
+      "question": "How can we make physical activity events more accessible for people in low-income areas?",
+      "basis": "abstract",
+      "leak": 0.3,
+      "attempts": 1
+    },
+    {
+      "qid": "t032",
+      "target": "app3-05",
+      "question": "How can we tell where people are struggling to access care and where services are underused in different areas?",
+      "basis": "summary",
+      "leak": 0.444,
+      "attempts": 1
+    },
+    {
+      "qid": "t033",
+      "target": "app3-06",
+      "question": "How common is it for people to do physical activity through different settings like clubs or at home?",
+      "basis": "summary",
+      "leak": 0.3,
+      "attempts": 1
+    },
+    {
+      "qid": "t034",
+      "target": "app3-07",
+      "question": "How effective are workplace-based step challenges in encouraging daily physical activity among adults?",
+      "basis": "summary",
+      "leak": 0.273,
+      "attempts": 1
+    },
+    {
+      "qid": "t035",
+      "target": "app3-08",
+      "question": "How can we better understand how people’s daily habits like activity, diet, and sleep actually match up in real life?",
+      "basis": "summary",
+      "leak": 0.231,
+      "attempts": 1
+    },
+    {
+      "qid": "t036",
+      "target": "app3-09",
+      "question": "How has the overall level of physical activity among adults changed over recent years?",
+      "basis": "summary",
+      "leak": 0.455,
+      "attempts": 1
+    },
+    {
+      "qid": "t037",
+      "target": "app3-10",
+      "question": "How common is overweight and obesity among adults and children in a country, and how does it affect health over time?",
+      "basis": "summary",
+      "leak": 0.417,
+      "attempts": 1
+    },
+    {
+      "qid": "t038",
+      "target": "app4-01",
+      "question": "How can we better understand how cross-sector policies lead to improved health outcomes?",
+      "basis": "abstract",
+      "leak": 0.333,
+      "attempts": 1
+    },
+    {
+      "qid": "t039",
+      "target": "app4-02",
+      "question": "How can different sectors work together more effectively to improve public health outcomes?",
+      "basis": "abstract",
+      "leak": 0.2,
+      "attempts": 1
+    },
+    {
+      "qid": "t040",
+      "target": "app4-03",
+      "question": "How can national health policies better support local efforts to reduce health inequalities?",
+      "basis": "abstract",
+      "leak": 0.556,
+      "attempts": 1
+    },
+    {
+      "qid": "t041",
+      "target": "app4-04",
+      "question": "Can we track how changes in one social program affect people’s health outcomes over time?",
+      "basis": "summary",
+      "leak": 0.273,
+      "attempts": 1
+    },
+    {
+      "qid": "t042",
+      "target": "app4-05",
+      "question": "How can we ensure data sharing in public health stays safe for people, settings, and outputs?",
+      "basis": "summary",
+      "leak": 0.444,
+      "attempts": 1
+    },
+    {
+      "qid": "t043",
+      "target": "app4-06",
+      "question": "How can government health data be safely shared with researchers and local agencies?",
+      "basis": "summary",
+      "leak": 0.429,
+      "attempts": 1
+    },
+    {
+      "qid": "t044",
+      "target": "app4-07",
+      "question": "Is there reliable health data available for specific local areas, like a city or town, to support targeted public health actions?",
+      "basis": "summary",
+      "leak": 0.231,
+      "attempts": 1
+    },
+    {
+      "qid": "t045",
+      "target": "app4-08",
+      "question": "Where can I find official, up-to-date data on public health initiatives across different levels of government?",
+      "basis": "summary",
+      "leak": 0.0,
+      "attempts": 1
+    },
+    {
+      "qid": "t046",
+      "target": "app4-09",
+      "question": "How should we consistently measure health outcomes across different reports and agencies?",
+      "basis": "summary",
+      "leak": 0.375,
+      "attempts": 1
+    },
+    {
+      "qid": "t047",
+      "target": "app4-10",
+      "question": "How close are people to the nearest health service, and does location affect access?",
+      "basis": "summary",
+      "leak": 0.444,
+      "attempts": 1
+    },
+    {
+      "qid": "t048",
+      "target": "app5-01",
+      "question": "How can we fairly track health gaps between different groups in a community?",
+      "basis": "summary",
+      "leak": 0.375,
+      "attempts": 1
+    },
+    {
+      "qid": "t049",
+      "target": "app5-02",
+      "question": "How can public health interventions better address growing inequalities in health outcomes across different communities?",
+      "basis": "summary",
+      "leak": 0.182,
+      "attempts": 1
+    },
+    {
+      "qid": "t050",
+      "target": "app5-03",
+      "question": "How can we better target health programs for rural areas without mixing them together?",
+      "basis": "summary",
+      "leak": 0.4,
+      "attempts": 1
+    },
+    {
+      "qid": "t051",
+      "target": "app5-04",
+      "question": "How does healthcare use differ across areas for certain chronic conditions, especially among disadvantaged populations?",
+      "basis": "summary",
+      "leak": 0.417,
+      "attempts": 3
+    },
+    {
+      "qid": "t052",
+      "target": "app5-05",
+      "question": "How can we ensure health data fairly compares different groups? What key details should be collected to make those comparisons fair and reliable?",
+      "basis": "summary",
+      "leak": 0.214,
+      "attempts": 1
+    },
+    {
+      "qid": "t053",
+      "target": "app5-06",
+      "question": "How can we identify which neighborhoods need more health support based on key community factors?",
+      "basis": "summary",
+      "leak": 0.0,
+      "attempts": 1
+    },
+    {
+      "qid": "t054",
+      "target": "app5-07",
+      "question": "How can we use local area disadvantage scores to better target health services for at-risk communities?",
+      "basis": "summary",
+      "leak": 0.5,
+      "attempts": 1
+    },
+    {
+      "qid": "t055",
+      "target": "app5-08",
+      "question": "How can we ensure data about Indigenous communities is used fairly and respects their rights?",
+      "basis": "summary",
+      "leak": 0.286,
+      "attempts": 1
+    },
+    {
+      "qid": "t056",
+      "target": "app5-09",
+      "question": "How can we tell which communities have worse health outcomes and what’s driving those differences?",
+      "basis": "summary",
+      "leak": 0.333,
+      "attempts": 1
+    },
+    {
+      "qid": "t057",
+      "target": "app5-10",
+      "question": "How can we identify which communities face the greatest challenges in accessing health resources?",
+      "basis": "summary",
+      "leak": 0.125,
+      "attempts": 1
+    },
+    {
+      "qid": "t058",
+      "target": "app5-11",
+      "question": "How does health change over a woman’s lifetime, and what factors influence these changes across different age groups and backgrounds?",
+      "basis": "summary",
+      "leak": 0.4,
+      "attempts": 1
+    },
+    {
+      "qid": "t059",
+      "target": "app5-12",
+      "question": "How can we track long-term changes in people’s health and life circumstances to improve support for families and individuals?",
+      "basis": "summary",
+      "leak": 0.25,
+      "attempts": 1
+    },
+    {
+      "qid": "t060",
+      "target": "app5-13",
+      "question": "How do early life conditions affect long-term health outcomes for children growing up?",
+      "basis": "summary",
+      "leak": 0.3,
+      "attempts": 1
+    },
+    {
+      "qid": "t061",
+      "target": "app5-14",
+      "question": "How can early childhood programs better support Indigenous children's health and wellbeing in different living areas?",
+      "basis": "summary",
+      "leak": 0.333,
+      "attempts": 1
+    },
+    {
+      "qid": "t062",
+      "target": "app5-15",
+      "question": "How can we support migrants' mental and physical health after they settle in a new country?",
+      "basis": "summary",
+      "leak": 0.4,
+      "attempts": 1
+    },
+    {
+      "qid": "t063",
+      "target": "app5-16",
+      "question": "How can we understand if certain groups of children are facing worse health or safety outcomes compared to others?",
+      "basis": "summary",
+      "leak": 0.364,
+      "attempts": 1
+    },
+    {
+      "qid": "t064",
+      "target": "app6-01",
+      "question": "How can we measure how healthy and walkable cities are in different neighborhoods?",
+      "basis": "abstract",
+      "leak": 0.5,
+      "attempts": 1
+    },
+    {
+      "qid": "t065",
+      "target": "app6-02",
+      "question": "Can I find out how accessible daily amenities are in different neighborhoods for residents?",
+      "basis": "summary",
+      "leak": 0.0,
+      "attempts": 1
+    },
+    {
+      "qid": "t066",
+      "target": "app6-03",
+      "question": "How can city designs help more people stay active and reduce traffic-related injuries?",
+      "basis": "summary",
+      "leak": 0.091,
+      "attempts": 1
+    },
+    {
+      "qid": "t067",
+      "target": "app6-04",
+      "question": "How can we measure and compare how easy it is for people to access healthy food and active spaces in different cities?",
+      "basis": "summary",
+      "leak": 0.273,
+      "attempts": 1
+    },
+    {
+      "qid": "t068",
+      "target": "app6-05",
+      "question": "How can we ensure health indicators influence real policy decisions in communities?",
+      "basis": "summary",
+      "leak": 0.25,
+      "attempts": 1
+    },
+    {
+      "qid": "t069",
+      "target": "app6-06",
+      "question": "How can city governments access real-time health data to improve local public health decisions?",
+      "basis": "summary",
+      "leak": 0.4,
+      "attempts": 1
+    },
+    {
+      "qid": "t070",
+      "target": "app6-07",
+      "question": "How well does a simple wellbeing tool detect people's mental health and track changes over time?",
+      "basis": "summary",
+      "leak": 0.385,
+      "attempts": 1
+    },
+    {
+      "qid": "t071",
+      "target": "app6-08",
+      "question": "How can we improve the accuracy of data on where people get their food and how it affects health?",
+      "basis": "abstract",
+      "leak": 0.286,
+      "attempts": 1
+    },
+    {
+      "qid": "t072",
+      "target": "app6-09",
+      "question": "How can we fairly combine different health indicators into a single score that remains reliable under different weighting choices?",
+      "basis": "summary",
+      "leak": 0.25,
+      "attempts": 1
+    },
+    {
+      "qid": "t073",
+      "target": "app6-10",
+      "question": "How common is unhealthy behavior like poor diet or lack of activity among residents in different parts of a region?",
+      "basis": "summary",
+      "leak": 0.231,
+      "attempts": 1
+    },
+    {
+      "qid": "t074",
+      "target": "app6-11",
+      "question": "How can we understand the key characteristics of residents in a local area to support better community health planning?",
+      "basis": "summary",
+      "leak": 0.182,
+      "attempts": 1
+    },
+    {
+      "qid": "t075",
+      "target": "app6-12",
+      "question": "How can we improve daily life in city areas for residents through better planning and access to key services?",
+      "basis": "summary",
+      "leak": 0.083,
+      "attempts": 1
+    },
+    {
+      "qid": "t076",
+      "target": "app6-13",
+      "question": "How can we compare how well different cities support active living and access to healthy environments?",
+      "basis": "summary",
+      "leak": 0.1,
+      "attempts": 1
+    },
+    {
+      "qid": "t077",
+      "target": "app6-14",
+      "question": "How can we quickly tell if a new neighborhood design supports healthier living for residents?",
+      "basis": "summary",
+      "leak": 0.111,
+      "attempts": 1
+    },
+    {
+      "qid": "t078",
+      "target": "app6-15",
+      "question": "How can we understand daily routines like commuting and volunteering across different neighborhoods in a region?",
+      "basis": "summary",
+      "leak": 0.0,
+      "attempts": 1
+    },
+    {
+      "qid": "t079",
+      "target": "app6-16",
+      "question": "How can we measure progress in building safe bike paths for regular use?",
+      "basis": "summary",
+      "leak": 0.286,
+      "attempts": 1
+    },
+    {
+      "qid": "t080",
+      "target": "app6-17",
+      "question": "How can we understand how health services are spread across different areas of a city?",
+      "basis": "summary",
+      "leak": 0.25,
+      "attempts": 1
+    }
+  ]
+}
