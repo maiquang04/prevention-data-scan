@@ -28,3 +28,9 @@ desktop.ini
 
 # Local server scratch
 *.log
+
+# Search prototype. Its evaluation results, screenshots and the abstracts it downloads
+# are generated on one laptop against one model, and the papers' abstracts belong to
+# their publishers. The code and the test questions are committed; these are not.
+search/results/
+search/data/abstracts.json

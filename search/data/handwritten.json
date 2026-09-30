@@ -1,0 +1,144 @@
+{
+  "confirmed": false,
+  "note": "Questions for the live demonstration, each with the sources that would be good answers. Every reason quotes the field in studies.json that makes the source relevant. Set confirmed to true once each reason has been checked.",
+  "items": [
+    {
+      "qid": "h1",
+      "question": "what are the current public data available for walkability in this region",
+      "acceptable": [
+        "app6-01",
+        "app6-02",
+        "app6-04"
+      ],
+      "reasons": {
+        "app6-01": "indicators include \"Walkability Index\"; access \"Public\"",
+        "app6-02": "indicators include \"Walkability Index\"; access \"Public\"; task says it publishes the underlying datasets as free open data",
+        "app6-04": "indicators include \"Walkability Index\"; access \"Public\""
+      },
+      "excluded": {
+        "app6-12": "carries the Walkability Index but access is \"Restricted - application\" with a fee, so not public data",
+        "app6-13": "carries the Walkability Index but access is \"Not yet assessed\""
+      }
+    },
+    {
+      "qid": "h2",
+      "question": "I want to establish a study to discuss the cost effectiveness of all the public transportation. What's the data source I can possibly use?",
+      "acceptable": [
+        "app2-06",
+        "app6-15",
+        "app6-02",
+        "app6-01",
+        "app6-04",
+        "app1-01",
+        "app1-07"
+      ],
+      "reasons": {
+        "app2-06": "task: records how Queensland households actually travelled over a single day, by what means and why; indicator \"Active transport mode share\"; access \"Public\"",
+        "app6-15": "task says it is the only source measuring how people travel to work; indicator \"Active transport mode share\"; access \"Public\"",
+        "app6-02": "indicators include \"Public transport accessibility\"; access \"Public\"",
+        "app6-01": "indicators include \"Public transport accessibility\"; access \"Public\"",
+        "app6-04": "indicators include \"Public transport accessibility\"; access \"Public\"",
+        "app1-01": "task: quantifies the economic return of public health interventions; this is the cost-effectiveness method rather than the transport data",
+        "app1-07": "task: shows most public health interventions assessed for England's national clinical guidance are highly cost-effective; again the method side"
+      }
+    },
+    {
+      "qid": "h3",
+      "question": "is there data that private companies own on how active people are, for example from smart devices?",
+      "acceptable": [
+        "app2-11",
+        "app3-07"
+      ],
+      "reasons": {
+        "app2-11": "Strava Metro, a company's data; task says it counts walking and cycling from phone and GPS-watch recordings; access \"Restricted - application\", fee \"No fee\"",
+        "app3-07": "10,000 Steps, an app people and workplaces log steps into. Run by CQUniversity rather than a company, so cut this one if the question is read strictly as private companies."
+      },
+      "excluded": {
+        "app3-08": "measures activity with an accelerometer, but it is an Australian Bureau of Statistics survey, not company data"
+      }
+    },
+    {
+      "qid": "h4",
+      "question": "which data sources would we have to pay a fee to access?",
+      "acceptable": [
+        "app1-03",
+        "app1-04",
+        "app2-02",
+        "app2-09",
+        "app3-01",
+        "app3-08",
+        "app4-04",
+        "app6-12"
+      ],
+      "reasons": {
+        "app1-03": "applicationFee \"Fee required\"",
+        "app1-04": "applicationFee \"Fee required\"",
+        "app2-02": "applicationFee \"Fee required\"",
+        "app2-09": "applicationFee \"Fee required\"",
+        "app3-01": "applicationFee \"Fee required\"",
+        "app3-08": "applicationFee \"Fee required\"",
+        "app4-04": "applicationFee \"Fee required\"",
+        "app6-12": "applicationFee \"Fee required\""
+      }
+    },
+    {
+      "qid": "h5",
+      "question": "how can a council measure whether residents can reach green space?",
+      "acceptable": [
+        "app6-01",
+        "app2-07",
+        "app6-02",
+        "app6-12",
+        "app2-03",
+        "app6-04"
+      ],
+      "reasons": {
+        "app6-01": "indicators include \"Green space access\" and \"% dwellings within 400m open space\", which is this question stated as a number; access \"Public\"",
+        "app2-07": "indicators \"Green space access\" and \"Tree canopy/shade coverage\"; geography tags include LGA; access \"Public\"",
+        "app6-02": "indicators include \"Green space access\"; access \"Public\"",
+        "app6-12": "indicator \"Green space access\" reported at LGA, which is the council's own boundary, but it carries a fee",
+        "app2-03": "indicator \"Green space access\" at small-area level",
+        "app6-04": "indicator \"Green space access\"; access \"Public\""
+      }
+    },
+    {
+      "qid": "h6",
+      "question": "where can I find data on children's physical activity?",
+      "acceptable": [
+        "app3-09",
+        "app6-10",
+        "app3-08"
+      ],
+      "reasons": {
+        "app3-09": "indicator \"Children meeting PA guidelines\"; access \"Public (aggregate only)\"",
+        "app6-10": "indicator \"Children meeting PA guidelines\", Queensland's own survey; access \"Public\"",
+        "app3-08": "indicator \"Children meeting PA guidelines\"; task says activity is measured with an accelerometer rather than asked about"
+      }
+    },
+    {
+      "qid": "h7",
+      "question": "what data shows differences in health between advantaged and disadvantaged areas?",
+      "acceptable": [
+        "app5-09",
+        "app5-10",
+        "app5-04",
+        "app5-02",
+        "app5-03"
+      ],
+      "reasons": {
+        "app5-09": "task: brings health, social and economic figures for small areas together so differences between areas can be seen side by side; access \"Public\"",
+        "app5-10": "task: ranks every area in Australia by social and economic disadvantage; access \"Public\"",
+        "app5-04": "healthcare variation between small areas, Primary Health Networks and remoteness; access \"Public (aggregate only)\"",
+        "app5-02": "the Marmot review of health inequality; access \"Public\"",
+        "app5-03": "task concerns regional health inequality at local government area and remoteness level"
+      }
+    },
+    {
+      "qid": "h8",
+      "question": "what data is there on hospital car parking fees?",
+      "acceptable": [],
+      "reasons": {},
+      "why_empty": "Nothing in the scan is about car parking. The only source whose text contains the word is app6-13, where parking appears in a list of city policy measures, not as data anyone could use. This question is here to show what a user sees when the collection has nothing: some tags are still chosen and something is still listed, so the reasoning line and the partial-match marks are what tell them the match is weak. There is no pass mark."
+    }
+  ]
+}
