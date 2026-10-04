@@ -214,6 +214,41 @@ def evaluate(args):
     return 0
 
 
+def stale_runs(runs):
+    """Runs made before the questions were last reviewed, so not comparable.
+
+    Freezing the test set stamps the day it happened. A run from before that was
+    scored on questions that have since been edited, and putting it in the same
+    table as a later run would compare two different things.
+    """
+    try:
+        with open(TESTSET, encoding="utf-8") as f:
+            frozen_on = json.load(f).get("frozen_on")
+    except (OSError, ValueError):
+        return []
+    if not frozen_on:
+        return []
+    return [r for r in runs if r["meta"]["date"] < frozen_on]
+
+
+def warn_about_dates(runs, lines):
+    """Add a line to the file, and print one, if the rows are not all comparable."""
+    stale = stale_runs(runs)
+    dates = sorted({r["meta"]["date"] for r in runs})
+    notes = []
+    if stale:
+        notes.append("**These rows are not comparable.** " +
+                     ", ".join(label(r) for r in stale) +
+                     " ran before the questions were last reviewed. Run those again.")
+    elif len(dates) > 1:
+        notes.append("Rows were run on different days (%s), on the same frozen questions."
+                     % ", ".join(dates))
+    for note in notes:
+        print("\n" + note)
+        lines += ["", note]
+    return bool(stale)
+
+
 def write_summary():
     runs = load_runs()
     if not runs:
@@ -222,22 +257,24 @@ def write_summary():
     runs.sort(key=lambda r: -r["summary"]["R@5"])
 
     lines = ["# Search results", "",
-             "One row per run. All scored on the same questions.", "",
-             "| Method | Model | R@1 | R@5 | R@10 | MRR@10 | Empty | Sec | Hand-written hit@5 |",
-             "|---|---|---|---|---|---|---|---|---|"]
+             "One row per method, the most recent run of each.", "",
+             "| Method | Model | R@1 | R@5 | R@10 | MRR@10 | Empty | Sec | Hand-written hit@5 | Run |",
+             "|---|---|---|---|---|---|---|---|---|---|"]
     for run in runs:
         s, m = run["summary"], run["meta"]
-        lines.append("| %s | %s | %.3f | %.3f | %.3f | %.3f | %.3f | %s | %s |"
-                     % (m["method"], m["model"] or "-", s["R@1"], s["R@5"], s["R@10"],
+        lines.append("| %s | %s | %.3f | %.3f | %.3f | %.3f | %.3f | %s | %s | %s |"
+                     % (m["method"], m.get("model") or "-", s["R@1"], s["R@5"], s["R@10"],
                         s["MRR@10"], s["empty"],
                         ("%.1f" % s["sec"]) if "sec" in s else "-",
-                        s["handwritten_hit@5"]))
+                        s["handwritten_hit@5"], m["date"]))
     lines += ["",
               "R@5 means the right source was in the top five. MRR@10 rewards putting it",
               "higher up. Empty is the share of questions that returned nothing at all.",
               "Sec is the median time per question. The hand-written questions are the",
               "seven with a known good answer; the eighth is deliberately out of scope and",
-              "is not scored.", ""]
+              "is not scored."]
+    warn_about_dates(runs, lines)
+    lines.append("")
     out = RESULTS / "summary.md"
     with open(out, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
@@ -246,19 +283,44 @@ def write_summary():
     return 0
 
 
-def load_runs():
+def load_runs(all_dates=False):
+    """The finished runs, newest per method and model only.
+
+    A result file is named by its date, so running a method again on another day
+    leaves the earlier file in place. Keeping both would list that method twice in
+    the tables, and the two rows would be scored on different questions whenever
+    the test set was reviewed in between. Only the newest of each is kept, unless
+    all_dates is asked for.
+    """
     runs = []
     for path in sorted(RESULTS.glob("*.json")):
         if path.name.startswith("_") or path.name.endswith(".partial.json"):
             continue
         with open(path, encoding="utf-8") as f:
             runs.append(json.load(f))
-    return runs
+    if all_dates:
+        return runs
+
+    newest, dropped = {}, []
+    for run in runs:
+        key = (run["meta"]["method"], run["meta"].get("model"))
+        older = newest.get(key)
+        # Same method run twice on one day: the later file overwrote the earlier,
+        # so ties keep whichever sorted last, which is the one still on disk.
+        if older is None or run["meta"]["date"] >= older["meta"]["date"]:
+            if older is not None:
+                dropped.append(older)
+            newest[key] = run
+        else:
+            dropped.append(run)
+    for run in dropped:
+        print("ignoring the older %s run of %s" % (run["meta"]["date"], label(run)))
+    return list(newest.values())
 
 
 def label(run):
     return run["meta"]["method"] + (
-        " " + run["meta"]["model"].split("/")[-1] if run["meta"]["model"] else "")
+        " " + run["meta"]["model"].split("/")[-1] if run["meta"].get("model") else "")
 
 
 def write_comparison():
@@ -311,7 +373,9 @@ def write_comparison():
                  % (scored, " | ".join(hand)))
     lines += ["",
               "The hand-written questions were not made from any source's text, so they",
-              "reuse nothing. They are the closest thing here to a real question.", ""]
+              "reuse nothing. They are the closest thing here to a real question."]
+    warn_about_dates(runs, lines)
+    lines.append("")
 
     out = RESULTS / "vague-questions.md"
     with open(out, "w", encoding="utf-8") as f:

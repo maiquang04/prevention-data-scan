@@ -95,10 +95,16 @@ python search/evaluate.py --method bm25        # word matching, no model
 python search/evaluate.py --method llm --model qwen/qwen3-4b-2507
 python search/evaluate.py --method llm --model qwen/qwen3-1.7b
 python search/evaluate.py --summary            # results/summary.md
+python search/evaluate.py --compare            # results/vague-questions.md
 ```
 
 Only one model fits in 4 GB at a time, so unload one in LM Studio before loading the
 other. A full run takes a while; it saves as it goes and picks up where it stopped.
+
+A result file is named by the day it was run, so running a method again leaves the older
+file in place. `--summary` and `--compare` use the newest run of each method and say which
+older ones they ignored. If a run predates the last review of the questions, they say the
+rows are not comparable and name the runs to repeat.
 
 Tests, which need no model:
 
@@ -110,8 +116,24 @@ python -m unittest discover -s search -p "test_*.py" -v
 
 `data/testset.json` holds one question per source, written by the model from that
 source's abstract or summary and deliberately kept vague. The source it came from is the
-right answer. Once reviewed the file is marked `"frozen": true`, so every method is
-scored on the same questions.
+right answer.
+
+Read a sample, edit or delete any that are poor, then lock the file:
+
+```
+python search/make_testset.py --sample 15
+python search/make_testset.py --freeze
+```
+
+Freezing checks every question, works out again how much of its source's wording it
+reuses, and sets `"frozen": true` with the date. Scoring it again matters because that
+number is what splits the results into vague and not-so-vague questions, and a question
+edited by hand would otherwise keep the score of its old wording. Freezing refuses if a
+question is empty, names a source that does not exist, or repeats another's id, and warns
+about a question that reuses more than half its source's wording or mentions a year.
+
+After freezing, run the evaluation again: earlier results were scored on the questions as
+they were before the review.
 
 `data/handwritten.json` holds eight example questions for the demonstration, each with a
 set of acceptable answers, because a real question usually has more than one good source.

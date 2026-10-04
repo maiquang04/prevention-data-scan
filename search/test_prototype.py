@@ -9,8 +9,10 @@ there to catch the vocabulary changing shape.
 """
 import json
 import sys
+import tempfile
 import unittest
 import urllib.request
+from datetime import date
 from pathlib import Path
 from unittest import mock
 
@@ -304,6 +306,179 @@ class Bm25Tests(unittest.TestCase):
 
     def test_tokenize_drops_punctuation(self):
         self.assertEqual(bm25.tokenize("Walk, don't run!"), ["walk", "don", "t", "run"])
+
+
+class FreezeTests(unittest.TestCase):
+    """--freeze: check the questions, score them again, and lock the file.
+
+    make_testset writes to one fixed path, so each test points that path, and the
+    abstracts beside it, at a temporary folder.
+    """
+
+    def setUp(self):
+        import make_testset
+        self.mt = make_testset
+        quiet = mock.patch("builtins.print")   # keep the test output readable
+        quiet.start()
+        self.addCleanup(quiet.stop)
+        self.dir = tempfile.TemporaryDirectory()
+        self.addCleanup(self.dir.cleanup)
+        out = Path(self.dir.name) / "testset.json"
+        for name, value in (("OUT", out),
+                            ("ABSTRACTS", Path(self.dir.name) / "abstracts.json")):
+            patch = mock.patch.object(self.mt, name, value)
+            patch.start()
+            self.addCleanup(patch.stop)
+        self.out = out
+        # Two real sources, so describe() has something to compare a question with.
+        self.studies = corpus.load_studies()[:2]
+        patch = mock.patch.object(self.mt, "load_studies", lambda: self.studies)
+        patch.start()
+        self.addCleanup(patch.stop)
+
+    def write(self, items, frozen=False):
+        payload = {"frozen": frozen, "generator": "test", "generated": "2026-10-04",
+                   "items": items}
+        with open(self.out, "w", encoding="utf-8") as f:
+            json.dump(payload, f)
+        return payload
+
+    def read(self):
+        with open(self.out, encoding="utf-8") as f:
+            return json.load(f)
+
+    def item(self, qid, target, question, leak=0.5):
+        return {"qid": qid, "target": target, "question": question,
+                "basis": "summary", "leak": leak, "attempts": 1}
+
+    def test_freezes_and_stamps_the_day(self):
+        self.write([self.item("t001", self.studies[0]["id"], "Does prevention save money?")])
+        self.assertEqual(self.mt.freeze(), 0)
+        saved = self.read()
+        self.assertTrue(saved["frozen"])
+        self.assertEqual(saved["frozen_on"], date.today().isoformat())
+
+    def test_rescores_an_edited_question(self):
+        # The recorded score describes the old wording; freezing must redo it.
+        self.write([self.item("t001", self.studies[0]["id"],
+                              "Does prevention save money?", leak=0.999)])
+        self.mt.freeze()
+        self.assertLess(self.read()["items"][0]["leak"], 0.9)
+
+    def test_score_matches_a_direct_calculation(self):
+        study = self.studies[0]
+        question = "Does spending on prevention save the health system money?"
+        self.write([self.item("t001", study["id"], question, leak=0.0)])
+        self.mt.freeze()
+        description, _ = self.mt.describe(study, {})
+        self.assertAlmostEqual(self.read()["items"][0]["leak"],
+                               round(self.mt.leak_score(question, description), 3))
+
+    def test_already_frozen_is_left_alone(self):
+        self.write([self.item("t001", self.studies[0]["id"], "A question?", leak=0.2)],
+                   frozen=True)
+        self.assertEqual(self.mt.freeze(), 0)
+        self.assertEqual(self.read()["items"][0]["leak"], 0.2)   # untouched
+
+    def test_refuses_an_empty_question(self):
+        self.write([self.item("t001", self.studies[0]["id"], "   ")])
+        self.assertEqual(self.mt.freeze(), 1)
+        self.assertFalse(self.read()["frozen"])
+
+    def test_refuses_an_unknown_source(self):
+        self.write([self.item("t001", "app9-99", "A question?")])
+        self.assertEqual(self.mt.freeze(), 1)
+        self.assertFalse(self.read()["frozen"])
+
+    def test_refuses_a_repeated_qid(self):
+        self.write([self.item("t001", self.studies[0]["id"], "One?"),
+                    self.item("t001", self.studies[1]["id"], "Two?")])
+        self.assertEqual(self.mt.freeze(), 1)
+        self.assertFalse(self.read()["frozen"])
+
+    def test_tidies_whitespace(self):
+        self.write([self.item("t001", self.studies[0]["id"], "  Does  it\nwork? ")])
+        self.mt.freeze()
+        self.assertEqual(self.read()["items"][0]["question"], "Does it work?")
+
+    def test_no_file(self):
+        self.assertEqual(self.mt.freeze(), 1)
+
+
+class LoadRunsTests(unittest.TestCase):
+    """--summary and --compare read the newest run of each method only."""
+
+    def setUp(self):
+        import evaluate
+        self.ev = evaluate
+        quiet = mock.patch("builtins.print")   # keep the test output readable
+        quiet.start()
+        self.addCleanup(quiet.stop)
+        self.dir = tempfile.TemporaryDirectory()
+        self.addCleanup(self.dir.cleanup)
+        self.results = Path(self.dir.name)
+        patch = mock.patch.object(self.ev, "RESULTS", self.results)
+        patch.start()
+        self.addCleanup(patch.stop)
+
+    def run_file(self, method, date_, model=None, r5=0.5):
+        name = "%s-%s%s.json" % (date_, method, "-" + model.replace("/", "-") if model else "")
+        payload = {"meta": {"method": method, "model": model, "date": date_},
+                   "summary": {"R@5": r5}, "testset": [], "handwritten": []}
+        with open(self.results / name, "w", encoding="utf-8") as f:
+            json.dump(payload, f)
+
+    def test_keeps_only_the_newest_of_each(self):
+        self.run_file("bm25", "2026-09-29", r5=0.1)
+        self.run_file("bm25", "2026-10-06", r5=0.9)
+        runs = self.ev.load_runs()
+        self.assertEqual(len(runs), 1)
+        self.assertEqual(runs[0]["meta"]["date"], "2026-10-06")
+
+    def test_models_are_counted_separately(self):
+        self.run_file("llm", "2026-10-06", model="qwen/a")
+        self.run_file("llm", "2026-10-06", model="qwen/b")
+        self.assertEqual(len(self.ev.load_runs()), 2)
+
+    def test_all_dates_keeps_everything(self):
+        self.run_file("bm25", "2026-09-29")
+        self.run_file("bm25", "2026-10-06")
+        self.assertEqual(len(self.ev.load_runs(all_dates=True)), 2)
+
+    def test_part_finished_and_scratch_files_ignored(self):
+        self.run_file("bm25", "2026-10-06")
+        for name in ("2026-10-06-llm.partial.json", "_keyword_in.json"):
+            with open(self.results / name, "w", encoding="utf-8") as f:
+                json.dump({"meta": {"method": "x", "model": None, "date": "2026-10-06"}}, f)
+        self.assertEqual(len(self.ev.load_runs()), 1)
+
+    def test_runs_older_than_the_freeze_are_named(self):
+        frozen = {"frozen": True, "frozen_on": "2026-10-05", "items": []}
+        path = self.results / "testset.json"
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(frozen, f)
+        with mock.patch.object(self.ev, "TESTSET", path):
+            runs = [{"meta": {"method": "bm25", "model": None, "date": "2026-09-29"},
+                     "summary": {"R@5": 0.5}},
+                    {"meta": {"method": "keyword", "model": None, "date": "2026-10-06"},
+                     "summary": {"R@5": 0.0}}]
+            stale = self.ev.stale_runs(runs)
+            self.assertEqual([r["meta"]["method"] for r in stale], ["bm25"])
+            lines = []
+            self.assertTrue(self.ev.warn_about_dates(runs, lines))
+            self.assertIn("not comparable", "\n".join(lines))
+
+    def test_no_warning_when_every_run_is_recent(self):
+        frozen = {"frozen": True, "frozen_on": "2026-10-05", "items": []}
+        path = self.results / "testset.json"
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(frozen, f)
+        with mock.patch.object(self.ev, "TESTSET", path):
+            runs = [{"meta": {"method": "bm25", "model": None, "date": "2026-10-06"},
+                     "summary": {"R@5": 0.5}}]
+            lines = []
+            self.assertFalse(self.ev.warn_about_dates(runs, lines))
+            self.assertEqual(lines, [])
 
 
 def server_up():

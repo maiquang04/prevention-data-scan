@@ -7,6 +7,7 @@ That source is the right answer, so the search can be scored without anyone writ
 
     python search/make_testset.py            # build or resume
     python search/make_testset.py --sample 15 # read some, change nothing
+    python search/make_testset.py --freeze    # check, re-score, and lock it
 """
 import argparse
 import json
@@ -138,12 +139,106 @@ def show_sample(count, seed):
     return 0
 
 
+def check(payload, abstracts, by_id):
+    """Problems that must be fixed before freezing, and things worth a look.
+
+    Returns (problems, warnings, rescored). Editing a question by hand leaves its
+    recorded reuse score describing the wording it used to have, and that score is
+    what splits the results into vague and not-so-vague questions. So every score is
+    worked out again here from whatever the question now says.
+    """
+    problems, warnings, rescored = [], [], []
+    seen = set()
+    for item in payload["items"]:
+        qid, target = item.get("qid"), item.get("target")
+        where = qid or "(no qid)"
+        if not qid:
+            problems.append("an item has no qid")
+        elif qid in seen:
+            problems.append("%s: two items share this qid" % qid)
+        seen.add(qid)
+
+        if target not in by_id:
+            problems.append("%s: target '%s' is not a source in the scan" % (where, target))
+            continue
+        question = (item.get("question") or "").strip()
+        if not question:
+            problems.append("%s: the question is empty. Write one or delete the item" % where)
+            continue
+        item["question"] = " ".join(question.split())
+
+        description, basis = describe(by_id[target], abstracts)
+        item["basis"] = basis
+        was = item.get("leak")
+        now = round(leak_score(item["question"], description), 3)
+        if was is None or abs(now - was) >= 0.001:
+            rescored.append((where, was, now))
+        item["leak"] = now
+
+        if now > 0.5:
+            warnings.append("%s: reuses a lot of its source's wording (%.2f), so word "
+                            "matching can answer it almost for free" % (where, now))
+        if re.search(r"\b\d{4}\b", item["question"]):
+            warnings.append("%s: contains a year, which these questions should not" % where)
+    return problems, warnings, rescored
+
+
+def freeze():
+    """Check the questions, score them again, and lock the file."""
+    payload = load_existing()
+    if not payload:
+        print("No test set yet. Run without --freeze first.")
+        return 1
+    if payload.get("frozen"):
+        print("%s is already frozen. Nothing to do." % OUT)
+        return 0
+
+    abstracts = {}
+    if ABSTRACTS.exists():
+        with open(ABSTRACTS, encoding="utf-8") as f:
+            abstracts = json.load(f)
+    by_id = study_index(load_studies())
+
+    problems, warnings, rescored = check(payload, abstracts, by_id)
+    for warning in warnings:
+        print("warning: " + warning)
+    if problems:
+        print("\nNot frozen, %d problem(s):" % len(problems))
+        for problem in problems:
+            print("  - " + problem)
+        return 1
+
+    if rescored:
+        print("\nReuse score recomputed for %d question(s):" % len(rescored))
+        for qid, was, now in rescored:
+            print("  %-5s %s -> %.3f" % (qid, "none" if was is None else "%.3f" % was, now))
+    else:
+        print("\nNo question changed, so every reuse score still stands.")
+
+    payload["frozen"] = True
+    payload["frozen_on"] = date.today().isoformat()
+    save(payload)
+
+    items = payload["items"]
+    leaks = [i["leak"] for i in items]
+    print("\n%d questions, mean reuse %.3f" % (len(items), sum(leaks) / max(len(items), 1)))
+    print("  reuses its source's wording (0.35 and over): %d" % sum(1 for l in leaks if l >= 0.35))
+    print("  in between (0.20 to 0.35):                   %d" % sum(1 for l in leaks if 0.20 <= l < 0.35))
+    print("  genuinely vague (under 0.20):                %d" % sum(1 for l in leaks if l < 0.20))
+    print("\nFrozen. Every method is now scored on these exact questions.")
+    print("Next: run the evaluation again, because the old results were scored on the "
+          "questions as they were before the review.")
+    return 0
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", default=MODEL_MAIN)
     parser.add_argument("--sample", type=int, metavar="N",
                         help="print N existing questions and stop")
     parser.add_argument("--seed", type=int, default=7, help="which sample to print")
+    parser.add_argument("--freeze", action="store_true",
+                        help="check the questions, score them again, and lock the file")
     parser.add_argument("--overwrite", action="store_true",
                         help="start again instead of resuming")
     parser.add_argument("--limit", type=int, help="only do the first N sources")
@@ -151,6 +246,8 @@ def main():
 
     if args.sample:
         return show_sample(args.sample, args.seed)
+    if args.freeze:
+        return freeze()
 
     payload = None if args.overwrite else load_existing()
     if payload and payload.get("frozen"):
