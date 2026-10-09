@@ -8,6 +8,7 @@ import http.client
 import json
 import re
 import sys
+import time
 import urllib.error
 import urllib.request
 
@@ -16,6 +17,13 @@ from config import LMSTUDIO_URL, MODEL_MAIN, NO_THINK_MODELS, TIMEOUT_S
 NOT_RUNNING = ("LM Studio's server is not running. "
                "In LM Studio open Developer and click Start Server.")
 DROPPED = "LM Studio stopped answering part-way through. Try the question again."
+TOO_SLOW = ("The model did not answer within %d seconds. It is probably too large for "
+            "this computer's graphics card, so most of it is running on the processor. "
+            "Load a smaller model, or raise TIMEOUT_S in config.py.")
+
+# How many times to send a request that failed in a way that might pass next time.
+RETRIES = 3
+BACKOFF_S = 2
 
 
 class LLMError(Exception):
@@ -50,6 +58,20 @@ def model_states():
     except (urllib.error.URLError, ConnectionError, TimeoutError, ValueError):
         return {}
     return {m.get("id"): m.get("state") for m in body.get("data", []) if m.get("id")}
+
+
+def is_timeout(err):
+    """Was this the model taking too long, rather than the server being away?
+
+    urllib wraps a socket timeout in URLError, so the cause has to be unwrapped.
+    """
+    seen = set()
+    while err is not None and id(err) not in seen:
+        seen.add(id(err))
+        if isinstance(err, TimeoutError):
+            return True
+        err = getattr(err, "reason", None) or err.__cause__
+    return False
 
 
 def strip_thinking(text):
@@ -125,20 +147,36 @@ def chat(messages, model=MODEL_MAIN, temperature=0.0, max_tokens=512, schema=Non
         LMSTUDIO_URL + "/chat/completions",
         data=json.dumps(body).encode("utf-8"),
         headers={"Content-Type": "application/json"})
-    connected = False
-    try:
-        with urllib.request.urlopen(request, timeout=TIMEOUT_S) as r:
-            connected = True
-            if on_text is not None:
-                return strip_thinking(_read_stream(r, on_text))
-            reply = json.load(r)
-    except urllib.error.HTTPError as err:
-        # LM Studio explains a rejected response_format in the body, so keep it.
-        detail = err.read().decode("utf-8", "replace")
-        raise LLMError("LM Studio returned %s: %s" % (err.code, detail)) from err
-    except (urllib.error.URLError, ConnectionError, TimeoutError,
-            http.client.HTTPException) as err:
-        raise LLMError(DROPPED if connected else NOT_RUNNING) from err
+    for attempt in range(1, RETRIES + 1):
+        connected = False
+        try:
+            with urllib.request.urlopen(request, timeout=TIMEOUT_S) as r:
+                connected = True
+                if on_text is not None:
+                    return strip_thinking(_read_stream(r, on_text))
+                reply = json.load(r)
+            break
+        except urllib.error.HTTPError as err:
+            detail = err.read().decode("utf-8", "replace")
+            # LM Studio sometimes returns 500 for a while under memory pressure, then
+            # recovers. A whole evaluation run was lost to that once. Anything in the
+            # 400s is our mistake and will fail the same way however often it is sent,
+            # so only server errors are worth repeating.
+            if err.code >= 500 and attempt < RETRIES:
+                time.sleep(BACKOFF_S * attempt)
+                continue
+            # LM Studio explains a rejected response_format in the body, so keep it.
+            raise LLMError("LM Studio returned %s: %s" % (err.code, detail)) from err
+        except (urllib.error.URLError, ConnectionError, TimeoutError,
+                http.client.HTTPException) as err:
+            # A read timeout and a refused connection both arrive here, and saying the
+            # server is down when it is merely slow sends you looking in the wrong place.
+            if is_timeout(err):
+                raise LLMError(TOO_SLOW % TIMEOUT_S) from err
+            if not connected and attempt < RETRIES:
+                time.sleep(BACKOFF_S * attempt)
+                continue
+            raise LLMError(DROPPED if connected else NOT_RUNNING) from err
 
     try:
         return strip_thinking(reply["choices"][0]["message"]["content"])
