@@ -105,11 +105,15 @@ def inject_nav(html):
 
 # ---------- the search itself ----------
 
-def load_examples(path=DATA / "handwritten.json"):
-    """The demo questions, for the buttons under the search box."""
+def load_examples(path=DATA / "examples.json"):
+    """The example questions, for the buttons under the search box.
+
+    Only the question text reaches the page. The "shows" note beside each one in
+    the file is there for whoever gives the demonstration.
+    """
     try:
         with open(path, encoding="utf-8") as f:
-            items = json.load(f).get("items", [])
+            items = json.load(f).get("examples", [])
     except (OSError, json.JSONDecodeError):
         return []
     return [{"qid": i.get("qid"), "question": i["question"]}

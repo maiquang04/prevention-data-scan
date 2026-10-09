@@ -1,0 +1,40 @@
+{
+  "note": "Example questions offered as buttons under the search box, so the search can be tried without typing. Written for this prototype against what the scan covers. They are not scored and have no recorded right answer: the measured results come from data/testset.json. Each one is here because it exercises a different part of the pipeline, which the 'shows' field explains.",
+  "examples": [
+    {
+      "qid": "e1",
+      "question": "is there free data on how walkable our suburbs are?",
+      "shows": "The ordinary case. Maps to the Walkability Index measure and Public access, and a handful of sources carry every tag."
+    },
+    {
+      "qid": "e2",
+      "question": "which data sources would we have to pay a fee to access?",
+      "shows": "A question about a tag rather than a subject. One tag, and all eight sources that charge a fee come back. Word matching cannot answer this, because no source's text says 'fee'."
+    },
+    {
+      "qid": "e3",
+      "question": "how can a council measure whether residents can reach green space?",
+      "shows": "Green space access is the best covered measure in the scan, at eight sources. Watch whether the model also picks a council-sized geography, which narrows it further than it needs to."
+    },
+    {
+      "qid": "e4",
+      "question": "where can I find data on children's physical activity?",
+      "shows": "A plainly worded subject question, where both the measure and the health focus apply."
+    },
+    {
+      "qid": "e5",
+      "question": "I want to study whether better public transport is worth the money. What data could I use?",
+      "shows": "A vague question with no obvious single tag. The model picks many, nothing carries them all, and partial matching is what keeps the answer sensible."
+    },
+    {
+      "qid": "e6",
+      "question": "what data shows differences in health between advantaged and disadvantaged areas?",
+      "shows": "A question about a focus area rather than a measure."
+    },
+    {
+      "qid": "e7",
+      "question": "what data is there on hospital car parking fees?",
+      "shows": "Outside the scan on purpose. The model should choose no tags and say why, and the page then warns that the results may not be relevant."
+    }
+  ]
+}
