@@ -65,10 +65,17 @@ class Mapping:
     used_schema: bool = True
     error: str = ""
     raw: str = ""
+    # Empty when the tags were chosen in one go. The staged mapper fills it with one
+    # entry per question it asked, so the page and the report can show the working.
+    stages: list = field(default_factory=list)
 
     def chosen(self):
         """Only the groups that got a tag, for printing."""
         return {g: v for g, v in self.tags.items() if v}
+
+    def calls(self):
+        """How many times the model was asked."""
+        return len(self.stages) or 1
 
 
 def build_messages(question, meta, vocab):
@@ -87,6 +94,9 @@ def parse_and_validate(raw, vocab):
 
     Returns (tags, reasoning, rejected). A value the model made up goes into
     rejected as "group:value" so the run can count how often that happens.
+
+    `vocab` decides which keys are read and what each may contain, so the staged
+    mapper can pass a single group, or a list of kinds, rather than all eight.
     """
     data = None
     try:
@@ -99,11 +109,13 @@ def parse_and_validate(raw, vocab):
                 data = json.loads(raw[start:end + 1])
             except json.JSONDecodeError:
                 data = None
+    groups = list(vocab)
     if not isinstance(data, dict):
-        return _empty_tags(), "", ["<unparseable>"]
+        return ({g: [] for g in groups} if groups != GROUPS else _empty_tags(),
+                "", ["<unparseable>"])
 
     tags, rejected = {}, []
-    for group in GROUPS:
+    for group in groups:
         value = data.get(group)
         if isinstance(value, str):
             value = [value]

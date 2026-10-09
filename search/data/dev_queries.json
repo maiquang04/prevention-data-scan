@@ -1,0 +1,65 @@
+{
+  "note": "Questions for developing and judging the tag mapper by hand. They are deliberately NOT the frozen test questions: prompts are refined against these, then measured once on data/testset.json, so the measured numbers stay honest. Nothing here is scored automatically. 'expect' says what shape of answer is right, which is a judgement to read, not an assertion to run.",
+  "queries": [
+    {
+      "qid": "d1",
+      "question": "I need a number for how walkable each suburb is.",
+      "expect": "Names a specific measure, so it should reach Walkability Index. Small area is reasonable for 'suburb'. No region, no access."
+    },
+    {
+      "qid": "d2",
+      "question": "What helps people be more physically active day to day?",
+      "expect": "Broad. Should stay at the Physical Activity focus and pick NO measure. This is the main case for stopping early."
+    },
+    {
+      "qid": "d3",
+      "question": "I want to look at whether how walkable a place is has anything to do with people developing chronic illness.",
+      "expect": "Rocky's walkability-and-illness example, reworded. The scan has no illness measure, so the right answer is the walkability side only, not an invented health outcome tag."
+    },
+    {
+      "qid": "d4",
+      "question": "What can I get for Brisbane without filling in an application?",
+      "expect": "Access Public. Brisbane is a council, so LGA is reasonable and Queensland is defensible. No measure and no health focus: the question names no subject at all."
+    },
+    {
+      "qid": "d5",
+      "question": "Is there anything on what children eat?",
+      "expect": "Healthy Eating focus. A measure only if one genuinely covers children's intake; otherwise stay at the focus."
+    },
+    {
+      "qid": "d6",
+      "question": "Which of these would cost us money to get hold of?",
+      "expect": "Fee required, and nothing else. No subject is named, so every other group should be empty."
+    },
+    {
+      "qid": "d7",
+      "question": "I am after peer-reviewed work on parks and mental health.",
+      "expect": "Kind of source Peer-reviewed, and two focuses: Physical Activity (parks) and Mental Wellbeing. Tests whether two focuses can be held at once."
+    },
+    {
+      "qid": "d8",
+      "question": "How do councils and health services actually share information with each other?",
+      "expect": "Regional partnerships focus area. No health focus, no measure. Tests a focus-area-only question."
+    },
+    {
+      "qid": "d9",
+      "question": "what data is there on hospital car parking fees?",
+      "expect": "Nothing in the scan covers this. No tags at all is the right answer, and the page should say the results may not be relevant."
+    },
+    {
+      "qid": "d10",
+      "question": "Counts of people cycling past a given point, ideally updated often.",
+      "expect": "Walking & cycling counts. 'Updated often' has no tag, so it should be ignored rather than mapped to something close."
+    },
+    {
+      "qid": "d11",
+      "question": "Show me everything you have.",
+      "expect": "No tags. Nothing is specified, so the search should fall back to the words and say so, rather than guessing."
+    },
+    {
+      "qid": "d12",
+      "question": "Are poorer neighbourhoods worse off for places to be active?",
+      "expect": "Equity and Physical Activity. An equity measure about walkability or park access would be right; a generic measure would be too narrow."
+    }
+  ]
+}
