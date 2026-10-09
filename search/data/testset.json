@@ -1,5 +1,5 @@
 {
-  "frozen": false,
+  "frozen": true,
   "generator": "qwen/qwen3-4b-2507",
   "generated": "2026-09-29",
   "items": [
@@ -643,5 +643,6 @@
       "leak": 0.25,
       "attempts": 1
     }
-  ]
+  ],
+  "frozen_on": "2026-10-09"
 }
