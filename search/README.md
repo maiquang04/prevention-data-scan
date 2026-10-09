@@ -96,7 +96,13 @@ python search/evaluate.py --method llm --model qwen/qwen3-4b-2507
 python search/evaluate.py --method llm --model qwen/qwen3-1.7b
 python search/evaluate.py --summary            # results/summary.md
 python search/evaluate.py --compare            # results/vague-questions.md
+python search/evaluate.py --models             # results/models.md
 ```
+
+`--summary` answers "does the pipeline work", one row per method. `--compare` splits the
+questions by how much wording they reuse, which is the honest comparison against word
+matching. `--models` puts the models side by side on accuracy, how many tags each picks,
+speed, and what each does with a question the scan cannot answer.
 
 Only one model fits in 4 GB at a time, so unload one in LM Studio before loading the
 other. A full run takes a while; it saves as it goes and picks up where it stopped.
@@ -135,10 +141,11 @@ about a question that reuses more than half its source's wording or mentions a y
 After freezing, run the evaluation again: earlier results were scored on the questions as
 they were before the review.
 
-`data/handwritten.json` holds eight example questions for the demonstration, each with a
-set of acceptable answers, because a real question usually has more than one good source.
-The last one is about something the scan does not cover, to show what a user sees when
-there is no good answer.
+`data/examples.json` holds the questions offered as buttons under the search box, so the
+search can be tried without typing. They are **not scored** and have no recorded right
+answer: every measured result comes from `testset.json`. Each one carries a `shows` note
+saying which part of the pipeline it exercises, including one question about something
+the scan does not cover, to show what a user sees when there is no good answer.
 
 ## Files
 

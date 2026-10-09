@@ -7,6 +7,7 @@ Most tests build small made-up sources rather than using the real ones, so addin
 source to the scan cannot break them. The few that do read the real meta.json are
 there to catch the vocabulary changing shape.
 """
+import io
 import json
 import sys
 import tempfile
@@ -184,6 +185,273 @@ class ChatBodyTests(unittest.TestCase):
         with mock.patch.object(urllib.request, "urlopen", return_value=response):
             llm.chat(messages, model=config.MODEL_SMALL)
         self.assertEqual(messages[0]["content"], "hello")
+
+
+class RetryTests(unittest.TestCase):
+    """A request that failed in a way that might pass next time is sent again.
+
+    LM Studio returned 500 for the last 17 questions of one evaluation run, under
+    memory pressure, then recovered. Without a retry that run was wasted, and the
+    same thing mid-demonstration would show an error instead of an answer.
+    """
+
+    def ok(self):
+        reply = json.dumps({"choices": [{"message": {"content": "{}"}}]}).encode()
+        response = mock.MagicMock()
+        response.__enter__.return_value.read.return_value = reply
+        return response
+
+    def http_error(self, code):
+        return urllib.error.HTTPError("u", code, "err", {}, io.BytesIO(b"server busy"))
+
+    def test_a_server_error_is_retried_and_can_succeed(self):
+        with mock.patch.object(llm, "BACKOFF_S", 0), \
+             mock.patch.object(urllib.request, "urlopen",
+                               side_effect=[self.http_error(500), self.ok()]) as urlopen:
+            self.assertEqual(llm.chat([{"role": "user", "content": "q"}],
+                                      model=config.MODEL_MAIN), "{}")
+        self.assertEqual(urlopen.call_count, 2)
+
+    def test_it_gives_up_eventually(self):
+        with mock.patch.object(llm, "BACKOFF_S", 0), \
+             mock.patch.object(urllib.request, "urlopen",
+                               side_effect=self.http_error(500)) as urlopen:
+            with self.assertRaises(llm.LLMError):
+                llm.chat([{"role": "user", "content": "q"}], model=config.MODEL_MAIN)
+        self.assertEqual(urlopen.call_count, llm.RETRIES)
+
+    def test_our_own_mistake_is_not_retried(self):
+        # A 400 means the request is wrong; sending it again wastes time.
+        with mock.patch.object(llm, "BACKOFF_S", 0), \
+             mock.patch.object(urllib.request, "urlopen",
+                               side_effect=self.http_error(400)) as urlopen:
+            with self.assertRaises(llm.LLMError):
+                llm.chat([{"role": "user", "content": "q"}], model=config.MODEL_MAIN)
+        self.assertEqual(urlopen.call_count, 1)
+
+    def test_a_slow_model_is_not_retried(self):
+        # Retrying something that timed out just waits all over again.
+        with mock.patch.object(llm, "BACKOFF_S", 0), \
+             mock.patch.object(urllib.request, "urlopen",
+                               side_effect=TimeoutError()) as urlopen:
+            with self.assertRaises(llm.LLMError) as caught:
+                llm.chat([{"role": "user", "content": "q"}], model=config.MODEL_MAIN)
+        self.assertEqual(urlopen.call_count, 1)
+        self.assertIn("did not answer within", str(caught.exception))
+
+
+class SubsetSchemaTests(unittest.TestCase):
+    """The staged mapper asks about part of the vocabulary at a time."""
+
+    def setUp(self):
+        self.vocab = vocab.load_vocab(FAKE_META)
+
+    def test_only_the_groups_asked_for(self):
+        schema = vocab.json_schema(self.vocab, groups=["geo", "access"])
+        self.assertEqual(list(schema["properties"]), ["reasoning", "geo", "access"])
+        self.assertEqual(schema["required"], ["reasoning", "geo", "access"])
+
+    def test_choices_override_the_allowed_values(self):
+        # Stage 3 offers only the measures under the focus already chosen.
+        schema = vocab.json_schema(self.vocab, groups=["indicator"],
+                                   choices={"indicator": ["Fruit intake"]})
+        self.assertEqual(schema["properties"]["indicator"]["items"]["enum"],
+                         ["Fruit intake"])
+
+    def test_prompt_block_leaves_out_what_was_not_asked(self):
+        block = vocab.vocab_prompt_block(FAKE_META, self.vocab, groups=["access"])
+        self.assertIn("Public", block)
+        self.assertNotIn("Walkability Index", block)
+        self.assertNotIn("Queensland", block)
+
+    def test_measures_under_a_focus(self):
+        self.assertEqual(vocab.indicators_under(FAKE_META, ["Healthy Eating"]),
+                         ["Fruit intake"])
+        self.assertEqual(vocab.indicators_under(FAKE_META, ["Physical Activity"]),
+                         ["Walkability Index", "Walking & cycling counts"])
+        self.assertEqual(vocab.indicators_under(FAKE_META, []), [])
+
+    def test_every_kind_has_a_meaning_for_stage_one(self):
+        import map_staged
+        for group in map_staged.KINDS:
+            self.assertIn(group, vocab.GROUP_MEANING)
+        self.assertNotIn("indicator", map_staged.KINDS)
+
+    def test_the_key_is_shown_beside_the_label(self):
+        # Without this the model cannot know "Health focus" is answered as "domain",
+        # and in an early run it never chose it at all.
+        import map_staged
+        block = map_staged._kinds_block()
+        for group in map_staged.KINDS:
+            self.assertIn('(answer with "%s")' % group, block)
+
+
+class StagedMapperTests(unittest.TestCase):
+    """The three stages, with canned replies instead of a model."""
+
+    def setUp(self):
+        import map_staged
+        self.ms = map_staged
+        self.meta = FAKE_META
+        self.vocab = vocab.load_vocab(FAKE_META)
+
+    def run_with(self, replies):
+        """Run the mapper against a fixed list of replies, and report the prompts."""
+        seen = []
+
+        def fake_chat(messages, model=None, temperature=0, max_tokens=0, schema=None,
+                      on_text=None):
+            seen.append((messages, schema))
+            return replies[len(seen) - 1]
+
+        with mock.patch.object(self.ms.llm, "chat", side_effect=fake_chat):
+            got = self.ms.map_staged("a question", "m", self.meta, self.vocab)
+        return got, seen
+
+    def test_a_broad_question_stays_at_the_focus(self):
+        # Stage 3 answering with nothing is the whole point: the search then uses
+        # the focus, rather than a guessed measure.
+        got, seen = self.run_with([
+            '{"reasoning": "health subject", "kinds": ["domain"]}',
+            '{"reasoning": "activity", "domain": ["Physical Activity"]}',
+            '{"reasoning": "no single measure", "indicator": []}',
+        ])
+        self.assertEqual(got.tags["domain"], ["Physical Activity"])
+        self.assertEqual(got.tags["indicator"], [])
+        self.assertEqual(len(seen), 3)
+        self.assertEqual(got.calls(), 3)
+
+    def test_a_specific_question_reaches_the_measure(self):
+        got, _ = self.run_with([
+            '{"reasoning": "health subject", "kinds": ["domain"]}',
+            '{"reasoning": "activity", "domain": ["Physical Activity"]}',
+            '{"reasoning": "walkability", "indicator": ["Walkability Index"]}',
+        ])
+        self.assertEqual(got.tags["indicator"], ["Walkability Index"])
+
+    def test_stage_three_only_offers_measures_under_the_chosen_focus(self):
+        _, seen = self.run_with([
+            '{"reasoning": "x", "kinds": ["domain"]}',
+            '{"reasoning": "x", "domain": ["Healthy Eating"]}',
+            '{"reasoning": "x", "indicator": []}',
+        ])
+        enum = seen[2][1]["properties"]["indicator"]["items"]["enum"]
+        self.assertEqual(enum, ["Fruit intake"])        # not the activity measures
+
+    def test_no_kinds_means_no_tags_and_one_call(self):
+        got, seen = self.run_with(['{"reasoning": "nothing fits", "kinds": []}'])
+        self.assertEqual(got.chosen(), {})
+        self.assertEqual(len(seen), 1)
+        self.assertEqual(got.error, "")
+
+    def test_stage_three_is_skipped_without_a_focus(self):
+        got, seen = self.run_with([
+            '{"reasoning": "a place", "kinds": ["geo"]}',
+            '{"reasoning": "councils", "geo": ["LGA"]}',
+        ])
+        self.assertEqual(len(seen), 2)
+        self.assertEqual(got.tags["geo"], ["LGA"])
+        self.assertEqual(got.tags["indicator"], [])
+
+    def test_stage_two_may_overrule_stage_one(self):
+        # Stage 1 guessed a kind; stage 2 found nothing in it that fits.
+        got, _ = self.run_with([
+            '{"reasoning": "maybe health", "kinds": ["domain"]}',
+            '{"reasoning": "nothing fits", "domain": []}',
+        ])
+        self.assertEqual(got.chosen(), {})
+
+    def test_an_invented_value_is_refused(self):
+        got, _ = self.run_with([
+            '{"reasoning": "x", "kinds": ["domain"]}',
+            '{"reasoning": "x", "domain": ["Dentistry"]}',
+        ])
+        self.assertEqual(got.tags["domain"], [])
+        self.assertIn("domain:Dentistry", got.rejected)
+
+    def test_a_failure_is_reported_not_raised(self):
+        def boom(*a, **k):
+            raise self.ms.llm.LLMError("server away")
+        with mock.patch.object(self.ms.llm, "chat", side_effect=boom):
+            got = self.ms.map_staged("q", "m", self.meta, self.vocab)
+        self.assertEqual(got.error, "server away")
+        self.assertEqual(got.chosen(), {})
+
+    def test_every_stage_is_recorded_for_display(self):
+        got, _ = self.run_with([
+            '{"reasoning": "health subject", "kinds": ["domain"]}',
+            '{"reasoning": "activity", "domain": ["Physical Activity"]}',
+            '{"reasoning": "no single measure", "indicator": []}',
+        ])
+        self.assertEqual([s.number for s in got.stages], [1, 2, 3])
+        self.assertEqual(got.stages[0].chose, ["Health focus"])
+        self.assertIn("none", got.stages[2].chose[0])
+
+
+class RankerTests(unittest.TestCase):
+    """Word matching first, as suggested on 8 October."""
+
+    def setUp(self):
+        self.studies = [
+            fake_study("s1", indicators=["Walkability Index"], task="walking walking"),
+            fake_study("s2", indicators=["Walkability Index"], task="nothing relevant"),
+            fake_study("s3", task="walking"),
+        ]
+        self.index = bm25.build_index(self.studies)
+
+    def test_word_matching_narrows_the_field(self):
+        # s3 shares a word but carries no tag, so a shortlist of one leaves it out.
+        tags = {"indicator": ["Fruit intake"]}
+        ids = [r.id for r in rank.rank("walking", tags, self.studies, FAKE_META,
+                                       self.index, k=None,
+                                       strategy="bm25-first", recall=1)]
+        self.assertNotIn("s3", ids)
+
+    def test_a_source_carrying_every_tag_is_never_dropped(self):
+        """s2 has the tag but shares no wording, and must survive anyway.
+
+        Word matching does no stemming, so "walkable suburbs" matches nothing that
+        says "walkability". Without this rule the three public walkability sources
+        vanish from the very question they answer.
+        """
+        tags = {"indicator": ["Walkability Index"]}
+        ids = [r.id for r in rank.rank("walking", tags, self.studies, FAKE_META,
+                                       self.index, k=None,
+                                       strategy="bm25-first", recall=1)]
+        self.assertIn("s2", ids)
+
+    def test_a_partial_match_outside_the_shortlist_is_still_dropped(self):
+        # Only carrying *every* tag earns a place. Two tags asked, s2 has one.
+        tags = {"indicator": ["Walkability Index"], "access": ["Restricted - application"]}
+        ids = [r.id for r in rank.rank("walking", tags, self.studies, FAKE_META,
+                                       self.index, k=None,
+                                       strategy="bm25-first", recall=1)]
+        self.assertNotIn("s2", ids)
+
+    def test_tags_still_reorder_the_shortlist(self):
+        tags = {"indicator": ["Walkability Index"]}
+        ids = [r.id for r in rank.rank("walking", tags, self.studies, FAKE_META,
+                                       self.index, k=None,
+                                       strategy="bm25-first", recall=3)]
+        self.assertEqual(ids[0], "s1")          # the tag lifts it above plain s3
+        self.assertIn("s3", ids)
+
+    def test_with_no_tags_it_is_word_matching_exactly(self):
+        empty = {g: [] for g in vocab.GROUPS}
+        ids = [r.id for r in rank.rank("walking", empty, self.studies, FAKE_META,
+                                       self.index, k=None,
+                                       strategy="bm25-first", recall=10)]
+        self.assertEqual(ids, [d for d, _ in self.index.rank("walking", 10)])
+
+    def test_tags_first_still_sees_everything(self):
+        tags = {"indicator": ["Walkability Index"]}
+        ids = [r.id for r in rank.rank("walking", tags, self.studies, FAKE_META,
+                                       self.index, k=None, strategy="tags-first")]
+        self.assertIn("s2", ids)                # kept, unlike under bm25-first
+
+    def test_an_unknown_strategy_is_refused(self):
+        with self.assertRaises(ValueError):
+            rank.rank("q", {}, self.studies, FAKE_META, self.index, strategy="magic")
 
 
 class TagTests(unittest.TestCase):
@@ -424,7 +692,7 @@ class LoadRunsTests(unittest.TestCase):
     def run_file(self, method, date_, model=None, r5=0.5):
         name = "%s-%s%s.json" % (date_, method, "-" + model.replace("/", "-") if model else "")
         payload = {"meta": {"method": method, "model": model, "date": date_},
-                   "summary": {"R@5": r5}, "testset": [], "handwritten": []}
+                   "summary": {"R@5": r5}, "testset": [], "examples": []}
         with open(self.results / name, "w", encoding="utf-8") as f:
             json.dump(payload, f)
 
@@ -434,6 +702,26 @@ class LoadRunsTests(unittest.TestCase):
         runs = self.ev.load_runs()
         self.assertEqual(len(runs), 1)
         self.assertEqual(runs[0]["meta"]["date"], "2026-10-06")
+
+    def test_variants_of_one_model_are_kept_apart(self):
+        # Without this a staged run would silently replace a flat one of the same day.
+        for mapper in ("flat", "staged"):
+            for ranker in ("tags-first", "bm25-first"):
+                payload = {"meta": {"method": "llm", "model": "qwen/a",
+                                    "date": "2026-10-09", "mapper": mapper,
+                                    "ranker": ranker},
+                           "summary": {"R@5": 0.5}, "testset": [], "examples": []}
+                name = "2026-10-09-llm-qwen-a-%s-%s.json" % (mapper, ranker)
+                with open(self.results / name, "w", encoding="utf-8") as f:
+                    json.dump(payload, f)
+        self.assertEqual(len(self.ev.load_runs()), 4)
+
+    def test_the_label_names_the_variant(self):
+        run = {"meta": {"method": "llm", "model": "qwen/qwen3-4b", "mapper": "staged",
+                        "ranker": "bm25-first"}}
+        self.assertEqual(self.ev.label(run), "qwen3-4b staged bm25-first")
+        self.assertEqual(self.ev.label({"meta": {"method": "bm25", "model": None}}),
+                         "bm25")
 
     def test_models_are_counted_separately(self):
         self.run_file("llm", "2026-10-06", model="qwen/a")
@@ -452,9 +740,17 @@ class LoadRunsTests(unittest.TestCase):
                 json.dump({"meta": {"method": "x", "model": None, "date": "2026-10-06"}}, f)
         self.assertEqual(len(self.ev.load_runs()), 1)
 
+    def test_a_stray_json_file_is_skipped_not_crashed_on(self):
+        self.run_file("bm25", "2026-10-06")
+        with open(self.results / "notes.json", "w", encoding="utf-8") as f:
+            json.dump({"something": "else"}, f)
+        with open(self.results / "broken.json", "w", encoding="utf-8") as f:
+            f.write("{ not json")
+        self.assertEqual(len(self.ev.load_runs()), 1)
+
     def test_runs_older_than_the_freeze_are_named(self):
         frozen = {"frozen": True, "frozen_on": "2026-10-05", "items": []}
-        path = self.results / "testset.json"
+        path = Path(self.dir.name) / "testset.json"
         with open(path, "w", encoding="utf-8") as f:
             json.dump(frozen, f)
         with mock.patch.object(self.ev, "TESTSET", path):
@@ -470,7 +766,7 @@ class LoadRunsTests(unittest.TestCase):
 
     def test_no_warning_when_every_run_is_recent(self):
         frozen = {"frozen": True, "frozen_on": "2026-10-05", "items": []}
-        path = self.results / "testset.json"
+        path = Path(self.dir.name) / "testset.json"
         with open(path, "w", encoding="utf-8") as f:
             json.dump(frozen, f)
         with mock.patch.object(self.ev, "TESTSET", path):
@@ -479,6 +775,94 @@ class LoadRunsTests(unittest.TestCase):
             lines = []
             self.assertFalse(self.ev.warn_about_dates(runs, lines))
             self.assertEqual(lines, [])
+
+
+class ModelTableTests(unittest.TestCase):
+    """--models: the two models side by side."""
+
+    def setUp(self):
+        import evaluate
+        self.ev = evaluate
+        quiet = mock.patch("builtins.print")
+        quiet.start()
+        self.addCleanup(quiet.stop)
+        self.dir = tempfile.TemporaryDirectory()
+        self.addCleanup(self.dir.cleanup)
+        self.results = Path(self.dir.name) / "results"
+        self.results.mkdir()
+        # Beside the results folder, as data/testset.json is beside it for real.
+        testset = Path(self.dir.name) / "testset.json"
+        with open(testset, "w", encoding="utf-8") as f:
+            json.dump({"frozen": True, "items": [
+                {"qid": "t001", "leak": 0.10},     # genuinely vague
+                {"qid": "t002", "leak": 0.50},     # reuses its source's wording
+            ]}, f)
+        for name, value in (("RESULTS", self.results), ("TESTSET", testset)):
+            patch = mock.patch.object(self.ev, name, value)
+            patch.start()
+            self.addCleanup(patch.stop)
+
+    def write_llm(self, model, r5, tags, out_of_scope_tags, secs=(2.0, 4.0)):
+        payload = {
+            "meta": {"method": "llm", "model": model, "date": "2026-10-06"},
+            "summary": {"R@1": 0.1, "R@5": r5, "R@10": 0.8, "MRR@10": 0.3,
+                        "empty": 0.0, "sec": secs[0], "tags": tags, "no_tags": 0.0,
+                        "rejected": 0, "errors": 0, "too_narrow": 0.3},
+            # t001 found, t002 missed, so the vague band scores 1.0 and the other 0.0
+            "testset": [{"qid": "t001", "rank_of_target": 2, "seconds": secs[0]},
+                        {"qid": "t002", "rank_of_target": None, "seconds": secs[1]}],
+            "examples": [{"qid": "e7", "tags": out_of_scope_tags}],
+        }
+        name = "2026-10-06-llm-%s.json" % model.replace("/", "-")
+        with open(self.results / name, "w", encoding="utf-8") as f:
+            json.dump(payload, f)
+
+    def table(self):
+        self.assertEqual(self.ev.write_models(), 0)
+        with open(self.results / "models.md", encoding="utf-8") as f:
+            return f.read()
+
+    def test_needs_two_models(self):
+        self.write_llm("qwen/big", 0.6, 4.5, {})
+        self.assertEqual(self.ev.write_models(), 1)
+
+    def test_better_model_goes_in_the_first_column(self):
+        self.write_llm("qwen/small", 0.3, 5.8, {"domain": ["Mental Wellbeing"]})
+        self.write_llm("qwen/big", 0.6, 4.5, {})
+        header = [l for l in self.table().splitlines() if l.startswith("| | qwen")][0]
+        self.assertLess(header.index("qwen/big"), header.index("qwen/small"))
+
+    def test_scores_are_all_to_three_places(self):
+        self.write_llm("qwen/small", 0.3, 5.8, {})
+        self.write_llm("qwen/big", 0.7, 4.5, {})
+        row = [l for l in self.table().splitlines() if l.startswith("| In the top ten")][0]
+        self.assertIn("0.800", row)          # not "0.8"
+
+    def test_out_of_scope_behaviour_is_named(self):
+        self.write_llm("qwen/small", 0.3, 5.8,
+                       {"domain": ["Mental Wellbeing"], "indicator": ["Park utilisation"]})
+        self.write_llm("qwen/big", 0.6, 4.5, {})
+        row = [l for l in self.table().splitlines() if "Out-of-scope" in l][0]
+        self.assertIn("chose nothing, correctly", row)
+        self.assertIn("chose 2 tags anyway", row)
+
+    def test_vague_band_is_scored_separately(self):
+        self.write_llm("qwen/small", 0.3, 5.8, {})
+        self.write_llm("qwen/big", 0.6, 4.5, {})
+        text = self.table()
+        vague = [l for l in text.splitlines() if l.startswith("| genuinely vague")][0]
+        reuses = [l for l in text.splitlines() if l.startswith("| reuses")][0]
+        self.assertIn("(1)", vague)          # one question in that band
+        self.assertIn("1.000", vague)        # t001 was found by both
+        self.assertIn("0.000", reuses)       # t002 was missed by both
+
+    def test_other_methods_are_left_out(self):
+        self.write_llm("qwen/small", 0.3, 5.8, {})
+        self.write_llm("qwen/big", 0.6, 4.5, {})
+        with open(self.results / "2026-10-06-bm25.json", "w", encoding="utf-8") as f:
+            json.dump({"meta": {"method": "bm25", "model": None, "date": "2026-10-06"},
+                       "summary": {"R@5": 0.9}, "testset": [], "examples": []}, f)
+        self.assertNotIn("bm25", self.table())
 
 
 def server_up():

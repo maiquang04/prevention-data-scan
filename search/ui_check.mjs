@@ -223,7 +223,7 @@ async function run() {
     await shot("01-start.png");
 
     log("2. Walkability, while the model is writing");
-    await askExample("walkability");
+    await askExample("walkable");
     await waitFor(`!!document.querySelector(".ask-caret")`, "the reasoning to start streaming", 30000);
     await sleep(700);
     await shot("02-streaming.png");
@@ -273,7 +273,7 @@ async function run() {
       "putting the tags back restores the original list");
 
     log("5. The public transport question");
-    await askExample("cost effectiveness");
+    await askExample("worth the money");
     await waitFor(FINISHED, "the answer", 90000);
     seen = await evaluate(READ);
     log(`   tags: ${seen.tags.join(" | ")}`);

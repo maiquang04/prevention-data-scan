@@ -259,7 +259,7 @@ class ServerTests(unittest.TestCase):
     def test_examples(self):
         _, payload = self.request("GET", "/api/examples")
         examples = json.loads(payload)["examples"]
-        self.assertEqual(len(examples), 8)
+        self.assertEqual(len(examples), 7)
         self.assertTrue(all(e["question"] for e in examples))
 
     def test_rank_keeps_only_real_tags(self):

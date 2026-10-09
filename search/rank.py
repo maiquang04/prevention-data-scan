@@ -12,7 +12,7 @@ the model chose no tags at all.
 import sys
 from dataclasses import dataclass
 
-from config import GROUP_WEIGHTS, TOP_K
+from config import GROUP_WEIGHTS, RANKER, RECALL_DEPTH, TOP_K
 from corpus import source_tags
 from vocab import GROUPS, indicator_domain
 
@@ -40,14 +40,50 @@ def group_matches(src_tags, group, wanted, ind_domain):
     return False
 
 
-def rank(question, tags, studies, meta, index, weights=None, k=TOP_K):
+def rank(question, tags, studies, meta, index, weights=None, k=TOP_K,
+         strategy=None, recall=None):
+    """Order the sources for this question.
+
+    Two strategies, both ending in the same sort:
+
+    "tags-first" scores every source by tags and lets word matching break ties.
+
+    "bm25-first" is the other way round, as suggested on 8 October: word matching
+    picks the `recall` most promising sources, and the tags only reorder those.
+    Anything outside that shortlist is gone however many tags it carries. The depth
+    is set from word matching's own reach rather than from any score: its top 30
+    holds the right source for 97.5% of the test questions, and 95% of the vague
+    ones, so little is lost by looking no further.
+    """
     weights = GROUP_WEIGHTS if weights is None else weights
+    strategy = RANKER if strategy is None else strategy
+    recall = RECALL_DEPTH if recall is None else recall
+    if strategy not in ("tags-first", "bm25-first"):
+        raise ValueError("no such strategy: %r" % (strategy,))
+
     ind_domain = indicator_domain(meta)
     asked = [g for g in GROUPS if tags.get(g)]
     scores = index.score(question)
 
+    if strategy == "bm25-first":
+        # Word matching picks the shortlist. With no tags this is word matching
+        # exactly, because the sort below then has nothing but the bm25 score to go on.
+        shortlist = {d for d, _ in index.rank(question, recall)}
+        # A source carrying every tag asked for joins it whatever its wording. Word
+        # matching has no stemming, so "walkable suburbs" finds nothing that says
+        # "walkability", and without this the three public walkability sources are
+        # dropped from exactly the question they answer. It happened on 4 of the 80
+        # test questions.
+        if asked:
+            shortlist |= {s["id"] for s in studies
+                          if all(group_matches(source_tags(s, meta), g, tags[g],
+                                               ind_domain) for g in asked)}
+        candidates = [s for s in studies if s["id"] in shortlist]
+    else:
+        candidates = studies
+
     rows = []
-    for study in studies:
+    for study in candidates:
         src = source_tags(study, meta)
         matched = [g for g in asked if group_matches(src, g, tags[g], ind_domain)]
         score = sum(weights.get(g, 1) for g in matched)
