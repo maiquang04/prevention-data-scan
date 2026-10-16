@@ -294,6 +294,10 @@ def write_summary():
     if not runs:
         print("No finished runs in", RESULTS)
         return 1
+    # A run that returned nothing for every question did not work; printing it as
+    # 0.000 reads as a result. The keyword baseline is in that state.
+    skipped = [label(r) for r in runs if r["summary"].get("empty") == 1.0]
+    runs = [r for r in runs if r["summary"].get("empty") != 1.0]
     runs.sort(key=lambda r: -r["summary"]["R@5"])
 
     lines = ["# Search results", "",
@@ -511,51 +515,52 @@ def write_variants():
     """Every way of building the search, side by side on the frozen questions.
 
     One row per run: the two baselines, and each pairing of a mapper with a ranker.
-    The vague column is the one that decides anything, for the reason set out in
-    vague-questions.md.
+    Only the headline recall figures are shown. The band-by-band split, which is what
+    actually decides anything, lives in compare.md and vague-questions.md.
     """
     runs = load_runs()
     if not runs:
         print("No finished runs in", RESULTS)
         return 1
-    leak, _ = leak_bands()
-    vague = {q for q, v in leak.items() if v < 0.20}
-    middling = {q for q, v in leak.items() if 0.20 <= v < 0.35}
-    reusing = {q for q, v in leak.items() if v >= 0.35}
-    runs.sort(key=lambda r: -(hit_at(r, 5, vague) or 0))
+    # A run that returned nothing for every question did not work; printing it as
+    # 0.000 reads as a result. The keyword baseline is in that state.
+    skipped = [label(r) for r in runs if r["summary"].get("empty") == 1.0]
+    runs = [r for r in runs if r["summary"].get("empty") != 1.0]
+    runs.sort(key=lambda r: -r["summary"]["R@5"])
 
     lines = ["# Every version of the search, side by side", "",
-             "All on the same frozen questions. **Read the vague column**: those are the",
-             "questions that share least wording with their source, so they are the",
-             "closest this test gets to one a person would really ask. The others can be",
-             "answered by word matching almost for free.", "",
-             "Mapper: how a question becomes tags, all at once or in three narrowing",
-             "steps. Ranker: whether the tags score every source, or word matching",
-             "shortlists first and the tags only reorder it.", "",
-             "| Version | R@1 | R@5 | R@10 | R@5 reusing (%d) | R@5 middling (%d) | "
-             "**R@5 vague (%d)** | Tags | No full match | Calls | Sec |"
-             % (len(reusing), len(middling), len(vague)),
-             "|---|---|---|---|---|---|---|---|---|---|---|"]
+             "All on the same frozen questions. R@5 is how often the right source is in",
+             "the top five results, R@10 in the top ten.", "",
+             "**Mapper** is how a question becomes tags.", "",
+             "- **flat** asks the model once, showing it all eight kinds of tag and all",
+             "  101 values together, and takes whatever it picks in one reply.",
+             "- **staged** asks up to three times, narrowing each time: first which kinds",
+             "  of tag the question says anything about, then which values inside only",
+             "  those kinds, then, if a health focus was chosen, whether one specific",
+             "  measure under that focus is meant. Built so a vague question stops at the",
+             "  broader tag instead of guessing a narrow one.", "",
+             "**Ranker** is how those tags then order the sources.", "",
+             "- **tags-first** scores every source in the collection by how many of the",
+             "  chosen tags it carries, and uses word matching only to break ties.",
+             "- **bm25-first** does it the other way round: word matching picks the 30",
+             "  most promising sources, and the tags only reorder those. Anything outside",
+             "  that shortlist is gone, except a source carrying every tag asked for,",
+             "  which always joins it.", "",
+             "**bm25** on its own is the baseline with no model involved: word matching",
+             "against the question, no tags at all.", "",
+             "| Version | R@1 | R@5 | R@10 | # Tags chosen |",
+             "|---|---|---|---|---|"]
     for run in runs:
         s = run["summary"]
-
-        def band(among):
-            got = hit_at(run, 5, among)
-            return "-" if got is None else "%.3f" % got
-
-        def num(key, fmt="%.2f"):
-            return fmt % s[key] if key in s else "-"
-
-        lines.append("| %s | %.3f | %.3f | %.3f | %s | %s | **%s** | %s | %s | %s | %s |"
-                     % (label(run), s["R@1"], s["R@5"], s["R@10"],
-                        band(reusing), band(middling), band(vague),
-                        num("tags"), num("too_narrow", "%.3f"), num("calls", "%.1f"),
-                        num("sec", "%.1f")))
+        tags = "%.2f" % s["tags"] if "tags" in s else "-"
+        lines.append("| %s | %.3f | %.3f | %.3f | %s |"
+                     % (label(run), s["R@1"], s["R@5"], s["R@10"], tags))
     lines += ["",
-              "Tags is how many the mapper chose per question, and No full match how often",
-              "no single source carried all of them. Fewer tags and fewer empty full",
-              "matches is better: an extra tag narrows the search without adding meaning.",
-              "Calls is how many times the model was asked per question."]
+              "Tags is how many the mapper chose per question. Fewer is not better: every",
+              "version that chose fewer tags searched worse on the vaguest questions."]
+    if skipped:
+        lines += ["", "Left out, because it returned no results at all for every "
+                  "question: " + ", ".join(skipped) + "."]
     warn_about_dates(runs, lines)
     lines.append("")
 
