@@ -34,3 +34,9 @@ desktop.ini
 # their publishers. The code and the test questions are committed; these are not.
 search/results/
 search/data/abstracts.json
+
+# Docker. The model file is gigabytes and belongs to its publisher; .env holds
+# one machine's paths.
+models/
+*.gguf
+.env

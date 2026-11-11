@@ -1,0 +1,5 @@
+# Nothing is copied into the image, so this only keeps the build context small.
+.git
+models/
+*.gguf
+search/results/

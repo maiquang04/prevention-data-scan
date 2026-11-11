@@ -337,5 +337,33 @@ class ServerTests(unittest.TestCase):
         self.assertEqual(seen["model"], config.MODEL_MAIN)
 
 
+class SettingsTests(unittest.TestCase):
+    """What Docker Compose relies on to point the page at its own model container."""
+
+    def test_model_address_defaults_to_lm_studio(self):
+        with mock.patch.dict("os.environ", {}, clear=False) as env:
+            env.pop("LLM_URL", None)
+            fresh = self._reload_config()
+        self.assertEqual(fresh.LMSTUDIO_URL, "http://127.0.0.1:1234/v1")
+
+    def test_llm_url_overrides_the_model_address(self):
+        with mock.patch.dict("os.environ", {"LLM_URL": "http://model:8080/v1"}):
+            fresh = self._reload_config()
+        self.assertEqual(fresh.LMSTUDIO_URL, "http://model:8080/v1")
+
+    def test_listens_on_this_computer_only_by_default(self):
+        self.assertEqual(serve.parse_args([]).host, "127.0.0.1")
+        self.assertEqual(serve.parse_args(["--host", "0.0.0.0"]).host, "0.0.0.0")
+
+    @staticmethod
+    def _reload_config():
+        # A separate copy, so the module every other test imported is left alone.
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("config_copy", config.__file__)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+
 if __name__ == "__main__":
     unittest.main()

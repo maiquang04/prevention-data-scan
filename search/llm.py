@@ -14,9 +14,9 @@ import urllib.request
 
 from config import LMSTUDIO_URL, MODEL_MAIN, NO_THINK_MODELS, TIMEOUT_S
 
-NOT_RUNNING = ("LM Studio's server is not running. "
-               "In LM Studio open Developer and click Start Server.")
-DROPPED = "LM Studio stopped answering part-way through. Try the question again."
+NOT_RUNNING = ("The model server is not running. If it is LM Studio, open Developer "
+               "and click Start Server; under Docker, start the model container.")
+DROPPED = "The model server stopped answering part-way through. Try the question again."
 TOO_SLOW = ("The model did not answer within %d seconds. It is probably too large for "
             "this computer's graphics card, so most of it is running on the processor. "
             "Load a smaller model, or raise TIMEOUT_S in config.py.")
@@ -36,7 +36,7 @@ def list_models(timeout=TIMEOUT_S):
         with urllib.request.urlopen(LMSTUDIO_URL + "/models", timeout=timeout) as r:
             body = json.load(r)
     except urllib.error.HTTPError as err:
-        raise LLMError("LM Studio returned %s listing models: %s"
+        raise LLMError("The model server returned %s listing models: %s"
                        % (err.code, err.read().decode("utf-8", "replace"))) from err
     except (urllib.error.URLError, ConnectionError, TimeoutError) as err:
         raise LLMError(NOT_RUNNING) from err
@@ -166,7 +166,7 @@ def chat(messages, model=MODEL_MAIN, temperature=0.0, max_tokens=512, schema=Non
                 time.sleep(BACKOFF_S * attempt)
                 continue
             # LM Studio explains a rejected response_format in the body, so keep it.
-            raise LLMError("LM Studio returned %s: %s" % (err.code, detail)) from err
+            raise LLMError("The model server returned %s: %s" % (err.code, detail)) from err
         except (urllib.error.URLError, ConnectionError, TimeoutError,
                 http.client.HTTPException) as err:
             # A read timeout and a refused connection both arrive here, and saying the
@@ -181,7 +181,7 @@ def chat(messages, model=MODEL_MAIN, temperature=0.0, max_tokens=512, schema=Non
     try:
         return strip_thinking(reply["choices"][0]["message"]["content"])
     except (KeyError, IndexError, TypeError) as err:
-        raise LLMError("Unexpected reply from LM Studio: %s" % json.dumps(reply)[:400]) from err
+        raise LLMError("Unexpected reply from the model server: %s" % json.dumps(reply)[:400]) from err
 
 
 if __name__ == "__main__":

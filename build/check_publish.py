@@ -19,12 +19,13 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
 
-SKIP_DIRS = {".git", "node_modules", "__pycache__", ".vscode", ".idea"}
+# models/ holds the language model for Docker: gigabytes, gitignored, never published.
+SKIP_DIRS = {".git", "node_modules", "__pycache__", ".vscode", ".idea", "models"}
 
 # Only these extensions are expected in a static site. Anything else is probably a
 # document that wandered in from the project folder.
 ALLOWED_EXT = {".html", ".css", ".js", ".mjs", ".json", ".md", ".py", ".txt", ".svg",
-               ".png", ".jpg", ".jpeg", ".ico", ".webmanifest", ".gitignore", ""}
+               ".png", ".jpg", ".jpeg", ".ico", ".webmanifest", ".gitignore", ".yml", ""}
 BANNED_EXT = {".xlsx", ".xls", ".xlsm", ".docx", ".doc", ".eml", ".msg", ".pdf",
               ".pptx", ".ppt", ".csv", ".zip"}
 
@@ -59,7 +60,9 @@ ALLOWED_EXCEPTIONS = [
     "build/check_publish.py",   # this file lists the banned words on purpose
 ]
 
-TEXT_EXT = {".html", ".css", ".js", ".mjs", ".json", ".md", ".py", ".txt", ".svg"}
+TEXT_EXT = {".html", ".css", ".js", ".mjs", ".json", ".md", ".py", ".txt", ".svg", ".yml"}
+# Text files with no extension of their own, which the rule above would pass unread.
+TEXT_NAMES = {"Dockerfile", ".dockerignore", ".gitignore"}
 
 
 def walk():
@@ -87,7 +90,8 @@ def check_text(problems):
     needles += [(p, re.compile(r"\b" + re.escape(p) + r"\b")) for p in BANNED_UPPERCASE]
 
     for path, rel in walk():
-        if os.path.splitext(rel)[1].lower() not in TEXT_EXT:
+        if (os.path.splitext(rel)[1].lower() not in TEXT_EXT
+                and os.path.basename(rel) not in TEXT_NAMES):
             continue
         if any(rel.endswith(x) for x in ALLOWED_EXCEPTIONS):
             continue

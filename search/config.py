@@ -1,4 +1,5 @@
 """Settings for the search prototype. Every other file imports from here."""
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent            # search/
@@ -10,7 +11,10 @@ DATA = ROOT / "data"
 RESULTS = ROOT / "results"
 
 SITE_URL = "https://maiquang04.github.io/prevention-data-scan/"
-LMSTUDIO_URL = "http://127.0.0.1:1234/v1"
+# Where the model answers. LM Studio on this computer unless LLM_URL says otherwise;
+# Docker Compose sets it to the model container. Any OpenAI-compatible server works
+# if it honours a JSON schema in response_format.
+LMSTUDIO_URL = os.environ.get("LLM_URL", "http://127.0.0.1:1234/v1")
 TIMEOUT_S = 120
 
 # The ids LM Studio reports for each model (plan Task 0). The server also lists

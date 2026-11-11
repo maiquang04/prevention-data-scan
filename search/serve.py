@@ -12,8 +12,10 @@ links to each source's page are the site's own, and no file outside this folder 
 changed. The one thing added on the way out is an "Ask a question" link in each site
 page's menu, so the demonstration can move between the two.
 
-It listens on 127.0.0.1 only, so nothing outside this computer can reach it. Standard
-library only, like the rest of the prototype.
+It listens on 127.0.0.1 only, so nothing outside this computer can reach it, unless
+--host says otherwise. Docker Compose passes --host 0.0.0.0 inside the container and
+publishes the port on 127.0.0.1 alone. Standard library only, like the rest of the
+prototype.
 """
 import argparse
 import json
@@ -61,8 +63,8 @@ _SITE_NAV = re.compile(r'(<nav class="site-nav"[^>]*>.*?)(\s*</nav>)', re.S)
 class ClientGone(Exception):
     """The browser went away before the answer finished.
 
-    Deliberately not a ConnectionError: llm.chat turns those into "LM Studio stopped
-    answering", which would blame the wrong end.
+    Deliberately not a ConnectionError: llm.chat turns those into "The model server
+    stopped answering", which would blame the wrong end.
     """
 
 
@@ -186,8 +188,9 @@ def status():
                "recommended": m == MODEL_MAIN} for m in configured]
     ok = any(m["available"] for m in models)
     return {"ok": ok, "default": MODEL_MAIN, "models": models,
-            "message": "" if ok else ("LM Studio is running but has neither Qwen model. "
-                                      "Download them in LM Studio first.")}
+            "message": "" if ok else ("The model server is running but offers neither "
+                                      "Qwen model. In LM Studio, download them first; "
+                                      "under Docker, check MODEL_FILE.")}
 
 
 # ---------- HTTP ----------
@@ -352,30 +355,38 @@ def make_server(port=PORT, host=HOST):
     return ThreadingHTTPServer((host, port), Handler)
 
 
-def main():
+def parse_args(argv=None):
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--port", type=int, default=PORT)
+    parser.add_argument("--host", default=HOST,
+                        help="address to listen on (default %(default)s, this computer only)")
     parser.add_argument("--no-browser", action="store_true",
                         help="do not open the page in a browser")
-    args = parser.parse_args()
+    return parser.parse_args(argv)
+
+
+def main():
+    args = parse_args()
 
     try:
-        httpd = make_server(args.port)
+        httpd = make_server(args.port, args.host)
     except OSError as err:
         print("Could not start on port %d (%s).\nIs the search page already running "
               "in another window? If so use that one, or pick another port with "
               "--port %d." % (args.port, err, args.port + 1))
         return 1
 
-    url = "http://%s:%d/ask.html" % (HOST, httpd.server_address[1])
+    # 0.0.0.0 is where it listens, not an address to open; this computer is.
+    shown = HOST if args.host in ("0.0.0.0", "::") else args.host
+    url = "http://%s:%d/ask.html" % (shown, httpd.server_address[1])
     st = status()
     print("Search page:  " + url)
     if st["ok"]:
         ready = ", ".join("%s (%s)" % (m["name"], "loaded" if m["loaded"] else
                                        "not loaded yet" if m["loaded"] is False else "available")
                           for m in st["models"] if m["available"])
-        print("Model:        LM Studio at %s, %s" % (LMSTUDIO_URL, ready))
+        print("Model:        %s, %s" % (LMSTUDIO_URL, ready))
     else:
         print("Model:        not available. " + st["message"])
         print("              The page still works, ranking by the words of the question.")

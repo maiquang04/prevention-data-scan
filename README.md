@@ -17,6 +17,87 @@ python -m http.server 8000
 
 then open <http://localhost:8000>.
 
+## Running with Docker
+
+This runs the site, the search page and the language model on one machine. Docker is
+the only thing to install; the model answers on that machine, so no question leaves it.
+
+1. **Get the model file.** Download `Qwen3-4B-Instruct-2507-Q4_K_M.gguf` (about 2.5 GB,
+   Apache 2.0 licence) from
+   <https://huggingface.co/lmstudio-community/Qwen3-4B-Instruct-2507-GGUF> into a
+   folder called `models/` here. It is gitignored. If LM Studio already has it, point
+   `MODEL_DIR` at LM Studio's folder instead of copying it (see Settings below).
+2. **Start it:**
+
+   ```
+   docker compose up -d
+   ```
+
+   The first start downloads the images. The model then takes a little while to load;
+   until it has, the search page says the model is unavailable and ranks by words.
+3. **Open** <http://127.0.0.1:8765/ask.html> for the search, or
+   <http://127.0.0.1:8765/> for the site.
+
+`docker compose logs -f search` shows each question as it is answered, and
+`docker compose down` stops everything.
+
+**With an NVIDIA graphics card**, add the GPU file to every command:
+
+```
+docker compose -f docker-compose.yml -f compose.gpu.yml up -d
+```
+
+This needs the NVIDIA driver, and on Linux the NVIDIA Container Toolkit. It matters:
+on the laptop this was tested on, a question took 2 to 5 seconds on its 4 GB graphics
+card and 18 to 60 seconds on its processor alone.
+
+**After changing the workbook**, rebuild the data and restart the search, which reads
+the data once when it starts:
+
+```
+docker compose run --rm export
+docker compose restart search
+```
+
+The export reads `../lit-scan/lit-scan-draft.xlsx` unless `WORKBOOK_DIR` and
+`WORKBOOK_FILE` say otherwise. Close the workbook in Excel first, as above.
+
+### Settings
+
+Put any of these in a file called `.env` beside `docker-compose.yml` (gitignored), one
+`NAME=value` per line.
+
+| Setting | Default | What it is |
+|---|---|---|
+| `MODEL_DIR` | `./models` | Folder holding the model file |
+| `MODEL_FILE` | `Qwen3-4B-Instruct-2507-Q4_K_M.gguf` | The model file's name |
+| `MODEL_CONTEXT` | `4096` | Tokens the model can read at once. The prompt is about 1,500 |
+| `SEARCH_PORT` | `8765` | Port the page is published on |
+| `LLM_URL` | the model container | Any other OpenAI-compatible model server |
+| `WORKBOOK_DIR` | `../lit-scan` | Folder holding the workbook |
+| `WORKBOOK_FILE` | `lit-scan-draft.xlsx` | The workbook's name |
+| `HOST_UID`, `HOST_GID` | `1000` | Linux only: who owns the files the export writes |
+
+To use LM Studio on the same computer instead of the model container, set
+`LLM_URL=http://host.docker.internal:1234/v1` and start only the search:
+`docker compose up -d --no-deps search`.
+
+### Not the same answers as LM Studio
+
+Same model file, same prompt, temperature 0, but llama.cpp's server and LM Studio do
+not choose identical tags. On the 80 test questions (11 November) the container gave the
+same tags as the 9 October LM Studio run on 33 of them, and found the right source in the
+top ten 69% of the time against 76%. One reply came back unreadable. Whether that is
+llama.cpp's own settings or LM Studio having changed since October has not been checked;
+the demo questions all behaved as expected (`node search/ui_check.mjs`).
+
+### What this does not do yet
+
+The page is published on `127.0.0.1` only, so it can be used on the machine running it
+and nowhere else. Opening it to a network is a decision for whoever runs the server,
+and needs a proper web server with a sign-in in front of it: `search/serve.py` is
+Python's built-in web server, which is not built to face the internet.
+
 ## Where the content comes from
 
 The spreadsheet is the source of truth. Nothing in `data/studies.json` or `data/meta.json`
@@ -218,6 +299,9 @@ build/
   check_publish.py  pre-push safety scan
   check_links.py    checks the outbound links still resolve
 search/             a prototype, not part of the published pages — see below
+Dockerfile          the Python image the search and the export run in
+docker-compose.yml  the site, search and model together; see Running with Docker
+compose.gpu.yml     the same, with the model on an NVIDIA card
 .nojekyll           stops GitHub Pages hiding files that start with an underscore
 ```
 
@@ -231,9 +315,9 @@ language model reads the question, picks tags the scan already uses, and those t
 searching; the reader sees which tags were chosen, why, and can remove any of them.
 
 It is **not part of the published site** and nothing else here depends on it. The model
-runs on a laptop through LM Studio, which a static site cannot do, so the page is served
-locally beside the real site by `search/serve.py`. Where this would eventually run is
-still open. `search/README.md` says how to run it and what it cannot do.
+runs on a laptop through LM Studio, or in Docker beside its own model container, which
+a static site cannot do, so the page is served beside the real site by
+`search/serve.py`. Where this would eventually run is still open. `search/README.md` says how to run it and what it cannot do.
 
 ## Which filters start open
 

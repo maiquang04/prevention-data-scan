@@ -1,0 +1,70 @@
+# The site, its search page and the language model, on one machine.
+#
+#   docker compose up -d                 start the site, search and model
+#   open http://127.0.0.1:8765/ask.html
+#   docker compose run --rm export       rebuild the site's data from the workbook
+#   docker compose restart search        then pick up the new data
+#   docker compose down                  stop everything
+#
+# With an NVIDIA graphics card, add the GPU settings:
+#   docker compose -f docker-compose.yml -f compose.gpu.yml up -d
+#
+# Before the first start, put the model file in models/, or set MODEL_DIR to the
+# folder that holds it (see README.md).
+
+services:
+  # llama.cpp's server, answering the same OpenAI-style requests LM Studio does.
+  model:
+    image: ghcr.io/ggml-org/llama.cpp:server-b12242
+    volumes:
+      - ${MODEL_DIR:-./models}:/models:ro
+    # --alias makes the server report the model under the name search/config.py asks
+    # for. --parallel 1 keeps the whole context for one question at a time; with
+    # several slots it is split between them, and the prompt, about 1,500 tokens,
+    # no longer fits.
+    command: >
+      -m /models/${MODEL_FILE:-Qwen3-4B-Instruct-2507-Q4_K_M.gguf}
+      --alias qwen/qwen3-4b-2507
+      -c ${MODEL_CONTEXT:-4096} --parallel 1
+      --host 0.0.0.0 --port 8080
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+    restart: unless-stopped
+
+  # The site and the search page, served together by search/serve.py.
+  search:
+    build: .
+    image: prevention-data-scan-python
+    volumes:
+      - .:/site:ro
+    environment:
+      LLM_URL: ${LLM_URL:-http://model:8080/v1}
+    command: python search/serve.py --host 0.0.0.0 --no-browser
+    # Published on this machine only. Opening it to a network is a decision for
+    # whoever runs the server, and needs a proper web server and sign-in in front.
+    ports:
+      - "127.0.0.1:${SEARCH_PORT:-8765}:8765"
+    # Started, not waited for: the page works without the model, ranking by words,
+    # and says so until the model has loaded.
+    depends_on:
+      - model
+    restart: unless-stopped
+
+  # Rebuilds data/ from the workbook. Not started by `up`; run it when the workbook
+  # changes. The workbook is kept outside this folder, so its folder is named here.
+  export:
+    build: .
+    image: prevention-data-scan-python
+    profiles: ["tools"]
+    volumes:
+      - .:/site
+      - ${WORKBOOK_DIR:-../lit-scan}:/workbook:ro
+    # On Linux, files written here belong to this user; set HOST_UID and HOST_GID to
+    # your own (id -u, id -g) if they differ, or the repository ends up with files
+    # you cannot edit.
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+    command: python build/export_data.py --src /workbook/${WORKBOOK_FILE:-lit-scan-draft.xlsx}
