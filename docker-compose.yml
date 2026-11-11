@@ -1,39 +1,71 @@
 # The site, its search page and the language model, on one machine.
 #
+# First choose where the model runs: put COMPOSE_PROFILES=gpu in a file called .env
+# beside this one for an NVIDIA graphics card (2 to 5 s a question), or
+# COMPOSE_PROFILES=cpu for the processor alone (much slower). Then:
+#
 #   docker compose up -d                 start the site, search and model
 #   open http://127.0.0.1:8765/ask.html
 #   docker compose run --rm export       rebuild the site's data from the workbook
 #   docker compose restart search        then pick up the new data
 #   docker compose down                  stop everything
 #
-# With an NVIDIA graphics card, add the GPU settings:
-#   docker compose -f docker-compose.yml -f compose.gpu.yml up -d
+# Without that setting, `up` starts no model and `down` leaves one running; name the
+# profile in each command instead if you prefer: docker compose --profile gpu up -d
 #
 # Before the first start, put the model file in models/, or set MODEL_DIR to the
 # folder that holds it (see README.md).
 
+# What the two ways of running the model share. Both answer to the name "model" on
+# Compose's network, so the search finds whichever one is running.
+x-model: &model
+  volumes:
+    - ${MODEL_DIR:-./models}:/models:ro
+  networks:
+    default:
+      aliases: [model]
+  healthcheck:
+    test: ["CMD", "curl", "-fs", "http://localhost:8080/health"]
+    interval: 10s
+    timeout: 5s
+    retries: 30
+    start_period: 20s
+  restart: unless-stopped
+
 services:
   # llama.cpp's server, answering the same OpenAI-style requests LM Studio does.
-  model:
+  # --alias makes it report the model under the name search/config.py asks for.
+  # --parallel 1 keeps the whole context for one question at a time; with several
+  # slots it is split between them, and the prompt, about 1,500 tokens, no longer fits.
+  model-gpu:
+    <<: *model
+    profiles: ["gpu"]
+    image: ghcr.io/ggml-org/llama.cpp:server-cuda-b12242
+    # Every layer on the card. A 4B model at Q4 fits in 4 GB with a 4096 context.
+    # Needs the NVIDIA driver, and on Linux the NVIDIA Container Toolkit.
+    command: >
+      -m /models/${MODEL_FILE:-Qwen3-4B-Instruct-2507-Q4_K_M.gguf}
+      --alias qwen/qwen3-4b-2507
+      -c ${MODEL_CONTEXT:-4096} --parallel 1
+      --n-gpu-layers 999
+      --host 0.0.0.0 --port 8080
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  model-cpu:
+    <<: *model
+    profiles: ["cpu"]
     image: ghcr.io/ggml-org/llama.cpp:server-b12242
-    volumes:
-      - ${MODEL_DIR:-./models}:/models:ro
-    # --alias makes the server report the model under the name search/config.py asks
-    # for. --parallel 1 keeps the whole context for one question at a time; with
-    # several slots it is split between them, and the prompt, about 1,500 tokens,
-    # no longer fits.
     command: >
       -m /models/${MODEL_FILE:-Qwen3-4B-Instruct-2507-Q4_K_M.gguf}
       --alias qwen/qwen3-4b-2507
       -c ${MODEL_CONTEXT:-4096} --parallel 1
       --host 0.0.0.0 --port 8080
-    healthcheck:
-      test: ["CMD", "curl", "-fs", "http://localhost:8080/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 30
-      start_period: 20s
-    restart: unless-stopped
 
   # The site and the search page, served together by search/serve.py.
   search:
@@ -48,10 +80,11 @@ services:
     # whoever runs the server, and needs a proper web server and sign-in in front.
     ports:
       - "127.0.0.1:${SEARCH_PORT:-8765}:8765"
-    # Started, not waited for: the page works without the model, ranking by words,
-    # and says so until the model has loaded.
+    # Started after whichever model was chosen, but not waited for: the page works
+    # without the model, ranking by words, and says so until the model has loaded.
     depends_on:
-      - model
+      model-gpu: {condition: service_started, required: false}
+      model-cpu: {condition: service_started, required: false}
     restart: unless-stopped
 
   # Rebuilds data/ from the workbook. Not started by `up`; run it when the workbook

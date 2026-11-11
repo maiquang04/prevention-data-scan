@@ -164,7 +164,7 @@
       }
       if (r.usedModel !== false && r.modelName) {
         html += '<p class="ask-meta">Answered by ' + esc(r.modelName) + " in " +
-          Number(r.seconds || 0).toFixed(1) + " seconds, on this computer.</p>";
+          Number(r.seconds || 0).toFixed(1) + " seconds.</p>";
       }
     }
 
@@ -364,7 +364,7 @@
     var message = err && err.message ? err.message : String(err);
     // What the browser says when it cannot connect at all.
     if (/failed to fetch|networkerror|load failed/i.test(message)) {
-      return "Could not reach the search server on this computer. Is serve.py still running?";
+      return "Could not reach the search server. Check that it is running, then try again.";
     }
     return message;
   }

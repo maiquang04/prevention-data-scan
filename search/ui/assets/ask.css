@@ -9,12 +9,6 @@
   clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
 }
 
-.ask-proto {
-  font-size: .85rem; color: var(--ink-soft); background: var(--panel);
-  border: 1px dashed var(--rule); border-radius: var(--radius);
-  padding: 8px 12px; max-width: var(--text); margin: 4px 0 0;
-}
-
 /* ---------- the question ---------- */
 
 .ask-form { margin: 24px 0 12px; }

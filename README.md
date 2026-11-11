@@ -27,7 +27,18 @@ the only thing to install; the model answers on that machine, so no question lea
    <https://huggingface.co/lmstudio-community/Qwen3-4B-Instruct-2507-GGUF> into a
    folder called `models/` here. It is gitignored. If LM Studio already has it, point
    `MODEL_DIR` at LM Studio's folder instead of copying it (see Settings below).
-2. **Start it:**
+2. **Choose where the model runs.** Create a file called `.env` beside
+   `docker-compose.yml` containing one line:
+
+   ```
+   COMPOSE_PROFILES=gpu
+   ```
+
+   `gpu` runs the model on an NVIDIA graphics card, which needs the NVIDIA driver, and
+   on Linux the NVIDIA Container Toolkit. Use `cpu` on a machine without one. It
+   matters: on the laptop this was tested on, a question took 2 to 5 seconds on its
+   4 GB graphics card and 18 to 60 seconds on its processor alone.
+3. **Start it:**
 
    ```
    docker compose up -d
@@ -35,21 +46,15 @@ the only thing to install; the model answers on that machine, so no question lea
 
    The first start downloads the images. The model then takes a little while to load;
    until it has, the search page says the model is unavailable and ranks by words.
-3. **Open** <http://127.0.0.1:8765/ask.html> for the search, or
+4. **Open** <http://127.0.0.1:8765/ask.html> for the search, or
    <http://127.0.0.1:8765/> for the site.
 
 `docker compose logs -f search` shows each question as it is answered, and
 `docker compose down` stops everything.
 
-**With an NVIDIA graphics card**, add the GPU file to every command:
-
-```
-docker compose -f docker-compose.yml -f compose.gpu.yml up -d
-```
-
-This needs the NVIDIA driver, and on Linux the NVIDIA Container Toolkit. It matters:
-on the laptop this was tested on, a question took 2 to 5 seconds on its 4 GB graphics
-card and 18 to 60 seconds on its processor alone.
+Without `COMPOSE_PROFILES`, `up` starts the search page but no model, and `down` leaves
+a running model behind. Either set it in `.env` as above, or name the profile in every
+command: `docker compose --profile gpu up -d`, `docker compose --profile gpu down`.
 
 **After changing the workbook**, rebuild the data and restart the search, which reads
 the data once when it starts:
@@ -69,6 +74,7 @@ Put any of these in a file called `.env` beside `docker-compose.yml` (gitignored
 
 | Setting | Default | What it is |
 |---|---|---|
+| `COMPOSE_PROFILES` | none | `gpu` or `cpu`: where the model runs |
 | `MODEL_DIR` | `./models` | Folder holding the model file |
 | `MODEL_FILE` | `Qwen3-4B-Instruct-2507-Q4_K_M.gguf` | The model file's name |
 | `MODEL_CONTEXT` | `4096` | Tokens the model can read at once. The prompt is about 1,500 |
@@ -301,7 +307,6 @@ build/
 search/             a prototype, not part of the published pages — see below
 Dockerfile          the Python image the search and the export run in
 docker-compose.yml  the site, search and model together; see Running with Docker
-compose.gpu.yml     the same, with the model on an NVIDIA card
 .nojekyll           stops GitHub Pages hiding files that start with an underscore
 ```
 
@@ -433,7 +438,7 @@ and the reader sees the whole list.
 
 ## Status
 
-Working draft, 61 sources across six focus areas. One has the grid view; the other five are
+80 sources across six focus areas. One has the grid view; the other five are
 on the browse page while their framing is settled — that is the existing behaviour for a
 focus area without a `quadrants.json` entry, not a fault. Where a source's data has not been
 checked yet, it is marked `Not yet assessed` rather than guessed at, and where a claim
