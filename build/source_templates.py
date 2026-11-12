@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Build the two CSV templates for people who suggest changes to the scan.
+"""Build the CSV template for people who suggest new sources.
 
-One CSV is a deliberately lightweight form for suggesting new resources. The
-second exports the current focus-area, health-focus and measure assignments for
-human review, with a Notes column for corrections. Both are written to
-templates/ (gitignored) from the site's own data, so they always offer the
+A deliberately lightweight form: free-text columns for what the source is, then
+one column per kind of tag with its allowed values in the heading. It is written
+to templates/ (gitignored) from the site's own data, so it always offers the
 current tag values. A returned file is read by a person and copied into
 data/sources.csv; nothing here publishes anything.
 
@@ -29,9 +28,6 @@ STUDIES_PATH = DATA_DIR / "studies.json"
 META_PATH = DATA_DIR / "meta.json"
 TEMPLATES_DIR = PROJECT_ROOT / "templates"
 CSV_PATH = TEMPLATES_DIR / "resource-entry-template.csv"
-TAG_REVIEW_CSV_PATH = TEMPLATES_DIR / "current-source-tag-review.csv"
-# Where the tag-review CSV links each source. Change it if the site moves.
-WEBSITE_ROOT = "https://maiquang04.github.io/prevention-data-scan"
 
 FREE_ENTRY_CSV_COLUMNS = {
     "number": "No.",
@@ -84,22 +80,6 @@ BRIEF_EXAMPLE_VALUES = {
         "key_details": "Regional priorities and data sources",
     },
 }
-
-
-TAG_REVIEW_CSV_COLUMNS = [
-    "Review number",
-    "Notes",
-    "Resource title or citation",
-    "Website record",
-    "Original source link",
-    "Current focus area(s)",
-    "Current health focus(es)",
-    "Current measure(s) or indicator(s)",
-    # Added September 2026 alongside the site's own two new columns, so a
-    # reviewer checking tags can check these two in the same pass.
-    "Current application fee",
-    "Current data source year(s)",
-]
 
 
 def read_json(path: Path) -> Any:
@@ -306,55 +286,13 @@ def write_excel_csv(
         writer.writerows(rows)
 
 
-def tag_review_csv_row(
-    review_number: int, study: dict[str, Any], meta: dict[str, Any]
-) -> dict[str, str]:
-    titles = topic_titles(meta)
-    return {
-        "Review number": str(review_number),
-        "Notes": "",
-        "Resource title or citation": study.get("reference", ""),
-        "Website record": f"{WEBSITE_ROOT}/study.html?id={study['id']}",
-        "Original source link": study.get("link", ""),
-        "Current focus area(s)": joined(
-            titles[topic] for topic in study.get("topics", [])
-        ),
-        "Current health focus(es)": joined(study.get("domains", [])),
-        "Current measure(s) or indicator(s)": joined(study.get("indicators", [])),
-        "Current application fee": study.get("applicationFee", ""),
-        "Current data source year(s)": study.get("dataYears", ""),
-    }
-
-
-def tag_review_csv_rows(
-    studies: list[dict[str, Any]], meta: dict[str, Any]
-) -> list[dict[str, str]]:
-    return [
-        tag_review_csv_row(review_number, study, meta)
-        for review_number, study in enumerate(studies, start=1)
-    ]
-
-
-def build_tag_review_csv(
-    studies: list[dict[str, Any]], meta: dict[str, Any]
-) -> None:
-    write_excel_csv(
-        TAG_REVIEW_CSV_PATH,
-        TAG_REVIEW_CSV_COLUMNS,
-        tag_review_csv_rows(studies, meta),
-    )
-
-
 def build_pack(studies: list[dict[str, Any]], meta: dict[str, Any]) -> None:
     build_csv(studies, meta)
-    build_tag_review_csv(studies, meta)
     print(f"wrote {CSV_PATH.relative_to(PROJECT_ROOT)}")
     print(
         f"  {len(resource_entry_columns(meta))} columns, "
         "2 examples, 5 numbered new-resource rows"
     )
-    print(f"wrote {TAG_REVIEW_CSV_PATH.relative_to(PROJECT_ROOT)}")
-    print(f"  {len(studies)} current-source rows, {len(TAG_REVIEW_CSV_COLUMNS)} columns")
 
 
 def read_checked_csv(path: Path, expected_columns: list[str]) -> list[dict[str, str]]:
@@ -465,37 +403,13 @@ def check_csv(studies: list[dict[str, Any]], meta: dict[str, Any]) -> None:
         raise AssertionError("measure and indicator options are missing or duplicated")
 
 
-def check_tag_review_csv(
-    studies: list[dict[str, Any]], meta: dict[str, Any]
-) -> None:
-    rows = read_checked_csv(TAG_REVIEW_CSV_PATH, TAG_REVIEW_CSV_COLUMNS)
-    if TAG_REVIEW_CSV_COLUMNS[1] != "Notes":
-        raise AssertionError("tag-review Notes must be the second column")
-    expected_rows = tag_review_csv_rows(studies, meta)
-    if rows != expected_rows:
-        raise AssertionError("tag-review CSV does not match the current website metadata")
-    review_numbers = [row["Review number"] for row in rows]
-    if review_numbers != [str(number) for number in range(1, len(studies) + 1)]:
-        raise AssertionError(
-            f"tag-review CSV review numbers must run from 1 to {len(studies)}")
-    if any(row["Notes"] for row in rows):
-        raise AssertionError("tag-review CSV Notes cells must be blank when generated")
-
-
 def check_pack(studies: list[dict[str, Any]], meta: dict[str, Any]) -> None:
     check_csv(studies, meta)
-    check_tag_review_csv(studies, meta)
     print("source_templates: clean")
     print(
         "  resource-entry CSV: non-duplicative free-entry fields followed by tag fields; "
         "7 health-focus measure columns; all current options in headings; "
         "rows numbered 1-7; 2 examples; 5 empty entry rows"
-    )
-    print(
-        f"  tag-review CSV: {len(TAG_REVIEW_CSV_COLUMNS)} focused columns; "
-        f"neutral review numbers 1-{len(studies)}; "
-        "Notes second and blank; "
-        "Excel comma directive; UTF-8 BOM; CRLF"
     )
 
 
@@ -504,7 +418,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--check",
         action="store_true",
-        help="check the existing templates without rewriting them",
+        help="check the existing template without rewriting it",
     )
     return parser.parse_args(argv)
 

@@ -8,7 +8,7 @@
 #   open http://127.0.0.1:8765/index.html
 #   docker compose run --rm export       rebuild the site's data from data/sources.csv
 #   docker compose restart search        then pick up the new data
-#   docker compose down                  stop everything
+#   docker compose down -v                 stop everything
 #
 # Without that setting, `up` starts no model and `down` leaves one running; name the
 # profile in each command instead if you prefer: docker compose --profile gpu up -d

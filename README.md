@@ -149,18 +149,17 @@ column.
 
 ### Suggestions from contributors
 
-People who should not edit `data/sources.csv` directly can send changes in two CSV
-templates:
+People who should not edit `data/sources.csv` directly can suggest new sources in a
+CSV template:
 
 ```
-python build/source_templates.py           write both into templates/
-python build/source_templates.py --check   check them without rewriting
+python build/source_templates.py           write it into templates/
+python build/source_templates.py --check   check it without rewriting
 ```
 
 `resource-entry-template.csv` is one row per new source, with the allowed tag values in
-each column heading. `current-source-tag-review.csv` lists every current source and its
-tags, with a Notes column for corrections. Both are built from `data/`, so regenerate them
-after an export. A returned file is read by whoever maintains the site and copied into
+each column heading. It is built from `data/`, so regenerate it after an export.
+Corrections to existing sources can simply be sent by email. A returned file is read by whoever maintains the site and copied into
 `data/sources.csv` by hand; nothing imports it automatically, because duplicates,
 conflicting tags and unchecked claims need a person to look at them.
 
@@ -325,7 +324,7 @@ build/
   stamp_assets.py   adds ?v=<hash> to each stylesheet and script link
   check_publish.py  pre-push safety scan
   check_links.py    checks the outbound links still resolve
-  source_templates.py  writes the two CSV templates for contributors into templates/
+  source_templates.py  writes the CSV template for suggesting sources into templates/
 search/             a prototype, not part of the published pages — see below
 Dockerfile          the Python image the search and the export run in
 docker-compose.yml  the site, search and model together; see Running with Docker
