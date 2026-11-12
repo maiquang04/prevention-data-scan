@@ -33,9 +33,9 @@ desktop.ini
 # Local server scratch
 *.log
 
-# Search prototype. Its evaluation results, screenshots and the abstracts it downloads
-# are generated on one laptop against one model, and the papers' abstracts belong to
-# their publishers. The code and the test questions are committed; these are not.
+# Search prototype. The page check's screenshots go to search/results/, and older
+# evaluation outputs and downloaded abstracts may still sit in a working copy; the
+# abstracts belong to their publishers. None of it is committed.
 search/results/
 search/data/abstracts.json
 

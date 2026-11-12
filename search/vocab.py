@@ -82,8 +82,8 @@ def json_schema(vocab, groups=None, choices=None):
 
     `groups` narrows it to some of the eight, for a question asked about only part
     of the vocabulary. `choices` overrides the allowed values of a group, which is
-    how the staged mapper offers only the measures under a focus already chosen,
-    rather than all 61.
+    how only the measures under a focus already chosen can be offered, rather
+    than all 61.
     """
     groups = list(GROUPS if groups is None else groups)
     choices = choices or {}

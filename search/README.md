@@ -77,40 +77,13 @@ each step in `results/screens/`, and reports two things separately: **problems w
 page**, which mean something is broken, and **notes**, which mean the model answered
 differently from what the demo expects. The second kind happens, see Known limits.
 
-## Running it in the terminal
+## How well it works
 
-```
-python search/search.py "what public data is available for walkability in this region"
-python search/search.py --model qwen/qwen3-1.7b "your question"
-python search/search.py --json "your question"
-```
-
-The link printed at the end opens the same filters on the live site.
-
-## Checking how well it works
-
-```
-python search/evaluate.py --method keyword     # today's search box
-python search/evaluate.py --method bm25        # word matching, no model
-python search/evaluate.py --method llm --model qwen/qwen3-4b-2507
-python search/evaluate.py --method llm --model qwen/qwen3-1.7b
-python search/evaluate.py --summary            # results/summary.md
-python search/evaluate.py --compare            # results/vague-questions.md
-python search/evaluate.py --models             # results/models.md
-```
-
-`--summary` answers "does the pipeline work", one row per method. `--compare` splits the
-questions by how much wording they reuse, which is the honest comparison against word
-matching. `--models` puts the models side by side on accuracy, how many tags each picks,
-speed, and what each does with a question the scan cannot answer.
-
-Only one model fits in 4 GB at a time, so unload one in LM Studio before loading the
-other. A full run takes a while; it saves as it goes and picks up where it stopped.
-
-A result file is named by the day it was run, so running a method again leaves the older
-file in place. `--summary` and `--compare` use the newest run of each method and say which
-older ones they ignored. If a run predates the last review of the questions, they say the
-rows are not comparable and name the runs to repeat.
+It was measured in October 2026 on 80 test questions, each written from one source's own
+summary, with that source as the right answer. Word matching first, then reordering by
+the model's tags, found the right source in the top ten 76% of the time. The code that ran
+those measurements, the test questions, and a rejected way of choosing tags in three
+steps were removed from the tree before handover; they are in the repository's history.
 
 Tests, which need no model:
 
@@ -118,32 +91,11 @@ Tests, which need no model:
 python -m unittest discover -s search -p "test_*.py" -v
 ```
 
-## The questions it is scored on
-
-`data/testset.json` holds one question per source, written by the model from that
-source's abstract or summary and deliberately kept vague. The source it came from is the
-right answer.
-
-Read a sample, edit or delete any that are poor, then lock the file:
-
-```
-python search/make_testset.py --sample 15
-python search/make_testset.py --freeze
-```
-
-Freezing checks every question, works out again how much of its source's wording it
-reuses, and sets `"frozen": true` with the date. Scoring it again matters because that
-number is what splits the results into vague and not-so-vague questions, and a question
-edited by hand would otherwise keep the score of its old wording. Freezing refuses if a
-question is empty, names a source that does not exist, or repeats another's id, and warns
-about a question that reuses more than half its source's wording or mentions a year.
-
-After freezing, run the evaluation again: earlier results were scored on the questions as
-they were before the review.
+## The example questions
 
 `data/examples.json` holds the questions offered as buttons under the search box, so the
 search can be tried without typing. They are **not scored** and have no recorded right
-answer: every measured result comes from `testset.json`. Each one carries a `shows` note
+answer. Each one carries a `shows` note
 saying which part of the pipeline it exercises, including one question about something
 the scan does not cover, to show what a user sees when there is no good answer.
 
@@ -152,20 +104,15 @@ the scan does not cover, to show what a user sees when there is no good answer.
 | File | What it does |
 |---|---|
 | `config.py` | paths, server address, model ids, ranking weights |
-| `llm.py` | talks to LM Studio |
+| `llm.py` | talks to the model server (LM Studio, or the Docker model container) |
 | `vocab.py` | the 101 tags, and how they are described to the model |
 | `corpus.py` | the sources, their text, their tags, links back to the site |
 | `bm25.py` | word matching |
 | `map_query.py` | question to tags |
 | `rank.py` | tags to ranked sources |
-| `search.py` | the same search in the terminal |
 | `serve.py` | the search page's server |
 | `ui/` | the search page: `ask.html`, `assets/ask.js`, `assets/ask.css` |
 | `ui_check.mjs` | walks through the page in a real browser, with screenshots |
-| `fetch_abstracts.py` | abstracts from Europe PMC, for building test questions |
-| `make_testset.py` | writes the test questions |
-| `keyword_baseline.mjs` | runs the site's current search, for comparison |
-| `evaluate.py` | scores everything |
 | `test_prototype.py` | tests for the search |
 | `test_server.py` | tests for the page's server, with the model replaced by a stand-in |
 
@@ -178,8 +125,8 @@ the scan does not cover, to show what a user sees when there is no good answer.
   are chosen, the link drops a focus that a chosen measure already implies, so the page
   shows the same sources. A focus unrelated to any chosen measure is kept, and then the
   page can show more than the ranking counted.
-- Each test question counts only the source it came from as correct, so a genuinely good
-  answer from another source is scored as a miss.
+- In the October measurements each test question counted only the source it came from
+  as correct, so a good answer from another source was scored as a miss.
 - The model does not always give the same answer to the same question, even at
   temperature 0. Asked the walkability example question six times in a row on
   29 September 2026, it chose `Small area` once and `LGA` five times, always adding
