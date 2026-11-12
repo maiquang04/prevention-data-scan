@@ -122,10 +122,12 @@ yet checked", and a blank tag column simply leaves the source out of that filter
 that is filled in must hold one of the allowed values, or the export stops and names the
 row.
 
-**Each row's ID** (`app1-03`) is the address of that source's page, so it never changes
-once published. A new source takes the next free number under the topic it belongs to
-most, e.g. `app2-15` after `app2-14`. Removing a source means deleting its row; its old
-link then shows "not found".
+**Each row's ID** is the address of that source's page (`study.html?id=81`), so it never
+changes once published. A new source takes the next whole number, which the export prints
+at the end of each run ("The next new source takes ID 81."). The first 80 sources keep
+the IDs they had when the list was six workbook sheets, such as `app1-03`, because links
+and `data/quadrants.json` already point at them. Removing a source means deleting its row;
+its old link then says it no longer matches anything in the scan.
 
 That command also re-stamps the stylesheet and script links with a hash of each file
 (`assets/common.js?v=cbf15586`). GitHub Pages caches assets for ten minutes and its CDN

@@ -29,10 +29,15 @@ TOPICS_FILE = os.path.join(OUT_DIR, "topics.json")
 INDICATORS_FILE = os.path.join(OUT_DIR, "indicators.json")
 QUADRANTS_FILE = os.path.join(OUT_DIR, "quadrants.json")
 
-# The source's id, as in study.html?id=app1-03. It never changes once a source is
-# published, because links to it are already out there. The number after "app" is
-# the topic the source was first filed under, the one after the dash its place there.
+# The source's id, as in study.html?id=81. It never changes once a source is
+# published, because links to it are already out there. A new source takes the next
+# whole number, which the export prints. The first 80 keep the ids they were given
+# when the list was six workbook sheets, app<sheet>-<row> such as app1-03: links and
+# data/quadrants.json already point at them.
 ID_RE = re.compile(r"^app(\d+)-(\d+)$")
+NUMBER_ID_RE = re.compile(r"^[1-9]\d*$")
+# Where a numbered source sorts among the old ones: after all six sheets.
+NUMBERED_APP = 99
 
 # CSV column heading -> JSON key. Anything not listed here is ignored, so a new
 # column in the CSV will not silently leak onto a public website.
@@ -362,6 +367,13 @@ def read_sources(src):
         yield number, row
 
 
+def next_free_id(ids):
+    """The number a new source should take: one more than the highest number in use,
+    starting at 81, the first after the 80 sources that kept their sheet-based ids."""
+    numbers = [int(i.strip()) for i in ids if i and NUMBER_ID_RE.match(i.strip())]
+    return max(numbers + [80]) + 1
+
+
 def export(src, out_dir, quiet=False):
     if not os.path.exists(src):
         raise SystemExit("Source list not found: " + src)
@@ -372,22 +384,28 @@ def export(src, out_dir, quiet=False):
     topic_by_title = {t["title"]: t["id"] for t in topics}
 
     studies, problems, seen_ids = [], [], set()
+    rows = list(read_sources(src))
+    next_id = next_free_id(row.get("ID") for _, row in rows)
 
-    for number, row in read_sources(src):
+    for number, row in rows:
         record = {}
         for heading, key in FIELDS.items():
             record[key] = clean(row.get(heading))
 
         where = "Row %d (%s)" % (number, record["id"] or "no ID")
         match = ID_RE.match(record["id"])
-        if not match:
-            problems.append("%s: ID must look like app1-03" % where)
+        if not match and not NUMBER_ID_RE.match(record["id"]):
+            problems.append("%s: ID must be a whole number, such as %d" % (where, next_id))
             continue
         if record["id"] in seen_ids:
-            problems.append("%s: ID is used by an earlier row too" % where)
+            problems.append("%s: ID is used by an earlier row too - use %d"
+                            % (where, next_id))
             continue
         seen_ids.add(record["id"])
-        app, num = int(match.group(1)), int(match.group(2))
+        if match:
+            app, num = int(match.group(1)), int(match.group(2))
+        else:
+            app, num = NUMBERED_APP, int(record["id"])
 
         # Only ID and Reference have to be filled in; a source can be added with what
         # is known and completed over time. A blank that the pages need an answer for
@@ -562,6 +580,7 @@ def export(src, out_dir, quiet=False):
             len(studies),
             ", ".join("%s = %d" % (t["title"], t["count"]) for t in meta["topics"]),
         ))
+        print("The next new source takes ID %d." % next_id)
         for value in ACCESS_VALUES:
             print("  %-26s %d" % (value, counts.get(value, 0)))
         dated = [s2["year"] for s2 in studies if s2["year"]]
