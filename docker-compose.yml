@@ -5,8 +5,8 @@
 # COMPOSE_PROFILES=cpu for the processor alone (much slower). Then:
 #
 #   docker compose up -d                 start the site, search and model
-#   open http://127.0.0.1:8765/ask.html
-#   docker compose run --rm export       rebuild the site's data from the workbook
+#   open http://127.0.0.1:8765/index.html
+#   docker compose run --rm export       rebuild the site's data from data/sources.csv
 #   docker compose restart search        then pick up the new data
 #   docker compose down                  stop everything
 #
@@ -87,17 +87,16 @@ services:
       model-cpu: {condition: service_started, required: false}
     restart: unless-stopped
 
-  # Rebuilds data/ from the workbook. Not started by `up`; run it when the workbook
-  # changes. The workbook is kept outside this folder, so its folder is named here.
+  # Rebuilds the site's data from data/sources.csv. Not started by `up`; run it when
+  # the CSV changes.
   export:
     build: .
     image: prevention-data-scan-python
     profiles: ["tools"]
     volumes:
       - .:/site
-      - ${WORKBOOK_DIR:-../lit-scan}:/workbook:ro
     # On Linux, files written here belong to this user; set HOST_UID and HOST_GID to
     # your own (id -u, id -g) if they differ, or the repository ends up with files
     # you cannot edit.
     user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
-    command: python build/export_data.py --src /workbook/${WORKBOOK_FILE:-lit-scan-draft.xlsx}
+    command: python build/export_data.py

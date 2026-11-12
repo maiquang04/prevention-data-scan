@@ -19,7 +19,7 @@
      about as tall as the filters, so both columns end at roughly the same place. */
   var PAGE_SIZE = 10;
 
-  /* Newest first is the default. The workbook's own order used to be, and it is gone:
+  /* Newest first is the default. The source list's own order used to be, and it is gone:
      it meant something to whoever built the sheet and nothing to a reader, and a
      shared ?page= link that depends on it is not worth keeping.
 
@@ -49,7 +49,7 @@
   };
 
   // A source without the field sorts last in both directions rather than being
-  // handed a date it does not have. Array.sort is stable, so ties keep workbook order.
+  // handed a date it does not have. Array.sort is stable, so ties keep the source list's order.
   function byField(field, direction) {
     return function (a, b) {
       if (!a[field] !== !b[field]) return a[field] ? -1 : 1;
@@ -365,7 +365,7 @@
 
   function currentResults() {
     // subsetExcluding hands back a fresh array, so this does not reorder the loaded
-    // data. Array.sort is stable, so sources sharing a year stay in workbook order
+    // data. Array.sort is stable, so sources sharing a year stay in the source list's order
     // underneath the year sort rather than shuffling between renders.
     return subsetExcluding(null).sort(SORTS[state.sort].compare);
   }

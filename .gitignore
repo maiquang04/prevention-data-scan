@@ -13,6 +13,10 @@
 *.csv
 *.zip
 
+# The one exception: the list every page is generated from. build/check_publish.py
+# reads it for the same banned names and phrases as every other text file.
+!data/sources.csv
+
 # Python
 __pycache__/
 *.py[cod]

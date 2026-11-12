@@ -1,39 +1,43 @@
 # -*- coding: utf-8 -*-
-"""Export the literature and data scan workbook to JSON for the website.
+"""Export the scan's source list to JSON for the website.
 
-The workbook is the source of truth. Thanh maintains it and Rocky annotates it by
-highlighting rows, so nothing here is hand-edited - run this script instead:
+data/sources.csv is the source of truth, one row per source. Nothing the site reads is
+hand-edited - change the CSV, then run this script:
 
     python build/export_data.py
 
 Writes data/studies.json and data/meta.json. data/quadrants.json is hand-authored
 and is never touched by this script.
 
-Close the workbook in Excel before running, or openpyxl will read a stale copy.
+The CSV must be saved as UTF-8. In Excel that is "CSV UTF-8 (Comma delimited)"; the
+plain "CSV (Comma delimited)" choice writes the computer's own code page, and the
+export stops rather than guess at what it meant.
 """
 import argparse
+import csv
 import datetime
 import json
 import os
 import re
 import sys
 
-from openpyxl import load_workbook
-
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
-DEFAULT_SRC = os.path.normpath(os.path.join(REPO, "..", "lit-scan", "lit-scan-draft.xlsx"))
+DEFAULT_SRC = os.path.join(REPO, "data", "sources.csv")
 OUT_DIR = os.path.join(REPO, "data")
 TOPICS_FILE = os.path.join(OUT_DIR, "topics.json")
 INDICATORS_FILE = os.path.join(OUT_DIR, "indicators.json")
 QUADRANTS_FILE = os.path.join(OUT_DIR, "quadrants.json")
 
-HEADER_ROW = 2
+# The source's id, as in study.html?id=app1-03. It never changes once a source is
+# published, because links to it are already out there. The number after "app" is
+# the topic the source was first filed under, the one after the dash its place there.
+ID_RE = re.compile(r"^app(\d+)-(\d+)$")
 
-# Workbook column heading -> JSON key. Anything not listed here is ignored, so a
-# new column in the workbook will not silently leak onto a public website.
+# CSV column heading -> JSON key. Anything not listed here is ignored, so a new
+# column in the CSV will not silently leak onto a public website.
 FIELDS = {
-    "#": "num",
+    "ID": "id",
     "Reference": "reference",
     "Link": "link",
     "Source type": "sourceType",
@@ -69,9 +73,9 @@ ACCESS_VALUES = [
 
 # Whether getting the data costs money on top of the application. Asked for by the
 # partner agency in September 2026: they need to know what exists behind a paywall so
-# they can make a case to pay for it. The same four strings as the handover template
-# in lit-scan/build_hwqld_handover_pack.py, so a contributor's spreadsheet and the
-# site never disagree. "Not applicable" means there is no application to pay for.
+# they can make a case to pay for it. The same four strings as the contributor template
+# in build/source_templates.py, so a contributor's spreadsheet and the site never
+# disagree. "Not applicable" means there is no application to pay for.
 APPLICATION_FEE_VALUES = [
     "Fee required",
     "No fee",
@@ -124,7 +128,7 @@ DOMAINS = [
     "Mental Wellbeing",
 ]
 
-# Two derived facets. The workbook's own "Source type" and "Country/system" columns
+# Two derived facets. The CSV's own "Source type" and "Country/system" columns
 # are prose and have around a dozen distinct values each, which makes a useless
 # filter. These roll them into buckets people actually filter by. The original
 # wording is still shown on the record.
@@ -245,18 +249,6 @@ def clean(value):
     return " ".join(str(value).split())
 
 
-def priority_of(row):
-    """Rocky marks relevance by filling cells: yellow relevant, red highly relevant."""
-    for cell in row:
-        fill = cell.fill
-        if fill is not None and fill.fill_type == "solid":
-            if getattr(fill.start_color, "rgb", None) == "FFFFFF00":
-                return "relevant"
-            if getattr(fill.start_color, "theme", None) == 5:
-                return "highly-relevant"
-    return "unmarked"
-
-
 def parse_links(text):
     """Split a free-text cell into labelled links.
 
@@ -280,8 +272,8 @@ def parse_links(text):
 
 
 def app_number(sheet_title):
-    """Only used to build a stable study id. It records which sheet a row lives on,
-    which is not the same thing as which topics it belongs to."""
+    """The number in a topic's old sheet name, kept in topics.json so the ?app=1 links
+    sent out before topics had names still resolve."""
     match = re.search(r"App\s*(\d+)", sheet_title)
     if not match:
         raise SystemExit("Sheet name does not carry a number: " + sheet_title)
@@ -343,155 +335,169 @@ def gridded_topic_ids():
         return set()
 
 
+def read_sources(src):
+    """The CSV's rows as (row number, {heading: text}), blank rows left out. The row
+    number is the one Excel shows, header row 1, so a message points at the right row
+    even when a cell above holds several lines of text.
+
+    Accepts the two things Excel may add: a byte-order mark, and a "sep=," first line
+    that makes Excel split on commas whatever the computer's regional settings say.
+    """
+    try:
+        with open(src, encoding="utf-8-sig", newline="") as handle:
+            text = handle.read()
+    except UnicodeDecodeError:
+        raise SystemExit('%s is not saved as UTF-8. In Excel use Save As > '
+                         '"CSV UTF-8 (Comma delimited)", then run this again.' % src)
+    lines = text.splitlines(keepends=True)
+    if lines and lines[0].strip().lower().startswith("sep="):
+        lines = lines[1:]
+    reader = csv.DictReader(lines)
+    missing = [h for h in FIELDS if h not in (reader.fieldnames or [])]
+    if missing:
+        raise SystemExit("%s is missing columns: %s" % (src, ", ".join(missing)))
+    for number, row in enumerate(reader, start=2):
+        if not any(isinstance(v, str) and v.strip() for v in row.values()):
+            continue
+        yield number, row
+
+
 def export(src, out_dir, quiet=False):
     if not os.path.exists(src):
-        raise SystemExit("Workbook not found: " + src)
+        raise SystemExit("Source list not found: " + src)
 
     topics = load_topics()
     indicators_meta = load_indicators()
     indicator_names = [i["name"] for i in indicators_meta]
     topic_by_title = {t["title"]: t["id"] for t in topics}
-    topic_by_sheet = {t["sheet"]: t["id"] for t in topics if t.get("sheet")}
 
-    workbook = load_workbook(src, data_only=True)
-    studies, problems = [], []
+    studies, problems, seen_ids = [], [], set()
 
-    for sheet in workbook:
-        app = app_number(sheet.title)
-        default_topic = topic_by_sheet.get(sheet.title)
+    for number, row in read_sources(src):
+        record = {}
+        for heading, key in FIELDS.items():
+            record[key] = clean(row.get(heading))
 
-        headers = {cell.value: idx for idx, cell in enumerate(sheet[HEADER_ROW]) if cell.value}
-        missing = [h for h in FIELDS if h not in headers]
-        if missing:
-            problems.append("Sheet '%s' is missing columns: %s" % (sheet.title, ", ".join(missing)))
+        where = "Row %d (%s)" % (number, record["id"] or "no ID")
+        match = ID_RE.match(record["id"])
+        if not match:
+            problems.append("%s: ID must look like app1-03" % where)
             continue
+        if record["id"] in seen_ids:
+            problems.append("%s: ID is used by an earlier row too" % where)
+            continue
+        seen_ids.add(record["id"])
+        app, num = int(match.group(1)), int(match.group(2))
 
-        for row in sheet.iter_rows(min_row=HEADER_ROW + 1):
-            if row[0].value is None:
-                continue
+        access = record.get("access", "")
+        if access not in ACCESS_VALUES:
+            problems.append("%s: Access is '%s', not one of the allowed values" % (where, access))
 
-            record = {}
-            for heading, key in FIELDS.items():
-                record[key] = clean(row[headers[heading]].value)
+        tags = [t.strip() for t in record.pop("geoTagsRaw", "").split(";") if t.strip()]
+        for tag in tags:
+            if tag not in GEO_TAGS:
+                problems.append("%s: geo tag '%s' is not in the vocabulary" % (where, tag))
+        if not tags:
+            problems.append("%s: no geo tags" % where)
 
-            num = int(record.pop("num"))
-            where = "App %d row %d" % (app, num)
+        # Same split and check as the geo tags, without the "must have at least
+        # one" rule - plenty of sources genuinely have no health-issue domain.
+        domains = [d.strip() for d in record.pop("domainsRaw", "").split(";") if d.strip()]
+        for domain in domains:
+            if domain not in DOMAINS:
+                problems.append("%s: domain '%s' is not in the vocabulary" % (where, domain))
 
-            access = record.get("access", "")
-            if access not in ACCESS_VALUES:
-                problems.append("%s: Access is '%s', not one of the allowed values" % (where, access))
+        # Same again for the indicators, and blank is the usual answer here. A
+        # source earns a tag only by naming or computing the measure; the agency
+        # said they would fill in the rest, so gaps are the plan and not a lapse.
+        indicators = [i.strip() for i in record.pop("indicatorsRaw", "").split(";") if i.strip()]
+        for indicator in indicators:
+            if indicator not in indicator_names:
+                problems.append("%s: indicator '%s' is not in indicators.json"
+                                % (where, indicator))
 
-            tags = [t.strip() for t in record.pop("geoTagsRaw", "").split(";") if t.strip()]
-            for tag in tags:
-                if tag not in GEO_TAGS:
-                    problems.append("%s: geo tag '%s' is not in the vocabulary" % (where, tag))
-            if not tags:
-                problems.append("%s: no geo tags" % where)
+        # Every source names its topics. In the old workbook a blank cell meant
+        # "this sheet's topic"; with one list there is no sheet to fall back on.
+        named = [t.strip() for t in record.pop("topicsRaw", "").split(";") if t.strip()]
+        topic_ids = []
+        for name in named:
+            if name not in topic_by_title:
+                problems.append("%s: topic '%s' is not in topics.json" % (where, name))
+            elif topic_by_title[name] not in topic_ids:
+                topic_ids.append(topic_by_title[name])
+        if not topic_ids:
+            problems.append("%s: no topic - name at least one in Topics" % where)
 
-            # Same split and check as the geo tags, without the "must have at least
-            # one" rule - plenty of sources genuinely have no health-issue domain.
-            domains = [d.strip() for d in record.pop("domainsRaw", "").split(";") if d.strip()]
-            for domain in domains:
-                if domain not in DOMAINS:
-                    problems.append("%s: domain '%s' is not in the vocabulary" % (where, domain))
+        record["app"] = app
+        record["num"] = num
+        record["topics"] = topic_ids
+        record["geoTags"] = tags
+        record["domains"] = domains
+        record["indicators"] = indicators
+        group = source_group(record.get("sourceType", ""))
+        if group is None:
+            problems.append("%s: source type '%s' matches no rule in "
+                            "SOURCE_GROUP_RULES - add a rule or fix the cell"
+                            % (where, record.get("sourceType", "")))
+        record["sourceGroup"] = group or ""
 
-            # Same again for the indicators, and blank is the usual answer here. A
-            # source earns a tag only by naming or computing the measure; the agency
-            # said they would fill in the rest, so gaps are the plan and not a lapse.
-            indicators = [i.strip() for i in record.pop("indicatorsRaw", "").split(";") if i.strip()]
-            for indicator in indicators:
-                if indicator not in indicator_names:
-                    problems.append("%s: indicator '%s' is not in indicators.json"
-                                    % (where, indicator))
+        # Access answers "can you get the data" and Source type answers "what kind
+        # of thing is this", so a row can hold both without either being checked
+        # against the other. These two values contradict each other, and app4-07
+        # shipped reading "No dataset" and "Published dataset" side by side until
+        # someone spotted it on the page.
+        if access == "Not a dataset" and group == "Published dataset":
+            problems.append("%s: Access says 'Not a dataset' but the Source type "
+                            "'%s' files it under Published dataset - the row would "
+                            "show both. Fix whichever is wrong"
+                            % (where, record.get("sourceType", "")))
 
-            # A blank cell means "whatever this sheet is about", so the column only
-            # has to be filled in where a source genuinely spans more than one topic.
-            named = [t.strip() for t in record.pop("topicsRaw", "").split(";") if t.strip()]
-            topic_ids = []
-            for name in named:
-                if name not in topic_by_title:
-                    problems.append("%s: topic '%s' is not in topics.json" % (where, name))
-                elif topic_by_title[name] not in topic_ids:
-                    topic_ids.append(topic_by_title[name])
-            if not topic_ids:
-                if default_topic:
-                    topic_ids = [default_topic]
-                else:
-                    problems.append("%s: no topic, and no topic claims sheet '%s'"
-                                    % (where, sheet.title))
+        regions = regions_of(record.get("country", ""))
+        if regions is None:
+            problems.append("%s: no country or system given" % where)
+        record["regions"] = regions or []
+        record["dataLinks"] = parse_links(record.pop("dataLinkRaw", ""))
 
-            record["id"] = "app%d-%02d" % (app, num)
-            record["app"] = app
-            record["num"] = num
-            record["topics"] = topic_ids
-            record["priority"] = priority_of(row)
-            record["geoTags"] = tags
-            record["domains"] = domains
-            record["indicators"] = indicators
-            group = source_group(record.get("sourceType", ""))
-            if group is None:
-                problems.append("%s: source type '%s' matches no rule in "
-                                "SOURCE_GROUP_RULES - add a rule or fix the cell"
-                                % (where, record.get("sourceType", "")))
-            record["sourceGroup"] = group or ""
+        record["year"] = publication_year(record["reference"])
 
-            # Access answers "can you get the data" and Source type answers "what kind
-            # of thing is this", so a row can hold both without either being checked
-            # against the other. These two values contradict each other, and app4-07
-            # shipped reading "No dataset" and "Published dataset" side by side until
-            # someone spotted it on the page.
-            if access == "Not a dataset" and group == "Published dataset":
-                problems.append("%s: Access says 'Not a dataset' but the Source type "
-                                "'%s' files it under Published dataset - the row would "
-                                "show both. Fix whichever is wrong"
-                                % (where, record.get("sourceType", "")))
+        fee = record.get("applicationFee", "")
+        if fee not in APPLICATION_FEE_VALUES:
+            problems.append("%s: Application fee is '%s', not one of the allowed values"
+                            % (where, fee))
+        elif access in FEE_ALLOWED_BY_ACCESS and fee not in FEE_ALLOWED_BY_ACCESS[access]:
+            problems.append("%s: Application fee '%s' does not go with Access '%s' "
+                            "(allowed: %s)" % (where, fee, access,
+                                               ", ".join(FEE_ALLOWED_BY_ACCESS[access])))
 
-            regions = regions_of(record.get("country", ""))
-            if regions is None:
-                problems.append("%s: no country or system given" % where)
-            record["regions"] = regions or []
-            record["dataLinks"] = parse_links(record.pop("dataLinkRaw", ""))
+        years_text = record.get("dataYears", "")
+        record["dataYear"] = data_year(years_text)
+        if access == "Not a dataset":
+            if years_text.lower() != "not applicable":
+                problems.append("%s: Data source year(s) must be 'Not applicable' for a "
+                                "source that is not a dataset, got '%s'" % (where, years_text))
+        elif not years_text:
+            problems.append("%s: Data source year(s) is blank - state the span the data "
+                            "covers, or 'Not yet assessed'" % where)
+        elif (record["dataYear"] is None
+              and years_text.lower() != "not yet assessed"
+              and not years_text.lower().startswith("varies by")):
+            # "Varies by dataset" is the honest answer for a portal or atlas that
+            # holds many collections; it sorts as undated rather than being given
+            # one year that is wrong for most of what it holds.
+            problems.append("%s: Data source year(s) '%s' has no four-digit year the "
+                            "export can sort on" % (where, years_text))
+        elif (re.search(r"\b(ongoing|onwards|to date|present)\b", years_text, re.I)
+              and not re.search(r"\bto (19|20)\d{2}\b|\b(19|20)\d{2}\)?\s*$", years_text)):
+            problems.append("%s: Data source year(s) '%s' says the series is ongoing "
+                            "without stating the latest release year" % (where, years_text))
 
-            record["year"] = publication_year(record["reference"])
+        if not record["reference"]:
+            problems.append("%s: no reference" % where)
 
-            fee = record.get("applicationFee", "")
-            if fee not in APPLICATION_FEE_VALUES:
-                problems.append("%s: Application fee is '%s', not one of the allowed values"
-                                % (where, fee))
-            elif access in FEE_ALLOWED_BY_ACCESS and fee not in FEE_ALLOWED_BY_ACCESS[access]:
-                problems.append("%s: Application fee '%s' does not go with Access '%s' "
-                                "(allowed: %s)" % (where, fee, access,
-                                                   ", ".join(FEE_ALLOWED_BY_ACCESS[access])))
-
-            years_text = record.get("dataYears", "")
-            record["dataYear"] = data_year(years_text)
-            if access == "Not a dataset":
-                if years_text.lower() != "not applicable":
-                    problems.append("%s: Data source year(s) must be 'Not applicable' for a "
-                                    "source that is not a dataset, got '%s'" % (where, years_text))
-            elif not years_text:
-                problems.append("%s: Data source year(s) is blank - state the span the data "
-                                "covers, or 'Not yet assessed'" % where)
-            elif (record["dataYear"] is None
-                  and years_text.lower() != "not yet assessed"
-                  and not years_text.lower().startswith("varies by")):
-                # "Varies by dataset" is the honest answer for a portal or atlas that
-                # holds many collections; it sorts as undated rather than being given
-                # one year that is wrong for most of what it holds.
-                problems.append("%s: Data source year(s) '%s' has no four-digit year the "
-                                "export can sort on" % (where, years_text))
-            elif (re.search(r"\b(ongoing|onwards|to date|present)\b", years_text, re.I)
-                  and not re.search(r"\bto (19|20)\d{2}\b|\b(19|20)\d{2}\)?\s*$", years_text)):
-                problems.append("%s: Data source year(s) '%s' says the series is ongoing "
-                                "without stating the latest release year" % (where, years_text))
-
-            if not record["reference"]:
-                problems.append("%s: no reference" % where)
-
-            studies.append(record)
+        studies.append(record)
 
     if problems:
-        print("Export stopped - fix the workbook first:", file=sys.stderr)
+        print("Export stopped - fix data/sources.csv first:", file=sys.stderr)
         for problem in problems:
             print("  - " + problem, file=sys.stderr)
         raise SystemExit(1)
@@ -582,7 +588,7 @@ def export(src, out_dir, quiet=False):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--src", default=DEFAULT_SRC, help="path to lit-scan-draft.xlsx")
+    parser.add_argument("--src", default=DEFAULT_SRC, help="path to the sources CSV")
     parser.add_argument("--out", default=OUT_DIR, help="output directory for the JSON")
     parser.add_argument("--quiet", action="store_true")
     args = parser.parse_args()

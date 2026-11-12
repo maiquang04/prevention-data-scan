@@ -56,16 +56,13 @@ Without `COMPOSE_PROFILES`, `up` starts the search page but no model, and `down`
 a running model behind. Either set it in `.env` as above, or name the profile in every
 command: `docker compose --profile gpu up -d`, `docker compose --profile gpu down`.
 
-**After changing the workbook**, rebuild the data and restart the search, which reads
-the data once when it starts:
+**After changing `data/sources.csv`**, rebuild the data and restart the search, which
+reads the data once when it starts:
 
 ```
 docker compose run --rm export
 docker compose restart search
 ```
-
-The export reads `../lit-scan/lit-scan-draft.xlsx` unless `WORKBOOK_DIR` and
-`WORKBOOK_FILE` say otherwise. Close the workbook in Excel first, as above.
 
 ### Settings
 
@@ -80,8 +77,6 @@ Put any of these in a file called `.env` beside `docker-compose.yml` (gitignored
 | `MODEL_CONTEXT` | `4096` | Tokens the model can read at once. The prompt is about 1,500 |
 | `SEARCH_PORT` | `8765` | Port the page is published on |
 | `LLM_URL` | the model container | Any other OpenAI-compatible model server |
-| `WORKBOOK_DIR` | `../lit-scan` | Folder holding the workbook |
-| `WORKBOOK_FILE` | `lit-scan-draft.xlsx` | The workbook's name |
 | `HOST_UID`, `HOST_GID` | `1000` | Linux only: who owns the files the export writes |
 
 To use LM Studio on the same computer instead of the model container, set
@@ -106,14 +101,25 @@ Python's built-in web server, which is not built to face the internet.
 
 ## Where the content comes from
 
-The spreadsheet is the source of truth. Nothing in `data/studies.json` or `data/meta.json`
-is edited by hand — regenerate them after changing the workbook:
+`data/sources.csv` is the source of truth: one row per source, one column per field.
+Nothing in `data/studies.json` or `data/meta.json` is edited by hand. Regenerate them after
+changing the CSV:
 
 ```
 python build/export_data.py
 ```
 
-Close the workbook in Excel first, or openpyxl reads a stale copy.
+No packages to install; it is the standard library only.
+
+**Editing the CSV in Excel** works, with two rules. Save it with Save As > **CSV UTF-8
+(Comma delimited)**, because the plain "CSV" choice writes the computer's own code page and
+the export stops rather than guess. And close it in Excel before running the export. Any
+text editor works too.
+
+**Each row's ID** (`app1-03`) is the address of that source's page, so it never changes
+once published. A new source takes the next free number under the topic it belongs to
+most, e.g. `app2-15` after `app2-14`. Removing a source means deleting its row; its old
+link then shows "not found".
 
 That command also re-stamps the stylesheet and script links with a hash of each file
 (`assets/common.js?v=cbf15586`). GitHub Pages caches assets for ten minutes and its CDN
@@ -126,7 +132,7 @@ python build/stamp_assets.py
 ```
 
 ```
-lit-scan/lit-scan-draft.xlsx        source of truth, maintained in Excel
+data/sources.csv                    source of truth, edited in Excel or a text editor
         │
         │  build/export_data.py
         ▼
@@ -139,11 +145,28 @@ the pages
 
 `data/quadrants.json` is the exception: it is written by hand, because deciding whether a
 measure belongs under People or under Places is a judgement, not something to infer from a
-spreadsheet column.
+column.
+
+### Suggestions from contributors
+
+People who should not edit `data/sources.csv` directly can send changes in two CSV
+templates:
+
+```
+python build/source_templates.py           write both into templates/
+python build/source_templates.py --check   check them without rewriting
+```
+
+`resource-entry-template.csv` is one row per new source, with the allowed tag values in
+each column heading. `current-source-tag-review.csv` lists every current source and its
+tags, with a Notes column for corrections. Both are built from `data/`, so regenerate them
+after an export. A returned file is read by whoever maintains the site and copied into
+`data/sources.csv` by hand; nothing imports it automatically, because duplicates,
+conflicting tags and unchecked claims need a person to look at them.
 
 ### The three controlled columns
 
-Filtering needs clean categories, which the workbook's prose columns cannot give. Three
+Filtering needs clean categories, which the CSV's prose columns cannot give. Three
 columns exist purely to drive the filters, and `export_data.py` stops with an error if a
 cell holds anything outside these lists.
 
@@ -247,11 +270,10 @@ like a right one.
 
 ### Adding a controlled column
 
-`python build/add_column.py "Indicators" --width 44` adds an empty column to every sheet,
-styled so the relevance highlighting stays unbroken across it — `priority_of()` reads those
-cell fills back, so a white gap through a highlighted row is a real hazard, not a cosmetic
-one. Fill the column, then add it to `FIELDS` in `export_data.py`; a heading listed in
-`FIELDS` but missing from a sheet stops the export.
+Add the column to `data/sources.csv` and fill it, then add its heading to `FIELDS` in
+`export_data.py`. A heading listed in `FIELDS` but missing from the CSV stops the export,
+and a column in the CSV that is not in `FIELDS` is ignored, so nothing reaches the site by
+accident.
 
 ## Before pushing
 
@@ -292,26 +314,26 @@ assets/
   browse.js         filtering
   quadrants.js      the grid
 data/
+  sources.csv       the source list: every page comes from this, edit it then export
   studies.json      generated
   meta.json         generated
   topics.json       hand-authored — the taxonomy: id, title, heading, question, blurb
   indicators.json   hand-authored — the partner agency's 61 named measures
   quadrants.json    hand-authored — keyed by topic id
 build/
-  export_data.py    workbook → JSON, then re-stamps the asset links
-  add_column.py     adds an empty controlled column to every sheet, styling and all
-  add_topics_column.py  superseded by add_column.py; kept only as a record of the first migration
+  export_data.py    data/sources.csv → JSON, then re-stamps the asset links
   stamp_assets.py   adds ?v=<hash> to each stylesheet and script link
   check_publish.py  pre-push safety scan
   check_links.py    checks the outbound links still resolve
+  source_templates.py  writes the two CSV templates for contributors into templates/
 search/             a prototype, not part of the published pages — see below
 Dockerfile          the Python image the search and the export run in
 docker-compose.yml  the site, search and model together; see Running with Docker
 .nojekyll           stops GitHub Pages hiding files that start with an underscore
 ```
 
-Plain HTML, CSS and JavaScript, no build step and no dependencies beyond `openpyxl` for the
-export script. GitHub Pages serves the files as they are.
+Plain HTML, CSS and JavaScript, no build step, and the scripts use only Python's standard
+library. GitHub Pages serves the files as they are.
 
 ### search/
 
@@ -347,7 +369,7 @@ The dropdown in the result bar offers four orders. **Newest first** is the defau
 | A to Z | The reference line, so author surname for a paper and agency name for a dataset |
 | Z to A | The same, reversed |
 
-The year is not a column in the workbook. `publication_year()` in `export_data.py` reads
+The year is not a column in the CSV. `publication_year()` in `export_data.py` reads
 it out of the reference, and only from the bracketed form every reference uses:
 `Masters R, ... (2017). Return on investment ...`. A bare four-digit number elsewhere in
 the string is usually part of a title or a survey name and would date the source wrongly,
@@ -359,8 +381,8 @@ AusPlay - which have no single publication year. Under either year order they so
 bottom rather than being handed a date, so none of them is on page 1 of the opening view.
 Under A to Z they sort with everything else.
 
-The workbook's own order used to be the default and is gone. It meant something to
-whoever built the sheet and nothing to a reader. One consequence worth knowing: a
+The source list's own order used to be the default and is gone. It meant something to
+whoever built the list and nothing to a reader. One consequence worth knowing: a
 `?page=` link shared before this change now points at a different slice.
 
 `tests/sorttest.mjs` covers all four orders across every page, the undated sources going
@@ -387,9 +409,8 @@ a source's own page, where nothing wraps them.
 The site groups sources by focus area rather than by "Application N" - that numbering is
 internal project shorthand and means nothing to an outside reader. The taxonomy lives in
 `data/topics.json`; adding one there is enough, no code change needed. A source can belong to
-more than one: add to its `Topics` cell in the workbook, semicolon-separated, e.g.
-`Local government measurement; Health inequities`. A blank cell defaults to whichever focus
-area claims that sheet.
+more than one: list them in its `Topics` cell, semicolon-separated, e.g.
+`Local government measurement; Health inequities`. Every source names at least one.
 
 **Removing one does not remove any source.** The export then stops with `topic '<name>' is not
 in topics.json` for every source that carried it, until those cells are pointed somewhere
@@ -397,7 +418,7 @@ else. That is deliberate: it forces a decision rather than leaving sources silen
 
 The word on screen is "focus area", asked for by the supervisors in September 2026. Everything
 underneath still says topic - the `?topic=` parameter, the `topics` key in `meta.json`, the
-`topics.json` filename, the `Topics` column in the workbook. Same split as `e4cc3d1` made for
+`topics.json` filename, the `Topics` column in the CSV. Same split as `e4cc3d1` made for
 the source field labels: display text moved, keys did not, so no link already sent out breaks.
 
 `?topic=<id>` is the current parameter on `application.html` and `browse.html`. The older
@@ -422,16 +443,14 @@ them apart. `tests/cardtags.mjs` checks all 14 titles against `studies.json`.
 
 ## Relevance marks
 
-Rocky marks relevance by filling cells in the workbook, yellow for relevant and red for
-highly relevant, and `priority_of()` in `export_data.py` reads those fills back into a
-`priority` field on every source.
+Relevance used to be marked by filling cells in the old workbook, yellow for relevant and
+red for highly relevant, and the export read those fills into a `priority` field.
 
-**Nothing on the site draws it any more.** Rocky marked 17 sources before the scan grew to
-61, so 44 now carry no mark, and a source can sit in several focus areas, so a mark made
-against one no longer means what it looks like. The dot and the Relevance filter both went
-in September 2026. The field is still exported, so putting them back is a display change
-rather than a re-derivation, and `add_column.py` still styles new columns so the
-highlighting stays unbroken.
+**They are gone.** Only 17 sources were ever marked, before the scan grew to 80, and a
+source can sit in several focus areas, so a mark made against one no longer meant what it
+looked like. The dot and the Relevance filter went in September 2026, and the field itself
+went in November 2026 when the source list moved from the workbook to `data/sources.csv`,
+which has no cell colours to read.
 
 A `?priority=` link shared before this is not an error and does not filter; it is ignored
 and the reader sees the whole list.

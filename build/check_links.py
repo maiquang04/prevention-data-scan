@@ -9,7 +9,7 @@ before showing the site to anyone:
 
 Three outcomes get kept apart, because confusing them wastes an afternoon:
 
-  the server replied 404      the link really is broken - fix the workbook
+  the server replied 404      the link really is broken - fix data/sources.csv
   the server replied 403      a publisher blocking robots; open it in a browser
   nothing replied at all      a network problem here, not a problem with the link
 
@@ -135,7 +135,7 @@ def main():
             print("  %s  %s\n    %s" % (study_id, url, error))
         print("")
     if dead:
-        print("BROKEN - the server replied with an error. Fix these in the workbook, then")
+        print("BROKEN - the server replied with an error. Fix these in data/sources.csv, then")
         print("re-run build/export_data.py:")
         for study_id, url, status in dead:
             print("  %s  HTTP %s  %s" % (study_id, status, url))

@@ -263,7 +263,7 @@ async function run() {
     }
     expect(await chipCount() === before.chips - places.length, "each click took off exactly one tag");
     expect(seen.ids.length > 0, "the list was ranked again and is not empty");
-    note(walk.every((id) => seen.ids.slice(0, 3).includes(id)) && /^3 sources carry every tag/.test(seen.bar),
+    note(walk.every((id) => seen.ids.slice(0, 3).includes(id)) && /^3 sources match every tag/.test(seen.bar),
       "without the place tags, the three public Walkability Index sources carry every tag");
     await shot("04-place-tags-removed.png");
     await evaluate(`document.getElementById("restore").click()`);

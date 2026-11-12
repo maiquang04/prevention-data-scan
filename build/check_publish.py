@@ -19,8 +19,9 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
 
-# models/ holds the language model for Docker: gigabytes, gitignored, never published.
-SKIP_DIRS = {".git", "node_modules", "__pycache__", ".vscode", ".idea", "models"}
+# models/ holds the language model for Docker, and templates/ the CSVs that
+# build/source_templates.py writes. Both are gitignored and regenerated, never published.
+SKIP_DIRS = {".git", "node_modules", "__pycache__", ".vscode", ".idea", "models", "templates"}
 
 # Only these extensions are expected in a static site. Anything else is probably a
 # document that wandered in from the project folder.
@@ -55,6 +56,10 @@ BANNED_PLACES = [
     "Moorooka", "Stafford",
 ]
 
+# Files allowed despite a banned extension. The source list is the site's own input
+# and is read and checked like any other text file.
+ALLOWED_FILES = {"data/sources.csv"}
+
 # Substrings that are fine even though they trip a rule above.
 ALLOWED_EXCEPTIONS = [
     "build/check_publish.py",   # this file lists the banned words on purpose
@@ -76,6 +81,8 @@ def walk():
 def check_files(problems, warnings):
     for path, rel in walk():
         ext = os.path.splitext(rel)[1].lower()
+        if rel in ALLOWED_FILES:
+            continue
         if ext in BANNED_EXT:
             problems.append("%s: %s files must not be published from this repository" % (rel, ext))
         elif ext not in ALLOWED_EXT:
@@ -91,7 +98,8 @@ def check_text(problems):
 
     for path, rel in walk():
         if (os.path.splitext(rel)[1].lower() not in TEXT_EXT
-                and os.path.basename(rel) not in TEXT_NAMES):
+                and os.path.basename(rel) not in TEXT_NAMES
+                and rel not in ALLOWED_FILES):
             continue
         if any(rel.endswith(x) for x in ALLOWED_EXCEPTIONS):
             continue
@@ -105,6 +113,7 @@ def check_text(problems):
             for phrase, pattern in needles:
                 if pattern.search(line):
                     problems.append('%s:%d: contains "%s"' % (rel, number, phrase))
+
 
 
 def check_quadrant_ids(problems):

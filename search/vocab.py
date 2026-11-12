@@ -1,6 +1,6 @@
 """The tags a source can carry, and the way they are described to the model.
 
-Every value is read from the site's own meta.json, so when the workbook gains a
+Every value is read from the site's own meta.json, so when the source list gains a
 measure the prompt gains it too. The only wording written here is GLOSS, which
 explains values the model could not guess from their name alone.
 """

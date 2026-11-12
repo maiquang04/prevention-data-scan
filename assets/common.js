@@ -87,7 +87,7 @@
   };
 
   /* The three geography tags that are abbreviations. They stay short on screen and
-     expand on hover: the short form is what the workbook, the filter and the URL all
+     expand on hover: the short form is what the source list, the filter and the URL all
      call them, and the full names would push every card taller. Same teach-by-hover
      as ACCESS_MEANING above. Anything not listed here returns "" and is drawn plain. */
   var TAG_TITLE = {
@@ -274,7 +274,7 @@
 
      There used to be a separate "Visit original source" button above this list. It was
      removed in September 2026 because the two competed: the button held the page for the
-     source itself, while this list held whatever the workbook's "Data sources link" cell
+     source itself, while this list held whatever the source list's "Data sources link" column
      pointed at, which for some rows is a portal landing page. A reader had no way to tell
      which of the two was the specific one.
 
@@ -285,14 +285,14 @@
   /* One link per source: the page that source lives on, showing its own address.
 
      This row used to be a bulleted list holding the source's page plus every "Data
-     sources link" from the workbook, above a separate "Visit original source" button.
+     sources link" from the source list, above a separate "Visit original source" button.
      Three problems, all fixed here: two controls competed for the same click, the
      wording "Original source" hid where the link actually went, and several data links
      were portal landing pages rather than the source itself.
 
-     The data links are still in the workbook and in studies.json. They are not drawn.
+     The data links are still in the source list and in studies.json. They are not drawn.
      If a source's link is a bare domain, the fix is that row's Link cell in the
-     workbook, not a second link in this row. */
+     source list, not a second link in this row. */
   function sourceLink(study) {
     return study.link ? externalLink(study.link, study.link) : "";
   }

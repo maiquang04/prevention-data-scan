@@ -3,16 +3,15 @@
     "Hand-authored. export_data.py reads this and never writes it.",
     "",
     "To add a topic: add an entry below. Nothing else needs changing - not the export",
-    "script, not the pages. Give it a 'sheet' only if a whole workbook sheet belongs to",
-    "it; a topic with no sheet is fine and simply picks up whatever rows name it in",
-    "their Topics column.",
+    "script, not the pages. A source joins a topic by naming it in the Topics column",
+    "of data/sources.csv. A new topic needs no 'sheet'.",
     "",
     "  id       used in web addresses and inside quadrants.json. Never change one that",
     "           is already published - links carry it.",
     "  title    the short name. Filter options, tags on a card, breadcrumbs.",
     "  heading  the longer phrasing, used only as the heading on this topic's own page.",
-    "  sheet    the workbook sheet whose rows default to this topic when their Topics",
-    "           cell is blank."
+    "  sheet    the six original topics only: the name of the workbook sheet they once",
+    "           had. Its number keeps the old ?app=1 links working. Do not change it."
   ],
   "topics": [
     {

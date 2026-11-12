@@ -182,13 +182,13 @@
     if (!tagCount(r.tags)) {
       text = "No tags to search by, so these " + n + " are ranked by the words in your question.";
     } else if (!full) {
-      text = "No source carries every tag. These " + n + " come closest.";
+      text = "No source matches every tag. These " + n + " come closest.";
     } else if (full >= n) {
-      text = "<b>" + full + "</b> " + (full === 1 ? "source carries" : "sources carry") +
+      text = "<b>" + full + "</b> " + (full === 1 ? "source matches" : "sources match") +
         " every tag" + (full > n ? ". The first " + n + " are shown." : ".");
     } else {
-      text = "<b>" + full + "</b> " + (full === 1 ? "source carries" : "sources carry") +
-        " every tag, listed first. The rest carry some of them.";
+      text = "<b>" + full + "</b> " + (full === 1 ? "source matches" : "sources match") +
+        " every tag, listed first. The rest match some of them.";
     }
     return "<span>" + text + "</span>" + (r.url
       ? '<a class="ask-browse" href="' + esc(r.url) + '">Open ' +
@@ -215,7 +215,7 @@
     });
     return '<span class="ask-match' + (whole ? " ask-match--full" : "") + '">' +
       '<span class="ask-match__count">' +
-        (whole ? "Carries every tag" : "Carries " + row.matched + " of " + row.asked) +
+        (whole ? "Matches every tag" : "Matches " + row.matched + " of " + row.asked + " tags") +
       "</span>" + bits.join("") + "</span>";
   }
 
