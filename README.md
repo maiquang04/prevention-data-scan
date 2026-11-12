@@ -116,6 +116,12 @@ No packages to install; it is the standard library only.
 the export stops rather than guess. And close it in Excel before running the export. Any
 text editor works too.
 
+**Only `ID` and `Reference` are required.** A source can go in with what is known and be
+filled in over time: a blank Access, Application fee or Data source year(s) shows as "not
+yet checked", and a blank tag column simply leaves the source out of that filter. A cell
+that is filled in must hold one of the allowed values, or the export stops and names the
+row.
+
 **Each row's ID** (`app1-03`) is the address of that source's page, so it never changes
 once published. A new source takes the next free number under the topic it belongs to
 most, e.g. `app2-15` after `app2-14`. Removing a source means deleting its row; its old

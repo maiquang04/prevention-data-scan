@@ -389,7 +389,12 @@ def export(src, out_dir, quiet=False):
         seen_ids.add(record["id"])
         app, num = int(match.group(1)), int(match.group(2))
 
-        access = record.get("access", "")
+        # Only ID and Reference have to be filled in; a source can be added with what
+        # is known and completed over time. A blank that the pages need an answer for
+        # becomes "Not yet assessed", which is what it means. A filled cell must still
+        # hold an allowed value, or the filters would grow an option nobody meant.
+        access = record.get("access", "") or "Not yet assessed"
+        record["access"] = access
         if access not in ACCESS_VALUES:
             problems.append("%s: Access is '%s', not one of the allowed values" % (where, access))
 
@@ -397,8 +402,6 @@ def export(src, out_dir, quiet=False):
         for tag in tags:
             if tag not in GEO_TAGS:
                 problems.append("%s: geo tag '%s' is not in the vocabulary" % (where, tag))
-        if not tags:
-            problems.append("%s: no geo tags" % where)
 
         # Same split and check as the geo tags, without the "must have at least
         # one" rule - plenty of sources genuinely have no health-issue domain.
@@ -425,8 +428,6 @@ def export(src, out_dir, quiet=False):
                 problems.append("%s: topic '%s' is not in topics.json" % (where, name))
             elif topic_by_title[name] not in topic_ids:
                 topic_ids.append(topic_by_title[name])
-        if not topic_ids:
-            problems.append("%s: no topic - name at least one in Topics" % where)
 
         record["app"] = app
         record["num"] = num
@@ -435,7 +436,7 @@ def export(src, out_dir, quiet=False):
         record["domains"] = domains
         record["indicators"] = indicators
         group = source_group(record.get("sourceType", ""))
-        if group is None:
+        if group is None and record.get("sourceType", ""):
             problems.append("%s: source type '%s' matches no rule in "
                             "SOURCE_GROUP_RULES - add a rule or fix the cell"
                             % (where, record.get("sourceType", "")))
@@ -453,14 +454,17 @@ def export(src, out_dir, quiet=False):
                             % (where, record.get("sourceType", "")))
 
         regions = regions_of(record.get("country", ""))
-        if regions is None:
-            problems.append("%s: no country or system given" % where)
         record["regions"] = regions or []
         record["dataLinks"] = parse_links(record.pop("dataLinkRaw", ""))
 
         record["year"] = publication_year(record["reference"])
 
         fee = record.get("applicationFee", "")
+        if not fee:
+            # Nothing to apply for, so nothing to pay; otherwise not known yet.
+            fee = ("Not applicable" if access in ("Public", "Not a dataset")
+                   else "Not yet assessed")
+            record["applicationFee"] = fee
         if fee not in APPLICATION_FEE_VALUES:
             problems.append("%s: Application fee is '%s', not one of the allowed values"
                             % (where, fee))
@@ -470,6 +474,9 @@ def export(src, out_dir, quiet=False):
                                                ", ".join(FEE_ALLOWED_BY_ACCESS[access])))
 
         years_text = record.get("dataYears", "")
+        if not years_text:
+            years_text = "Not applicable" if access == "Not a dataset" else "Not yet assessed"
+            record["dataYears"] = years_text
         record["dataYear"] = data_year(years_text)
         if access == "Not a dataset":
             if years_text.lower() != "not applicable":
